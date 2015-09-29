@@ -2,6 +2,7 @@ package com.sapo.entidades;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.*;
 
@@ -23,7 +24,18 @@ public class Almacen implements Serializable {
 	private String descripcion;
 	@OneToOne(cascade={CascadeType.PERSIST, CascadeType.REMOVE, CascadeType.MERGE})
 	private Imagen foto;
+	@OneToOne(cascade={CascadeType.PERSIST, CascadeType.REMOVE, CascadeType.MERGE})
+	private Usuario propietario;
 	private Date fechaAlta;
+	
+	@ManyToMany(mappedBy="almacenes",cascade={CascadeType.PERSIST, CascadeType.REMOVE, CascadeType.MERGE})
+	private List<Usuario> usuarios;
+	@OneToMany
+	private List<Comentario> comentarios;
+	@ManyToMany
+	private List<Categoria> categorias;
+	@ManyToMany
+	private List<Producto> productos;
 	
 	public Almacen() {
 		super();
@@ -67,6 +79,46 @@ public class Almacen implements Serializable {
 
 	public void setFechaAlta(Date fechaAlta) {
 		this.fechaAlta = fechaAlta;
+	}
+
+	public Usuario getPropietario() {
+		return propietario;
+	}
+
+	public void setPropietario(Usuario propietario) {
+		this.propietario = propietario;
+	}
+
+	public List<Usuario> getUsuarios() {
+		return usuarios;
+	}
+
+	public void setUsuarios(List<Usuario> usuarios) {
+		this.usuarios = usuarios;
+	}
+
+	public List<Comentario> getComentarios() {
+		return comentarios;
+	}
+
+	public void setComentarios(List<Comentario> comentarios) {
+		this.comentarios = comentarios;
+	}
+
+	public List<Categoria> getCategorias() {
+		return categorias;
+	}
+
+	public void setCategorias(List<Categoria> categorias) {
+		this.categorias = categorias;
+	}
+
+	public List<Producto> getProductos() {
+		return productos;
+	}
+
+	public void setProductos(List<Producto> productos) {
+		this.productos = productos;
 	}
    
 }

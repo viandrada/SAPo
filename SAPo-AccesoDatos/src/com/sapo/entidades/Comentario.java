@@ -21,6 +21,8 @@ public class Comentario implements Serializable {
 	private int idComentario;
 	private String contenido;
 	private Date fecha;
+	@OneToOne
+	private Usuario usuario;
 	
 	public Comentario() {
 		super();
@@ -48,6 +50,14 @@ public class Comentario implements Serializable {
 
 	public void setFecha(Date fecha) {
 		this.fecha = fecha;
+	}
+
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
 	}
    
 }

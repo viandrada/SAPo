@@ -1,6 +1,7 @@
 package com.sapo.entidades;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.persistence.*;
 
@@ -20,6 +21,8 @@ public class Categoria implements Serializable {
 	private int idCategoria;
 	private String nombre;
 	private boolean esGenerica;
+	@ManyToMany(mappedBy="categorias")
+	private List<Almacen> almacenes;
 	
 	public Categoria() {
 		super();

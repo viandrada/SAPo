@@ -2,6 +2,7 @@ package com.sapo.entidades;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.*;
 
@@ -21,8 +22,16 @@ public class Producto implements Serializable {
 	private int idProducto;
 	private String nombre;
 	private float precio;
+	@OneToMany(cascade={CascadeType.PERSIST, CascadeType.REMOVE, CascadeType.MERGE})
+	private List<Imagen> foto;
 	private String atributos;
 	private Date fechaAlta;
+	
+	@ManyToMany(mappedBy="productos")
+	private List<Almacen> almacenes;
+	
+	@OneToOne(cascade={CascadeType.PERSIST, CascadeType.REMOVE, CascadeType.MERGE})
+	private Categoria categoria;
 	
 	public Producto() {
 		super();
@@ -66,6 +75,30 @@ public class Producto implements Serializable {
 
 	public void setFechaAlta(Date fechaAlta) {
 		this.fechaAlta = fechaAlta;
+	}
+
+	public List<Imagen> getFoto() {
+		return foto;
+	}
+
+	public void setFoto(List<Imagen> foto) {
+		this.foto = foto;
+	}
+
+	public List<Almacen> getAlmacenes() {
+		return almacenes;
+	}
+
+	public void setAlmacenes(List<Almacen> almacenes) {
+		this.almacenes = almacenes;
+	}
+
+	public Categoria getCategoria() {
+		return categoria;
+	}
+
+	public void setCategoria(Categoria categoria) {
+		this.categoria = categoria;
 	}
    
 }
