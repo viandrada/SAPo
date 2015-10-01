@@ -28,7 +28,26 @@ public class Usuario implements Serializable {
 	private Imagen foto;
 	private boolean premium;
 	private Date fecha;
+	private Date fechaPago;
+	private float monto;
 	
+	
+	public Date getFechaPago() {
+		return fechaPago;
+	}
+
+	public void setFechaPago(Date fechaPago) {
+		this.fechaPago = fechaPago;
+	}
+
+	public float getMonto() {
+		return monto;
+	}
+
+	public void setMonto(float monto) {
+		this.monto = monto;
+	}
+
 	@ManyToMany(cascade={CascadeType.PERSIST, CascadeType.REMOVE, CascadeType.MERGE})
 	private List<Almacen> almacenes;
 
