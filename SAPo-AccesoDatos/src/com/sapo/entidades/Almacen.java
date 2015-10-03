@@ -27,6 +27,12 @@ public class Almacen implements Serializable {
 	@OneToOne(cascade={CascadeType.PERSIST, CascadeType.REMOVE, CascadeType.MERGE})
 	private Usuario propietario;
 	private Date fechaAlta;
+	private boolean estaActivo;
+	
+	
+	public Almacen() {
+		super();
+	}
 	
 	@ManyToMany(mappedBy="almacenes",cascade={CascadeType.PERSIST, CascadeType.REMOVE, CascadeType.MERGE})
 	private List<Usuario> usuarios;
@@ -36,10 +42,6 @@ public class Almacen implements Serializable {
 	private List<Categoria> categorias;
 	@ManyToMany
 	private List<Producto> productos;
-	
-	public Almacen() {
-		super();
-	}
 
 	public int getIdAlmacen() {
 		return idAlmacen;
@@ -119,6 +121,14 @@ public class Almacen implements Serializable {
 
 	public void setProductos(List<Producto> productos) {
 		this.productos = productos;
+	}
+
+	public Boolean getEstaActivo() {
+		return estaActivo;
+	}
+
+	public void setEstaActivo(Boolean estaActivo) {
+		this.estaActivo = estaActivo;
 	}
    
 }

@@ -30,7 +30,11 @@ public class Usuario implements Serializable {
 	private Date fecha;
 	private Date fechaPago;
 	private float monto;
+	private boolean estaActivo;
 	
+	 public Usuario() {
+			super();
+	}	
 	
 	public Date getFechaPago() {
 		return fechaPago;
@@ -51,10 +55,7 @@ public class Usuario implements Serializable {
 	@ManyToMany(cascade={CascadeType.PERSIST, CascadeType.REMOVE, CascadeType.MERGE})
 	private List<Almacen> almacenes;
 
-	public Usuario() {
-		super();
-	}
-
+	
 	public int getIdUsuario() {
 		return idUsuario;
 	}
@@ -125,6 +126,14 @@ public class Usuario implements Serializable {
 
 	public void setAlmacenes(List<Almacen> almacenes) {
 		this.almacenes = almacenes;
+	}
+
+	public Boolean getEstaActivo() {
+		return estaActivo;
+	}
+
+	public void setEstaActivo(Boolean estaActivo) {
+		this.estaActivo = estaActivo;
 	}
 	
 }

@@ -1,38 +1,37 @@
 package com.sapo.entidades;
 
 import java.io.Serializable;
-import java.util.List;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.*;
 
-/**
- * Entity implementation class for Entity: Categoria
- *
- */
-@Entity
 
-public class Categoria implements Serializable {
+@Entity
+public class CategoriaGenerica implements Serializable {
 
 	private static final long serialVersionUID = 1L;
+	
+	//La clave no debe ser en nombre?
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int idCategoria;
+	private int idCategoriaGenerica;
 	private String nombre;
 	private boolean esGenerica;
-	@ManyToMany(mappedBy="categorias")
-	private List<Almacen> almacenes;
 	
-	public Categoria() {
+	
+	public CategoriaGenerica() {
 		super();
 	}
-
-	public int getIdCategoria() {
-		return idCategoria;
+	
+	public int getIdCategoriaGenerica() {
+		return idCategoriaGenerica;
 	}
 
-	public void setIdCategoria(int idCategoria) {
-		this.idCategoria = idCategoria;
+	public void setIdCategoriaGenerica(int idCategoriaGenerica) {
+		this.idCategoriaGenerica = idCategoriaGenerica;
 	}
 
 	public String getNombre() {
@@ -43,13 +42,11 @@ public class Categoria implements Serializable {
 		this.nombre = nombre;
 	}
 
-	public boolean EsGenerica() {
+	public boolean isEsGenerica() {
 		return esGenerica;
 	}
 
 	public void setEsGenerica(boolean esGenerica) {
 		this.esGenerica = esGenerica;
 	}
-   
-	
 }

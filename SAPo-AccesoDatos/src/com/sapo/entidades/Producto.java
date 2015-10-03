@@ -26,6 +26,7 @@ public class Producto implements Serializable {
 	private List<Imagen> foto;
 	private String atributos;
 	private Date fechaAlta;
+	private boolean estaActivo;
 	
 	@ManyToMany(mappedBy="productos")
 	private List<Almacen> almacenes;
@@ -99,6 +100,14 @@ public class Producto implements Serializable {
 
 	public void setCategoria(Categoria categoria) {
 		this.categoria = categoria;
+	}
+
+	public Boolean getEstaActivo() {
+		return estaActivo;
+	}
+
+	public void setEstaActivo(Boolean estaActivo) {
+		this.estaActivo = estaActivo;
 	}
    
 }

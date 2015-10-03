@@ -9,7 +9,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
@@ -18,7 +17,24 @@ public class HistoricoProducto implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
 	
-	//puse casi todos los datos si sobran se sacan 
+	
+	//Seccion comentarios
+	//POR EL MOMENTO GUARDAMOS TODOS LOS DATOS, LA IDEA ES GUARDAR SOLO
+	//LOS DEL PRODUCTO CON EL TIPO DE MOVIMIENTO Y LA FHECHA QUE SE HIZO,
+	//COMO ASI TB LA REFERENCIA A ALMACEN Y USUARIO YA QUE NUNCA SE VAN A BORRAR 
+	//SINO QUE SE VAN A DESHABILITAR,
+	
+	//ERA LO ANTERIOR NO?
+	
+	//YA AGREGUE EL ATRIBUTO ESTAACTIVO(boolean), EN DICHAS CLASES.
+	
+	
+	//@SuppressWarnings("unchecked")utilizar esta estiqueta si se devuelven listas en los DAOs, 
+	//por el momento no fue necesario
+	
+	///////////////////////////////////////---FIN---///////////////////////////////////////////////
+	
+	
 	
 	//DATOS DEL PRODUCTO	
 	@Id
@@ -26,6 +42,11 @@ public class HistoricoProducto implements Serializable{
 	private int idHistoricoProducto;
 	private int idProducto;
     private Date fechaCreacion;	
+    
+    public HistoricoProducto() {
+		super();
+	}
+    
 	public int getIdHistoricoProducto() {
 		return idHistoricoProducto;
 	}
@@ -189,7 +210,5 @@ public class HistoricoProducto implements Serializable{
 	public void setFechaAltaAlmacen(Date fechaAltaAlmacen) {
 		this.fechaAltaAlmacen = fechaAltaAlmacen;
 	}
-	
-	
 
 }

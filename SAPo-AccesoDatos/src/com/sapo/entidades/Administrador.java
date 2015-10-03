@@ -23,7 +23,7 @@ public class Administrador implements Serializable {
 	private String email;
 	private String password;
 	private Date fecha;
-	
+	private boolean estaActivo;
 	
 	public Administrador() {
 		super();
@@ -77,6 +77,16 @@ public class Administrador implements Serializable {
 
 	public void setFecha(Date fecha) {
 		this.fecha = fecha;
+	}
+
+
+	public boolean EstaActivo() {
+		return estaActivo;
+	}
+
+
+	public void setEstaActivo(boolean estactivo) {
+		this.estaActivo = estactivo;
 	}
 	
 	
