@@ -3,6 +3,7 @@
 	<name>SAPo-BackOffice</name>
 	<comment></comment>
 	<projects>
+		<project>SAPo-Crosscuttin</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<h:head>
+	<f:facet name="first">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+		<title>SAPo</title>
+	</f:facet>
+
+	<f:facet name="middle">
+		<h:outputScript name="js/jquery-2.1.4.min.js" target="head" />
+		<h:outputScript name="bootstrap/js/bootstrap.js" target="head" />
+		<h:outputStylesheet name="bootstrap/css/bootstrap.css" target="head" />
+		<h:outputStylesheet name="bootstrap/css/bootstrap.css.map"
+			target="head" />
+		<h:outputStylesheet name="css/signin.css" target="head" />
+	</f:facet>
+
+	<f:facet name="last">
+
+	</f:facet>
+</h:head>
+<h:body>
+	<h:panelGroup>
+	</h:panelGroup>
+	<h:panelGroup class="row">
+		<h:panelGroup
+			class="col-sm-11 col-sm-offset-1 col-md-3 col-lg-3 col-md-offset-3 col-lg-offset-3">
+			<h:outputLabel>Mi almac&eacute;n</h:outputLabel>
+			<h:graphicImage class="img-responsive" alt="Mi almacen"
+				url="resources/images/box.png"></h:graphicImage>
+		</h:panelGroup>
+		<h:panelGroup class="col-sm-12 col-md-4 col-lg-4">
+			<div class="container-fluid">
+
+				<h:form class="form-signin" id="loginForm">
+					<h:panelGroup class="row">
+						<h:inputText id="loginEmail" value="#{loginBean.email}"
+							required="true" class="form-control" a:placeholder="Email">
+							<f:validateBean for="loginEmail" />
+							<f:ajax event="keyup" render="@this loginEmailMessage" />
+						</h:inputText>
+						<h:message id="loginEmailMessage" for="loginEmail"
+							errorStyle="color:red;"></h:message>
+					</h:panelGroup>
+					<h:inputSecret id="loginPass" value="#{loginBean.password}"
+						required="true" class="form-control" a:placeholder="Password">
+						<f:validateBean for="loginPass" />
+						<f:ajax event="blur" render="loginPassMessage" />
+					</h:inputSecret>
+					<h:message id="loginPassMessage" for="loginPass"
+						errorStyle="color:red;"></h:message>
+					<div class="checkbox">
+						<label> <input type="checkbox" value="remember-me"></input>
+							Recordarme
+						</label>
+					</div>
+					<h:commandButton
+						class="btn btn-lg btn-primary btn-block btn-signin"
+						action="#{loginBean.login}" value="Ingresar"></h:commandButton>
+				</h:form>
+
+			</div>
+		</h:panelGroup>
+		<!-- /container -->
+	</h:panelGroup>
+</h:body>
+</html>
