@@ -8,7 +8,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
-import com.sapo.datatypes.Administrador;
+import com.sapo.datatypes.DataAdministrador;
 
 
 @ManagedBean
@@ -18,10 +18,10 @@ public class LoginBean {
 	
 
 	public LoginBean() {
-		this.admin = new Administrador();
+		this.dataAdmin = new DataAdministrador();
 	}
 
-	private com.sapo.datatypes.Administrador admin;
+	private com.sapo.datatypes.DataAdministrador dataAdmin;
 	 
 
     private String email;
@@ -56,15 +56,16 @@ public class LoginBean {
 		this.redirect = redirect;
 	}
 
-	public Administrador getAdministrador() {
-		return admin;
-	}
- 
-	public void setAdministrador(Administrador admin) {
-		this.admin = admin;
-	}
- 
+
 	
+	public com.sapo.datatypes.DataAdministrador getDataAdmin() {
+		return dataAdmin;
+	}
+
+	public void setDataAdmin(com.sapo.datatypes.DataAdministrador dataAdmin) {
+		this.dataAdmin = dataAdmin;
+	}
+
 	public boolean isLogueado() {
 		return logueado;
 	}
@@ -74,7 +75,7 @@ public class LoginBean {
 	}
 
 	public String login() {
-		this.admin.setEmail(this.email);
+		this.dataAdmin.setEmail(this.email);
 		
 		/*Encriptar password para compararlo con el encriptado de la BD*/
 		MessageDigest digest;
@@ -88,7 +89,7 @@ public class LoginBean {
 	                    .substring(1));
 	        }
 			String md5Hash = stringBuffer.toString();
-			this.admin.setPassword(md5Hash);
+			this.dataAdmin.setPassword(md5Hash);
 			System.out.println("Password encriptado");
 			System.out.println(md5Hash);
 		} catch (NoSuchAlgorithmException e) {

@@ -1,16 +1,12 @@
 package com.sapo.ejb;
 
 import javax.ejb.EJB;
-import javax.ejb.Local;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
-import javax.naming.Context;
-import javax.naming.NamingException;
+import javax.inject.Inject;
 
 import com.sapo.dao.AdministradorDAO;
-import com.sapo.dao.AdministradorDAORemote;
-import com.sapo.datatypes.Administrador;
-import com.sapo.utils.JNDILookup;
+import com.sapo.datatypes.DataAdministrador;
 
 /**
  * Session Bean implementation class AdministradorNegocio
@@ -24,16 +20,13 @@ public class AdministradorNegocio implements AdministradorNegocioRemote,
 	 * Default constructor.
 	 */
 	public AdministradorNegocio() {
-		//adminDAO = new AdministradorDAO();
-		admin = new Administrador();
 	}
 
-	//@EJB
-	//private AdministradorDAO adminDAO;
-	private Administrador admin;
+	@EJB(beanName="adminDAO")
+	private AdministradorDAO adminDAO;
+	@Inject
+	private DataAdministrador admin;
 	
-	AdministradorDAORemote manager = null;
-	Context context = null;
 
 	@Override
 	public boolean altaAdmin(String nombre, String email, String password) {
@@ -41,25 +34,18 @@ public class AdministradorNegocio implements AdministradorNegocioRemote,
 		admin.setNombre(nombre);
 		admin.setEmail(email);
 		admin.setPassword(password);
-		// try {
+		
 		try {
-			context = JNDILookup.getInitialContext();
-			manager = (AdministradorDAORemote) context
-					.lookup("ejb:SAPo-EAR/SAPo-AccesoDatos//AdministradorDAO!com.sapo.dao.AdministradorDAORemote");
-			manager.insertarAdministrador(admin);
-			//manager.altaAdmin(this.nombre,this.email,this.password);
-		} catch (NamingException e) {
+			adminDAO.insertarAdministrador(admin);
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		//adminDAO.insertarAdministrador(admin);
+		
 		altaExitosa = true;
-		// } catch (Exception e) {
-		// TODO: handle exception
-		// }
 		return altaExitosa;
 	}
 
-/*
+
 	public AdministradorDAO getAdminDAO() {
 		return adminDAO;
 	}
@@ -67,13 +53,16 @@ public class AdministradorNegocio implements AdministradorNegocioRemote,
 	public void setAdminDAO(AdministradorDAO adminDAO) {
 		this.adminDAO = adminDAO;
 	}
-*/
-	public Administrador getAdmin() {
+
+
+	public DataAdministrador getAdmin() {
 		return admin;
 	}
 
-	public void setAdmin(Administrador admin) {
+
+	public void setAdmin(DataAdministrador admin) {
 		this.admin = admin;
 	}
+
 
 }

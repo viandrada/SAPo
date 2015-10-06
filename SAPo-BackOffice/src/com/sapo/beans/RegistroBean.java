@@ -3,14 +3,17 @@ package com.sapo.beans;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
+import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.inject.Inject;
 import javax.naming.Context;
 import javax.naming.NamingException;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
-import com.sapo.datatypes.Administrador;
+import com.sapo.datatypes.DataAdministrador;
+import com.sapo.ejb.AdministradorNegocio;
 import com.sapo.ejb.AdministradorNegocioRemote;
 import com.sapo.utils.JNDILookup;
 
@@ -32,14 +35,17 @@ public class RegistroBean {
 	@NotNull(message = "Debe ingresar una contraseña.")
 	private String password;
 
-	private Administrador admin;
+	@Inject
+	DataAdministrador dataAdmin;
+	@EJB
+	AdministradorNegocio adminNegocio;
 
 	/*
 	 * @EJB AdministradorBean service;
 	 */
 
 	public RegistroBean() {
-		this.admin = new Administrador();
+		this.dataAdmin = new DataAdministrador();
 		// this.service = new AdministradorBean();
 	}
 
@@ -84,22 +90,24 @@ public class RegistroBean {
 		this.password = password;
 	}
 
-	public Administrador getAdmin() {
-		return admin;
-	}
 
 	public String showResult() {
 		return "result";
 	}
 
-	public void setAdmin(Administrador admin) {
-		this.admin = admin;
+
+	public DataAdministrador getDataAdmin() {
+		return dataAdmin;
+	}
+
+	public void setDataAdmin(DataAdministrador dataAdmin) {
+		this.dataAdmin = dataAdmin;
 	}
 
 	public String registroAdmin() {
-		this.admin.setNombre(this.nombre);
-		this.admin.setEmail(this.email);
-		this.admin.setPassword(this.password);
+		this.dataAdmin.setNombre(this.nombre);
+		this.dataAdmin.setEmail(this.email);
+		this.dataAdmin.setPassword(this.password);
 
 		/*
 		 * Encriptar password ->
@@ -117,7 +125,7 @@ public class RegistroBean {
 						(hashedBytes[i] & 0xff) + 0x100, 16).substring(1));
 			}
 			String md5Hash = stringBuffer.toString();
-			this.admin.setPassword(md5Hash);
+			this.dataAdmin.setPassword(md5Hash);
 			System.out.println("Password encriptado");
 			System.out.println(md5Hash);
 		} catch (NoSuchAlgorithmException e) {
@@ -133,11 +141,13 @@ public class RegistroBean {
 		Context context = null;
 
 		try {
-			context = JNDILookup.getInitialContext();
+			/*context = JNDILookup.getInitialContext();
 			manager = (AdministradorNegocioRemote) context
 					.lookup("ejb:SAPo-EAR/SAPo-Negocio//AdministradorNegocio!com.sapo.ejb.AdministradorNegocioRemote");
-			manager.altaAdmin(this.nombre,this.email,this.password);
-		} catch (NamingException e) {
+			manager.altaAdmin(this.nombre,this.email,this.password);*/
+			
+			adminNegocio.altaAdmin(this.nombre, this.email, this.password);
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 

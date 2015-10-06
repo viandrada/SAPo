@@ -2,7 +2,7 @@ package com.sapo.ejb;
 
 import javax.ejb.Local;
 
-import com.sapo.datatypes.Administrador;
+import com.sapo.datatypes.DataAdministrador;
 
 @Local
 public interface AdministradorNegocioLocal {
