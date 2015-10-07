@@ -3,10 +3,9 @@ package com.sapo.ejb;
 import javax.ejb.EJB;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
-import javax.inject.Inject;
 
 import com.sapo.dao.AdministradorDAO;
-import com.sapo.datatypes.DataAdministrador;
+import com.sapo.entidades.Administrador;
 
 /**
  * Session Bean implementation class AdministradorNegocio
@@ -20,14 +19,14 @@ public class AdministradorNegocio implements AdministradorNegocioRemote,
 	 * Default constructor.
 	 */
 	public AdministradorNegocio() {
+		admin = new Administrador();
 	}
 
-	@EJB(beanName="adminDAO")
+	@EJB
 	private AdministradorDAO adminDAO;
-	@Inject
-	private DataAdministrador admin;
 	
-
+	private Administrador admin;
+	
 	@Override
 	public boolean altaAdmin(String nombre, String email, String password) {
 		boolean altaExitosa = false;
@@ -45,24 +44,24 @@ public class AdministradorNegocio implements AdministradorNegocioRemote,
 		return altaExitosa;
 	}
 
-
-	public AdministradorDAO getAdminDAO() {
-		return adminDAO;
+	@Override
+	public boolean login(String email, String password){
+		boolean loginOK = false;
+		Administrador administrador = new Administrador();
+		administrador.setEmail(email);
+		administrador.setPassword(password);
+		try {
+			loginOK = adminDAO.login(administrador);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return loginOK;
 	}
-
-	public void setAdminDAO(AdministradorDAO adminDAO) {
-		this.adminDAO = adminDAO;
-	}
-
-
-	public DataAdministrador getAdmin() {
+	public Administrador getAdmin() {
 		return admin;
 	}
 
-
-	public void setAdmin(DataAdministrador admin) {
+	public void setAdmin(Administrador admin) {
 		this.admin = admin;
 	}
-
-
 }

@@ -5559,7 +5559,7 @@ a.list-group-item-danger.active:focus {
 }
 .panel-default > .panel-heading {
   color: #333;
-  background-color: #01836d;
+  background-color: #313534;
   border-color: #ddd;
 }
 .panel-default > .panel-heading + .panel-collapse > .panel-body {

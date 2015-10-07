@@ -4,11 +4,14 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 
+
+import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
 import com.sapo.datatypes.DataAdministrador;
+import com.sapo.ejb.AdministradorNegocio;
 
 
 @ManagedBean
@@ -21,8 +24,9 @@ public class LoginBean {
 		this.dataAdmin = new DataAdministrador();
 	}
 
-	private com.sapo.datatypes.DataAdministrador dataAdmin;
-	 
+	private DataAdministrador dataAdmin;
+	@EJB
+	AdministradorNegocio adminNegocio;
 
     private String email;
     private String password;
@@ -58,11 +62,11 @@ public class LoginBean {
 
 
 	
-	public com.sapo.datatypes.DataAdministrador getDataAdmin() {
+	public DataAdministrador getDataAdmin() {
 		return dataAdmin;
 	}
 
-	public void setDataAdmin(com.sapo.datatypes.DataAdministrador dataAdmin) {
+	public void setDataAdmin(DataAdministrador dataAdmin) {
 		this.dataAdmin = dataAdmin;
 	}
 
@@ -98,7 +102,7 @@ public class LoginBean {
         /*Fin de encriptar password*/
 		
 		//this.admin.setPassword(this.password);
-		boolean ok = true;
+		boolean ok = adminNegocio.login(this.dataAdmin.getEmail(), this.dataAdmin.getPassword());
 		if(ok){
 			this.redirect = "Login OK!";
 		    this.logueado = true;

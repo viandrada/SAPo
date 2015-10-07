@@ -37,10 +37,15 @@
 		</div>
 		<div class="row">
 			<!-- Body -->
-			<ui:insert name="header">
-			</ui:insert>
-			<!-- div class="col-xs-12 col-sm-2 col-md-2 col-lg-2"></div>
-			<div class="col-xs-12 col-sm-10 col-md-10 col-lg-10"></div-->
+			<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
+				<ui:insert name="body">
+					<ui:include src="/templates/default/leftMenu.xhtml" />
+				</ui:insert>
+			</div>
+
+			<div class="col-xs-12 col-sm-10 col-md-10 col-lg-10">
+				<ui:include src="#{navigationBean.redirectTo}" />
+			</div>
 		</div>
 
 	</div>

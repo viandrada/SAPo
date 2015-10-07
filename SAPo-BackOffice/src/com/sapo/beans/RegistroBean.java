@@ -35,7 +35,7 @@ public class RegistroBean {
 	@NotNull(message = "Debe ingresar una contraseña.")
 	private String password;
 
-	@Inject
+	
 	DataAdministrador dataAdmin;
 	@EJB
 	AdministradorNegocio adminNegocio;
