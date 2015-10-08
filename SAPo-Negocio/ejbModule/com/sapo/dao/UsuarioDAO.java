@@ -12,7 +12,7 @@ import com.sapo.entidades.Usuario;
 @TransactionManagement(TransactionManagementType.CONTAINER)
 public class UsuarioDAO {
 	
-	@PersistenceContext(unitName="SAPo-AccesoDatos")
+	@PersistenceContext(unitName="SAPo-Negocio")
 	EntityManager em;
 	
 	public Usuario getUsuario(String email){

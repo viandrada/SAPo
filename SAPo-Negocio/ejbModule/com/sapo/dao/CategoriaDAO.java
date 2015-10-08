@@ -12,7 +12,7 @@ import com.sapo.entidades.Categoria;
 @TransactionManagement(TransactionManagementType.CONTAINER)
 public class CategoriaDAO {
 	
-	@PersistenceContext(unitName="SAPo-AccesoDatos")
+	@PersistenceContext(unitName="SAPo-Negocio")
 	EntityManager em;
 	
 	public Categoria getCategoria(String email){
