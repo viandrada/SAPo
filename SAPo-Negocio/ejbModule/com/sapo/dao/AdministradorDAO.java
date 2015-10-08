@@ -20,7 +20,7 @@ public class AdministradorDAO {
 
 	public AdministradorDAO(){}
 	
-	@PersistenceContext(unitName = "SAPo-AccesoDatos")
+	@PersistenceContext(unitName = "SAPo-Negocio")
 	private EntityManager em;
 
 	

@@ -13,7 +13,7 @@ import com.sapo.entidades.Comentario;
 @TransactionManagement(TransactionManagementType.CONTAINER)
 public class ComentarioDAO {
 	
-	@PersistenceContext(unitName="SAPo-AccesoDatos")
+	@PersistenceContext(unitName="SAPo-Negocio")
 	EntityManager em;
 	
 	public Comentario getComentario(String email){

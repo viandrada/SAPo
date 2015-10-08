@@ -12,7 +12,7 @@ import com.sapo.entidades.Almacen;
 @TransactionManagement(TransactionManagementType.CONTAINER)
 public class AlmacenDAO {
 	
-	@PersistenceContext(unitName="SAPo-AccesoDatos")
+	@PersistenceContext(unitName="SAPo-Negocio")
 	EntityManager em;
 	
 	public Almacen getAlmacen(String email){

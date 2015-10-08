@@ -13,7 +13,7 @@ import com.sapo.entidades.Producto;
 @TransactionManagement(TransactionManagementType.CONTAINER)
 public class ProductoDAO {
 	
-	@PersistenceContext(unitName="SAPo-AccesoDatos")
+	@PersistenceContext(unitName="SAPo-Negocio")
 	EntityManager em;
 	
 	public Producto getProducto(String email){

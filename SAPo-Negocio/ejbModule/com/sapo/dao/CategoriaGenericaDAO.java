@@ -14,7 +14,7 @@ import com.sapo.entidades.CategoriaGenerica;
 public class CategoriaGenericaDAO {
 	
 
-	@PersistenceContext(unitName="SAPo-AccesoDatos")
+	@PersistenceContext(unitName="SAPo-Negocio")
 	EntityManager em;
 	
 	public CategoriaGenerica getCategoriaGenerica(String email){

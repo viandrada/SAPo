@@ -12,7 +12,7 @@ import com.sapo.entidades.HistoricoProducto;
 @TransactionManagement(TransactionManagementType.CONTAINER)
 public class HistoricoProductoDAO {
 	
-	@PersistenceContext(unitName="SAPo-AccesoDatos")
+	@PersistenceContext(unitName="SAPo-Negocio")
 	EntityManager em;
 	
 	public HistoricoProducto getHistoricoProducto(String email){

@@ -3,8 +3,6 @@ package com.sapo.beans;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-
-
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;

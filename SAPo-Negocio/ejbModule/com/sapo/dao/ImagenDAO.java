@@ -13,7 +13,7 @@ import com.sapo.entidades.Imagen;
 
 public class ImagenDAO {
 	
-	@PersistenceContext(unitName="SAPo-AccesoDatos")
+	@PersistenceContext(unitName="SAPo-Negocio")
 	EntityManager em;
 	
 	public Imagen getImagen(String email){
