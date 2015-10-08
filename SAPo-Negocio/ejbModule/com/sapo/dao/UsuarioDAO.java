@@ -5,6 +5,7 @@ import javax.ejb.TransactionManagement;
 import javax.ejb.TransactionManagementType;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 import com.sapo.entidades.Usuario;
 
@@ -31,6 +32,22 @@ public class UsuarioDAO {
 	
 	public void actualizarUsuario(Usuario a){
 		em.merge(a);		
+	}
+	
+	public boolean login(Usuario usuario){
+		Boolean existe = false;
+		try {
+			Query consulta = this.em
+					.createNamedQuery("Usuario.loginUsuario.Email.Pass");
+			consulta.setParameter("email", usuario.getEmail());
+			consulta.setParameter("pass", usuario.getPassword());
+			if ((!consulta.getResultList().isEmpty())) {
+				existe = true;
+			}
+		} catch (Exception excep) {
+			throw excep;
+		}
+		return existe;
 	}
 
 }

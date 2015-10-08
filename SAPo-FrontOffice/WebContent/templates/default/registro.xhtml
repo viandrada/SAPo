@@ -4,13 +4,10 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 
 <ui:composition>
-	<div class="container-fluid" id="altaAdminContent">
+	<div class="container-fluid" id="altaUsuarioContent">
 		<div class="row">
 			<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6" >
-				<h:form id="altaAdmin" rendered="true">
-					<h1>
-						<h:outputText value="Nuevo Administrador" />
-					</h1>
+				<h:form id="altaUsuario" rendered="true">
 
 					<div class="form-group">
 						<h:outputText value="Nombre : " />
@@ -52,7 +49,7 @@
 						<h:message id="inputTextMessagePassword" for="inputPassword" errorStyle="color:red;"></h:message>
 					</div>
 
-					<h:commandButton class="btn btn-default" value="Crear" type="submit" action="#{registroBean.registroAdmin()}">
+					<h:commandButton class="btn btn-default" value="Crear" type="submit" action="#{registroBean.registrar()}">
 					</h:commandButton>
 
 				</h:form>

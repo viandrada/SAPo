@@ -1,0 +1,11 @@
+@CHARSET "ISO-8859-1";
+
+.fondo {
+	background-color: #eee;
+	background-image: url('../../resources/images/cajaArriba4.png');
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+	height:1000px;
+	width:100%;
+}

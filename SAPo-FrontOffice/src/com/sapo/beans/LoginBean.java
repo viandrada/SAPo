@@ -3,14 +3,14 @@ package com.sapo.beans;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-
-
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
-import com.sapo.ejb.AdministradorNegocio;
+import com.sapo.datatypes.DataUsuario;
+import com.sapo.ejb.UsuarioNegocio;
 
 
 @ManagedBean
@@ -20,17 +20,21 @@ public class LoginBean {
 	
 
 	public LoginBean() {
-		//this.dataAdmin = new DataAdministrador();
+		this.dataUsuario = new DataUsuario();
+		this.shownLogin = true;
 	}
 
-	//private DataAdministrador dataAdmin;
+	private DataUsuario dataUsuario;
 	@EJB
-	AdministradorNegocio adminNegocio;
+	UsuarioNegocio usuarioNegocio;
+	@ManagedProperty(value="#{navigationBean}")
+	NavigationBean nav;
 
     private String email;
     private String password;
     private String redirect;
     private boolean logueado;
+    private boolean shownLogin;
     
  
 	public String getEmail() {
@@ -68,8 +72,25 @@ public class LoginBean {
 		this.logueado = logueado;
 	}
 
+	public boolean isShownLogin() {
+		return shownLogin;
+	}
+
+	public void setShownLogin(boolean shownLogin) {
+		this.shownLogin = shownLogin;
+	}
+
+	
+	public NavigationBean getNav() {
+		return nav;
+	}
+
+	public void setNav(NavigationBean nav) {
+		this.nav = nav;
+	}
+
 	public String login() {
-		//this.dataAdmin.setEmail(this.email);
+		this.dataUsuario.setEmail(this.email);
 		
 		/*Encriptar password para compararlo con el encriptado de la BD*/
 		MessageDigest digest;
@@ -83,7 +104,7 @@ public class LoginBean {
 	                    .substring(1));
 	        }
 			String md5Hash = stringBuffer.toString();
-			//this.dataAdmin.setPassword(md5Hash);
+			this.dataUsuario.setPassword(md5Hash);
 			System.out.println("Password encriptado");
 			System.out.println(md5Hash);
 		} catch (NoSuchAlgorithmException e) {
@@ -91,11 +112,12 @@ public class LoginBean {
 		}
         /*Fin de encriptar password*/
 		
-		//this.admin.setPassword(this.password);
-		boolean ok = adminNegocio.login(this.getEmail(), this.getPassword());
+		boolean ok = usuarioNegocio.login(this.dataUsuario.getEmail(), this.dataUsuario.getPassword());
 		if(ok){
 			this.redirect = "Login OK!";
 		    this.logueado = true;
+		    this.nav.setRedirectTo("areaTrabajo.xhtml");
+		    this.shownLogin = false;
 		    return "/index.xhtml?faces-redirect=true";
 		}
 		else{System.out.println("Todo mal");
@@ -104,6 +126,8 @@ public class LoginBean {
 	
 	 public String logout() {
 	        FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
+	        this.shownLogin = true;
+	        this.nav.setRedirectTo("home.xhtml");
 	        return "/login.xhtml?faces-redirect=true";
 	    }
 }

@@ -1,0 +1,79 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<ui:composition>
+
+	<!-- Main jumbotron for a primary marketing message or call to action -->
+	<div class="jumbotron">
+		<div class="container">
+			<h1>Bienvenido a Mi Almacen</h1>
+			<p>A traves de Mi Almacen podras mantener sincronizado de forma
+				virtual cualquier grupo de items que desees, pudiendo acceder a ello
+				a partir de difentes dispositivos. Para poder crear tu primer
+				almacen y usarlo de forma gratuita, deberas registrarte primero.</p>
+			<p>
+				<!-- Boton para mostrar ventana modal -->
+				<button type="button" class="btn btn-primary btn-lg"
+					data-toggle="modal" data-target="#myModal">Registrarme</button>
+
+				<!-- Modal -->
+			<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+				aria-labelledby="myModalLabel">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal"
+								aria-label="Close">
+								<span aria-hidden="true"></span>
+							</button>
+							<h4 class="modal-title" id="myModalLabel">Registro</h4>
+						</div>
+						<div class="modal-body">
+							<ui:include src="/templates/default/registro.xhtml" />
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-default"
+								data-dismiss="modal">Close</button>
+							<button type="button" class="btn btn-primary">Guardar</button>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- Fin de ventana modal -->
+			</p>
+		</div>
+	</div>
+
+	<div class="container">
+		<!-- Example row of columns -->
+		<div class="row">
+			<div class="col-md-4">
+				<h2>Quienes somos</h2>
+				<p>Somos...</p>
+				<p>
+					<a class="btn btn-default" href="#" role="button">Ver mas </a>
+				</p>
+			</div>
+			<div class="col-md-4">
+				<h2>Como usar Mi Almacen</h2>
+				<p>Aqui encontrara una guia para rapidamente comenzar a usar Mi
+					Almacen</p>
+				<p>
+					<a class="btn btn-default" href="#" role="button">Ver mas </a>
+				</p>
+			</div>
+			<div class="col-md-4">
+				<h2>Contactanos</h2>
+				<p>Por consultas, envienos un correo a mialmacen@mialmacen.com</p>
+				<p>
+					<a class="btn btn-default" href="#" role="button">Ver mas </a>
+				</p>
+			</div>
+		</div>
+
+	</div>
+	<!-- /container -->
+
+</ui:composition>
+</html>

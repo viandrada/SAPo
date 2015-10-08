@@ -12,7 +12,7 @@ public class NavigationBean {
 	public NavigationBean() {
 		super();
 		this.renderContent = "";
-		this.redirectTo = "home";
+		//this.redirectTo = "home";
 	}
 
 

@@ -21,6 +21,8 @@
 		<h:outputStylesheet name="bootstrap/css/bootstrap.css" target="head" />
 		<h:outputStylesheet name="bootstrap/css/bootstrap.css.map"
 			target="head" />
+			<h:outputStylesheet name="css/jumbotron.css" target="head" />
+			
 	</f:facet>
 
 	<f:facet name="last">
@@ -37,13 +39,7 @@
 		</div>
 		<div class="row">
 			<!-- Body -->
-			<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
-				<ui:insert name="body">
-					<ui:include src="/templates/default/leftMenu.xhtml" />
-				</ui:insert>
-			</div>
-
-			<div class="col-xs-12 col-sm-10 col-md-10 col-lg-10">
+			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 				<ui:include src="#{navigationBean.redirectTo}" />
 			</div>
 		</div>

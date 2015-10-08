@@ -10,6 +10,13 @@ import javax.persistence.*;
  * Entity implementation class for Entity: Usuario
  *
  */
+
+@NamedQueries({
+
+	@NamedQuery(name = "Usuario.loginUsuario.Email.Pass", query = "SELECT u "
+			+ "FROM Usuario u "
+			+ "WHERE u.email = :email and u.password = :pass")
+})
 @Entity
 
 public class Usuario implements Serializable {
