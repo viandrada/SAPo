@@ -5,6 +5,8 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 
 <ui:composition>
+
+
 	<!-- h:panelGroup class="container">
 		<h:panelGroup>
 			<h:panelGroup class="col-sm-4 col-md-4 col-lg-4" id="loginPanel"
@@ -55,14 +57,20 @@
 						</div>
 						<h:commandButton value="Ingresar" action="#{loginBean.login}"
 							class="btn btn-success"></h:commandButton>
+							<div class="fb-login-button" data-max-rows="1" data-size="large" data-show-faces="false" data-auto-logout-link="true"></div>
 					</h:form>
+					
 				</div>
+				
 			</h:panelGroup>
+			
+			
 			<!--/.navbar-collapse -->
 			<h:panelGroup class="navbar-form navbar-right" id="logoutPanel"
 				rendered="#{!loginBean.shownLogin}">
 				<ui:include src="logout.xhtml" />
 			</h:panelGroup>
+
 		</div>
 	</nav>
 </ui:composition>
