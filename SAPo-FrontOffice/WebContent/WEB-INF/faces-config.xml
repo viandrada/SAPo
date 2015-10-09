@@ -13,5 +13,9 @@
 			<from-outcome>error</from-outcome>
 			<to-view-id>/login.xhtml</to-view-id>
 		</navigation-case>
+		<navigation-case>
+			<from-outcome>area</from-outcome>
+			<to-view-id>/areaTrabajo.xhtml</to-view-id>
+		</navigation-case>
 	</navigation-rule>
 </faces-config>

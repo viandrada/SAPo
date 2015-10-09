@@ -4,91 +4,24 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 
 <ui:composition>
-	<aside class="sidebar show perfectScrollbar">
-		<div id="solso-sidebar">
-			<div class="panel-group" id="accordion">
-				<div class="panel panel-default">
-					<div class="panel panel-default">
-						<div class="panel-heading" style="color: white" id="heading1">
-							<h4 class="panel-title">
-								<a href="index.xhtml" class="single-item"> <i
-									class="fa fa-dashboard"></i> Principal
-								</a>
-							</h4>
-						</div>
-					</div>
-				</div>
+	<h:panelGroup class="container">
+		<div class="panel panel-default">
+			<div class="panel-body">
+				<h:form class="form">
+					<h:panelGroup class="row">
+						<h:commandButton value="Nuevo almacen"
+							action="#{navigationAreaBean.goTo('altaAlmacen.xhtml')}"
+							class="btn btn-primary btn-lg"></h:commandButton>
+					</h:panelGroup>
 
-				<div class="panel panel-default">
-					<div class="panel-heading" style="color: white" id="heading2">
-						<h4 class="panel-title">
-							<a href="#collapse2"> <i class="fa fa-bar-chart-o"></i>
-								Administrador<i class="pull-right fa fa-caret-down"></i>
-							</a>
-						</h4>
-					</div>
-
-					<div id="collapse2" class="panel-collapse collapse in">
-						<div>
-							<h:form>
-								<h:commandLink value="Registrar"
-									action="#{navigationBean.goTo('registro.xhtml')}"
-									class="list-group-item"></h:commandLink>
-							</h:form>
-						</div>
-					</div>
-				</div>
-
-				<div class="panel panel-default">
-					<div class="panel-heading" style="color: white" id="heading3">
-						<h4 class="panel-title">
-							<a href="#collapse3"> <i class="fa fa-table"></i> Almacen <i class="pull-right fa fa-caret-down"></i>
-							</a>
-						</h4>
-					</div>
-
-					<div id="collapse3" class="panel-collapse collapse in">
-						<div>
-							<h:form>
-								
-								<h:commandLink value="Agregar - Modificar"
-									action="#"
-									class="list-group-item"></h:commandLink>
-								<h:commandLink value="Eliminar"
-									action="#"
-									class="list-group-item"></h:commandLink>
-							</h:form>
-						</div>
-					</div>
-				</div>
-
-				<div class="panel panel-default">
-					<div class="panel-heading" style="color: white" id="heading4">
-						<h4 class="panel-title">
-							<a href="#collapse4"> <i class="fa fa-edit"></i> Reportes <i
-								class="pull-right fa fa-caret-down"></i>
-							</a>
-						</h4>
-					</div>
-
-					<div id="collapse4" class="panel-collapse collapse in">
-						<div>
-							<h:form>
-								<h:commandLink
-									action="#"
-									value="Reporte 1" class="list-group-item"></h:commandLink>
-								<h:commandLink
-									action="#"
-									value="Reporte 2" class="list-group-item"></h:commandLink>
-								<h:commandLink
-									action="#"
-									value="Reporte 3" class="list-group-item"></h:commandLink>
-							</h:form>
-						</div>
-					</div>
-				</div>
+					<h:panelGroup class="row">
+						<h:commandButton value="Reportes"
+							action="#{navigationAreaBean.goTo('reportes.xhtml')}"
+							class="btn btn-primary btn-lg"></h:commandButton>
+					</h:panelGroup>
+				</h:form>
 			</div>
 		</div>
-	</aside>
+	</h:panelGroup>
 </ui:composition>
 </html>

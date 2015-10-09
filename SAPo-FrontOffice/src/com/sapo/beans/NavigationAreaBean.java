@@ -1,21 +1,16 @@
 package com.sapo.beans;
 
-
-import javax.annotation.PostConstruct;
 import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
 
 @ManagedBean
 @ApplicationScoped
-public class NavigationBean {
-	
-	
-	public NavigationBean() {
+public class NavigationAreaBean {
+	public NavigationAreaBean() {
 		super();
-		this.renderContent = "";
+		this.renderContent = "altaAlmacen.xhtml";
 	}
-
-
+	
 	private String redirectTo;
 	private String renderContent;
 	
@@ -43,10 +38,4 @@ public class NavigationBean {
 		this.redirectTo = redirectTo;
 		return "index.xhtml";
 	}
-	
-	@PostConstruct
-	public void init(){
-		this.redirectTo = "home.xhtml";
-	}
-
 }
