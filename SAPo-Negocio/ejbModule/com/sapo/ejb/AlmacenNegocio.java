@@ -13,6 +13,7 @@ import com.datatypes.DataUsuario;
 import com.sapo.entidades.Almacen;
 import com.sapo.entidades.Usuario;
 
+
 /**
  * Session Bean implementation class AlmacenNegocio
  */

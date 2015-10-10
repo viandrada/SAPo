@@ -27,6 +27,7 @@ public class Administrador implements Serializable {
 	private String nombre;
 	private String email;
 	private String password;
+	private int telefono;
 	private Date fecha;
 	private boolean estaActivo;
 	
@@ -92,6 +93,16 @@ public class Administrador implements Serializable {
 
 	public void setEstaActivo(boolean estactivo) {
 		this.estaActivo = estactivo;
+	}
+
+
+	public int getTelefono() {
+		return telefono;
+	}
+
+
+	public void setTelefono(int telefono) {
+		this.telefono = telefono;
 	}
 	
 	

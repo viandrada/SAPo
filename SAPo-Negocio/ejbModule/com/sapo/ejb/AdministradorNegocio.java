@@ -4,6 +4,7 @@ import javax.ejb.EJB;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 
+import com.datatypes.DataAdministrador;
 import com.sapo.dao.AdministradorDAO;
 import com.sapo.entidades.Administrador;
 
@@ -12,23 +13,23 @@ import com.sapo.entidades.Administrador;
  */
 @Stateless
 @LocalBean
-public class AdministradorNegocio implements AdministradorNegocioRemote,
-		AdministradorNegocioLocal {
+public class AdministradorNegocio /*implements AdministradorNegocioRemote,
+		AdministradorNegocioLocal*/ {
 
 	/**
 	 * Default constructor.
 	 */
-	public AdministradorNegocio() {
+	/*public AdministradorNegocio() {
 		admin = new Administrador();
-	}
+	}*/
 
 	@EJB
-	private AdministradorDAO adminDAO;
+	AdministradorDAO adminDAO;
 	
-	private Administrador admin;
+	//private Administrador admin;
 	
-	@Override
-	public boolean altaAdmin(String nombre, String email, String password) {
+	//@Override
+	/*public boolean altaAdmin(String nombre, String email, String password) {
 		boolean altaExitosa = false;
 		admin.setNombre(nombre);
 		admin.setEmail(email);
@@ -42,26 +43,68 @@ public class AdministradorNegocio implements AdministradorNegocioRemote,
 		
 		altaExitosa = true;
 		return altaExitosa;
+	}*/
+	
+	public boolean altaAdmin(DataAdministrador dadmin) {
+			
+		Administrador admin = new Administrador();
+		
+		admin.setNombre(dadmin.getNombre() );
+		admin.setEmail(dadmin.getEmail());
+		admin.setPassword(dadmin.getPassword());
+				
+		try {
+			adminDAO.insertarAdministrador(admin);
+			return true;
+			
+		} catch (Exception e) {
+			
+			e.printStackTrace();
+			return false;
+		}
 	}
+	
 
-	@Override
-	public boolean login(String email, String password){
+	//@Override
+	/*public boolean login(String email, String password){
 		boolean loginOK = false;
 		Administrador administrador = new Administrador();
 		administrador.setEmail(email);
 		administrador.setPassword(password);
+		
 		try {
 			loginOK = adminDAO.login(administrador);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return loginOK;
+	}*/
+public boolean login(DataAdministrador dadmin){
+		
+		Administrador admin = new Administrador();
+		//admin.setNombre(dadmin.getNombre() );
+		admin.setEmail(dadmin.getEmail());
+		admin.setPassword(dadmin.getPassword());
+		
+		
+		boolean loginOK = false;
+		/*Administrador administrador = new Administrador();
+		administrador.setEmail(email);
+		administrador.setPassword(password);*/
+		try {
+			loginOK = adminDAO.login(admin);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return loginOK;
 	}
-	public Administrador getAdmin() {
+	
+	
+	/*public Administrador getAdmin() {
 		return admin;
 	}
 
 	public void setAdmin(Administrador admin) {
 		this.admin = admin;
-	}
+	}*/
 }

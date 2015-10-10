@@ -1,21 +1,15 @@
 package com.sapo.beans;
-
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
-import javax.inject.Inject;
-import javax.naming.Context;
-import javax.naming.NamingException;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
-import com.sapo.datatypes.DataAdministrador;
+
+import com.datatypes.DataAdministrador;
 import com.sapo.ejb.AdministradorNegocio;
-import com.sapo.ejb.AdministradorNegocioRemote;
-import com.sapo.utils.JNDILookup;
+import com.sapo.utils.Encrypter;
+
 
 @ManagedBean
 @RequestScoped
@@ -28,15 +22,13 @@ public class RegistroBean {
 	 * http://howtodoinjava.com/2014/11/11/java-regex-validate-email-address/
 	 */
 	@NotNull(message = "El email es requerido.")
-	@Pattern(regexp = "^[\\w!#$%&’*+/=?`{|}~^-]+(?:\\.[\\w!#$%&’*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$", message = "Email no válido.")
+	@Pattern(regexp = "^[\\w!#$%&ï¿½*+/=?`{|}~^-]+(?:\\.[\\w!#$%&ï¿½*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$", message = "Email no vï¿½lido.")
 	private String email;
-	@NotNull(message = "El teléfono es requerido.")
-	private String telefono;
-	@NotNull(message = "Debe ingresar una contraseña.")
+	@NotNull(message = "El telï¿½fono es requerido.")
+	private int telefono;
+	@NotNull(message = "Debe ingresar una contraseï¿½a.")
 	private String password;
 
-	
-	DataAdministrador dataAdmin;
 	@EJB
 	AdministradorNegocio adminNegocio;
 
@@ -45,75 +37,55 @@ public class RegistroBean {
 	 */
 
 	public RegistroBean() {
-		this.dataAdmin = new DataAdministrador();
+		//this.dataAdmin = new DataAdministrador();
 		// this.service = new AdministradorBean();
 	}
 
 	public RegistroBean(String nombre, String apellido, String email,
-			String telefono, String password) {
+			int telefono, String password) {
 		super();
 		this.nombre = nombre;
 		this.email = email;
 		this.telefono = telefono;
 		this.password = password;
 	}
-
-	public String getNombre() {
-		return nombre;
-	}
-
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	public String getTelefono() {
-		return telefono;
-	}
-
-	public void setTelefono(String telefono) {
-		this.telefono = telefono;
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
-
-	public String showResult() {
-		return "result";
-	}
-
-
-	public DataAdministrador getDataAdmin() {
-		return dataAdmin;
-	}
-
-	public void setDataAdmin(DataAdministrador dataAdmin) {
-		this.dataAdmin = dataAdmin;
-	}
-
+	
 	public String registroAdmin() {
-		this.dataAdmin.setNombre(this.nombre);
+		
+		DataAdministrador dataAdmin= new DataAdministrador();
+		dataAdmin.setNombre(nombre);
+		dataAdmin.setEmail(email);
+		dataAdmin.setPassword(password);
+		dataAdmin.setTelefono(telefono);
+		
+		String md5Hash = new Encrypter().MD5(password);
+		dataAdmin.setPassword(md5Hash);
+		System.out.println("Password encriptado");
+		System.out.println(md5Hash);
+		
+
+		boolean ok = true;
+
+		try {
+			 adminNegocio.altaAdmin(dataAdmin);
+			
+		} catch (Exception e) {
+			ok=false;
+			e.printStackTrace();
+		}
+
+		if (ok) {
+			System.out.println("Alta de Administrador exitosa");
+			return "/index.xhtml?faces-redirect=true";
+		} else {
+			System.out.println("Error. El administrador no fue dado de alta.");
+			return null;
+		}
+		
+/*		this.dataAdmin.setNombre(this.nombre);
 		this.dataAdmin.setEmail(this.email);
 		this.dataAdmin.setPassword(this.password);
 
-		/*
-		 * Encriptar password ->
-		 * http://www.codejava.net/coding/how-to-calculate-
-		 * md5-and-sha-hash-values-in-java
-		 */
 		MessageDigest digest;
 		try {
 			digest = MessageDigest.getInstance("MD5");
@@ -132,8 +104,7 @@ public class RegistroBean {
 
 			e.printStackTrace();
 		}
-		/* Fin de encriptar password */
-
+		
 		// this.admin.setPassword(this.password);
 
 		boolean ok = true;// service.altaAdmin(this.getAdmin());
@@ -141,10 +112,6 @@ public class RegistroBean {
 		Context context = null;
 
 		try {
-			/*context = JNDILookup.getInitialContext();
-			manager = (AdministradorNegocioRemote) context
-					.lookup("ejb:SAPo-EAR/SAPo-Negocio//AdministradorNegocio!com.sapo.ejb.AdministradorNegocioRemote");
-			manager.altaAdmin(this.nombre,this.email,this.password);*/
 			
 			adminNegocio.altaAdmin(this.nombre, this.email, this.password);
 		} catch (Exception e) {
@@ -157,7 +124,7 @@ public class RegistroBean {
 		} else {
 			System.out.println("Error. El admin no fue dado de alta.");
 			return null;
-		}
+		}*/
 	}
 
 	public boolean isValidEmailAddress(String email) {
@@ -167,4 +134,39 @@ public class RegistroBean {
 		return m.matches();
 	}
 
+	public String getNombre() {
+		return nombre;
+	}
+
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public String showResult() {
+		return "result";
+	}
+	
+	public int getTelefono() {
+		return telefono;
+	}
+
+	public void setTelefono(int telefono) {
+		this.telefono = telefono;
+	}
 }

@@ -11,6 +11,7 @@ public class DataAdministrador {
 	private String nombre;
 	private String email;
 	private String password;
+	private int telefono;
 	private Date fecha;
 	
 	public int getIdAdministrador() {
@@ -42,6 +43,12 @@ public class DataAdministrador {
 	}
 	public void setFecha(Date fecha) {
 		this.fecha = fecha;
+	}
+	public int getTelefono() {
+		return telefono;
+	}
+	public void setTelefono(int telefono) {
+		this.telefono = telefono;
 	}
 	
 }

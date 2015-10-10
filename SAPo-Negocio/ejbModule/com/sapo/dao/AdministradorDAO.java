@@ -45,6 +45,7 @@ public class AdministradorDAO {
 		adminEntidad.setPassword(admin.getPassword());
 		adminEntidad.setEstaActivo(true);
 		adminEntidad.setFecha(new Date());*/
+		
 		admin.setEstaActivo(true);
 		admin.setFecha(new Date());
 		
@@ -65,8 +66,9 @@ public class AdministradorDAO {
 		try {
 			Query consulta = this.em
 					.createNamedQuery("Administrador.loginAdministrador.Email.Pass");
-			consulta.setParameter("email", admin.getEmail());
-			consulta.setParameter("pass", admin.getPassword());
+					consulta.setParameter("email", admin.getEmail());
+					consulta.setParameter("pass", admin.getPassword());
+					
 			if ((!consulta.getResultList().isEmpty())) {
 				existe = true;
 			}
