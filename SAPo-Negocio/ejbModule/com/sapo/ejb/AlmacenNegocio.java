@@ -24,7 +24,7 @@ public class AlmacenNegocio {
 	 * Default constructor.
 	 */
 	public AlmacenNegocio() {
-		// TODO Auto-generated constructor stub
+		this.almacen = new Almacen();
 	}
 
 	@EJB
@@ -33,19 +33,18 @@ public class AlmacenNegocio {
 	private UsuarioDAO usuarioDAO;
 
 	private Almacen almacen;
-	private Usuario usuario;
 
 	public boolean altaAlmacen(DataAlmacen almacen, DataUsuario usuario) {
 		boolean altaOK = false;
-
-		this.usuario.setIdUsuario((Integer)this.usuarioDAO
-				.getUsuario(usuario.getEmail()).getIdUsuario());
+		Usuario usr;
+		
+		usr = this.usuarioDAO.getUsuarioPorEmail(usuario.getEmail());
 
 		this.almacen.setNombre(almacen.getNombre());
 		this.almacen.setDescripcion(almacen.getDescripcion());
 		this.almacen.setEstaActivo(true);
 		this.almacen.setFechaAlta(new Date());
-		this.almacen.setPropietario(this.usuario);
+		this.almacen.setPropietario(usr);
 
 		try {
 			this.almacenDAO.insertarAlmacen(this.almacen);

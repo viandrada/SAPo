@@ -28,6 +28,8 @@ public class AltaAlmacenBean {
 	AlmacenNegocio almacenNegocio;
 	@ManagedProperty(value="#{loginBean}")
 	LoginBean usuarioLogueado;
+	@ManagedProperty(value="#{navigationAreaBean}")
+	NavigationAreaBean nav;
 	private String nombre;
 	private String descripcion;
 
@@ -82,6 +84,7 @@ public class AltaAlmacenBean {
 		
 		if (ok) {
 			System.out.println("Alta almacen exitosa");
+			this.nav.setRedirectTo("almacen.xhtml");
 			return "/index.xhtml?faces-redirect=true";
 		} else {
 			System.out.println("Error. El almacen no fue dado de alta.");

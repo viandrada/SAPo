@@ -13,17 +13,17 @@ import javax.persistence.*;
 
 @NamedQueries({
 
-	@NamedQuery(name = "Usuario.loginUsuario.Email.Pass", query = "SELECT u "
-			+ "FROM Usuario u "
-			+ "WHERE u.email = :email and u.password = :pass")
-})
+		@NamedQuery(name = "Usuario.loginUsuario.Email.Pass", query = "SELECT u "
+				+ "FROM Usuario u "
+				+ "WHERE u.email = :email and u.password = :pass"),
+		@NamedQuery(name = "Usuario.getUsuarioPorEmail.Email", query = "SELECT u "
+				+ "FROM Usuario u "
+				+ "WHERE u.email = :email") })
 @Entity
-
 public class Usuario implements Serializable {
 
-	
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int idUsuario;
@@ -31,18 +31,19 @@ public class Usuario implements Serializable {
 	private String email;
 	private String password;
 	private String estilo;
-	@OneToOne(cascade={CascadeType.PERSIST, CascadeType.REMOVE, CascadeType.MERGE})
+	@OneToOne(cascade = { CascadeType.PERSIST, CascadeType.REMOVE,
+			CascadeType.MERGE })
 	private Imagen foto;
 	private boolean premium;
 	private Date fecha;
 	private Date fechaPago;
 	private float monto;
 	private boolean estaActivo;
-	
-	 public Usuario() {
-			super();
-	}	
-	
+
+	public Usuario() {
+		super();
+	}
+
 	public Date getFechaPago() {
 		return fechaPago;
 	}
@@ -59,10 +60,10 @@ public class Usuario implements Serializable {
 		this.monto = monto;
 	}
 
-	@ManyToMany(cascade={CascadeType.PERSIST, CascadeType.REMOVE, CascadeType.MERGE})
+	@ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.REMOVE,
+			CascadeType.MERGE })
 	private List<Almacen> almacenes;
 
-	
 	public int getIdUsuario() {
 		return idUsuario;
 	}
@@ -142,5 +143,5 @@ public class Usuario implements Serializable {
 	public void setEstaActivo(Boolean estaActivo) {
 		this.estaActivo = estaActivo;
 	}
-	
+
 }
