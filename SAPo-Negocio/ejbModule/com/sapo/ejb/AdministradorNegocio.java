@@ -52,6 +52,7 @@ public class AdministradorNegocio /*implements AdministradorNegocioRemote,
 		admin.setNombre(dadmin.getNombre() );
 		admin.setEmail(dadmin.getEmail());
 		admin.setPassword(dadmin.getPassword());
+		admin.setTelefono(dadmin.getTelefono());
 				
 		try {
 			adminDAO.insertarAdministrador(admin);
