@@ -21,6 +21,9 @@ public class Producto implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int idProducto;
 	private String nombre;
+	private String descripcion;
+
+
 	private float precio;
 	@OneToMany(cascade={CascadeType.PERSIST, CascadeType.REMOVE, CascadeType.MERGE})
 	private List<Imagen> foto;
@@ -101,13 +104,23 @@ public class Producto implements Serializable {
 	public void setCategoria(Categoria categoria) {
 		this.categoria = categoria;
 	}
+	
+	public String getDescripcion() {
+		return descripcion;
+	}
 
-	public Boolean getEstaActivo() {
+	public void setDescripcion(String descripcion) {
+		this.descripcion = descripcion;
+	}
+
+	public void setEstaActivo(boolean estaActivo) {
+		this.estaActivo = estaActivo;
+	}
+	
+	public boolean getEstaActivo() {
 		return estaActivo;
 	}
 
-	public void setEstaActivo(Boolean estaActivo) {
-		this.estaActivo = estaActivo;
-	}
+	
    
 }

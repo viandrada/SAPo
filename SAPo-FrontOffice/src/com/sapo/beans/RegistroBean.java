@@ -12,8 +12,7 @@ import javax.naming.NamingException;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
-import com.sapo.datatypes.DataAdministrador;
-import com.sapo.datatypes.DataUsuario;
+import com.datatypes.DataUsuario;
 import com.sapo.ejb.AdministradorNegocio;
 import com.sapo.ejb.AdministradorNegocioRemote;
 import com.sapo.ejb.UsuarioNegocio;
@@ -30,11 +29,11 @@ public class RegistroBean {
 	 * http://howtodoinjava.com/2014/11/11/java-regex-validate-email-address/
 	 */
 	@NotNull(message = "El email es requerido.")
-	@Pattern(regexp = "^[\\w!#$%&’*+/=?`{|}~^-]+(?:\\.[\\w!#$%&’*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$", message = "Email no válido.")
+	@Pattern(regexp = "^[\\w!#$%&ï¿½*+/=?`{|}~^-]+(?:\\.[\\w!#$%&ï¿½*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$", message = "Email no vï¿½lido.")
 	private String email;
-	@NotNull(message = "El teléfono es requerido.")
+	@NotNull(message = "El telï¿½fono es requerido.")
 	private String telefono;
-	@NotNull(message = "Debe ingresar una contraseña.")
+	@NotNull(message = "Debe ingresar una contraseï¿½a.")
 	private String password;
 
 	

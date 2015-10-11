@@ -3,6 +3,7 @@
 	<name>SAPo-FrontOffice</name>
 	<comment></comment>
 	<projects>
+		<project>SAPo-Negocio</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

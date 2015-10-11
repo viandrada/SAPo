@@ -9,7 +9,7 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
-import com.sapo.datatypes.DataUsuario;
+import com.datatypes.DataUsuario;
 import com.sapo.ejb.UsuarioNegocio;
 
 
