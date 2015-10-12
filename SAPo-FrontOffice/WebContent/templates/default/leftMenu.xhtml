@@ -9,15 +9,20 @@
 			<div class="panel-body">
 				<h:form class="form">
 					<h:panelGroup class="row">
-						<h:commandButton value="Nuevo almacen"
-							action="#{navigationAreaBean.goTo('altaAlmacen.xhtml')}"
-							class="btn btn-primary btn-lg"></h:commandButton>
+							<h:commandButton value="Mis almacenes"
+								action="#{navigationAreaBean.goTo('homeUsuario.xhtml')}"
+								class="btn btn-primary btn-lg"></h:commandButton>
+					</h:panelGroup>
+					<h:panelGroup class="row">
+							<h:commandButton value="Nuevo almacen"
+								action="#{navigationAreaBean.goTo('altaAlmacen.xhtml')}"
+								class="btn btn-primary btn-lg"></h:commandButton>
 					</h:panelGroup>
 
 					<h:panelGroup class="row">
-						<h:commandButton value="Reportes"
-							action="#{navigationAreaBean.goTo('reportes.xhtml')}"
-							class="btn btn-primary btn-lg"></h:commandButton>
+							<h:commandButton value="Reportes"
+								action="#{navigationAreaBean.goTo('reportes.xhtml')}"
+								class="btn btn-primary btn-lg"></h:commandButton>
 					</h:panelGroup>
 				</h:form>
 			</div>

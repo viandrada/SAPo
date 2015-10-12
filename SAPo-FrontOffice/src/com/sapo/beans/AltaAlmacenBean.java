@@ -1,12 +1,15 @@
 package com.sapo.beans;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Scanner;
+
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
-
-
-
+import javax.servlet.http.Part;
 
 import com.datatypes.DataAlmacen;
 import com.datatypes.DataUsuario;
@@ -26,12 +29,14 @@ public class AltaAlmacenBean {
 	private DataAlmacen dataAlmacen;
 	@EJB
 	AlmacenNegocio almacenNegocio;
-	@ManagedProperty(value="#{loginBean}")
+	@ManagedProperty(value = "#{loginBean}")
 	LoginBean usuarioLogueado;
-	@ManagedProperty(value="#{navigationAreaBean}")
+	@ManagedProperty(value = "#{navigationAreaBean}")
 	NavigationAreaBean nav;
 	private String nombre;
 	private String descripcion;
+	private Part imagen;
+	private String fileContent;
 
 	public String getNombre() {
 		return nombre;
@@ -73,15 +78,62 @@ public class AltaAlmacenBean {
 		this.usuarioLogueado = usuarioLogueado;
 	}
 
+	public Part getImagen() {
+		return imagen;
+	}
+
+	public void setImagen(Part imagen) {
+		this.imagen = imagen;
+	}
+
+	public NavigationAreaBean getNav() {
+		return nav;
+	}
+
+	public void setNav(NavigationAreaBean nav) {
+		this.nav = nav;
+	}
+
+	public String getFileContent() {
+		return fileContent;
+	}
+
+	public void setFileContent(String fileContent) {
+		this.fileContent = fileContent;
+	}
+
 	public String altaAlmacen() {
 		boolean ok = false;
-		
+		try {
+			/*fileContent = new Scanner(imagen.getInputStream()).useDelimiter(
+					"\\A").next();*/
+			// Esto es para pasar de InputStream a byte[]
+			InputStream is = imagen.getInputStream();
+			ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+
+			int nRead;
+			byte[] data = new byte[16384];
+
+			while ((nRead = is.read(data, 0, data.length)) != -1) {
+				buffer.write(data, 0, nRead);
+			}
+			buffer.flush();
+			is.close();
+			// Aca termina la conversion a byte[]
+			
+			this.dataAlmacen.setFoto(buffer.toByteArray());
+			// System.out.print(fileContent);
+		} catch (IOException e) {
+			// Error handling
+		}
+
 		this.dataAlmacen.setNombre(this.nombre);
 		this.dataAlmacen.setDescripcion(this.descripcion);
 		this.dataUsuario.setEmail(this.usuarioLogueado.getEmail());
-		
-		ok = this.almacenNegocio.altaAlmacen(this.dataAlmacen, this.dataUsuario);
-		
+
+		ok = this.almacenNegocio
+				.altaAlmacen(this.dataAlmacen, this.dataUsuario);
+
 		if (ok) {
 			System.out.println("Alta almacen exitosa");
 			this.nav.setRedirectTo("almacen.xhtml");

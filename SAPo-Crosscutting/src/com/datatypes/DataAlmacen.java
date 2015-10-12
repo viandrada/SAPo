@@ -9,6 +9,7 @@ public class DataAlmacen {
 	
 	public DataAlmacen(){}
 	
+	private int idAlmacen;
 	private String nombre;
 	private String descripcion;
 	private byte[] foto;
@@ -44,6 +45,12 @@ public class DataAlmacen {
 	}
 	public void setFechaAlta(Date fechaAlta) {
 		this.fechaAlta = fechaAlta;
+	}
+	public int getIdAlmacen() {
+		return idAlmacen;
+	}
+	public void setIdAlmacen(int idAlmacen) {
+		this.idAlmacen = idAlmacen;
 	}
 
 }

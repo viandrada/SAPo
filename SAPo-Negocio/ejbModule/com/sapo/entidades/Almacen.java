@@ -10,8 +10,11 @@ import javax.persistence.*;
  * Entity implementation class for Entity: Almacen
  *
  */
-@Entity
+@NamedQueries({
 
+	@NamedQuery(name = "Almacen.getAlmacenesUsuario.Email", query = "SELECT a FROM Almacen a WHERE a.propietario.email = :email")
+})
+@Entity
 public class Almacen implements Serializable {
 
 	

@@ -1,0 +1,23 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<ui:composition>
+	<div class="container">
+		<h:panelGrid class="row">
+			<h:outputLabel value="Id:" />
+		#{navigationAreaBean.idAlmacenActual}
+		</h:panelGrid>
+		<h:panelGrid class="row">
+			<h:outputLabel value="Nombre:" />
+			<h:outputText value="#{almacenBean.almacen.nombre}" />
+		</h:panelGrid>
+		<h:panelGrid class="row">
+			<h:outputLabel value="Descripcion:" />
+			<h:outputText value="#{almacenBean.almacen.descripcion}" />
+		</h:panelGrid>
+
+	</div>
+</ui:composition>
+</html>
