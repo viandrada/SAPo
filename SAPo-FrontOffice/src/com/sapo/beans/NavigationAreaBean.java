@@ -1,11 +1,11 @@
 package com.sapo.beans;
 
 import javax.annotation.PostConstruct;
-import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
 
 @ManagedBean
-@ApplicationScoped
+@SessionScoped
 public class NavigationAreaBean {
 	public NavigationAreaBean() {
 		super();

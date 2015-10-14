@@ -37,13 +37,18 @@ public class Almacen implements Serializable {
 		super();
 	}
 	
+	public Almacen(int id) {
+		super();
+		this.idAlmacen = id;
+	}
+	
 	@ManyToMany(mappedBy="almacenes",cascade={CascadeType.PERSIST, CascadeType.REMOVE, CascadeType.MERGE})
 	private List<Usuario> usuarios;
 	@OneToMany
 	private List<Comentario> comentarios;
 	@ManyToMany
 	private List<Categoria> categorias;
-	@ManyToMany
+	@ManyToMany(fetch=FetchType.EAGER)
 	private List<Producto> productos;
 
 	public int getIdAlmacen() {

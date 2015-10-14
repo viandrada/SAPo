@@ -10,7 +10,6 @@ import javax.persistence.*;
  *
  */
 @Entity
-
 public class Categoria implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -20,11 +19,16 @@ public class Categoria implements Serializable {
 	private int idCategoria;
 	private String nombre;
 	private boolean esGenerica;
-	@ManyToMany(mappedBy="categorias")
+	@ManyToMany(mappedBy = "categorias")
 	private List<Almacen> almacenes;
-	
+
 	public Categoria() {
 		super();
+	}
+
+	public Categoria(int id) {
+		super();
+		this.idCategoria = id;
 	}
 
 	public int getIdCategoria() {
@@ -50,6 +54,5 @@ public class Categoria implements Serializable {
 	public void setEsGenerica(boolean esGenerica) {
 		this.esGenerica = esGenerica;
 	}
-   
-	
+
 }

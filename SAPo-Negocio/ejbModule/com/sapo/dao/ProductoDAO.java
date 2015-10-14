@@ -1,5 +1,7 @@
 package com.sapo.dao;
 
+import java.util.List;
+
 import javax.ejb.Stateless;
 import javax.ejb.TransactionManagement;
 import javax.ejb.TransactionManagementType;
@@ -19,6 +21,10 @@ public class ProductoDAO {
 	public Producto getProducto(String email){
 		return em.find(Producto.class, email);
 	}
+	/*
+	public List<Producto> getProductosAlmacen(){
+		
+	}*/
 	
 	public boolean existeProducto(int idProducto){
 		return (em.createQuery("SELECT a FROM Producto p WHERE a.idProducto=:idProducto")

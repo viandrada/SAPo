@@ -14,7 +14,7 @@
 						<h:inputText class="form-control" id="inputNombre"
 							value="#{registroBean.nombre}">
 							<f:validateBean for="inputNombre" />
-							<f:ajax event="keyup" render="@this inputTextMessage" />
+							<f:ajax event="keyup" render="inputTextMessage" />
 						</h:inputText>
 						<h:message id="inputTextMessage" for="inputNombre" errorStyle="color:red;"></h:message>
 					</div>
@@ -24,7 +24,7 @@
 						<h:inputText class="form-control" id="inputEmail"
 							value="#{registroBean.email}">
 							<f:validateBean for="inputEmail" />
-							<f:ajax event="keyup" render="@this inputTextMessageEmail" />
+							<f:ajax event="keyup" render="inputTextMessageEmail" />
 						</h:inputText>
 						<h:message id="inputTextMessageEmail" for="inputEmail" errorStyle="color:red;"></h:message>
 					</div>
@@ -34,7 +34,7 @@
 						<h:inputText class="form-control" id="inputTelefono"
 							value="#{registroBean.telefono}">
 							<f:validateBean for="inputTelefono" />
-							<f:ajax event="keyup" render="@this inputTextMessageTelefono" />
+							<f:ajax event="keyup" render="inputTextMessageTelefono" />
 						</h:inputText>
 						<h:message id="inputTextMessageTelefono" for="inputTelefono" errorStyle="color:red;"></h:message>
 					</div>

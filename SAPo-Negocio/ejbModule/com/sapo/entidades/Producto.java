@@ -31,7 +31,7 @@ public class Producto implements Serializable {
 	private Date fechaAlta;
 	private boolean estaActivo;
 	
-	@ManyToMany(mappedBy="productos")
+	@ManyToMany(mappedBy="productos",fetch=FetchType.EAGER)
 	private List<Almacen> almacenes;
 	
 	@OneToOne(cascade={CascadeType.PERSIST, CascadeType.REMOVE, CascadeType.MERGE})

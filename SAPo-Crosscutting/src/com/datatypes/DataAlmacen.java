@@ -1,6 +1,7 @@
 package com.datatypes;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -15,6 +16,7 @@ public class DataAlmacen {
 	private byte[] foto;
 	private boolean isActivo;
 	private Date fechaAlta;
+	private List<DataProducto> productos;
 	
 	public String getNombre() {
 		return nombre;
@@ -51,6 +53,12 @@ public class DataAlmacen {
 	}
 	public void setIdAlmacen(int idAlmacen) {
 		this.idAlmacen = idAlmacen;
+	}
+	public List<DataProducto> getProductos() {
+		return productos;
+	}
+	public void setProductos(List<DataProducto> productos) {
+		this.productos = productos;
 	}
 
 }

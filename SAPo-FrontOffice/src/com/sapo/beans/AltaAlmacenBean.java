@@ -9,6 +9,8 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
 import javax.servlet.http.Part;
 
 import com.datatypes.DataAlmacen;
@@ -104,24 +106,32 @@ public class AltaAlmacenBean {
 
 	public String altaAlmacen() {
 		boolean ok = false;
+		int idAlmacenGenerado = 0;
 		try {
-			/*fileContent = new Scanner(imagen.getInputStream()).useDelimiter(
-					"\\A").next();*/
+			/*
+			 * fileContent = new Scanner(imagen.getInputStream()).useDelimiter(
+			 * "\\A").next();
+			 */
 			// Esto es para pasar de InputStream a byte[]
-			InputStream is = imagen.getInputStream();
-			ByteArrayOutputStream buffer = new ByteArrayOutputStream();
 
-			int nRead;
-			byte[] data = new byte[16384];
+			if (this.imagen != null) {
+				InputStream is = imagen.getInputStream();
 
-			while ((nRead = is.read(data, 0, data.length)) != -1) {
-				buffer.write(data, 0, nRead);
+				ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+
+				int nRead;
+				byte[] data = new byte[16384];
+
+				while ((nRead = is.read(data, 0, data.length)) != -1) {
+					buffer.write(data, 0, nRead);
+				}
+				buffer.flush();
+				is.close();
+
+				// Aca termina la conversion a byte[]
+
+				this.dataAlmacen.setFoto(buffer.toByteArray());
 			}
-			buffer.flush();
-			is.close();
-			// Aca termina la conversion a byte[]
-			
-			this.dataAlmacen.setFoto(buffer.toByteArray());
 			// System.out.print(fileContent);
 		} catch (IOException e) {
 			// Error handling
@@ -131,17 +141,32 @@ public class AltaAlmacenBean {
 		this.dataAlmacen.setDescripcion(this.descripcion);
 		this.dataUsuario.setEmail(this.usuarioLogueado.getEmail());
 
-		ok = this.almacenNegocio
-				.altaAlmacen(this.dataAlmacen, this.dataUsuario);
+		idAlmacenGenerado = this.almacenNegocio.altaAlmacen(this.dataAlmacen,
+				this.dataUsuario);
 
-		if (ok) {
+		if (idAlmacenGenerado != 0) {
 			System.out.println("Alta almacen exitosa");
 			this.nav.setRedirectTo("almacen.xhtml");
-			return "/index.xhtml?faces-redirect=true";
+			this.nav.setIdAlmacenActual(idAlmacenGenerado);
+
+			FacesContext facesContext = FacesContext.getCurrentInstance();
+
+			ExternalContext externalContext = facesContext.getExternalContext();
+
+			try {
+				externalContext.redirect("index.xhtml");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+			//return "/index.xhtml?faces-redirect=true";
 		} else {
 			System.out.println("Error. El almacen no fue dado de alta.");
 			return null;
 		}
+		
+		return "success";
 	}
 
 }

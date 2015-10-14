@@ -15,8 +15,8 @@ public class CategoriaDAO {
 	@PersistenceContext(unitName="SAPo-Negocio")
 	EntityManager em;
 	
-	public Categoria getCategoria(String email){
-		return em.find(Categoria.class, email);
+	public Categoria getCategoria(int idCat){
+		return em.find(Categoria.class, idCat);
 	}
 	
 	public boolean existeCategoria(int idCategoria){

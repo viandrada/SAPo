@@ -5,19 +5,39 @@
 
 <ui:composition>
 	<div class="container">
-		<h:panelGrid class="row">
-			<h:outputLabel value="Id:" />
-		#{navigationAreaBean.idAlmacenActual}
-		</h:panelGrid>
-		<h:panelGrid class="row">
-			<h:outputLabel value="Nombre:" />
-			<h:outputText value="#{almacenBean.almacen.nombre}" />
-		</h:panelGrid>
-		<h:panelGrid class="row">
-			<h:outputLabel value="Descripcion:" />
-			<h:outputText value="#{almacenBean.almacen.descripcion}" />
-		</h:panelGrid>
+		<div class="row">
+			<!-- div class="col-xs-12 col-md-12 col-sm-12 col-lg-12">
+				<h:outputLabel value="Id: " />
+				#{navigationAreaBean.idAlmacenActual}
+			</div-->
+			<div class="col-xs-12 col-md-12 col-sm-12 col-lg-12">
 
+				<h:outputText value="Almacen >> " class="h3" />
+				<h:outputText value="#{almacenBean.almacen.nombre}" class="h2" />
+				<h:outputText value=": " class="h2" />
+				<h:outputText value="#{almacenBean.almacen.descripcion}" class="h2"> </h:outputText>
+			</div>
+		</div>
+
+		<div class="row">
+			<ul class="list-group">
+				<ui:repeat value="#{almacenBean.almacen.productos}" var="item">
+					<div class="col-xs-6 col-md-3">
+						<h:form>
+							<li class="list-group-item"><h:outputText
+									value="#{item.nombre}" /> <h:commandLink action="#"
+									class="thumbnail">
+									<h:graphicImage class="img-responsive"
+										value="/resources/images/box.png">
+									</h:graphicImage>
+								</h:commandLink></li>
+						</h:form>
+					</div>
+				</ui:repeat>
+			</ul>
+
+		</div>
 	</div>
+	<ui:include src="altaProducto.xhtml" />
 </ui:composition>
 </html>

@@ -1,5 +1,7 @@
 package com.sapo.beans;
 
+import java.util.List;
+
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
@@ -7,6 +9,7 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
 
 import com.datatypes.DataAlmacen;
+import com.datatypes.DataProducto;
 import com.sapo.ejb.AlmacenNegocio;
 
 @ManagedBean
@@ -16,6 +19,7 @@ public class AlmacenBean {
 	public AlmacenBean(){}
 	
 	private DataAlmacen almacen;
+	private List<DataProducto> productos;
 	@EJB
 	AlmacenNegocio almacenNegocio;
 	@ManagedProperty(value = "#{navigationAreaBean}")
@@ -29,9 +33,19 @@ public class AlmacenBean {
 		this.almacen = almacen;
 	}
 	
+	public List<DataProducto> getProductos() {
+		return productos;
+	}
+
+	public void setProductos(List<DataProducto> productos) {
+		this.productos = productos;
+	}
+
 	public void obtenerAlmacen(){
 		this.almacen = almacenNegocio.getAlmacenPorId(nav.getIdAlmacenActual());
 	}
+	
+	public void obtenerProductos(){}
 	
 	public NavigationAreaBean getNav() {
 		return nav;

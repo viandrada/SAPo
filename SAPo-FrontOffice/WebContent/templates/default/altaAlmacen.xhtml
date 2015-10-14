@@ -15,7 +15,7 @@
 							<h:inputText class="form-control" id="inputNombre"
 								value="#{altaAlmacenBean.nombre}">
 								<f:validateBean for="inputNombre" />
-								<f:ajax event="keyup" render="@this inputTextMessage" />
+								<f:ajax event="keyup" render="inputTextMessage" />
 							</h:inputText>
 							<h:message id="inputTextMessage" for="inputNombre"
 								errorStyle="color:red;"></h:message>

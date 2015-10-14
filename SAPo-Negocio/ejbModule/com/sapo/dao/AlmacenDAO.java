@@ -19,8 +19,8 @@ public class AlmacenDAO {
 	@PersistenceContext(unitName="SAPo-Negocio")
 	EntityManager em;
 	
-	public Almacen getAlmacen(String email){
-		return em.find(Almacen.class, email);
+	public Almacen getAlmacen(int id){
+		return em.find(Almacen.class, id);
 	}
 	public Almacen getAlmacenPorId(int idAlmacen){
 		return em.find(Almacen.class, idAlmacen);
@@ -31,8 +31,9 @@ public class AlmacenDAO {
 				.getResultList().size()== 1);
 	}
 
-	public void insertarAlmacen (Almacen a){
+	public int insertarAlmacen (Almacen a){
 		em.persist(a);
+		return a.getIdAlmacen();
 	}
 	
 	public void actualizarAlmacen(Almacen a){
