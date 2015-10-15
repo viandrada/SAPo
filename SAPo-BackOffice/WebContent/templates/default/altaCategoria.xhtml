@@ -1,0 +1,34 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<ui:composition>
+	<div class="container-fluid" id="altaCatContent">
+		<div class="row">
+			<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6" >
+				<h:form id="altaCat" rendered="true">
+					<h1>
+						<h:outputText value="Nueva Categoria" />
+					</h1>
+
+					<div class="form-group">
+						<h:outputText value="Nombre : " />
+						<h:inputText class="form-control" id="inputNombre"
+							value="#{categoriaBean.nombre}">
+							<f:validateBean for="inputNombre" />
+							<f:ajax event="keyup" render="@this inputTextMessage" />
+						</h:inputText>
+						<h:message id="inputTextMessage" for="inputNombre" errorStyle="color:red;"></h:message>
+					</div>
+
+					<h:commandButton class="btn btn-default" value="Crear" type="submit" action="#{categoriaBean.altaCategoria()}">
+					</h:commandButton>
+
+				</h:form>
+			</div>
+		</div>
+	</div>
+
+</ui:composition>
+</html>
