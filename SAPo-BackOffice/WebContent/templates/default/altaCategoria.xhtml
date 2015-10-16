@@ -4,9 +4,10 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 
 <ui:composition>
+
 	<div class="container-fluid" id="altaCatContent">
 		<div class="row">
-			<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6" >
+			<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
 				<h:form id="altaCat" rendered="true">
 					<h1>
 						<h:outputText value="Nueva Categoria" />
@@ -15,24 +16,63 @@
 					<div class="form-group">
 						<h:outputText value="Nombre : " />
 						<h:inputText class="form-control" id="inputNombre"
-							value="#{categoriaBean.nombre}">
-							<f:validateBean for="inputNombre" />
-							<f:ajax event="keyup" render="@this inputTextMessage" />
+							value="#{categoriaBean.nombre}" required="true">
+							<!-- <f:validateBean for="inputNombre" />
+							<f:ajax event="keyup" render="@this inputTextMessage" /> -->
 						</h:inputText>
-						<h:message id="inputTextMessage" for="inputNombre" errorStyle="color:red;"></h:message>
+					<!-- 	<span style="color:red">Error: Es necesario que ingrese un nombre.</span> -->
+						<!-- <h:message id="inputTextMessage" for="inputNombre"
+							errorStyle="color:red;"></h:message> -->
 					</div>
-						   
-			    <h:selectOneMenu value="#{categoriaBean.idcatseleccionada}"  >
-			        <f:selectItems value="#{categoriaBean.listDataCat}" var="c" itemValue="#{c.idCategoria}" itemLabel="#{c.nombre}"/>
-			    </h:selectOneMenu>
-			    
+
+				
+					<div class="dropdown">
+						<button class="btn btn-default dropdown-toggle" type="button"
+							id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true"
+							aria-expanded="true">
+							Seleccione categoria del Producto <span class="caret"></span>
+						</button>
+						<ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+							<li class="dropdown-header">Mis Categorias</li>
+
+							<h:selectOneMenu value="#{categoriaBean.idcatseleccionada}">
+								<f:selectItems value="#{categoriaBean.listDataCat}" var="c"
+									itemValue="#{c.idCategoria}" itemLabel="#{c.nombre}" />
+
+							</h:selectOneMenu>
+
+							<li class="dropdown-header">Categorias Genericas</li>
+
+							<h:selectOneMenu value="#{categoriaBean.idcatseleccionada}">
+								<f:selectItems value="#{categoriaBean.listDataCatGeneticas}" var="c2"
+									itemValue="#{c2.idCategoria}" itemLabel="#{c2.nombre}" />
+
+							</h:selectOneMenu>
+
+						</ul>
+					</div>
+					
 					<h:commandButton class="btn btn-primary" value="Crear" type="submit" action="#{categoriaBean.altaCategoria()}">
 					</h:commandButton>
-
+			
 				</h:form>
 			</div>
 		</div>
 	</div>
+	<!-- <p:dataTable value="#{repartidor.repartidores}" var="r" 
+						emptyMessage="No existen repartidores en el sistema">
+   				<p:column headerText="Cédula de Identidad">
+   					<h:outputText value="#{r.ci}" />
+   				</p:column>
+   				<p:column headerText="Nombre">
+   					<h:outputText value="#{r.nombre}" />
+   				</p:column>
+   				<p:column headerText="Acciones">
+   					<h:commandLink value="Trasladar" action="#{repartidor.aTrasladar(r.ci)}" /> -  
+   					<h:commandLink value="Modificar" action="#{repartidor.aModificar(r.ci)}" /> - 
+   					<h:commandLink value="Despedir" onclick="return confirm('¿Est\u00E9s seguro de despedir a #{r.nombre}?')" action="#{repartidor.baja(r.ci)}" />
+   				</p:column>
+   			</p:dataTable> -->
 
 </ui:composition>
 </html>
