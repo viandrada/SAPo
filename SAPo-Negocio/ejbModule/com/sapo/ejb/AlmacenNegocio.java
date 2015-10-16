@@ -85,6 +85,7 @@ public class AlmacenNegocio {
 			DataAlmacen dataAlmacen = new DataAlmacen();
 			dataAlmacen.setNombre(listaAlmacenes.get(i).getNombre());
 			dataAlmacen.setDescripcion(listaAlmacenes.get(i).getDescripcion());
+			dataAlmacen.setBytesFoto(listaAlmacenes.get(i).getFoto().getDatos());
 			dataAlmacen.setIdFoto(listaAlmacenes.get(i).getFoto().getIdImagen());
 			dataAlmacen.setIdAlmacen(listaAlmacenes.get(i).getIdAlmacen());
 			listaDataAlmacen.add(dataAlmacen);
@@ -99,6 +100,7 @@ public class AlmacenNegocio {
 		dataAlmacen.setNombre(almacen.getNombre());
 		dataAlmacen.setDescripcion(almacen.getDescripcion());
 		dataAlmacen.setIdFoto(almacen.getFoto().getIdImagen());
+		dataAlmacen.setBytesFoto(almacen.getFoto().getDatos());
 		dataAlmacen.setProductos(toDataProductos(almacen.getProductos()));
 		return dataAlmacen;
 	}

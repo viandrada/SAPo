@@ -9,3 +9,11 @@
 	height:1000px;
 	width:100%;
 }
+
+.imgDefault {
+	background-image: url('../../resources/images/box.png');
+	background-size: cover;
+	background-repeat: no-repeat;
+	height:100%;
+	width:100%;
+}
