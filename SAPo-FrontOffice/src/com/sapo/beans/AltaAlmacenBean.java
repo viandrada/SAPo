@@ -129,7 +129,7 @@ public class AltaAlmacenBean {
 
 				// Aca termina la conversion a byte[]
 
-				this.dataAlmacen.setFoto(buffer.toByteArray());
+				this.dataAlmacen.setBytesFoto(buffer.toByteArray());
 			}
 			// System.out.print(fileContent);
 		} catch (IOException e) {

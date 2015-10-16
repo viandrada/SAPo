@@ -17,12 +17,12 @@
 									value="#{item.nombre}" /> <h:commandLink
 									action="#{navigationAreaBean.irAlmacen(item.idAlmacen)}"
 									class="thumbnail">
-									<h:graphicImage class="img-responsive"
-										value="/resources/images/box.png">
-									</h:graphicImage>
 									<!--h:graphicImage class="img-responsive"
-										value="data:image/jpg;base64,#{item.foto}">
+										value="/resources/images/box.png">
 									</h:graphicImage-->
+									<h:graphicImage class="img-responsive"
+										value="Image/#{item.idFoto}">
+									</h:graphicImage>
 								</h:commandLink></li>
 						</h:form>
 					</div>

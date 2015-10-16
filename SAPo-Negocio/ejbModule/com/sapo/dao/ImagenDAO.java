@@ -16,8 +16,8 @@ public class ImagenDAO {
 	@PersistenceContext(unitName="SAPo-Negocio")
 	EntityManager em;
 	
-	public Imagen getImagen(String email){
-		return em.find(Imagen.class, email);
+	public Imagen getImagen(int idImagen){
+		return em.find(Imagen.class, idImagen);
 	}
 	
 	public boolean existeImagen(int idImagen){

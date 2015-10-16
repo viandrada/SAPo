@@ -13,7 +13,8 @@ public class DataAlmacen {
 	private int idAlmacen;
 	private String nombre;
 	private String descripcion;
-	private byte[] foto;
+	private int idFoto;
+	private byte[] bytesFoto;
 	private boolean isActivo;
 	private Date fechaAlta;
 	private List<DataProducto> productos;
@@ -30,14 +31,22 @@ public class DataAlmacen {
 	public void setDescripcion(String descripcion) {
 		this.descripcion = descripcion;
 	}
-	public byte[] getFoto() {
-		return foto;
+
+	public int getIdFoto() {
+		return idFoto;
 	}
-	public void setFoto(byte[] foto) {
-		this.foto = foto;
+	public void setIdFoto(int idFoto) {
+		this.idFoto = idFoto;
 	}
 	public boolean isActivo() {
 		return isActivo;
+	}
+	
+	public byte[] getBytesFoto() {
+		return bytesFoto;
+	}
+	public void setBytesFoto(byte[] bytesFoto) {
+		this.bytesFoto = bytesFoto;
 	}
 	public void setActivo(boolean isActivo) {
 		this.isActivo = isActivo;

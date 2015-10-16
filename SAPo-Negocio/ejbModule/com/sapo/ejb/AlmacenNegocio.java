@@ -52,7 +52,7 @@ public class AlmacenNegocio {
 		Usuario usr;
 		Imagen img = new Imagen();
 
-		img.setDatos(almacen.getFoto());
+		img.setDatos(almacen.getBytesFoto());
 		usr = this.usuarioDAO.getUsuarioPorEmail(usuario.getEmail());
 
 		this.almacen.setNombre(almacen.getNombre());
@@ -85,7 +85,7 @@ public class AlmacenNegocio {
 			DataAlmacen dataAlmacen = new DataAlmacen();
 			dataAlmacen.setNombre(listaAlmacenes.get(i).getNombre());
 			dataAlmacen.setDescripcion(listaAlmacenes.get(i).getDescripcion());
-			dataAlmacen.setFoto(listaAlmacenes.get(i).getFoto().getDatos());
+			dataAlmacen.setIdFoto(listaAlmacenes.get(i).getFoto().getIdImagen());
 			dataAlmacen.setIdAlmacen(listaAlmacenes.get(i).getIdAlmacen());
 			listaDataAlmacen.add(dataAlmacen);
 		}
@@ -98,7 +98,7 @@ public class AlmacenNegocio {
 
 		dataAlmacen.setNombre(almacen.getNombre());
 		dataAlmacen.setDescripcion(almacen.getDescripcion());
-		dataAlmacen.setFoto(almacen.getFoto().getDatos());
+		dataAlmacen.setIdFoto(almacen.getFoto().getIdImagen());
 		dataAlmacen.setProductos(toDataProductos(almacen.getProductos()));
 		return dataAlmacen;
 	}
