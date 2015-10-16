@@ -5,6 +5,8 @@
 
 <ui:composition>
 	<div class="container">
+
+		<!-- Datos del almacen -->
 		<div class="row">
 			<!-- div class="col-xs-12 col-md-12 col-sm-12 col-lg-12">
 				<h:outputLabel value="Id: " />
@@ -15,10 +17,13 @@
 				<h:outputText value="Almacen >> " class="h3" />
 				<h:outputText value="#{almacenBean.almacen.nombre}" class="h2" />
 				<h:outputText value=": " class="h2" />
-				<h:outputText value="#{almacenBean.almacen.descripcion}" class="h2"> </h:outputText>
+				<h:outputText value="#{almacenBean.almacen.descripcion}" class="h2">
+				</h:outputText>
 			</div>
 		</div>
+		<!-- Fin de: Datos del almacen -->
 
+		<!-- Productos del almacen -->
 		<div class="row">
 			<ul class="list-group">
 				<ui:repeat value="#{almacenBean.almacen.productos}" var="item">
@@ -31,13 +36,49 @@
 										value="/resources/images/box.png">
 									</h:graphicImage>
 								</h:commandLink></li>
+							<div class="row">
+								<div class="col-xs-6 col-md-3 col-sm-3 col-lg-3">
+									<h:outputLabel value="Stock" />
+								</div>
+								<div class="col-xs-6 col-md-3 col-sm-3 col-lg-3">
+									<h:outputText value="1" class="form-control" />
+								</div>
+							</div>
 						</h:form>
 					</div>
 				</ui:repeat>
 			</ul>
-
 		</div>
+		<!-- Fin de: Productos del almacen -->
+
 	</div>
-	<ui:include src="altaProducto.xhtml" />
+					<!-- Boton para mostrar ventana modal -->
+				<button type="button" class="btn btn-primary btn-lg"
+					data-toggle="modal" data-target="#myModal">+</button>
+
+				<!-- Modal -->
+			<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+				aria-labelledby="myModalLabel">
+				<div class="modal-dialog" role="document" style="width:80%;">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal"
+								aria-label="Close">
+								<span aria-hidden="true"></span>
+							</button>
+							<h4 class="modal-title" id="myModalLabel">Nuevo producto</h4>
+						</div>
+						<div class="modal-body">
+							<ui:include src="altaProducto.xhtml" />
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-info"
+								data-dismiss="modal">Cancelar</button>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- Fin de ventana modal -->
+
 </ui:composition>
 </html>

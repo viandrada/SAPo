@@ -102,7 +102,6 @@ public class RegistroBean {
 	public String registrar() {
 		this.dataUsuario.setNombre(this.nombre);
 		this.dataUsuario.setEmail(this.email);
-		this.dataUsuario.setPassword(this.password);
 
 		/*
 		 * Encriptar password ->
@@ -133,7 +132,7 @@ public class RegistroBean {
 		boolean ok = false;
 
 		try {
-			usuarioNegocio.altaUsuario(this.nombre, this.email, this.password);
+			usuarioNegocio.altaUsuario(this.dataUsuario);
 			ok = true;
 		} catch (Exception e) {
 			e.printStackTrace();

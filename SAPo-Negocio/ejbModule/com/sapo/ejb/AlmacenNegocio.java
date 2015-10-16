@@ -48,7 +48,6 @@ public class AlmacenNegocio {
 	private Almacen almacen;
 
 	public int altaAlmacen(DataAlmacen almacen, DataUsuario usuario) {
-		boolean altaOK = false;
 		int idAlmacenGenerado = 0;
 		Usuario usr;
 		Imagen img = new Imagen();
@@ -65,7 +64,6 @@ public class AlmacenNegocio {
 
 		try {
 			idAlmacenGenerado = this.almacenDAO.insertarAlmacen(this.almacen);
-			altaOK = true;
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
@@ -109,10 +107,8 @@ public class AlmacenNegocio {
 			DataCategoria categoria) {
 		boolean altaOK = false;
 		Producto productoGuardar = new Producto();
-		List<Almacen> listaAlmacenesGuardar = new ArrayList<Almacen>();
 		Almacen almacenGuardar;// = new Almacen(almacen.getIdAlmacen());
 		almacenGuardar = this.almacenDAO.getAlmacen(almacen.getIdAlmacen());
-		listaAlmacenesGuardar.add(almacenGuardar);
 		Categoria catGuardar;// = new Categoria(categoria.getIdCategoria());
 		catGuardar = this.categoriaDAO.getCategoria(categoria.getIdCategoria());
 		
@@ -120,7 +116,7 @@ public class AlmacenNegocio {
 		productoGuardar.setDescripcion(producto.getDescripcion());
 		productoGuardar.setEstaActivo(true);
 		productoGuardar.setPrecio(producto.getPrecio());
-		productoGuardar.setAlmacenes(listaAlmacenesGuardar);
+		productoGuardar.setAlmacen(almacenGuardar);
 		productoGuardar.setCategoria(catGuardar);
 		
 		try {
@@ -132,12 +128,14 @@ public class AlmacenNegocio {
 
 		return altaOK;
 	}
-	/*
+	
 	public List<DataProducto> getProductosDeAlmacen(int idAlmacen){
-		List<DataProducto> productos = new ArrayList<DataProducto>();
-		this.productoDAO.
+		List<DataProducto> dataProductos = new ArrayList<DataProducto>();
+		List<Producto> productos = this.productoDAO.getProductosAlmacen(idAlmacen);
+		dataProductos = this.toDataProductos(productos);
+		return dataProductos;
 	}
-*/
+
 	public List<DataProducto> toDataProductos(List<Producto> productos) {
 		List<DataProducto> dataProductos = new ArrayList<DataProducto>();
 		for (int i = 0; i < productos.size(); i++) {

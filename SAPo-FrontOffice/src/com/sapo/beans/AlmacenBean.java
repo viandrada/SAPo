@@ -1,5 +1,6 @@
 package com.sapo.beans;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -43,9 +44,14 @@ public class AlmacenBean {
 
 	public void obtenerAlmacen(){
 		this.almacen = almacenNegocio.getAlmacenPorId(nav.getIdAlmacenActual());
+		this.almacen.setProductos(this.obtenerProductos(nav.getIdAlmacenActual()));
 	}
 	
-	public void obtenerProductos(){}
+	public List<DataProducto> obtenerProductos(int idAlmacen){
+		List<DataProducto> dataProductos = new ArrayList<DataProducto>();
+		dataProductos = almacenNegocio.getProductosDeAlmacen(idAlmacen);
+		return dataProductos;
+	}
 	
 	public NavigationAreaBean getNav() {
 		return nav;

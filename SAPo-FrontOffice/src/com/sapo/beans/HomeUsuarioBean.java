@@ -2,8 +2,10 @@ package com.sapo.beans;
 
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Base64;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -12,6 +14,8 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
 import javax.imageio.ImageIO;
+
+import sun.misc.IOUtils;
 
 import com.datatypes.DataAlmacen;
 import com.sapo.ejb.AlmacenNegocio;
@@ -63,4 +67,11 @@ public class HomeUsuarioBean {
         }
         return bufferedImage;
 }
+	/*public String encode(byte[] bytes){
+		String encodedImage ;
+		InputStream inputStream = new ByteArrayInputStream(bytes);
+		ByteArrayOutputStream os = new ByteArrayOutputStream();
+		//encodedImage = new String(Base64.encode(os.toByteArray()));
+		return new String(Base64.encode(IOUtils.(inputStream)));
+	}*/
 }

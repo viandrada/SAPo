@@ -3,7 +3,6 @@ package com.sapo.beans;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Scanner;
 
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
@@ -105,7 +104,7 @@ public class AltaAlmacenBean {
 	}
 
 	public String altaAlmacen() {
-		boolean ok = false;
+		//boolean ok = false;
 		int idAlmacenGenerado = 0;
 		try {
 			/*

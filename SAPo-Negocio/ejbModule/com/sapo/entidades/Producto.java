@@ -10,11 +10,12 @@ import javax.persistence.*;
  * Entity implementation class for Entity: Producto
  *
  */
-@Entity
+@NamedQueries({
 
+@NamedQuery(name = "Productos.getProductosDeAlmacen.IdAlmacen", query = "SELECT p FROM Producto p WHERE p.almacen.idAlmacen = :idAlmacen") })
+@Entity
 public class Producto implements Serializable {
 
-	
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -23,20 +24,21 @@ public class Producto implements Serializable {
 	private String nombre;
 	private String descripcion;
 
-
 	private float precio;
-	@OneToMany(cascade={CascadeType.PERSIST, CascadeType.REMOVE, CascadeType.MERGE})
+	@OneToMany(cascade = { CascadeType.PERSIST, CascadeType.REMOVE,
+			CascadeType.MERGE })
 	private List<Imagen> foto;
 	private String atributos;
 	private Date fechaAlta;
 	private boolean estaActivo;
-	
-	@ManyToMany(mappedBy="productos",fetch=FetchType.EAGER)
-	private List<Almacen> almacenes;
-	
-	@OneToOne(cascade={CascadeType.PERSIST, CascadeType.REMOVE, CascadeType.MERGE})
+
+	@ManyToOne
+	private Almacen almacen;
+
+	@OneToOne(cascade = { CascadeType.PERSIST, CascadeType.REMOVE,
+			CascadeType.MERGE })
 	private Categoria categoria;
-	
+
 	public Producto() {
 		super();
 	}
@@ -89,12 +91,12 @@ public class Producto implements Serializable {
 		this.foto = foto;
 	}
 
-	public List<Almacen> getAlmacenes() {
-		return almacenes;
+	public Almacen getAlmacen() {
+		return almacen;
 	}
 
-	public void setAlmacenes(List<Almacen> almacenes) {
-		this.almacenes = almacenes;
+	public void setAlmacen(Almacen almacen) {
+		this.almacen = almacen;
 	}
 
 	public Categoria getCategoria() {
@@ -104,7 +106,7 @@ public class Producto implements Serializable {
 	public void setCategoria(Categoria categoria) {
 		this.categoria = categoria;
 	}
-	
+
 	public String getDescripcion() {
 		return descripcion;
 	}
@@ -116,11 +118,9 @@ public class Producto implements Serializable {
 	public void setEstaActivo(boolean estaActivo) {
 		this.estaActivo = estaActivo;
 	}
-	
+
 	public boolean getEstaActivo() {
 		return estaActivo;
 	}
 
-	
-   
 }

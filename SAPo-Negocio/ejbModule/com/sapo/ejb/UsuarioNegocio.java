@@ -4,6 +4,7 @@ import javax.ejb.EJB;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 
+import com.datatypes.DataUsuario;
 import com.sapo.dao.UsuarioDAO;
 import com.sapo.entidades.Usuario;
 
@@ -26,11 +27,11 @@ public class UsuarioNegocio {
 	
 	private Usuario usuario;
 	
-	public boolean altaUsuario(String nombre, String email, String password) {
+	public boolean altaUsuario(DataUsuario dataUsuario) {
 		boolean altaExitosa = false;
-		usuario.setNombre(nombre);
-		usuario.setEmail(email);
-		usuario.setPassword(password);
+		usuario.setNombre(dataUsuario.getNombre());
+		usuario.setEmail(dataUsuario.getEmail());
+		usuario.setPassword(dataUsuario.getPassword());
 		
 		usuario.setEstaActivo(true);
 		usuario.setMonto(0f);

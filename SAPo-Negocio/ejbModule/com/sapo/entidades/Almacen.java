@@ -48,7 +48,7 @@ public class Almacen implements Serializable {
 	private List<Comentario> comentarios;
 	@ManyToMany
 	private List<Categoria> categorias;
-	@ManyToMany(fetch=FetchType.EAGER)
+	@OneToMany(fetch=FetchType.EAGER)
 	private List<Producto> productos;
 
 	public int getIdAlmacen() {

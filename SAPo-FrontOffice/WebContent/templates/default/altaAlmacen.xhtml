@@ -5,15 +5,14 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 
 <ui:composition>
-	<div class="container">
-			<div class="row">
+	<h:panelGroup class="container">
+			<h:panelGroup class="row">
 				<h:form id="altaAlmacen" rendered="true"
 					enctype="multipart/form-data">
-					<div class="col-xs-12 col-sm-12 col-md-7 col-lg-7">
+					<h:panelGroup class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
 						<div class="form-group">
-							<h:outputText value="Nombre : " />
 							<h:inputText class="form-control" id="inputNombre"
-								value="#{altaAlmacenBean.nombre}">
+								value="#{altaAlmacenBean.nombre}" a:placeholder="Nombre">
 								<f:validateBean for="inputNombre" />
 								<f:ajax event="keyup" render="inputTextMessage" />
 							</h:inputText>
@@ -21,10 +20,9 @@
 								errorStyle="color:red;"></h:message>
 						</div>
 						<div class="form-group">
-							<h:outputText value="Descripcion : " />
 							<h:inputTextarea class="form-control" id="inputDescripcion"
 								value="#{altaAlmacenBean.descripcion}" a:maxlength="500"
-								rows="10">
+								rows="5" a:placeholder="Escriba una descripcion aqui...">
 								<f:validateBean for="inputDescripcion" />
 								<f:ajax event="keyup" render="inputTextMessageDescripcion" />
 							</h:inputTextarea>
@@ -39,16 +37,16 @@
 						<h:commandButton class="btn btn-primary" value="Crear"
 							type="submit" action="#{altaAlmacenBean.altaAlmacen}">
 						</h:commandButton>
-					</div>
-					<div class="col-xs-12 col-sm-12 col-md-5 col-lg-5">
+					</h:panelGroup>
+					<h:panelGroup class="col-xs-12 col-sm-12 col-md-5 col-lg-5">
 
-						<div class="form-group">
+						<h:panelGroup class="form-group">
 							<img class="img-responsive img-thumbnail" id="inputFotoPreview"></img>
-						</div>
-					</div>
+						</h:panelGroup>
+					</h:panelGroup>
 					<h:outputScript name="js/fotoPreview.js" />
 				</h:form>
-			</div>
-	</div>
+			</h:panelGroup>
+	</h:panelGroup>
 </ui:composition>
 </html>
