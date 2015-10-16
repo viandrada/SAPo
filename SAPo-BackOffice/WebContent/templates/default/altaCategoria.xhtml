@@ -21,8 +21,12 @@
 						</h:inputText>
 						<h:message id="inputTextMessage" for="inputNombre" errorStyle="color:red;"></h:message>
 					</div>
-
-					<h:commandButton class="btn btn-default" value="Crear" type="submit" action="#{categoriaBean.altaCategoria()}">
+						   
+			    <h:selectOneMenu value="#{categoriaBean.idcatseleccionada}"  >
+			        <f:selectItems value="#{categoriaBean.listDataCat}" var="c" itemValue="#{c.idCategoria}" itemLabel="#{c.nombre}"/>
+			    </h:selectOneMenu>
+			    
+					<h:commandButton class="btn btn-primary" value="Crear" type="submit" action="#{categoriaBean.altaCategoria()}">
 					</h:commandButton>
 
 				</h:form>
