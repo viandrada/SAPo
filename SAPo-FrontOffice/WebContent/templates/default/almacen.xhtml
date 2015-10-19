@@ -14,7 +14,7 @@
 			</div-->
 			<div class="col-xs-12 col-md-12 col-sm-12 col-lg-12">
 
-				<h:outputText value="Almacen >> " class="h3" />
+				<h:outputText value="Almacén >> " class="h3" />
 				<h:outputText value="#{almacenBean.almacen.nombre}" class="h2" />
 				<h:outputText value=": " class="h2" />
 				<h:outputText value="#{almacenBean.almacen.descripcion}" class="h2">
@@ -53,9 +53,13 @@
 
 	</div>
 					<!-- Boton para mostrar ventana modal -->
-				<button type="button" class="btn btn-primary btn-lg"
-					data-toggle="modal" data-target="#myModal">+</button>
-
+				<!-- button type="button" class="btn btn-primary btn-lg"
+					data-toggle="modal" data-target="#myModal">+</button-->
+		<h:form>
+					<h:commandButton value="+"
+								action="#{navigationAreaBean.goTo('altaProducto.xhtml')}"
+								class="btn btn-primary btn-lg"></h:commandButton>
+</h:form>
 				<!-- Modal -->
 			<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
 				aria-labelledby="myModalLabel">

@@ -5,72 +5,187 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 
 <ui:composition>
-	<div class="container">
-		<div class="row">
-		<h:outputText value="Nuevo producto" class="h1"/>
-			<h:form id="altaProducto" rendered="true"
-				enctype="multipart/form-data">
-				<div class="col-xs-12 col-sm-12 col-md-7 col-lg-7">
-					<div class="form-group">
-						<h:outputText value="Categoria : " />
-						<h:selectOneMenu
-							value="#{altaProductoBean.dataCategoria.idCategoria}">
-							<f:selectItem itemValue="1" itemLabel="Categoria 1" />
-							<f:selectItem itemValue="2" itemLabel="Categoria 2" />
-							<f:selectItem itemValue="3" itemLabel="Categoria 3" />
-						</h:selectOneMenu>
-					</div>
+	<div class="container-fluid">
+		<H1>Producto nuevo</H1>
+		<h:form id="altaProducto" rendered="true"
+			enctype="multipart/form-data">
+			<div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
 
-
-					<div class="form-group">
-						<h:inputText class="form-control" id="inputNombre"
-							value="#{altaProductoBean.nombre}" a:placeholder="Nombre">
-							<f:validateBean for="inputNombre" />
-							<f:ajax event="keyup" render="inputTextMessage" />
-						</h:inputText>
-						<h:message id="inputTextMessage" for="inputNombre"
-							errorStyle="color:red;"></h:message>
+				<!-- Nombre, stock y precio -->
+				<div class="row">
+					<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+						<div class="form-group">
+							<h:inputText class="form-control" id="inputNombre"
+								value="#{altaProductoBean.nombre}" a:placeholder="Nombre">
+								<f:validateBean for="inputNombre" />
+								<f:ajax event="keyup" render="inputTextMessage" />
+							</h:inputText>
+							<h:message id="inputTextMessage" for="inputNombre"
+								errorStyle="color:red;"></h:message>
+						</div>
 					</div>
-					<div class="form-group">
-						<h:inputTextarea class="form-control" id="inputDescripcion"
-							value="#{altaProductoBean.descripcion}" a:maxlength="500"
-							rows="5" a:placeholder="Escribe una descripcion aqui...">
-							<f:validateBean for="inputDescripcion" />
-							<f:ajax event="keyup" render="inputTextMessageDescripcion" />
-						</h:inputTextarea>
-						<h:message id="inputTextMessageDescripcion" for="inputDescripcion"
-							errorStyle="color:red;"></h:message>
+					<div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
+						<div class="form-group">
+							<div class="col-xs-12 col-sm-12 col-md-2 col-lg-2">
+								<h:outputText value="Stock " />
+							</div>
+							<div class="col-xs-12 col-sm-12 col-md-1 col-lg-1">
+								<h:inputText class="form-control" id="inputStock"
+									value="#{altaProductoBean.stock}">
+									<f:validateBean for="inputStock" />
+									<f:ajax event="keyup" render="inputTextMessageStock" />
+								</h:inputText>
+								<h:message id="inputTextMessageStock" for="inputStock"
+									errorStyle="color:red;"></h:message>
+							</div>
+						</div>
 					</div>
-
-					<div class="form-group">
-						<h:outputText value="Precio : " />
-						<h:inputText class="form-control" id="inputPrecio"
-							value="#{altaProductoBean.precio}">
-							<f:validateBean for="inputPrecio" />
-							<f:ajax event="keyup" render="inputTextMessagePrecio" />
-						</h:inputText>
-						<h:message id="inputTextMessagePrecio" for="inputPrecio"
-							errorStyle="color:red;"></h:message>
-					</div>
-
-					<div class="form-group">
-						<h:inputFile id="imagenAlmacen" value="#{altaProductoBean.foto}"
-							onchange="loadFile(event)">
-						</h:inputFile>
-					</div>
-					<h:commandButton class="btn btn-primary" value="Crear"
-						type="submit" action="#{altaProductoBean.altaProducto}">
-					</h:commandButton>
-				</div>
-				<div class="col-xs-12 col-sm-12 col-md-5 col-lg-5">
-
-					<div class="form-group">
-						<img class="img-responsive img-thumbnail" id="inputFotoPreview"></img>
+					<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+						<div class="form-group">
+							<h:inputText class="form-control" id="inputPrecio"
+								value="#{altaProductoBean.precio}" a:placeholder="Precio">
+								<f:validateBean for="inputPrecio" />
+								<f:ajax event="keyup" render="inputTextMessagePrecio" />
+							</h:inputText>
+							<h:message id="inputTextMessagePrecio" for="inputPrecio"
+								errorStyle="color:red;"></h:message>
+						</div>
 					</div>
 				</div>
-				<h:outputScript name="js/fotoPreview.js" />
-			</h:form>
-		</div>
+
+				<div class="form-group">
+					<h:outputText value="Categoría : " />
+					<h:selectOneMenu
+						value="#{altaProductoBean.dataCategoria.idCategoria}">
+						<f:selectItem itemValue="1" itemLabel="Categoria 1" />
+						<f:selectItem itemValue="2" itemLabel="Categoria 2" />
+						<f:selectItem itemValue="3" itemLabel="Categoria 3" />
+					</h:selectOneMenu>
+				</div>
+
+				<div class="form-group">
+					<h:inputTextarea class="form-control" id="inputDescripcion"
+						value="#{altaProductoBean.descripcion}" a:maxlength="500" rows="5"
+						a:placeholder="Escribe una descripcion aqui...">
+						<f:validateBean for="inputDescripcion" />
+						<f:ajax event="keyup" render="inputTextMessageDescripcion" />
+					</h:inputTextarea>
+					<h:message id="inputTextMessageDescripcion" for="inputDescripcion"
+						errorStyle="color:red;"></h:message>
+				</div>
+
+
+				<h:dataTable value="#{altaProductoBean.atributosVista}" var="item"
+					id="tablaAtributos" class="table">
+					<h:column>
+						<f:facet name="header">Nombre</f:facet>
+						<h:outputText value="#{item.nombre}" />
+					</h:column>
+					<h:column>
+						<f:facet name="header">Tipo de dato</f:facet>
+						<h:outputText value="#{item.tipoDato}" />
+					</h:column>
+					<h:column>
+						<f:facet name="header">Valor</f:facet>
+						<h:outputText value="#{item.valor}" />
+					</h:column>
+				</h:dataTable>
+
+				<!-- Atributos genericos -->
+				<div class="row">
+					<div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
+						<div class="form-group">
+							<h:inputText class="form-control" id="inputNombreAtr"
+								value="#{altaProductoBean.nombreAtr}"
+								a:placeholder="Nombre del atributo">
+								<f:validateBean for="inputNombreAtr" />
+								<f:ajax event="keyup" render="inputTextMessage" />
+							</h:inputText>
+							<h:message id="inputTextMessageNombreAtr" for="inputNombreAtr"
+								errorStyle="color:red;"></h:message>
+						</div>
+					</div>
+					<div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
+						<div class="form-group">
+							<h:inputText class="form-control" id="inputTipoDatoAtr"
+								value="#{altaProductoBean.tipoDataAtr}"
+								a:placeholder="Tipo de dato">
+								<f:validateBean for="inputTipoDatoAtr" />
+								<f:ajax event="keyup" render="inputTextMessage" />
+							</h:inputText>
+							<h:message id="inputTextMessageTipoDato" for="inputTipoDatoAtr"
+								errorStyle="color:red;"></h:message>
+						</div>
+					</div>
+					<div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
+						<div class="form-group">
+							<h:inputText class="form-control" id="inputValorAtr"
+								value="#{altaProductoBean.valorAtr}" a:placeholder="Valor">
+								<f:validateBean for="inputNombreAtr" />
+								<f:ajax event="keyup" render="inputTextMessage" />
+							</h:inputText>
+							<h:message id="inputTextMessageValorAtr" for="inputValorAtr"
+								errorStyle="color:red;"></h:message>
+						</div>
+					</div>
+					<div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
+						<h:commandButton class="btn btn-primary" value="Agregar"
+							actionListener="#{altaProductoBean.add}">
+							<f:ajax render="@form" />
+						</h:commandButton>
+					</div>
+				</div>
+				<!-- Fin de: Atributos genericos -->
+
+				<div class="form-group">
+					<h:inputFile id="imagenProducto" value="#{altaProductoBean.foto}"
+						onchange="loadFile(event)">
+					</h:inputFile>
+				</div>
+				<div class="form-group">
+					<h:inputFile id="imagenProducto2" value="#{altaProductoBean.foto2}"
+						onchange="loadFile2(event)">
+					</h:inputFile>
+				</div>
+				<div class="form-group">
+					<h:inputFile id="imagenProducto3" value="#{altaProductoBean.foto3}"
+						onchange="loadFile3(event)">
+					</h:inputFile>
+				</div>
+				<div class="form-group">
+					<h:inputFile id="imagenProducto4" value="#{altaProductoBean.foto4}"
+						onchange="loadFile4(event)">
+					</h:inputFile>
+				</div>
+
+
+				<h:commandButton class="btn btn-primary" value="Crear" type="submit"
+					action="#{navigationAreaBean.goTo('almacen.xhtml')}"
+					actionListener="#{altaProductoBean.altaProducto}">
+				</h:commandButton>
+			</div>
+			<div class="col-xs-12 col-sm-12 col-md-2 col-lg-2">
+				<div class="form-group">
+					<img class="img-responsive img-thumbnail" id="inputFotoPreview"></img>
+				</div>
+			</div>
+			<div class="col-xs-12 col-sm-12 col-md-2 col-lg-2">
+				<div class="form-group">
+					<img class="img-responsive img-thumbnail" id="inputFotoPreview2"></img>
+				</div>
+			</div>
+			<div class="col-xs-12 col-sm-12 col-md-2 col-lg-2">
+				<div class="form-group">
+					<img class="img-responsive img-thumbnail" id="inputFotoPreview3"></img>
+				</div>
+			</div>
+			<div class="col-xs-12 col-sm-12 col-md-2 col-lg-2">
+				<div class="form-group">
+					<img class="img-responsive img-thumbnail" id="inputFotoPreview4"></img>
+				</div>
+			</div>
+			<h:outputScript name="js/fotoPreview.js" />
+		</h:form>
 	</div>
 </ui:composition>
 </html>

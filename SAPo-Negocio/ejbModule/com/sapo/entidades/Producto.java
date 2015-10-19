@@ -23,7 +23,6 @@ public class Producto implements Serializable {
 	private int idProducto;
 	private String nombre;
 	private String descripcion;
-
 	private float precio;
 	@OneToMany(cascade = { CascadeType.PERSIST, CascadeType.REMOVE,
 			CascadeType.MERGE })
@@ -31,6 +30,7 @@ public class Producto implements Serializable {
 	private String atributos;
 	private Date fechaAlta;
 	private boolean estaActivo;
+	private int stock;
 
 	@ManyToOne
 	private Almacen almacen;
@@ -121,6 +121,14 @@ public class Producto implements Serializable {
 
 	public boolean getEstaActivo() {
 		return estaActivo;
+	}
+
+	public int getStock() {
+		return stock;
+	}
+
+	public void setStock(int stock) {
+		this.stock = stock;
 	}
 
 }

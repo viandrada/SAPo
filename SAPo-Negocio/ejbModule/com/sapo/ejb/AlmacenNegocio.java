@@ -120,6 +120,17 @@ public class AlmacenNegocio {
 		productoGuardar.setPrecio(producto.getPrecio());
 		productoGuardar.setAlmacen(almacenGuardar);
 		productoGuardar.setCategoria(catGuardar);
+		productoGuardar.setAtributos(producto.getAtributos());
+		productoGuardar.setStock(producto.getStock());
+		productoGuardar.setFechaAlta(new Date());
+		
+		List<Imagen> imgs = new ArrayList<Imagen>();
+		for (int i = 0; i < producto.getFotos().size(); i++) {
+			Imagen img = new Imagen();
+			img.setDatos(producto.getFotos().get(i));
+			imgs.add(img);
+		}
+		productoGuardar.setFoto(imgs);
 		
 		try {
 			this.productoDAO.insertarProducto(productoGuardar);
