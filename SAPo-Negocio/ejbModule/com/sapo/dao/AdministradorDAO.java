@@ -29,11 +29,11 @@ public class AdministradorDAO {
 	}
 
 
-	public boolean existeAdministrador(String email) {
+	public boolean existeAdministrador(int idAdministrador) {
 		return (em
 				.createQuery(
-						"SELECT a FROM Administrador p WHERE a.email=:email")
-				.setParameter("email", email).getResultList().size() == 1);
+						"SELECT a FROM Administrador a WHERE a.idAdministrador=:idAdministrador")
+				.setParameter("idAdministrador", idAdministrador).getResultList().size() == 1);
 	}
 
 	public void insertarAdministrador(Administrador admin) {
