@@ -31,7 +31,7 @@ public class UsuarioDAO {
 	public boolean existeUsuario(int idUsuario) {
 		return (em
 				.createQuery(
-						"SELECT a FROM Usuario p WHERE a.idUsuario=:idUsuario")
+						"SELECT a FROM Usuario a WHERE a.idUsuario=:idUsuario")
 				.setParameter("idUsuario", idUsuario).getResultList().size() == 1);
 	}
 
