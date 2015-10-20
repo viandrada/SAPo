@@ -14,6 +14,7 @@ import com.sapo.dao.ProductoDAO;
 import com.sapo.dao.UsuarioDAO;
 import com.datatypes.DataAlmacen;
 import com.datatypes.DataCategoria;
+import com.datatypes.DataImagen;
 import com.datatypes.DataProducto;
 import com.datatypes.DataUsuario;
 import com.sapo.entidades.Almacen;
@@ -137,7 +138,7 @@ public class AlmacenNegocio {
 		List<Imagen> imgs = new ArrayList<Imagen>();
 		for (int i = 0; i < producto.getFotos().size(); i++) {
 			Imagen img = new Imagen();
-			img.setDatos(producto.getFotos().get(i));
+			img.setDatos(producto.getFotos().get(i).getDatos());
 			imgs.add(img);
 		}
 		productoGuardar.setFoto(imgs);
@@ -167,8 +168,24 @@ public class AlmacenNegocio {
 			dataProducto.setDescripcion(productos.get(i).getDescripcion());
 			dataProducto.setPrecio(productos.get(i).getPrecio());
 			// TODO Agregar mas campos al data (imagenes y atributos)
+			dataProducto.setAtributos(productos.get(i).getAtributos());
+			dataProducto.setStock(productos.get(i).getStock());
+			dataProducto.setFotos(toDataImagen(productos.get(i).getFoto()));
 			dataProductos.add(dataProducto);
 		}
 		return dataProductos;
+	}
+	
+	public List<DataImagen> toDataImagen(List<Imagen> imagenes){
+		List<DataImagen> dataImagenes = new ArrayList<DataImagen>();
+		for (int i = 0; i < imagenes.size(); i++) {
+			DataImagen dataImg = new DataImagen();
+			dataImg.setIdImagen(imagenes.get(i).getIdImagen());
+			dataImg.setNombre(imagenes.get(i).getNombre());
+			dataImg.setMime(imagenes.get(i).getMime());
+			dataImg.setDatos(imagenes.get(i).getDatos());
+			dataImagenes.add(dataImg);
+		}
+		return dataImagenes;
 	}
 }

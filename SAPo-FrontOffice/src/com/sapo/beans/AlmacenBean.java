@@ -10,6 +10,7 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
 
 import com.datatypes.DataAlmacen;
+import com.datatypes.DataImagen;
 import com.datatypes.DataProducto;
 import com.sapo.ejb.AlmacenNegocio;
 
@@ -44,7 +45,16 @@ public class AlmacenBean {
 
 	public void obtenerAlmacen(){
 		this.almacen = almacenNegocio.getAlmacenPorId(nav.getIdAlmacenActual());
-		this.almacen.setProductos(this.obtenerProductos(nav.getIdAlmacenActual()));
+		List<DataProducto> dataProductos = this.obtenerProductos(nav.getIdAlmacenActual());
+		//Si el producto no tiene foto se indica una por defecto.
+		for (int i = 0; i < dataProductos.size(); i++) {
+			if(dataProductos.get(i).getFotos().isEmpty()){
+				DataImagen dataImg = new DataImagen();
+				dataImg.setIdImagen(1);
+				dataProductos.get(i).getFotos().add(dataImg);//TODO Guardar en base una imagen por defecto y pasarle ese id.
+			}
+		}
+		this.almacen.setProductos(dataProductos);
 	}
 	
 	public List<DataProducto> obtenerProductos(int idAlmacen){

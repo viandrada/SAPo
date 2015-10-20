@@ -12,6 +12,7 @@ import javax.servlet.http.Part;
 
 import com.datatypes.DataAlmacen;
 import com.datatypes.DataCategoria;
+import com.datatypes.DataImagen;
 import com.datatypes.DataProducto;
 import com.datatypes.DataUsuario;
 import com.google.gson.Gson;
@@ -30,7 +31,7 @@ public class AltaProductoBean {
 		this.dataProducto = new DataProducto();
 		this.dataUsuario = new DataUsuario();
 		this.atributosVista = new ArrayList<Atributo>();
-		this.fotos = new ArrayList<byte[]>();
+		this.fotos = new ArrayList<DataImagen>();
 	}
 
 	@EJB
@@ -51,7 +52,7 @@ public class AltaProductoBean {
 	private String descripcion;
 	private float precio;
 	private String atributos;
-	private List<byte[]> fotos;
+	private List<DataImagen> fotos;
 	private Part foto;
 	private Part foto2;
 	private Part foto3;
@@ -104,11 +105,11 @@ public class AltaProductoBean {
 		this.atributos = atributos;
 	}
 
-	public List<byte[]> getFotos() {
+	public List<DataImagen> getFotos() {
 		return fotos;
 	}
 
-	public void setFotos(List<byte[]> fotos) {
+	public void setFotos(List<DataImagen> fotos) {
 		this.fotos = fotos;
 	}
 
@@ -304,23 +305,27 @@ public class AltaProductoBean {
 
 		// Procesando imagenes...
 		if (this.foto != null) {
-			this.getFotos()
-					.add(PartToByteArrayConverter.toByteArray(this.foto));
+			DataImagen dataImg = new DataImagen();
+			dataImg.setDatos(PartToByteArrayConverter.toByteArray(this.foto));
+			this.getFotos().add(dataImg);
 		}
 		if (this.foto2 != null) {
-			this.getFotos().add(
-					PartToByteArrayConverter.toByteArray(this.foto2));
+			DataImagen dataImg = new DataImagen();
+			dataImg.setDatos(PartToByteArrayConverter.toByteArray(this.foto2));
+			this.getFotos().add(dataImg);
 		}
 		if (this.foto3 != null) {
-			this.getFotos().add(
-					PartToByteArrayConverter.toByteArray(this.foto3));
+			DataImagen dataImg = new DataImagen();
+			dataImg.setDatos(PartToByteArrayConverter.toByteArray(this.foto3));
+			this.getFotos().add(dataImg);
 		}
 		if (this.foto4 != null) {
-			this.getFotos().add(
-					PartToByteArrayConverter.toByteArray(this.foto4));
+			DataImagen dataImg = new DataImagen();
+			dataImg.setDatos(PartToByteArrayConverter.toByteArray(this.foto4));
+			this.getFotos().add(dataImg);
 		}
 
-		this.dataProducto.setFoto(this.fotos);
+		this.dataProducto.setFotos(this.fotos);
 
 		//Procesando categoría...
 		if(this.catNueva.isEmpty())

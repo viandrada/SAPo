@@ -4,7 +4,7 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 
 <ui:composition>
-	<div class="container">
+	<div class="container-fluid">
 
 		<!-- Datos del almacen -->
 		<div class="row">
@@ -21,29 +21,37 @@
 				</h:outputText>
 			</div>
 		</div>
+		<hr />
 		<!-- Fin de: Datos del almacen -->
 
+		<div class="row">
+			<h:form>
+				<h:commandButton value="+"
+					action="#{navigationAreaBean.goTo('altaProducto.xhtml')}"
+					actionListener="#{altaProductoBean.init()}"
+					class="btn btn-primary btn-lg"></h:commandButton>
+			</h:form>
+		</div>
+		<hr />
 		<!-- Productos del almacen -->
 		<div class="row">
 			<ul class="list-group">
 				<ui:repeat value="#{almacenBean.almacen.productos}" var="item">
-					<div class="col-xs-6 col-md-3">
+					<div class="col-xs-6 col-sm-6 col-md-2 col-lg-2">
 						<h:form>
 							<li class="list-group-item"><h:outputText
 									value="#{item.nombre}" /> <h:commandLink action="#"
 									class="thumbnail">
 									<h:graphicImage class="img-responsive"
-										value="/resources/images/box.png">
+										value="Image/#{item.fotos.get(0).idImagen}">
 									</h:graphicImage>
-								</h:commandLink></li>
-							<div class="row">
-								<div class="col-xs-6 col-md-3 col-sm-3 col-lg-3">
-									<h:outputLabel value="Stock" />
-								</div>
-								<div class="col-xs-6 col-md-3 col-sm-3 col-lg-3">
-									<h:outputText value="1" class="form-control" />
-								</div>
-							</div>
+								</h:commandLink>
+								<div class="row">
+									<div
+										class="col-xs-6 col-md-4 col-sm-4 col-lg-4 col-sm-offset-8 col-lg-offset-8">
+										<h:outputText value="#{item.stock}" class="form-control" />
+									</div>
+								</div></li>
 						</h:form>
 					</div>
 				</ui:repeat>
@@ -52,37 +60,32 @@
 		<!-- Fin de: Productos del almacen -->
 
 	</div>
-					<!-- Boton para mostrar ventana modal -->
-				<!-- button type="button" class="btn btn-primary btn-lg"
+	<!-- Boton para mostrar ventana modal -->
+	<!-- button type="button" class="btn btn-primary btn-lg"
 					data-toggle="modal" data-target="#myModal">+</button-->
-		<h:form>
-					<h:commandButton value="+"
-								action="#{navigationAreaBean.goTo('altaProducto.xhtml')}" actionListener="#{altaProductoBean.init()}"
-								class="btn btn-primary btn-lg"></h:commandButton>
-</h:form>
-				<!-- Modal -->
-			<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
-				aria-labelledby="myModalLabel">
-				<div class="modal-dialog" role="document" style="width:80%;">
-					<div class="modal-content">
-						<div class="modal-header">
-							<button type="button" class="close" data-dismiss="modal"
-								aria-label="Close">
-								<span aria-hidden="true"></span>
-							</button>
-							<h4 class="modal-title" id="myModalLabel">Nuevo producto</h4>
-						</div>
-						<div class="modal-body">
-							<ui:include src="altaProducto.xhtml" />
-						</div>
-						<div class="modal-footer">
-							<button type="button" class="btn btn-info"
-								data-dismiss="modal">Cancelar</button>
-						</div>
-					</div>
+
+	<!-- Modal -->
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel">
+		<div class="modal-dialog" role="document" style="width: 80%;">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true"></span>
+					</button>
+					<h4 class="modal-title" id="myModalLabel">Nuevo producto</h4>
+				</div>
+				<div class="modal-body">
+					<ui:include src="altaProducto.xhtml" />
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-info" data-dismiss="modal">Cancelar</button>
 				</div>
 			</div>
-			<!-- Fin de ventana modal -->
+		</div>
+	</div>
+	<!-- Fin de ventana modal -->
 
 </ui:composition>
 </html>

@@ -12,7 +12,7 @@ public class DataProducto {
 
 	private String nombre;
 	private String descripcion;
-	private List<byte[]> fotos;
+	private List<DataImagen> fotos;
 	private float precio;
 	private boolean estaActivo;
 	private Date fechaAlta;
@@ -35,14 +35,6 @@ public class DataProducto {
 		this.descripcion = descripcion;
 	}
 
-	public List<byte[]> getFoto() {
-		return fotos;
-	}
-
-	public void setFoto(List<byte[]> fotos) {
-		this.fotos = fotos;
-	}
-
 	public float getPrecio() {
 		return precio;
 	}
@@ -59,11 +51,11 @@ public class DataProducto {
 		this.estaActivo = estaActivo;
 	}
 
-	public List<byte[]> getFotos() {
+	public List<DataImagen> getFotos() {
 		return fotos;
 	}
 
-	public void setFotos(List<byte[]> fotos) {
+	public void setFotos(List<DataImagen> fotos) {
 		this.fotos = fotos;
 	}
 
