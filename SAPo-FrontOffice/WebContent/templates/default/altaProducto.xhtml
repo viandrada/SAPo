@@ -6,16 +6,19 @@
 
 <ui:composition>
 	<div class="container-fluid">
-		<H1>Producto nuevo</H1>
+		<h:panelGrid class="row">
+			<h1>Producto nuevo</h1>
+		</h:panelGrid>
 		<h:form id="altaProducto" rendered="true"
 			enctype="multipart/form-data">
 			<div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
+
 
 				<!-- Nombre, stock y precio -->
 				<div class="row">
 					<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
 						<div class="form-group">
-							<h:inputText class="form-control" id="inputNombre"
+							<h:inputText class="form-control input-lg" id="inputNombre"
 								value="#{altaProductoBean.nombre}" a:placeholder="Nombre">
 								<f:validateBean for="inputNombre" />
 								<f:ajax event="keyup" render="inputTextMessage" />
@@ -25,44 +28,83 @@
 						</div>
 					</div>
 					<div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
-						<div class="form-group">
+						<div class="row">
+							<div class="form-group">
+								<div class="col-xs-12 col-sm-12 col-md-2 col-lg-2">
+									<h:outputText value="Stock " />
+								</div>
+								<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+									<h:inputText class="form-control input-lg" id="inputStock"
+										value="#{altaProductoBean.stock}">
+										<f:validateBean for="inputStock" />
+										<f:ajax event="keyup" render="inputTextMessageStock" />
+									</h:inputText>
+									<h:message id="inputTextMessageStock" for="inputStock"
+										errorStyle="color:red;"></h:message>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-xs-12 col-sm-12 col-md-5 col-lg-5">
+						<div class="row">
 							<div class="col-xs-12 col-sm-12 col-md-2 col-lg-2">
-								<h:outputText value="Stock " />
+								<h:outputText value="Precio " />
 							</div>
-							<div class="col-xs-12 col-sm-12 col-md-1 col-lg-1">
-								<h:inputText class="form-control" id="inputStock"
-									value="#{altaProductoBean.stock}">
-									<f:validateBean for="inputStock" />
-									<f:ajax event="keyup" render="inputTextMessageStock" />
-								</h:inputText>
-								<h:message id="inputTextMessageStock" for="inputStock"
-									errorStyle="color:red;"></h:message>
+							<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+								<div class="form-group">
+									<h:inputText class="form-control input-lg" id="inputPrecio"
+										value="#{altaProductoBean.precio}" a:placeholder="Precio">
+										<f:validateBean for="inputPrecio" />
+										<f:ajax event="keyup" render="inputTextMessagePrecio" />
+									</h:inputText>
+									<h:message id="inputTextMessagePrecio" for="inputPrecio"
+										errorStyle="color:red;"></h:message>
+								</div>
 							</div>
+						</div>
+					</div>
+				</div>
+
+				<!-- Categoría -->
+				<div class="row">
+					<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+						<div class="form-group">
+							<label for="sel1">Genérica:</label>
+							<h:selectOneMenu value="#{altaProductoBean.idCatSeleccionada}"
+								class="form-control" id="sel">
+								<f:selectItems value="#{altaProductoBean.listDataCatGeneticas}"
+									var="c2" itemValue="#{c2.idCategoria}" itemLabel="#{c2.nombre}" />
+							</h:selectOneMenu>
 						</div>
 					</div>
 					<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
 						<div class="form-group">
-							<h:inputText class="form-control" id="inputPrecio"
-								value="#{altaProductoBean.precio}" a:placeholder="Precio">
-								<f:validateBean for="inputPrecio" />
-								<f:ajax event="keyup" render="inputTextMessagePrecio" />
+							<label for="sel1">Personal:</label>
+							<h:selectOneMenu value="#{altaProductoBean.idCatSeleccionada}"
+								class="form-control" id="sel123">
+								<f:selectItems value="#{altaProductoBean.listDataCat}" var="c"
+									itemValue="#{c.idCategoria}" itemLabel="#{c.nombre}" />
+							</h:selectOneMenu>
+						</div>
+					</div>
+					<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+						<div class="form-group">
+							<label for="sel1">Crear nueva:</label>
+							<h:inputText class="form-control" id="inputCatNueva"
+								value="#{altaProductoBean.catNueva}"
+								a:placeholder="Ingrese el nombre">
+								<f:validateBean for="inputCatNueva" />
+								<f:ajax event="keyup" render="inputTextMessageCatNueva" />
 							</h:inputText>
-							<h:message id="inputTextMessagePrecio" for="inputPrecio"
+							<h:message id="inputTextMessageCatNueva" for="inputCatNueva"
 								errorStyle="color:red;"></h:message>
 						</div>
 					</div>
 				</div>
+				<!-- Fin categoría -->
 
-				<div class="form-group">
-					<h:outputText value="Categoría : " />
-					<h:selectOneMenu
-						value="#{altaProductoBean.dataCategoria.idCategoria}">
-						<f:selectItem itemValue="1" itemLabel="Categoria 1" />
-						<f:selectItem itemValue="2" itemLabel="Categoria 2" />
-						<f:selectItem itemValue="3" itemLabel="Categoria 3" />
-					</h:selectOneMenu>
-				</div>
-
+				<hr style="border-width: 3px;" /><!-- Separador -->
+				
 				<div class="form-group">
 					<h:inputTextarea class="form-control" id="inputDescripcion"
 						value="#{altaProductoBean.descripcion}" a:maxlength="500" rows="5"

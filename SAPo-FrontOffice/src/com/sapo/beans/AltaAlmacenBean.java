@@ -165,7 +165,7 @@ public class AltaAlmacenBean {
 			return null;
 		}
 		
-		return "success";
+		return "index";
 	}
 
 }

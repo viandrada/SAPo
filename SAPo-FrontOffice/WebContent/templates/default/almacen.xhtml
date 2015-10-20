@@ -57,7 +57,7 @@
 					data-toggle="modal" data-target="#myModal">+</button-->
 		<h:form>
 					<h:commandButton value="+"
-								action="#{navigationAreaBean.goTo('altaProducto.xhtml')}"
+								action="#{navigationAreaBean.goTo('altaProducto.xhtml')}" actionListener="#{altaProductoBean.init()}"
 								class="btn btn-primary btn-lg"></h:commandButton>
 </h:form>
 				<!-- Modal -->

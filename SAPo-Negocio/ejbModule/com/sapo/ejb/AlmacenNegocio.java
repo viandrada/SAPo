@@ -106,13 +106,23 @@ public class AlmacenNegocio {
 	}
 
 	public boolean altaProducto(DataProducto producto, DataAlmacen almacen,
-			DataCategoria categoria) {
+			DataCategoria categoria, DataUsuario usuario) {
 		boolean altaOK = false;
 		Producto productoGuardar = new Producto();
 		Almacen almacenGuardar;// = new Almacen(almacen.getIdAlmacen());
 		almacenGuardar = this.almacenDAO.getAlmacen(almacen.getIdAlmacen());
-		Categoria catGuardar;// = new Categoria(categoria.getIdCategoria());
+		
+		Categoria catGuardar;
+		if(categoria.getNombre() == null){
 		catGuardar = this.categoriaDAO.getCategoria(categoria.getIdCategoria());
+		}
+		else{
+			catGuardar = new Categoria();
+			catGuardar.setNombre(categoria.getNombre());
+			catGuardar.setEsGenerica(false);
+			Usuario usr = this.usuarioDAO.getUsuarioPorEmail(usuario.getEmail());
+			catGuardar.setUsu(usr);
+		}
 		
 		productoGuardar.setNombre(producto.getNombre());
 		productoGuardar.setDescripcion(producto.getDescripcion());
