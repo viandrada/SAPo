@@ -5,31 +5,9 @@
 
 <ui:composition>
 
-	<div class="container-fluid" id="altaCatContent">
+	<div class="container-fluid" id="EdicionCatContent">
 		<div class="row">
 			<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-				<h:form id="altaCat" rendered="true">
-					<h1>
-						<h:outputText value="Nueva Categoria" />
-					</h1>
-
-					<div class="form-group">
-						<h:outputText value="Nombre : " />
-						<h:inputText class="form-control" id="inputNombre"
-							value="#{categoriaBean.nombre}" required="true">
-							<!-- <f:validateBean for="inputNombre" />
-							<f:ajax event="keyup" render="@this inputTextMessage" /> -->
-						</h:inputText>
-						<!-- 	<span style="color:red">Error: Es necesario que ingrese un nombre.</span> -->
-						<!-- <h:message id="inputTextMessage" for="inputNombre"
-							errorStyle="color:red;"></h:message> -->
-					</div>
-					<h:commandButton class="btn btn-primary" value="Crear"
-						type="submit" action="#{categoriaBean.altaCategoria()}">
-					</h:commandButton>
-
-				</h:form>
-
 				<h:form id="ediCat" rendered="true">
 					<h1>
 						<h:outputText value="Promover Categorias Especificas" />
@@ -95,20 +73,20 @@
 								</div>
 								<div class="modal-body">
 
-									<h:inputText value="#{listarCategoriasBean.idCatSeleccionada}"
-										id="idCat" class="form-control" />
-
 									<h:inputText
 										value="#{listarCategoriasBean.nombreCatSeleccionada}"
 										id="nombre" class="form-control" placeholder="Nombre"
 										readonly="false" />
+									<h:inputHidden 
+										value="#{listarCategoriasBean.idCatSeleccionada}"
+										id="idCat" class="form-control" 
+										 />	
+
 								</div>
 								<div class="modal-footer">
-									
-									<h:commandButton class="btn btn-success" value="Guardar"
-										type="submit" action="#{listarCategoriasBean.modificarCat()}">
-									</h:commandButton>
-
+									<button type="button" class="btn btn-success"
+										data-dismiss="modal"
+										onclick="#{listarCategoriasBean.modificarCat()}">Guardar</button>
 									<button type="button" class="btn btn-danger"
 										data-dismiss="modal" onclick="return false;">Cancelar</button>
 								</div>
@@ -116,10 +94,10 @@
 						</div>
 					</div>
 				</h:form>
+
 			</div>
 		</div>
 	</div>
-
 
 </ui:composition>
 </html>

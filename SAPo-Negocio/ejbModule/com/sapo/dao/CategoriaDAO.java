@@ -1,5 +1,7 @@
 package com.sapo.dao;
 
+import java.util.List;
+
 import javax.ejb.Stateless;
 import javax.ejb.TransactionManagement;
 import javax.ejb.TransactionManagementType;
@@ -25,13 +27,28 @@ public class CategoriaDAO {
 				.getResultList().size()== 1);
 	}
 
-	
 	public void insertarCategoria (Categoria a){
 		em.persist(a);
 	}
 	
 	public void actualizarCategoria(Categoria a){
 		em.merge(a);		
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Categoria> getCat()
+	{
+		//boolean esGenerica=false;
+		//return em.createQuery("SELECT c FROM Categoria c  WHERE c.esGenerica=:esGenerica").setParameter("esGenerica", esGenerica).getResultList();
+		return em.createQuery("SELECT c FROM Categoria c  WHERE c.esGenerica IS FALSE").getResultList();
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Categoria> getCatGenericas()
+	{
+		//boolean esGenerica=true;
+		//return em.createQuery("SELECT cg FROM Categoria cg WHERE cg.esGenerica=:esGenerica").setParameter("esGenerica", esGenerica).getResultList();
+		return em.createQuery("SELECT cg FROM Categoria cg WHERE cg.esGenerica IS TRUE").getResultList();
 	}
 
 
