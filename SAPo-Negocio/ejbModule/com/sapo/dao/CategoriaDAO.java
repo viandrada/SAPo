@@ -8,6 +8,7 @@ import javax.ejb.TransactionManagementType;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import com.datatypes.DataUsuario;
 import com.sapo.entidades.Categoria;
 
 @Stateless
@@ -22,7 +23,7 @@ public class CategoriaDAO {
 	}
 	
 	public boolean existeCategoria(int idCategoria){
-		return (em.createQuery("SELECT a FROM Categoria p WHERE a.idCategoria=:idCategoria")
+		return (em.createQuery("SELECT a FROM Categoria a WHERE a.idCategoria=:idCategoria")
 				.setParameter("idCategoria", idCategoria)
 				.getResultList().size()== 1);
 	}
@@ -41,6 +42,16 @@ public class CategoriaDAO {
 		//boolean esGenerica=false;
 		//return em.createQuery("SELECT c FROM Categoria c  WHERE c.esGenerica=:esGenerica").setParameter("esGenerica", esGenerica).getResultList();
 		return em.createQuery("SELECT c FROM Categoria c  WHERE c.esGenerica IS FALSE").getResultList();
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Categoria> getCatPorUsusario(int id)
+	{
+		//boolean esGenerica=false;
+		//return em.createQuery("SELECT c FROM Categoria c  WHERE c.esGenerica=:esGenerica").setParameter("esGenerica", esGenerica).getResultList();
+		return em.createQuery("SELECT c FROM Categoria c  WHERE c.usu.idusuario=:idu")
+				.setParameter("idu", id)
+				.getResultList();
 	}
 	
 	@SuppressWarnings("unchecked")
