@@ -5,6 +5,7 @@ import javax.ejb.TransactionManagement;
 import javax.ejb.TransactionManagementType;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 import com.sapo.entidades.ProductoGenerico;
 
@@ -16,8 +17,21 @@ public class ProductoGenericoDAO {
 	@PersistenceContext(unitName="SAPo-Negocio")
 	EntityManager em;
 	
+	////EMAIL????? 
 	public ProductoGenerico getProductoGenerico(String email){
 		return em.find(ProductoGenerico.class, email);
+	}
+	
+	public ProductoGenerico getProductoGenericoPorID(int id){
+		ProductoGenerico prodGen;
+		Query query =em.createQuery("SELECT a FROM ProductoGenerico d¡p WHERE a.idProductoGenerico=:idProductoGenerico");
+		query.setParameter("idProductoGenerico", id);
+		if ((query.getResultList() != null) && (query.getResultList().size() > 0)){
+			prodGen = (ProductoGenerico) query.getSingleResult();
+			return (ProductoGenerico) query.getSingleResult();
+		}
+		else 
+			return null;	
 	}
 	
 	public boolean existeProductoGenerico(int idProductoGenerico){
@@ -26,8 +40,10 @@ public class ProductoGenericoDAO {
 				.getResultList().size()== 1);
 	}
 	
-	public void insertarProductoGenerico (ProductoGenerico a){
+	public int insertarProductoGenerico (ProductoGenerico a){
 		em.persist(a);
+		em.flush(); 
+		return a.getIdProductoGenerico();
 	}
 	
 	public void actualizarProductoGenerico(ProductoGenerico a){
