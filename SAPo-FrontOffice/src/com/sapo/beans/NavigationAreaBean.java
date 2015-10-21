@@ -15,6 +15,7 @@ public class NavigationAreaBean {
 	private String redirectTo;
 	private String renderContent;
 	private int idAlmacenActual;
+	private int idProductoActual;
 	
 	public String getRedirectTo() {
 		return redirectTo;
@@ -46,6 +47,16 @@ public class NavigationAreaBean {
 	}
 
 
+	public int getIdProductoActual() {
+		return idProductoActual;
+	}
+
+
+	public void setIdProductoActual(int idProductoActual) {
+		this.idProductoActual = idProductoActual;
+	}
+
+
 	public String goTo(String redirectTo){
 		this.redirectTo = redirectTo;
 		return "index.xhtml?faces-redirect=true";
@@ -57,6 +68,11 @@ public class NavigationAreaBean {
 		return "index.xhtml";
 	}
 	
+	public String setIdProducto(int idProducto){
+		this.idProductoActual = idProducto;
+		this.redirectTo = "detalleProducto.xhtml";
+		return "index.xhtml";
+	}
 	@PostConstruct
 	public void init(){
 		this.redirectTo = "homeUsuario.xhtml";

@@ -130,4 +130,10 @@ public class LoginBean {
 	        this.nav.setRedirectTo("home.xhtml");
 	        return "/login.xhtml?faces-redirect=true";
 	    }
+	 
+	 public void loginExterno(){
+		 DataUsuario dUsu = new DataUsuario();
+		 dUsu.setEmail(this.email);
+		 this.usuarioNegocio.loginExterno(dUsu);
+	 }
 }

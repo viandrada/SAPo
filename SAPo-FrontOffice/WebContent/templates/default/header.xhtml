@@ -5,8 +5,10 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 
 <ui:composition>
+<script src="https://apis.google.com/js/platform.js"></script>
 
 
+<meta name="google-signin-client_id" content="830964360841-irejv19qe6oglnfm3ahgv86q2qsh5hnv.apps.googleusercontent.com"/>
 	<!-- h:panelGroup class="container">
 		<h:panelGroup>
 			<h:panelGroup class="col-sm-4 col-md-4 col-lg-4" id="loginPanel"
@@ -38,7 +40,8 @@
 				</h:form>
 			</div>
 
-
+<h:inputHidden id="emailGmail" value="#{loginBean.email}"
+								class="form-control" onchange="location.reload()" valueChangeListener="#{loginBean.email}"/>
 			<h:panelGroup id="loginPanel" rendered="#{loginBean.shownLogin}">
 
 				<div id="navbar" class="navbar-collapse collapse">
@@ -57,14 +60,18 @@
 						</div>
 						<h:commandButton value="Ingresar" action="#{loginBean.login}"
 							class="btn btn-success"></h:commandButton>
-							<div class="fb-login-button" data-max-rows="1" data-size="large" data-show-faces="false" data-auto-logout-link="true"></div>
+						<!-- div class="fb-login-button" data-max-rows="1" data-size="large"
+							data-show-faces="false" data-auto-logout-link="true"></div>
+						<div id="status"></div-->
+						<div class="g-signin2" data-onsuccess="onSignIn"></div>
+						
 					</h:form>
-					
+
 				</div>
-				
+<
 			</h:panelGroup>
-			
-			
+
+
 			<!--/.navbar-collapse -->
 			<h:panelGroup class="navbar-form navbar-right" id="logoutPanel"
 				rendered="#{!loginBean.shownLogin}">

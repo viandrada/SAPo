@@ -275,7 +275,7 @@ public class AltaProductoBean {
 
 	@PostConstruct
 	public void init() {
-		listDataCat=cNegocio.listDataCategorias();
+		listDataCat=cNegocio.listDataCategoriasPersonal(this.usuarioLogueado.getEmail());
 		listDataCatGeneticas=cNegocio.listDataCategoriasGenericas();
 		nombreCatSeleccionada="Vacío";
 		idCatSeleccionada=1;
@@ -328,7 +328,7 @@ public class AltaProductoBean {
 		this.dataProducto.setFotos(this.fotos);
 
 		//Procesando categoría...
-		if(this.catNueva.isEmpty())
+		if(this.catNueva == null)
 		{
 			this.dataCategoria.setIdCategoria(this.idCatSeleccionada);
 		}

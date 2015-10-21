@@ -38,13 +38,15 @@
 			<ul class="list-group">
 				<ui:repeat value="#{almacenBean.almacen.productos}" var="item">
 					<div class="col-xs-6 col-sm-6 col-md-2 col-lg-2">
-						<h:form>
+						<h:form id="modalForm">
 							<li class="list-group-item"><h:outputText
-									value="#{item.nombre}" /> <h:commandLink action="#"
+									value="#{item.nombre}" /> <h:commandLink
+									action="detalleProducto.xhtml" actionListener="#{detalleProductoBean.init(item.idProducto)}"
 									class="thumbnail">
 									<h:graphicImage class="img-responsive"
 										value="Image/#{item.fotos.get(0).idImagen}">
 									</h:graphicImage>
+									<f:param name="Id" value="#{item.idProducto}" />
 								</h:commandLink>
 								<div class="row">
 									<div
@@ -52,7 +54,34 @@
 										<h:outputText value="#{item.stock}" class="form-control" />
 									</div>
 								</div></li>
+
 						</h:form>
+						<button type="button" class="btn btn-primary btn-lg"
+							data-toggle="modal" data-target="#myModal" onclick="#{detalleProductoBean.init(item.idProducto)}">Ver detalle</button>
+
+						<!-- Modal -->
+						<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+							aria-labelledby="myModalLabel">
+							<div class="modal-dialog" role="document">
+								<div class="modal-content">
+									<div class="modal-header">
+										<button type="button" class="close" data-dismiss="modal"
+											aria-label="Close">
+											<span aria-hidden="true"></span>
+										</button>
+										<h4 class="modal-title" id="myModalLabel">Detalle</h4>
+									</div>
+									<div class="modal-body">
+										<ui:include src="detalleProducto.xhtml" />
+									</div>
+									<div class="modal-footer">
+										<button type="button" class="btn btn-info"
+											data-dismiss="modal">Cancelar</button>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- Fin de ventana modal -->
 					</div>
 				</ui:repeat>
 			</ul>
@@ -60,32 +89,6 @@
 		<!-- Fin de: Productos del almacen -->
 
 	</div>
-	<!-- Boton para mostrar ventana modal -->
-	<!-- button type="button" class="btn btn-primary btn-lg"
-					data-toggle="modal" data-target="#myModal">+</button-->
-
-	<!-- Modal -->
-	<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
-		aria-labelledby="myModalLabel">
-		<div class="modal-dialog" role="document" style="width: 80%;">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal"
-						aria-label="Close">
-						<span aria-hidden="true"></span>
-					</button>
-					<h4 class="modal-title" id="myModalLabel">Nuevo producto</h4>
-				</div>
-				<div class="modal-body">
-					<ui:include src="altaProducto.xhtml" />
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-info" data-dismiss="modal">Cancelar</button>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- Fin de ventana modal -->
 
 </ui:composition>
 </html>

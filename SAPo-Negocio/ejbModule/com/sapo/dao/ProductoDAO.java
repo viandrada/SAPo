@@ -19,8 +19,8 @@ public class ProductoDAO {
 	@PersistenceContext(unitName="SAPo-Negocio")
 	EntityManager em;
 	
-	public Producto getProducto(String email){
-		return em.find(Producto.class, email);
+	public Producto getProducto(int id){
+		return em.find(Producto.class, id);
 	}
 	
 	public List<Producto> getProductosAlmacen(int idAlmacen){

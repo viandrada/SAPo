@@ -59,4 +59,14 @@ public class UsuarioNegocio {
 		}
 		return loginOK;
 	}
+	
+	public void loginExterno(DataUsuario dataUsuario){
+		Usuario usuario = new Usuario();
+		usuario = usuarioDAO.getUsuarioPorEmail(dataUsuario.getEmail());
+		if(usuario.getEmail() == null){
+			Usuario usu = new Usuario();
+			usu.setEmail(dataUsuario.getEmail());
+			usuarioDAO.insertarUsuario(usu);
+		}
+	}
 }

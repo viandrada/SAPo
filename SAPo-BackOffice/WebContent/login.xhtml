@@ -47,7 +47,7 @@
 						<h:inputText id="loginEmail" value="#{loginBean.email}"
 							required="true" class="form-control" a:placeholder="Email">
 							<f:validateBean for="loginEmail" />
-							<f:ajax event="keyup" render="@this loginEmailMessage" />
+							<f:ajax event="keyup" render="loginEmailMessage" />
 						</h:inputText>
 						<h:message id="loginEmailMessage" for="loginEmail"
 							errorStyle="color:red;"></h:message>

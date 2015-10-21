@@ -1,0 +1,91 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<ui:composition>
+	<div class="container-fluid">
+		<h:panelGrid class="row">
+			<h1>Detalle</h1>
+		</h:panelGrid>
+		<h:form id="detalleProducto" rendered="true">
+			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+
+
+				<!-- Nombre, stock y precio -->
+				<div class="row">
+					<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+						<div class="form-group">
+							<h:inputText class="form-control input-lg" id="inputNombre"
+								value="#{detalleProductoBean.producto.nombre}"
+								a:placeholder="Nombre">
+								<f:validateBean for="inputNombre" />
+								<f:ajax event="keyup" render="inputTextMessage" />
+							</h:inputText>
+							<h:message id="inputTextMessage" for="inputNombre"
+								errorStyle="color:red;"></h:message>
+						</div>
+					</div>
+					<div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
+						<div class="row">
+							<div class="form-group">
+								<div class="col-xs-12 col-sm-12 col-md-2 col-lg-2">
+									<h:outputText value="Stock " />
+								</div>
+								<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+									<h:inputText class="form-control input-lg" id="inputStock"
+										value="#{detalleProductoBean.producto.stock}">
+										<f:validateBean for="inputStock" />
+										<f:ajax event="keyup" render="inputTextMessageStock" />
+									</h:inputText>
+									<h:message id="inputTextMessageStock" for="inputStock"
+										errorStyle="color:red;"></h:message>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-xs-12 col-sm-12 col-md-5 col-lg-5">
+						<div class="row">
+							<div class="col-xs-12 col-sm-12 col-md-2 col-lg-2">
+								<h:outputText value="Precio " />
+							</div>
+							<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+								<div class="form-group">
+									<h:inputText class="form-control input-lg" id="inputPrecio"
+										value="#{detalleProductoBean.producto.precio}"
+										a:placeholder="Precio">
+										<f:validateBean for="inputPrecio" />
+										<f:ajax event="keyup" render="inputTextMessagePrecio" />
+									</h:inputText>
+									<h:message id="inputTextMessagePrecio" for="inputPrecio"
+										errorStyle="color:red;"></h:message>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<!-- Categoría -->
+				<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+					<div class="form-group">
+						<h:outputText class="form-control input-lg" id="inputCategoria"
+							value="">
+						</h:outputText>
+					</div>
+				</div>
+				<!-- Fin categoría -->
+
+				<hr style="border-width: 3px;" />
+				<!-- Separador -->
+
+				<div class="form-group">
+					<h:inputTextarea class="form-control" id="inputDescripcion"
+						value="#{detalleProductoBean.producto.descripcion}">
+					</h:inputTextarea>
+				</div>
+			</div>
+		</h:form>
+	</div>
+</ui:composition>
+</html>

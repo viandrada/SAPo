@@ -10,6 +10,7 @@ public class DataProducto {
 	public DataProducto() {
 	}
 
+	private int idProducto;
 	private String nombre;
 	private String descripcion;
 	private List<DataImagen> fotos;
@@ -18,6 +19,15 @@ public class DataProducto {
 	private Date fechaAlta;
 	private String atributos;
 	private int stock;
+
+	
+	public int getIdProducto() {
+		return idProducto;
+	}
+
+	public void setIdProducto(int idProducto) {
+		this.idProducto = idProducto;
+	}
 
 	public String getNombre() {
 		return nombre;

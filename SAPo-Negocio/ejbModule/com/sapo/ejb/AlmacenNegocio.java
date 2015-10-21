@@ -164,6 +164,7 @@ public class AlmacenNegocio {
 		List<DataProducto> dataProductos = new ArrayList<DataProducto>();
 		for (int i = 0; i < productos.size(); i++) {
 			DataProducto dataProducto = new DataProducto();
+			dataProducto.setIdProducto(productos.get(i).getIdProducto());
 			dataProducto.setNombre(productos.get(i).getNombre());
 			dataProducto.setDescripcion(productos.get(i).getDescripcion());
 			dataProducto.setPrecio(productos.get(i).getPrecio());
