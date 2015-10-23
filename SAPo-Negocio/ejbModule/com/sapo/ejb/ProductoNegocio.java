@@ -8,16 +8,18 @@ import javax.ejb.EJB;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 
+import com.datatypes.DataCategoria;
 import com.datatypes.DataImagen;
 import com.datatypes.DataProducto;
-import com.datatypes.DataUsuario;
 import com.sapo.dao.AlmacenDAO;
+import com.sapo.dao.CategoriaDAO;
 import com.sapo.dao.ProductoDAO;
+import com.sapo.dao.ProductoGenericoDAO;
 import com.sapo.dao.UsuarioDAO;
-import com.sapo.entidades.Almacen;
+import com.sapo.entidades.Categoria;
 import com.sapo.entidades.Imagen;
 import com.sapo.entidades.Producto;
-import com.sapo.entidades.Usuario;
+import com.sapo.entidades.ProductoGenerico;
 
 /**
  * Session Bean implementation class ProductoNegocio
@@ -28,65 +30,78 @@ public class ProductoNegocio {
 
 	@EJB
 	private ProductoDAO productoDAO;
-	
+	@EJB
+	private ProductoGenericoDAO productoGenericoDAO;
 	@EJB
 	private UsuarioDAO usuarioDAO;
-	
 	@EJB
 	private AlmacenDAO almacenDAO;
-	
+	@EJB
+	private CategoriaDAO categoriaDAO;
+
 	private Producto producto;
 
-		
-    public ProductoNegocio() {
-        producto = new Producto();
-    }
-    
-    
-    public boolean altaProductoGenerico(DataProducto productoData, DataUsuario usuario, int idAlmacen ){
-    	boolean altaOK = false;
-    	Usuario user;
-    	user = this.usuarioDAO.getUsuarioPorEmail(usuario.getEmail());
-    	Almacen almacen;
-    	//FALTA CREAR getAlmacenPorID en AlmacenDAO
-    	// almacen = this.almacenDAO.getAlmacenPorID(idAlmacen);
-    	
-    	this.producto.setNombre(productoData.getNombre());
-    	this.producto.setDescripcion(productoData.getDescripcion());
-    	this.producto.setEstaActivo(productoData.isEstaActivo());
-    	this.producto.setFechaAlta(new Date());
-    	//FALTA this.productoData.setFoto(...);
-    	//FALTA this.productoData.setAlmacenes(almacen);
-    	this.producto.setPrecio(productoData.getPrecio());
-    	
-    	try {
-    		this.productoDAO.insertarProducto(producto);
-    		altaOK=true;
-    	} catch (Exception e){
-    		
-    	}
-    	
-	
-    	return altaOK;
-    }
+	public ProductoNegocio() {
+		producto = new Producto();
+	}
 
-    public DataProducto getProductoPorId(int idProducto){
-    	DataProducto dataProducto = new DataProducto();
-    	Producto producto = this.productoDAO.getProducto(idProducto);
-    	
-    	dataProducto.setIdProducto(producto.getIdProducto());
-    	dataProducto.setAtributos(producto.getAtributos());
-    	dataProducto.setDescripcion(producto.getDescripcion());
-    	dataProducto.setNombre(producto.getNombre());
-    	dataProducto.setPrecio(producto.getPrecio());
-    	dataProducto.setStock(producto.getStock());
-    	dataProducto.setFotos(toDataImagen(producto.getFoto()));
-    	
-    	return dataProducto;
-    }
-    
-    //TODO función auxiliar q se usa bastante. Pasar a paquete utils.
-    public List<DataImagen> toDataImagen(List<Imagen> imagenes){
+	public boolean altaProductoGenerico(DataProducto productoData,
+			DataCategoria categoria) {
+		boolean altaOK = false;
+		ProductoGenerico productoGenerico = new ProductoGenerico();
+		
+		productoGenerico.setNombre(productoData.getNombre());
+		productoGenerico.setDescripcion(productoData.getDescripcion());
+		productoGenerico.setEstaActivo(productoData.isEstaActivo());
+		productoGenerico.setFechaAlta(new Date());
+		productoGenerico.setAtributos(productoData.getAtributos());
+
+		Categoria catGuardar;
+		if (categoria.getNombre() == null) {
+			catGuardar = this.categoriaDAO.getCategoria(categoria
+					.getIdCategoria());
+		} else {
+			catGuardar = new Categoria();
+			catGuardar.setNombre(categoria.getNombre());
+			catGuardar.setEsGenerica(true);
+		}
+		productoGenerico.setCategoria(catGuardar);
+
+		List<Imagen> imgs = new ArrayList<Imagen>();
+		for (int i = 0; i < productoData.getFotos().size(); i++) {
+			Imagen img = new Imagen();
+			img.setDatos(productoData.getFotos().get(i).getDatos());
+			imgs.add(img);
+		}
+		this.producto.setFoto(imgs);
+
+		try {
+			this.productoGenericoDAO.insertarProductoGenerico(productoGenerico);
+			altaOK = true;
+		} catch (Exception e) {
+
+		}
+
+		return altaOK;
+	}
+
+	public DataProducto getProductoPorId(int idProducto) {
+		DataProducto dataProducto = new DataProducto();
+		Producto producto = this.productoDAO.getProducto(idProducto);
+
+		dataProducto.setIdProducto(producto.getIdProducto());
+		dataProducto.setAtributos(producto.getAtributos());
+		dataProducto.setDescripcion(producto.getDescripcion());
+		dataProducto.setNombre(producto.getNombre());
+		dataProducto.setPrecio(producto.getPrecio());
+		dataProducto.setStock(producto.getStock());
+		dataProducto.setFotos(toDataImagen(producto.getFoto()));
+
+		return dataProducto;
+	}
+
+	// TODO función auxiliar q se usa bastante. Pasar a paquete utils.
+	public List<DataImagen> toDataImagen(List<Imagen> imagenes) {
 		List<DataImagen> dataImagenes = new ArrayList<DataImagen>();
 		for (int i = 0; i < imagenes.size(); i++) {
 			DataImagen dataImg = new DataImagen();

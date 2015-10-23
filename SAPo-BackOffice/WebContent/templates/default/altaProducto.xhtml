@@ -1,0 +1,159 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<ui:composition>
+	<div class="container-fluid">
+		<h:panelGrid class="row">
+			<h1>Producto genérico nuevo</h1>
+		</h:panelGrid>
+		<h:form id="altaProducto" rendered="true"
+			enctype="multipart/form-data">
+			<div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
+
+				<!-- Nombre y descripcion -->
+				<div class="row">
+					<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+						<div class="form-group">
+							<h:inputText class="form-control input-lg" id="inputNombre"
+								value="#{altaProductoGenericoBean.nombre}" a:placeholder="Nombre">
+								<f:validateBean for="inputNombre" />
+								<f:ajax event="keyup" render="inputTextMessage" />
+							</h:inputText>
+							<h:message id="inputTextMessage" for="inputNombre"
+								errorStyle="color:red;"></h:message>
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<h:inputTextarea class="form-control" id="inputDescripcion"
+						value="#{altaProductoGenericoBean.descripcion}" a:maxlength="500" rows="5"
+						a:placeholder="Escribe una descripcion aqui...">
+						<f:validateBean for="inputDescripcion" />
+						<f:ajax event="keyup" render="inputTextMessageDescripcion" />
+					</h:inputTextarea>
+					<h:message id="inputTextMessageDescripcion" for="inputDescripcion"
+						errorStyle="color:red;"></h:message>
+				</div>
+				<hr style="border-width: 3px;" />
+				<!-- Separador -->
+				
+				<!-- Categoría -->
+				<div class="row">
+					<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+						<div class="form-group">
+							<label for="sel1">Genérica:</label>
+							<h:selectOneMenu value="#{altaProductoGenericoBean.idCatSeleccionada}"
+								class="form-control" id="sel">
+								<f:selectItems value="#{altaProductoGenericoBean.categorias}"
+									var="c2" itemValue="#{c2.idCategoria}" itemLabel="#{c2.nombre}" />
+							</h:selectOneMenu>
+						</div>
+					</div>
+
+					<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+						<div class="form-group">
+							<label for="sel1">Crear nueva:</label>
+							<h:inputText class="form-control" id="inputCatNueva"
+								value="#{altaProductoGenericoBean.categoriaNueva}"
+								a:placeholder="Ingrese el nombre">
+								<f:validateBean for="inputCatNueva" />
+								<f:ajax event="keyup" render="inputTextMessageCatNueva" />
+							</h:inputText>
+							<h:message id="inputTextMessageCatNueva" for="inputCatNueva"
+								errorStyle="color:red;"></h:message>
+						</div>
+					</div>
+				</div>
+				<!-- Fin categoría -->
+
+				<hr style="border-width: 3px;" />
+				<!-- Separador -->
+
+
+				<h:dataTable value="#{altaProductoGenericoBean.atributosVista}" var="item"
+					id="tablaAtributos" class="table">
+					<h:column>
+						<f:facet name="header">Nombre</f:facet>
+						<h:outputText value="#{item.nombre}" />
+					</h:column>
+					<h:column>
+						<f:facet name="header">Tipo de dato</f:facet>
+						<h:outputText value="#{item.tipoDato}" />
+					</h:column>
+					<h:column>
+						<f:facet name="header">Valor</f:facet>
+						<h:outputText value="#{item.valor}" />
+					</h:column>
+				</h:dataTable>
+
+				<!-- Atributos genericos -->
+				<div class="row">
+					<div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
+						<div class="form-group">
+							<h:inputText class="form-control" id="inputNombreAtr"
+								value="#{altaProductoGenericoBean.nombreAtributo}"
+								a:placeholder="Nombre del atributo">
+								<f:validateBean for="inputNombreAtr" />
+								<f:ajax event="keyup" render="inputTextMessage" />
+							</h:inputText>
+							<h:message id="inputTextMessageNombreAtr" for="inputNombreAtr"
+								errorStyle="color:red;"></h:message>
+						</div>
+					</div>
+					<div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
+						<div class="form-group">
+							<h:inputText class="form-control" id="inputTipoDatoAtr"
+								value="#{altaProductoGenericoBean.tipoAtributo}"
+								a:placeholder="Tipo de dato">
+								<f:validateBean for="inputTipoDatoAtr" />
+								<f:ajax event="keyup" render="inputTextMessage" />
+							</h:inputText>
+							<h:message id="inputTextMessageTipoDato" for="inputTipoDatoAtr"
+								errorStyle="color:red;"></h:message>
+						</div>
+					</div>
+					<div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
+						<div class="form-group">
+							<h:inputText class="form-control" id="inputValorAtr"
+								value="#{altaProductoGenericoBean.valorAtributo}" a:placeholder="Valor">
+								<f:validateBean for="inputNombreAtr" />
+								<f:ajax event="keyup" render="inputTextMessage" />
+							</h:inputText>
+							<h:message id="inputTextMessageValorAtr" for="inputValorAtr"
+								errorStyle="color:red;"></h:message>
+						</div>
+					</div>
+					<div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
+						<h:commandButton class="btn btn-primary" value="Agregar"
+							actionListener="#{altaProductoGenericoBean.add}">
+							<f:ajax render="@form" />
+						</h:commandButton>
+					</div>
+				</div>
+				<!-- Fin de: Atributos genericos -->
+
+				<div class="form-group">
+					<h:inputFile id="imagenProducto" value="#{altaProductoGenericoBean.foto}"
+						onchange="loadFile(event)">
+					</h:inputFile>
+				</div>
+
+				<h:commandButton class="btn btn-primary" value="Crear" type="submit"
+					action="#{navigationBean.goTo('altaProducto.xhtml')}"
+					actionListener="#{altaProductoGenericoBean.altaProductoGenerico()}">
+				</h:commandButton>
+			</div>
+			<div class="col-xs-12 col-sm-12 col-md-2 col-lg-2">
+				<div class="form-group">
+					<img class="img-responsive img-thumbnail" id="inputFotoPreview"></img>
+				</div>
+			</div>
+
+			<h:outputScript name="js/fotoPreview.js" />
+		</h:form>
+	</div>
+</ui:composition>
+</html>

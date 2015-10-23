@@ -3,9 +3,6 @@ package com.sapo.entidades;
 import java.io.Serializable;
 import java.util.Date;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.*;
 
 
@@ -18,10 +15,15 @@ public class ProductoGenerico implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int idProductoGenerico;
 	private String nombre;
+	private String descripcion;
 	private float precio;
 	private String atributos;
 	private Date fechaAlta;
 	private boolean estaActivo;
+	
+	@OneToOne(cascade = { CascadeType.PERSIST, CascadeType.REMOVE,
+			CascadeType.MERGE })
+	private Categoria categoria;
 	
 	public ProductoGenerico() {
 			super();
@@ -41,6 +43,18 @@ public class ProductoGenerico implements Serializable {
 
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
+	}
+
+	public String getDescripcion() {
+		return descripcion;
+	}
+
+	public void setDescripcion(String descripcion) {
+		this.descripcion = descripcion;
+	}
+
+	public void setEstaActivo(boolean estaActivo) {
+		this.estaActivo = estaActivo;
 	}
 
 	public float getPrecio() {
@@ -73,6 +87,14 @@ public class ProductoGenerico implements Serializable {
 
 	public void setEstaActivo(Boolean estaActivo) {
 		this.estaActivo = estaActivo;
+	}
+
+	public Categoria getCategoria() {
+		return categoria;
+	}
+
+	public void setCategoria(Categoria categoria) {
+		this.categoria = categoria;
 	}
 
 

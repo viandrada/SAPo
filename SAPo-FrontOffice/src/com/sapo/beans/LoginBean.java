@@ -8,6 +8,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import javax.faces.event.ValueChangeEvent;
 
 import com.datatypes.DataUsuario;
 import com.sapo.ejb.UsuarioNegocio;
@@ -35,6 +36,7 @@ public class LoginBean {
     private String redirect;
     private boolean logueado;
     private boolean shownLogin;
+    private int contadorLogin;
     
  
 	public String getEmail() {
@@ -89,6 +91,14 @@ public class LoginBean {
 		this.nav = nav;
 	}
 
+	public int getContadorLogin() {
+		return contadorLogin;
+	}
+
+	public void setContadorLogin(int contadorLogin) {
+		this.contadorLogin = contadorLogin;
+	}
+
 	public String login() {
 		this.dataUsuario.setEmail(this.email);
 		
@@ -131,9 +141,9 @@ public class LoginBean {
 	        return "/login.xhtml?faces-redirect=true";
 	    }
 	 
-	 public void loginExterno(){
+	 public void loginExterno(String email){
 		 DataUsuario dUsu = new DataUsuario();
-		 dUsu.setEmail(this.email);
+		 dUsu.setEmail(email);
 		 this.usuarioNegocio.loginExterno(dUsu);
 	 }
 }

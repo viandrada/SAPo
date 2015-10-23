@@ -5,10 +5,11 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 
 <ui:composition>
-<script src="https://apis.google.com/js/platform.js"></script>
+	<script src="https://apis.google.com/js/platform.js"></script>
 
 
-<meta name="google-signin-client_id" content="830964360841-irejv19qe6oglnfm3ahgv86q2qsh5hnv.apps.googleusercontent.com"/>
+	<meta name="google-signin-client_id"
+		content="830964360841-irejv19qe6oglnfm3ahgv86q2qsh5hnv.apps.googleusercontent.com" />
 	<!-- h:panelGroup class="container">
 		<h:panelGroup>
 			<h:panelGroup class="col-sm-4 col-md-4 col-lg-4" id="loginPanel"
@@ -25,7 +26,7 @@
 
 
 	<nav class="navbar navbar-inverse navbar-fixed-top">
-		<div class="container">
+		<div class="container-fluid">
 			<div class="navbar-header">
 				<button type="button" class="navbar-toggle collapsed"
 					data-toggle="collapse" data-target="#navbar" aria-expanded="false"
@@ -40,35 +41,38 @@
 				</h:form>
 			</div>
 
-<h:inputHidden id="emailGmail" value="#{loginBean.email}"
-								class="form-control" onchange="location.reload()" valueChangeListener="#{loginBean.email}"/>
-			<h:panelGroup id="loginPanel" rendered="#{loginBean.shownLogin}">
 
+			<h:panelGroup id="loginPanel" rendered="#{loginBean.shownLogin}">
+				<h:form id="inputHiddenForm">
+					<h:inputHidden id="contadorLogin"
+						value="#{loginBean.contadorLogin}" />
+				</h:form>
 				<div id="navbar" class="navbar-collapse collapse">
 					<h:form class="navbar-form navbar-right">
-						<div class="form-group">
-							<h:inputText id="loginEmail" value="#{loginBean.email}"
-								required="true" class="form-control" a:placeholder="Email">
-								<f:ajax />
-							</h:inputText>
-						</div>
-						<div class="form-group">
-							<h:inputSecret value="#{loginBean.password}" required="true"
-								class="form-control" a:placeholder="Password">
-								<f:ajax />
-							</h:inputSecret>
-						</div>
-						<h:commandButton value="Ingresar" action="#{loginBean.login}"
-							class="btn btn-success"></h:commandButton>
+							<div class="form-group">
+								<h:inputText id="loginEmail" value="#{loginBean.email}"
+									required="true" class="form-control" a:placeholder="Email">
+									<f:ajax />
+								</h:inputText>
+							</div>
+							<div class="form-group">
+								<h:inputSecret value="#{loginBean.password}" required="true"
+									class="form-control" a:placeholder="Password">
+									<f:ajax />
+								</h:inputSecret>
+							</div>
+							<h:commandButton value="Ingresar" action="#{loginBean.login}"
+								class="btn btn-success"></h:commandButton>
 						<!-- div class="fb-login-button" data-max-rows="1" data-size="large"
 							data-show-faces="false" data-auto-logout-link="true"></div>
 						<div id="status"></div-->
-						<div class="g-signin2" data-onsuccess="onSignIn"></div>
-						
+
+						<div class="g-signin2 navbar-right" data-onsuccess="onSignIn"><h:commandLink action="index" value="" /></div>
+
 					</h:form>
 
 				</div>
-<
+
 			</h:panelGroup>
 
 

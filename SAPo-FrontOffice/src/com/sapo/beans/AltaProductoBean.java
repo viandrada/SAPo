@@ -328,7 +328,7 @@ public class AltaProductoBean {
 		this.dataProducto.setFotos(this.fotos);
 
 		//Procesando categoría...
-		if(this.catNueva == null)
+		if(this.catNueva == null || this.catNueva.isEmpty())
 		{
 			this.dataCategoria.setIdCategoria(this.idCatSeleccionada);
 		}

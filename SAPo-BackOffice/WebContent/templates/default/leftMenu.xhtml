@@ -42,7 +42,8 @@
 				<div class="panel panel-default">
 					<div class="panel-heading" style="color: white" id="heading3">
 						<h4 class="panel-title">
-							<a href="#collapse3"> <i class="fa fa-table"></i> Categoria <i class="pull-right fa fa-caret-down"></i>
+							<a href="#collapse3"> <i class="fa fa-table"></i> Categoria <i
+								class="pull-right fa fa-caret-down"></i>
 							</a>
 						</h4>
 					</div>
@@ -50,7 +51,7 @@
 					<div id="collapse3" class="panel-collapse collapse in">
 						<div>
 							<h:form>
-								
+
 								<h:commandLink value="Agregar"
 									action="#{navigationBean.goTo('altaCategoria.xhtml')}"
 									class="list-group-item"></h:commandLink>
@@ -61,7 +62,29 @@
 						</div>
 					</div>
 				</div>
+				<div class="panel panel-default">
+					<div class="panel-heading" style="color: white" id="heading3">
+						<h4 class="panel-title">
+							<a href="#collapse3"> <i class="fa fa-table"></i> Producto <i
+								class="pull-right fa fa-caret-down"></i>
+							</a>
+						</h4>
+					</div>
 
+					<div id="collapse3" class="panel-collapse collapse in">
+						<div>
+							<h:form>
+
+								<h:commandLink value="Agregar"
+									action="#{navigationBean.goTo('altaProducto.xhtml')}"
+									actionListener="#{altaProductoGenericoBean.init()}"
+									class="list-group-item"></h:commandLink>
+								<h:commandLink value="Eliminar - Modificar" action="#"
+									class="list-group-item"></h:commandLink>
+							</h:form>
+						</div>
+					</div>
+				</div>
 				<div class="panel panel-default">
 					<div class="panel-heading" style="color: white" id="heading4">
 						<h4 class="panel-title">
@@ -74,18 +97,14 @@
 					<div id="collapse4" class="panel-collapse collapse in">
 						<div>
 							<h:form>
-								<h:commandLink
-									action="#"
-									value="Reporte 1" class="list-group-item"></h:commandLink>
-								<h:commandLink
-									action="#"
-									value="Reporte 2" class="list-group-item"></h:commandLink>
-								<h:commandLink
-									action="#"
-									value="Reporte 3" class="list-group-item"></h:commandLink>
-								<h:commandLink
-									action="#"
-									value="Reporte 4" class="list-group-item"></h:commandLink>
+								<h:commandLink action="#" value="Reporte 1"
+									class="list-group-item"></h:commandLink>
+								<h:commandLink action="#" value="Reporte 2"
+									class="list-group-item"></h:commandLink>
+								<h:commandLink action="#" value="Reporte 3"
+									class="list-group-item"></h:commandLink>
+								<h:commandLink action="#" value="Reporte 4"
+									class="list-group-item"></h:commandLink>
 							</h:form>
 						</div>
 					</div>

@@ -4,6 +4,7 @@ import javax.ejb.Stateless;
 import javax.ejb.TransactionManagement;
 import javax.ejb.TransactionManagementType;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
@@ -17,14 +18,25 @@ public class UsuarioDAO {
 	EntityManager em;
 
 	public Usuario getUsuario(int idUsuario) {
-		return em.find(Usuario.class, idUsuario);
+		Usuario u = new Usuario();
+		try {
+			u = em.find(Usuario.class, idUsuario);
+		} catch (NoResultException e) {
+			System.out.print("No se encontró el usuario.");
+		}
+		return u;
 	}
 
 	public Usuario getUsuarioPorEmail(String email) {
 		Query consulta = this.em
 				.createNamedQuery("Usuario.getUsuarioPorEmail.Email");
 		consulta.setParameter("email", email);
-		Usuario usr = (Usuario)consulta.getSingleResult();
+		Usuario usr = new Usuario();
+		try {
+			usr = (Usuario) consulta.getSingleResult();
+		} catch (NoResultException e) {
+			System.out.print("No se encontró el usuario.");
+		}
 		return usr;
 	}
 
