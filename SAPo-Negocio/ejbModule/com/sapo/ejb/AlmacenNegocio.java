@@ -2,6 +2,7 @@ package com.sapo.ejb;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 
 import javax.ejb.EJB;
@@ -22,6 +23,7 @@ import com.sapo.entidades.Categoria;
 import com.sapo.entidades.Imagen;
 import com.sapo.entidades.Producto;
 import com.sapo.entidades.Usuario;
+import com.sapo.utils.Fabrica;
 
 /**
  * Session Bean implementation class AlmacenNegocio
@@ -45,6 +47,8 @@ public class AlmacenNegocio {
 	private ProductoDAO productoDAO;
 	@EJB
 	private CategoriaDAO categoriaDAO;
+	@EJB
+	private Fabrica fabrica;
 
 	private Almacen almacen;
 
@@ -52,6 +56,7 @@ public class AlmacenNegocio {
 		int idAlmacenGenerado = 0;
 		Usuario usr;
 		Imagen img = new Imagen();
+		// List<Usuario> usus=new LinkedList<Usuario>();
 
 		img.setDatos(almacen.getBytesFoto());
 		usr = this.usuarioDAO.getUsuarioPorEmail(usuario.getEmail());
@@ -63,8 +68,27 @@ public class AlmacenNegocio {
 		this.almacen.setPropietario(usr);
 		this.almacen.setFoto(img);
 
+		// usus.add(usr);
+		// this.almacen.agregarUsuarioCompartido(usr);
+		// this.almacen.setUsuarios(usus);
+
 		try {
+
+			List<Usuario> listAux = new LinkedList<>();
+			listAux.add(usr);
+
+			this.almacen.setUsuarios(listAux);
+
 			idAlmacenGenerado = this.almacenDAO.insertarAlmacen(this.almacen);
+
+			// almacenDAO.actualizarAlmacen(a);agregado x vic
+
+			// a.agregarUsuarioCompartido(usr);
+
+			if (this.almacen.EsUsuariodeEsteAlmacen(usr.getEmail())) {
+				System.out.println("SI YYYYYYA LO AGREGO AL ALMACEN");
+			}
+
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
@@ -86,8 +110,10 @@ public class AlmacenNegocio {
 			DataAlmacen dataAlmacen = new DataAlmacen();
 			dataAlmacen.setNombre(listaAlmacenes.get(i).getNombre());
 			dataAlmacen.setDescripcion(listaAlmacenes.get(i).getDescripcion());
-			dataAlmacen.setBytesFoto(listaAlmacenes.get(i).getFoto().getDatos());
-			dataAlmacen.setIdFoto(listaAlmacenes.get(i).getFoto().getIdImagen());
+			dataAlmacen
+					.setBytesFoto(listaAlmacenes.get(i).getFoto().getDatos());
+			dataAlmacen
+					.setIdFoto(listaAlmacenes.get(i).getFoto().getIdImagen());
 			dataAlmacen.setIdAlmacen(listaAlmacenes.get(i).getIdAlmacen());
 			listaDataAlmacen.add(dataAlmacen);
 		}
@@ -112,19 +138,20 @@ public class AlmacenNegocio {
 		Producto productoGuardar = new Producto();
 		Almacen almacenGuardar;// = new Almacen(almacen.getIdAlmacen());
 		almacenGuardar = this.almacenDAO.getAlmacen(almacen.getIdAlmacen());
-		
+
 		Categoria catGuardar;
-		if(categoria.getNombre() == null){
-		catGuardar = this.categoriaDAO.getCategoria(categoria.getIdCategoria());
-		}
-		else{
+		if (categoria.getNombre() == null) {
+			catGuardar = this.categoriaDAO.getCategoria(categoria
+					.getIdCategoria());
+		} else {
 			catGuardar = new Categoria();
 			catGuardar.setNombre(categoria.getNombre());
 			catGuardar.setEsGenerica(false);
-			Usuario usr = this.usuarioDAO.getUsuarioPorEmail(usuario.getEmail());
+			Usuario usr = this.usuarioDAO
+					.getUsuarioPorEmail(usuario.getEmail());
 			catGuardar.setUsu(usr);
 		}
-		
+
 		productoGuardar.setNombre(producto.getNombre());
 		productoGuardar.setDescripcion(producto.getDescripcion());
 		productoGuardar.setEstaActivo(true);
@@ -134,7 +161,7 @@ public class AlmacenNegocio {
 		productoGuardar.setAtributos(producto.getAtributos());
 		productoGuardar.setStock(producto.getStock());
 		productoGuardar.setFechaAlta(new Date());
-		
+
 		List<Imagen> imgs = new ArrayList<Imagen>();
 		for (int i = 0; i < producto.getFotos().size(); i++) {
 			Imagen img = new Imagen();
@@ -142,7 +169,7 @@ public class AlmacenNegocio {
 			imgs.add(img);
 		}
 		productoGuardar.setFoto(imgs);
-		
+
 		try {
 			this.productoDAO.insertarProducto(productoGuardar);
 			altaOK = true;
@@ -152,10 +179,11 @@ public class AlmacenNegocio {
 
 		return altaOK;
 	}
-	
-	public List<DataProducto> getProductosDeAlmacen(int idAlmacen){
+
+	public List<DataProducto> getProductosDeAlmacen(int idAlmacen) {
 		List<DataProducto> dataProductos = new ArrayList<DataProducto>();
-		List<Producto> productos = this.productoDAO.getProductosAlmacen(idAlmacen);
+		List<Producto> productos = this.productoDAO
+				.getProductosAlmacen(idAlmacen);
 		dataProductos = this.toDataProductos(productos);
 		return dataProductos;
 	}
@@ -176,8 +204,8 @@ public class AlmacenNegocio {
 		}
 		return dataProductos;
 	}
-	
-	public List<DataImagen> toDataImagen(List<Imagen> imagenes){
+
+	public List<DataImagen> toDataImagen(List<Imagen> imagenes) {
 		List<DataImagen> dataImagenes = new ArrayList<DataImagen>();
 		for (int i = 0; i < imagenes.size(); i++) {
 			DataImagen dataImg = new DataImagen();
@@ -189,4 +217,46 @@ public class AlmacenNegocio {
 		}
 		return dataImagenes;
 	}
+
+	public List<DataUsuario> listDataUsuarios(String email) {
+
+		// return fabrica.convertirUsu(usuarioDAO.getUsuarios());
+		return fabrica.convertirUsu(usuarioDAO.getUsuariosMenosUno(usuarioDAO
+				.getUsuarioPorEmail(email).getIdUsuario()));
+	};
+
+	public List<DataUsuario> listDataUsuariosParaCompartir(String email,
+			int idalma) {
+		// return fabrica.convertirUsu(usuarioDAO.getUsuarios());
+		Almacen alma = almacenDAO.getAlmacen(idalma);
+		return fabrica.convertirUsu(usuarioDAO
+				.getUsuariosMenosYOyLosqueNOCompartenEsteAlmacen(usuarioDAO
+						.getUsuarioPorEmail(email).getIdUsuario(), alma));
+	};
+
+	public void compartirAlmacen(String emaildueno, String emailAmigo,
+			int idAlmacen) {
+		/*
+		 * System.out.println("LLEGO PERO FALTA GUARDAR EL ALMACEN: " +
+		 * idAlmacen + " EN LA LISTA DE ALMACENES DE " + emailAmigo);
+		 */
+
+		Usuario amigo = usuarioDAO.getUsuarioPorEmail(emailAmigo);
+
+		Almacen a = almacenDAO.getAlmacen(idAlmacen);
+
+		a.agregarUsuarioCompartido(amigo);
+
+		almacenDAO.actualizarAlmacen(a);
+
+		/*
+		 * Almacen e = almacenDAO.getAlmacen(idAlmacen);
+		 * 
+		 * if (e.EsUsuariodeEsteAlmacen(emailAmigo)){
+		 * 
+		 * System.out.println("LO AGREGO BIEN"); };
+		 */
+
+	};
+
 }

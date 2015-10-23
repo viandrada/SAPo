@@ -72,8 +72,12 @@ public class CategoriaNegocio {
     	cdao.actualizarCategoria(c);
      }
     
- public List<DataCategoria> listDataCategoriasPersonal(String email){
+    public List<DataCategoria> listDataCategoriasPersonal(String email){
 	 	Usuario usu=udao.getUsuarioPorEmail(email);
+		System.out.println(usu.getEmail()+"HHHHHHHHHHHHHHHHHHHHHHHH");
+		
+		//List<Categoria> l=cdao.getCatPorUsusario(usu.getIdUsuario());
+
 		return fabrica.convertirCat(cdao.getCatPorUsusario(usu.getIdUsuario()));
 	}
     

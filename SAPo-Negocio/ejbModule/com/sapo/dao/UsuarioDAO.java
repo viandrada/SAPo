@@ -1,5 +1,8 @@
 package com.sapo.dao;
 
+import java.util.LinkedList;
+import java.util.List;
+
 import javax.ejb.Stateless;
 import javax.ejb.TransactionManagement;
 import javax.ejb.TransactionManagementType;
@@ -8,6 +11,7 @@ import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
+import com.sapo.entidades.Almacen;
 import com.sapo.entidades.Usuario;
 
 @Stateless
@@ -22,7 +26,7 @@ public class UsuarioDAO {
 		try {
 			u = em.find(Usuario.class, idUsuario);
 		} catch (NoResultException e) {
-			System.out.print("No se encontró el usuario.");
+			System.out.print("No se encontrï¿½ el usuario.");
 		}
 		return u;
 	}
@@ -35,7 +39,7 @@ public class UsuarioDAO {
 		try {
 			usr = (Usuario) consulta.getSingleResult();
 		} catch (NoResultException e) {
-			System.out.print("No se encontró el usuario.");
+			System.out.print("No se encontrï¿½ el usuario.");
 		}
 		return usr;
 	}
@@ -69,6 +73,40 @@ public class UsuarioDAO {
 			throw excep;
 		}
 		return existe;
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<Usuario> getUsuarios() {
+		return em.createQuery("SELECT u FROM Usuario u").getResultList();
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<Usuario> getUsuariosMenosUno(int idu) {
+		// return em.createQuery("SELECT u FROM Usuario u").getResultList();
+
+		return em
+				.createQuery("SELECT u FROM Usuario u  WHERE u.idUsuario!=:idu")
+				.setParameter("idu", idu).getResultList();
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<Usuario> getUsuariosMenosYOyLosqueNOCompartenEsteAlmacen(
+			int idu, Almacen a) {
+		// return em.createQuery("SELECT u FROM Usuario u").getResultList();
+		List<Usuario> listaU = new LinkedList<Usuario>();
+		listaU = em
+				.createQuery("SELECT u FROM Usuario u  WHERE u.idUsuario!=:idu")
+				.setParameter("idu", idu).getResultList();
+		List<Usuario> lisR = new LinkedList<Usuario>();
+
+		if (!listaU.isEmpty()) {
+			for (Usuario u : listaU) {
+				if (!a.EsUsuariodeEsteAlmacen(u.getEmail())) {
+					lisR.add(u);
+				}
+			}
+		}
+		return lisR;
 	}
 
 }

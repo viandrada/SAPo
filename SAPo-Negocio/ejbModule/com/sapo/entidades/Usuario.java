@@ -60,9 +60,20 @@ public class Usuario implements Serializable {
 		this.monto = monto;
 	}
 
-	@ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.REMOVE,
+	/*@ManyToMany(cascade = { CascadeType.REMOVE,
 			CascadeType.MERGE })
-	private List<Almacen> almacenes;
+	private List<Almacen> almacenes;*/
+	
+	//@ManyToOne(cascade={CascadeType.MERGE, CascadeType.REMOVE})
+	//private Almacen almacen;
+/*
+	public Almacen getAlmacen() {
+		return almacen;
+	}
+
+	public void setAlmacen(Almacen almacen) {
+		this.almacen = almacen;
+	}*/
 
 	public int getIdUsuario() {
 		return idUsuario;
@@ -128,13 +139,13 @@ public class Usuario implements Serializable {
 		this.fecha = fecha;
 	}
 
-	public List<Almacen> getAlmacenes() {
+	/*public List<Almacen> getAlmacenes() {
 		return almacenes;
 	}
 
 	public void setAlmacenes(List<Almacen> almacenes) {
 		this.almacenes = almacenes;
-	}
+	}*/
 
 	public Boolean getEstaActivo() {
 		return estaActivo;
