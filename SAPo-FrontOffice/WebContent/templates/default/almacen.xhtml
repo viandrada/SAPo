@@ -30,11 +30,15 @@
 					<h:commandButton value="Compartir Almacen"
 						action="#{navigationAreaBean.goTo('compartirAlmacen.xhtml')}"
 						class="btn btn-primary btn-lg"></h:commandButton>
+					<h:commandButton value="Comentarios"
+						action="#{navigationAreaBean.goTo('comentariosAlmacen.xhtml')}"
+						class="btn btn-primary btn-lg"></h:commandButton>
+					<h:commandButton value="+"
+						action="#{navigationAreaBean.goTo('altaProducto.xhtml')}"
+						actionListener="#{altaProductoBean.init()}"
+						class="btn btn-primary btn-lg"></h:commandButton>
 				</h:panelGroup>
-				<h:commandButton value="+"
-					action="#{navigationAreaBean.goTo('altaProducto.xhtml')}"
-					actionListener="#{altaProductoBean.init()}"
-					class="btn btn-primary btn-lg"></h:commandButton>
+
 			</h:form>
 
 		</div>

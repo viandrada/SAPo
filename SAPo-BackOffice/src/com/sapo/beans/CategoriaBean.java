@@ -15,6 +15,7 @@ import com.sapo.ejb.CategoriaNegocio;
 
 
 @ManagedBean
+@RequestScoped
 //@ViewScoped
 public class CategoriaBean implements Serializable{
 	private static final long serialVersionUID = 1L;
@@ -75,10 +76,18 @@ public class CategoriaBean implements Serializable{
 	
 	}
 	
-	public void promoverCategoria(int idCatpromover){
+	/*public void promoverCategoria(int idCatpromover){
 		this.idCatpromover=idCatpromover;
 		cNegocio.promoCat(this.idCatpromover);
+	}*/
+	
+
+	public String promoverCategoria(int idCatpromover){
+		this.idCatpromover=idCatpromover;
+		cNegocio.promoCat(this.idCatpromover);
+		return "/index.xhtml?faces-redirect=true";
 	}
+	
 	
 	public String getNombre() {
 		return nombre;

@@ -1,33 +1,23 @@
-package com.sapo.entidades;
+package com.datatypes;
 
 import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  * Entity implementation class for Entity: Comentario
  *
  */
-@Entity
-
-public class Comentario implements Serializable {
-
+@XmlRootElement
+public class DataComentario{
 	
-	private static final long serialVersionUID = 1L;
-
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int idComentario;
 	private String contenido;
 	private Date fecha;
-	@OneToOne
-	private Usuario usuario;
+	private int usuario; 
 	
-	public Comentario() {
-		super();
-	}
-
 	public int getIdComentario() {
 		return idComentario;
 	}
@@ -52,12 +42,20 @@ public class Comentario implements Serializable {
 		this.fecha = fecha;
 	}
 
-	public Usuario getUsuario() {
+	public int getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(int usuario) {
+		this.usuario = usuario;
+	}
+
+	/*public Usuario getUsuario() {
 		return usuario;
 	}
 
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
 	}
-  
+   */
 }
