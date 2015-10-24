@@ -1,6 +1,7 @@
 package com.sapo.beans;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -34,8 +35,11 @@ public class AltaProductoGenericoBean {
 	private String nombreAtributo;
 	private String tipoAtributo;
 	private String valorAtributo;
+	private Date valorAtributoFecha;
 	private Part foto;
 	private DataImagen dataImagen;
+	private String tipoDato;
+	private List<String> tipoDatoList ;
 
 	@EJB
 	CategoriaNegocio cNegocio;
@@ -114,6 +118,14 @@ public class AltaProductoGenericoBean {
 		this.valorAtributo = valorAtributo;
 	}
 
+	public Date getValorAtributoFecha() {
+		return valorAtributoFecha;
+	}
+
+	public void setValorAtributoFecha(Date valorAtributoFecha) {
+		this.valorAtributoFecha = valorAtributoFecha;
+	}
+
 	public Part getFoto() {
 		return foto;
 	}
@@ -130,6 +142,22 @@ public class AltaProductoGenericoBean {
 		this.dataImagen = dataImagen;
 	}
 
+	public String getTipoDato() {
+		return tipoDato;
+	}
+
+	public void setTipoDato(String tipoDato) {
+		this.tipoDato = tipoDato;
+	}
+
+	public List<String> getTipoDatoList() {
+		return tipoDatoList;
+	}
+
+	public void setTipoDatoList(List<String> tipoDatoList) {
+		this.tipoDatoList = tipoDatoList;
+	}
+
 	@PostConstruct
 	public void init() {
 		categorias = cNegocio.listDataCategoriasGenericas();
@@ -137,6 +165,11 @@ public class AltaProductoGenericoBean {
 		this.nombre = "";
 		this.categoriaNueva = null;
 		this.descripcion = "";
+		this.tipoDatoList = new ArrayList<String>();
+		this.tipoDatoList.add("Texto");
+		this.tipoDatoList.add("Entero");
+		this.tipoDatoList.add("Fecha");
+		this.tipoDatoList.add("Decimal");
 	}
 
 	public String altaProductoGenerico() {

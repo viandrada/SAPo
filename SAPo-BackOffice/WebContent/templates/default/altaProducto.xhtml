@@ -2,7 +2,8 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
-	xmlns:ui="http://java.sun.com/jsf/facelets">
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
 
 <ui:composition>
 	<div class="container-fluid">
@@ -18,7 +19,8 @@
 					<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
 						<div class="form-group">
 							<h:inputText class="form-control input-lg" id="inputNombre"
-								value="#{altaProductoGenericoBean.nombre}" a:placeholder="Nombre">
+								value="#{altaProductoGenericoBean.nombre}"
+								a:placeholder="Nombre">
 								<f:validateBean for="inputNombre" />
 								<f:ajax event="keyup" render="inputTextMessage" />
 							</h:inputText>
@@ -29,8 +31,8 @@
 				</div>
 				<div class="form-group">
 					<h:inputTextarea class="form-control" id="inputDescripcion"
-						value="#{altaProductoGenericoBean.descripcion}" a:maxlength="500" rows="5"
-						a:placeholder="Escribe una descripcion aqui...">
+						value="#{altaProductoGenericoBean.descripcion}" a:maxlength="500"
+						rows="5" a:placeholder="Escribe una descripcion aqui...">
 						<f:validateBean for="inputDescripcion" />
 						<f:ajax event="keyup" render="inputTextMessageDescripcion" />
 					</h:inputTextarea>
@@ -39,13 +41,14 @@
 				</div>
 				<hr style="border-width: 3px;" />
 				<!-- Separador -->
-				
+
 				<!-- Categoría -->
 				<div class="row">
 					<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
 						<div class="form-group">
 							<label for="sel1">Genérica:</label>
-							<h:selectOneMenu value="#{altaProductoGenericoBean.idCatSeleccionada}"
+							<h:selectOneMenu
+								value="#{altaProductoGenericoBean.idCatSeleccionada}"
 								class="form-control" id="sel">
 								<f:selectItems value="#{altaProductoGenericoBean.categorias}"
 									var="c2" itemValue="#{c2.idCategoria}" itemLabel="#{c2.nombre}" />
@@ -73,8 +76,8 @@
 				<!-- Separador -->
 
 
-				<h:dataTable value="#{altaProductoGenericoBean.atributosVista}" var="item"
-					id="tablaAtributos" class="table">
+				<h:dataTable value="#{altaProductoGenericoBean.atributosVista}"
+					var="item" id="tablaAtributos" class="table">
 					<h:column>
 						<f:facet name="header">Nombre</f:facet>
 						<h:outputText value="#{item.nombre}" />
@@ -105,25 +108,26 @@
 					</div>
 					<div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
 						<div class="form-group">
-							<h:inputText class="form-control" id="inputTipoDatoAtr"
-								value="#{altaProductoGenericoBean.tipoAtributo}"
-								a:placeholder="Tipo de dato">
-								<f:validateBean for="inputTipoDatoAtr" />
-								<f:ajax event="keyup" render="inputTextMessage" />
-							</h:inputText>
-							<h:message id="inputTextMessageTipoDato" for="inputTipoDatoAtr"
-								errorStyle="color:red;"></h:message>
+							<h:selectOneMenu value="#{altaProductoGenericoBean.tipoDato}"
+								class="form-control" id="tipoDato">
+								<f:selectItems value="#{altaProductoGenericoBean.tipoDatoList}"
+									var="e" itemValue="#{e}" itemLabel="#{e}" />
+							</h:selectOneMenu>
 						</div>
 					</div>
 					<div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
 						<div class="form-group">
 							<h:inputText class="form-control" id="inputValorAtr"
-								value="#{altaProductoGenericoBean.valorAtributo}" a:placeholder="Valor">
+								value="#{altaProductoGenericoBean.valorAtributo}"
+								a:placeholder="Valor" rendered="true">
 								<f:validateBean for="inputNombreAtr" />
 								<f:ajax event="keyup" render="inputTextMessage" />
 							</h:inputText>
 							<h:message id="inputTextMessageValorAtr" for="inputValorAtr"
 								errorStyle="color:red;"></h:message>
+						</div>
+						<div class="form-group">
+							<p:calendar value="#{altaProductoGenericoBean.valorAtributoFecha}"></p:calendar>
 						</div>
 					</div>
 					<div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
@@ -136,7 +140,8 @@
 				<!-- Fin de: Atributos genericos -->
 
 				<div class="form-group">
-					<h:inputFile id="imagenProducto" value="#{altaProductoGenericoBean.foto}"
+					<h:inputFile id="imagenProducto"
+						value="#{altaProductoGenericoBean.foto}"
 						onchange="loadFile(event)">
 					</h:inputFile>
 				</div>
@@ -153,6 +158,7 @@
 			</div>
 
 			<h:outputScript name="js/fotoPreview.js" />
+
 		</h:form>
 	</div>
 </ui:composition>
