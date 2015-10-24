@@ -61,4 +61,7 @@ public class Categoria implements Serializable {
 		this.usu = usu;
 	}
 
+	public boolean tieneUsuario(){
+		return usu!=null;
+	}
 }
