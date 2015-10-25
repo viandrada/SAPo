@@ -21,6 +21,8 @@ public class VerProductosBean {
 	@EJB
 	ProductoNegocio productoNegocio;
 	private List<DataProducto> productosGenericos;
+	private String nombreProductoSeleccionado;
+	private int idProductoSeleccionado;
 	
 	
 	public void setProductosGenericos(List<DataProducto> productosGenericos) {
@@ -29,6 +31,22 @@ public class VerProductosBean {
 
 	public List<DataProducto> getProductosGenericos() {
 		return productosGenericos;
+	}
+
+	public String getNombreProductoSeleccionado() {
+		return nombreProductoSeleccionado;
+	}
+
+	public void setNombreProductoSeleccionado(String nombreProductoSeleccionado) {
+		this.nombreProductoSeleccionado = nombreProductoSeleccionado;
+	}
+
+	public int getIdProductoSeleccionado() {
+		return idProductoSeleccionado;
+	}
+
+	public void setIdProductoSeleccionado(int idProductoSeleccionado) {
+		this.idProductoSeleccionado = idProductoSeleccionado;
 	}
 
 	@PostConstruct
