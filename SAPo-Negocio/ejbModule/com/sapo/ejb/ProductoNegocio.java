@@ -20,6 +20,7 @@ import com.sapo.entidades.Categoria;
 import com.sapo.entidades.Imagen;
 import com.sapo.entidades.Producto;
 import com.sapo.entidades.ProductoGenerico;
+import com.sapo.utils.Fabrica;
 
 /**
  * Session Bean implementation class ProductoNegocio
@@ -49,7 +50,7 @@ public class ProductoNegocio {
 			DataCategoria categoria) {
 		boolean altaOK = false;
 		ProductoGenerico productoGenerico = new ProductoGenerico();
-		
+
 		productoGenerico.setNombre(productoData.getNombre());
 		productoGenerico.setDescripcion(productoData.getDescripcion());
 		productoGenerico.setEstaActivo(productoData.isEstaActivo());
@@ -112,5 +113,13 @@ public class ProductoNegocio {
 			dataImagenes.add(dataImg);
 		}
 		return dataImagenes;
+	}
+
+	public List<DataProducto> getProductosGenericos() {
+		List<DataProducto> productosGenericos = new ArrayList<DataProducto>();
+		Fabrica fabrica = new Fabrica();
+		productosGenericos = fabrica.toDataProducto(productoGenericoDAO
+				.getProductosGenericos());
+		return productosGenericos;
 	}
 }

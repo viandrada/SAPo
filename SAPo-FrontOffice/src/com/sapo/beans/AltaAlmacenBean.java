@@ -153,7 +153,7 @@ public class AltaAlmacenBean {
 			ExternalContext externalContext = facesContext.getExternalContext();
 
 			try {
-				externalContext.redirect("index.xhtml");
+				externalContext.redirect("/index.xhtml?faces-redirect=true");
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -165,7 +165,7 @@ public class AltaAlmacenBean {
 			return null;
 		}
 		
-		return "index";
+		return "/index.xhtml?faces-redirect=true";
 	}
 
 }

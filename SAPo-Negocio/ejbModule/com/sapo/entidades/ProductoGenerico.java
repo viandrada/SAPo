@@ -5,7 +5,9 @@ import java.util.Date;
 
 import javax.persistence.*;
 
+@NamedQueries({
 
+@NamedQuery(name = "ProductosGenericos.getProductos", query = "SELECT p FROM ProductoGenerico p") })
 @Entity
 public class ProductoGenerico implements Serializable {
 

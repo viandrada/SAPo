@@ -1,5 +1,6 @@
 package com.sapo.beans;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -8,11 +9,16 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.event.AjaxBehaviorEvent;
+import javax.faces.event.ValueChangeEvent;
 import javax.servlet.http.Part;
+
+import org.primefaces.event.SelectEvent;
 
 import com.datatypes.DataCategoria;
 import com.datatypes.DataImagen;
 import com.datatypes.DataProducto;
+import com.datatypes.TipoDato;
 import com.google.gson.Gson;
 import com.sapo.ejb.CategoriaNegocio;
 import com.sapo.ejb.ProductoNegocio;
@@ -34,12 +40,15 @@ public class AltaProductoGenericoBean {
 	private List<Atributo> atributosVista;
 	private String nombreAtributo;
 	private String tipoAtributo;
-	private String valorAtributo;
+	private String valorAtributoTexto;
+	private double valorAtributoNumero;
 	private Date valorAtributoFecha;
 	private Part foto;
 	private DataImagen dataImagen;
 	private String tipoDato;
-	private List<String> tipoDatoList ;
+	private List<String> tipoDatoList;
+	private boolean renderText;
+	private boolean renderCalendar;
 
 	@EJB
 	CategoriaNegocio cNegocio;
@@ -110,12 +119,16 @@ public class AltaProductoGenericoBean {
 		this.tipoAtributo = tipoAtributo;
 	}
 
-	public String getValorAtributo() {
-		return valorAtributo;
+	public String getValorAtributoTexto() {
+		return valorAtributoTexto;
+	}
+
+	public void setValorAtributoTexto(String valorAtributoTexto) {
+		this.valorAtributoTexto = valorAtributoTexto;
 	}
 
 	public void setValorAtributo(String valorAtributo) {
-		this.valorAtributo = valorAtributo;
+		this.valorAtributoTexto = valorAtributo;
 	}
 
 	public Date getValorAtributoFecha() {
@@ -124,6 +137,14 @@ public class AltaProductoGenericoBean {
 
 	public void setValorAtributoFecha(Date valorAtributoFecha) {
 		this.valorAtributoFecha = valorAtributoFecha;
+	}
+
+	public double getValorAtributoNumero() {
+		return valorAtributoNumero;
+	}
+
+	public void setValorAtributoNumero(double valorAtributoNumero) {
+		this.valorAtributoNumero = valorAtributoNumero;
 	}
 
 	public Part getFoto() {
@@ -158,6 +179,22 @@ public class AltaProductoGenericoBean {
 		this.tipoDatoList = tipoDatoList;
 	}
 
+	public boolean isRenderText() {
+		return renderText;
+	}
+
+	public void setRenderText(boolean renderText) {
+		this.renderText = renderText;
+	}
+
+	public boolean isRenderCalendar() {
+		return renderCalendar;
+	}
+
+	public void setRenderCalendar(boolean renderCalendar) {
+		this.renderCalendar = renderCalendar;
+	}
+
 	@PostConstruct
 	public void init() {
 		categorias = cNegocio.listDataCategoriasGenericas();
@@ -167,9 +204,9 @@ public class AltaProductoGenericoBean {
 		this.descripcion = "";
 		this.tipoDatoList = new ArrayList<String>();
 		this.tipoDatoList.add("Texto");
-		this.tipoDatoList.add("Entero");
+		this.tipoDatoList.add("Numero");
 		this.tipoDatoList.add("Fecha");
-		this.tipoDatoList.add("Decimal");
+		this.tipoDato = "Texto";
 	}
 
 	public String altaProductoGenerico() {
@@ -196,7 +233,7 @@ public class AltaProductoGenericoBean {
 			imagenesData.add(this.dataImagen);
 		}
 		dataProducto.setFotos(imagenesData);
-		
+
 		// Procesando categoría...
 		if (this.categoriaNueva == null || this.categoriaNueva.isEmpty()) {
 			dataCategoria.setIdCategoria(this.idCatSeleccionada);
@@ -205,8 +242,7 @@ public class AltaProductoGenericoBean {
 		}
 
 		// Alta producto
-		this.productoNegocio
-				.altaProductoGenerico(dataProducto, dataCategoria);
+		this.productoNegocio.altaProductoGenerico(dataProducto, dataCategoria);
 
 		this.init();
 		return "index";
@@ -216,12 +252,41 @@ public class AltaProductoGenericoBean {
 	public String add() {
 		Atributo a = new Atributo();
 		a.setNombre(this.getNombreAtributo());
-		a.setTipoDato(this.getTipoAtributo());
-		a.setValor(this.getValorAtributo());
+		a.setTipoDato(this.tipoDato);
+		
+		switch (this.getTipoDato()) {
+		case "Texto":
+			a.setValor(this.valorAtributoTexto);
+			break;
+		case "Fecha":
+			SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+			a.setValor(format.format(this.valorAtributoFecha));
+			break;
+		case "Numero":
+			a.setValor(String.valueOf(this.valorAtributoNumero));
+			break;
+		default:
+			this.renderText = true;
+		}
+		
 		atributosVista.add(a);
 		this.nombreAtributo = null;
 		this.tipoAtributo = null;
-		this.valorAtributo = null;
+		this.valorAtributoTexto = null;
+		this.valorAtributoNumero = 0.0f;
+		this.valorAtributoFecha = null;
+		this.tipoDato = "Texto";
 		return null;
+	}
+
+	public void comboChangeListener(AjaxBehaviorEvent event) {
+		System.out.println(this.tipoDato);
+		
+	}
+	
+	public void handleDateSelect(AjaxBehaviorEvent  event){
+
+	    SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+	    System.out.println(format.format(this.valorAtributoFecha));
 	}
 }

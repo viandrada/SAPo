@@ -109,25 +109,41 @@
 					<div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
 						<div class="form-group">
 							<h:selectOneMenu value="#{altaProductoGenericoBean.tipoDato}"
-								class="form-control" id="tipoDato">
+								class="form-control" id="tipoDato" onchange="mostrarComponente()">
 								<f:selectItems value="#{altaProductoGenericoBean.tipoDatoList}"
-									var="e" itemValue="#{e}" itemLabel="#{e}" />
+									var="e" itemValue="#{e}" itemLabel="#{e}" id="tipoDatoSelect" />
+								<f:ajax event="change" listener="#{altaProductoGenericoBean.comboChangeListener}"></f:ajax>
 							</h:selectOneMenu>
 						</div>
 					</div>
 					<div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
-						<div class="form-group">
+						<div class="form-group" id="atributoTexto" style="display: block;">
 							<h:inputText class="form-control" id="inputValorAtr"
-								value="#{altaProductoGenericoBean.valorAtributo}"
-								a:placeholder="Valor" rendered="true">
+								value="#{altaProductoGenericoBean.valorAtributoTexto}"
+								a:placeholder="Valor">
 								<f:validateBean for="inputNombreAtr" />
 								<f:ajax event="keyup" render="inputTextMessage" />
 							</h:inputText>
 							<h:message id="inputTextMessageValorAtr" for="inputValorAtr"
 								errorStyle="color:red;"></h:message>
 						</div>
-						<div class="form-group">
-							<p:calendar value="#{altaProductoGenericoBean.valorAtributoFecha}"></p:calendar>
+
+						<div class="form-group" id="atributoCalendario"
+							style="display: none;">
+							<p:calendar
+								value="#{altaProductoGenericoBean.valorAtributoFecha}" pattern="dd/MM/yyyy">
+								<f:ajax event="dateSelect" listener="#{altaProductoGenericoBean.handleDateSelect}"/></p:calendar>
+						</div>
+
+						<div class="form-group" id="atributoNumero" style="display: none;">
+							<h:inputText class="form-control" id="atributoNumero"
+								value="#{altaProductoGenericoBean.valorAtributoNumero}"
+								a:placeholder="Valor">
+								<f:validateBean for="atributoNumero" />
+								<f:ajax event="keyup" render="inputTextMessage" />
+							</h:inputText>
+							<h:message id="inputTextMessageatributoNumero" for="inputValorAtr"
+								errorStyle="color:red;"></h:message>
 						</div>
 					</div>
 					<div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
@@ -161,5 +177,35 @@
 
 		</h:form>
 	</div>
+	<script type="text/javascript">
+
+               function mostrarComponente()
+               {
+
+                  var tipoDato;
+                  tipoDato = document.getElementById('altaProducto:tipoDato').value;
+
+                  document.getElementById('atributoTexto').style.display='none';
+                  document.getElementById('atributoCalendario').style.display='none';
+                  document.getElementById('atributoNumero').style.display='none';
+
+                  switch(tipoDato)
+                  {
+                    case "Texto":
+                       document.getElementById('atributoTexto').style.display='block';
+                       break;
+                    case "Fecha":
+                       document.getElementById('atributoCalendario').style.display='block';      
+                       break;
+                    case "Numero":
+                        document.getElementById('atributoNumero').style.display='block';      
+                        break;
+                    default:
+                    	document.getElementById('atributoTexto').style.display='block';
+                        break;
+                  }
+                  
+               }
+     </script>
 </ui:composition>
 </html>

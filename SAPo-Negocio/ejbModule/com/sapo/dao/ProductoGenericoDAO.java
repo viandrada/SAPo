@@ -1,5 +1,7 @@
 package com.sapo.dao;
 
+import java.util.List;
+
 import javax.ejb.Stateless;
 import javax.ejb.TransactionManagement;
 import javax.ejb.TransactionManagementType;
@@ -7,6 +9,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
+import com.sapo.entidades.Producto;
 import com.sapo.entidades.ProductoGenerico;
 
 
@@ -48,5 +51,13 @@ public class ProductoGenericoDAO {
 	
 	public void actualizarProductoGenerico(ProductoGenerico a){
 		em.merge(a);		
+	}
+	
+	public List<ProductoGenerico> getProductosGenericos(){
+		Query consulta = this.em
+				.createNamedQuery("ProductosGenericos.getProductos");
+		List<ProductoGenerico> productos = (List<ProductoGenerico>)consulta.getResultList();
+		return productos;
+		
 	}
 }
