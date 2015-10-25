@@ -11,15 +11,18 @@ import javax.ejb.Stateless;
 
 import com.sapo.dao.AlmacenDAO;
 import com.sapo.dao.CategoriaDAO;
+import com.sapo.dao.ComentarioDAO;
 import com.sapo.dao.ProductoDAO;
 import com.sapo.dao.UsuarioDAO;
 import com.datatypes.DataAlmacen;
 import com.datatypes.DataCategoria;
+import com.datatypes.DataComentario;
 import com.datatypes.DataImagen;
 import com.datatypes.DataProducto;
 import com.datatypes.DataUsuario;
 import com.sapo.entidades.Almacen;
 import com.sapo.entidades.Categoria;
+import com.sapo.entidades.Comentario;
 import com.sapo.entidades.Imagen;
 import com.sapo.entidades.Producto;
 import com.sapo.entidades.Usuario;
@@ -41,6 +44,8 @@ public class AlmacenNegocio {
 
 	@EJB
 	private AlmacenDAO almacenDAO;
+	@EJB
+	private ComentarioDAO comentarioDAO;
 	@EJB
 	private UsuarioDAO usuarioDAO;
 	@EJB
@@ -225,6 +230,12 @@ public class AlmacenNegocio {
 				.getUsuarioPorEmail(email).getIdUsuario()));
 	};
 
+	public List<DataComentario> listadeComentarios(int idalma) {
+
+		return fabrica.convertirComentarios(almacenDAO.getAlmacen(idalma)
+				.getComentarios());
+	};
+
 	public List<DataUsuario> listDataUsuariosParaCompartir(String email,
 			int idalma) {
 		// return fabrica.convertirUsu(usuarioDAO.getUsuarios());
@@ -257,6 +268,25 @@ public class AlmacenNegocio {
 		 * System.out.println("LO AGREGO BIEN"); };
 		 */
 
+	};
+
+	public void comentarEnAlmacen(String emailusuario, String contenido,
+			int idAlmacen) {
+
+		Usuario usuario = usuarioDAO.getUsuarioPorEmail(emailusuario);
+
+		Comentario co = new Comentario();
+		co.setContenido(contenido);
+		co.setFecha(new Date());
+		co.setUsuario(usuario);
+
+		// comentarioDAO.insertarComentario(co);
+
+		Almacen a = almacenDAO.getAlmacen(idAlmacen);
+
+		a.agregarComentario(co);
+
+		almacenDAO.actualizarAlmacen(a);
 	};
 
 }

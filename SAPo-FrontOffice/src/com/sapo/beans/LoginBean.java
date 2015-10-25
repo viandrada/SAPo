@@ -32,7 +32,9 @@ public class LoginBean {
 	NavigationBean nav;
 
     private String email;
+    private String nombre;
     private String password;
+    private boolean premium;
     private String redirect;
     private boolean logueado;
     private boolean shownLogin;
@@ -45,6 +47,23 @@ public class LoginBean {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+	
+	
+	public boolean isPremium() {
+		return premium;
+	}
+
+	public void setPremium(boolean premium) {
+		this.premium = premium;
+	}
+
+	public String getNombre() {
+		return nombre;
+	}
+
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
 	}
 
 	public String getPassword() {
@@ -124,8 +143,14 @@ public class LoginBean {
 		
 		boolean ok = usuarioNegocio.login(this.dataUsuario.getEmail(), this.dataUsuario.getPassword());
 		if(ok){
+			DataUsuario dataUser = usuarioNegocio.getUsuarioPorEmail(email);
+			System.out.println("email "+dataUser.getEmail()+" - Nombre "+dataUser.getNombre());
 			this.redirect = "Login OK!";
 		    this.logueado = true;
+		    //this.dataUsuario.setNombre(dataUser.getNombre());
+		    this.nombre=dataUser.getNombre();
+		    this.premium=dataUser.isPremium();
+		    //System.out.println("nombe2 "+this.getNombre()+" - Nombre "+this.dataUsuario.getNombre());
 		    this.nav.setRedirectTo("areaTrabajo.xhtml");
 		    this.shownLogin = false;
 		    return "/index.xhtml?faces-redirect=true";

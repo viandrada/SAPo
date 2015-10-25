@@ -7,6 +7,7 @@ import javax.ejb.Stateless;
 import com.datatypes.DataUsuario;
 import com.sapo.dao.UsuarioDAO;
 import com.sapo.entidades.Usuario;
+import com.sapo.utils.Fabrica;
 
 /**
  * Session Bean implementation class UsuarioNegocio
@@ -42,7 +43,7 @@ public class UsuarioNegocio {
 					.getEmail());
 			if (existeUsuario == null) {// Si no existe se da de alta.
 				usuarioDAO.insertarUsuario(usuario);
-			}else if ((existeUsuario != null && existeUsuario.getPassword() == null)) {// Si existe pero no tiene password porque se logueó con terceros, se actualiza.
+			}else if ((existeUsuario != null && existeUsuario.getPassword() == null)) {// Si existe pero no tiene password porque se logueï¿½ con terceros, se actualiza.
 				existeUsuario.setEmail(usuario.getEmail());
 				existeUsuario.setPassword(usuario.getPassword());
 				existeUsuario.setEstaActivo(true);
@@ -71,6 +72,7 @@ public class UsuarioNegocio {
 		}
 		return loginOK;
 	}
+	
 
 	public DataUsuario loginExterno(DataUsuario dataUsuario) {
 		Usuario usuario = new Usuario();
@@ -91,5 +93,27 @@ public class UsuarioNegocio {
 		dUsuario.setNombre(usuario.getNombre());
 		
 		return dUsuario;
+	}
+
+	public boolean pasarAPremium(String usuarioLogueado) {
+		
+		usuario = usuarioDAO.getUsuarioPorEmail(usuarioLogueado); 
+		usuario.setPremium(true);
+		
+		try {
+			usuarioDAO.actualizarUsuario(usuario);
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+		
+	}
+	
+	public DataUsuario getUsuarioPorEmail(String email){
+		Fabrica f = new Fabrica();
+		DataUsuario dataUser = f.convertirUserAData(usuarioDAO.getUsuarioPorEmail(email));
+		return dataUser;
+		
 	}
 }

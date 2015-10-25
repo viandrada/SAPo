@@ -1,11 +1,15 @@
 package com.sapo.dao;
 
+import java.util.LinkedList;
+import java.util.List;
+
 import javax.ejb.Stateless;
 import javax.ejb.TransactionManagement;
 import javax.ejb.TransactionManagementType;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import com.sapo.entidades.Almacen;
 import com.sapo.entidades.Comentario;
 
 
@@ -21,7 +25,7 @@ public class ComentarioDAO {
 	}
 	
 	public boolean existeComentario(int idComentario){
-		return (em.createQuery("SELECT a FROM Comentario p WHERE a.idComentario=:idComentario")
+		return (em.createQuery("SELECT a FROM Comentario a WHERE a.idComentario=:idComentario")
 				.setParameter("idComentario", idComentario)
 				.getResultList().size()== 1);
 	}
@@ -32,7 +36,30 @@ public class ComentarioDAO {
 	}
 	
 	public void actualizarComentario(Comentario a){
+		//em.persist(a);
 		em.merge(a);		
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Comentario> getComentariosdeEsteAlmacen(
+			Almacen a) {
+		
+		List<Comentario> listaC = new LinkedList<Comentario>();
+		
+		listaC = em
+				.createQuery("SELECT c FROM Comentario c")
+				.getResultList();
+		
+		List<Comentario> lisR = new LinkedList<Comentario>();
+
+		if (!listaC.isEmpty()) {
+			for (Comentario c : listaC) {
+				if (!a.EsComentariodeAlmacen(c.getIdComentario())) {
+					lisR.add(c);
+				}
+			}
+		}
+		return lisR;
 	}
 
 }
