@@ -285,6 +285,11 @@ public class AltaProductoBean {
 		this.catNueva = "";
 		this.descripcion = "";
 		this.atributosVista = new ArrayList<Atributo>();
+		this.foto = null;
+		this.foto2 = null;
+		this.foto3 = null;
+		this.foto4 = null;
+		this.fotos.clear();
 	}
 
 	public String altaProducto() {

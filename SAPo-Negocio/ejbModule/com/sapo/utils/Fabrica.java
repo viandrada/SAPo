@@ -6,8 +6,10 @@ import java.util.List;
 import javax.ejb.Stateless;
 
 import com.datatypes.DataCategoria;
+import com.datatypes.DataComentario;
 import com.datatypes.DataUsuario;
 import com.sapo.entidades.Categoria;
+import com.sapo.entidades.Comentario;
 import com.sapo.entidades.Usuario;
 
 @Stateless
@@ -43,7 +45,24 @@ public class Fabrica
 			dcat.setPassword(c.getPassword());
 			//dcat.setFecha(c.);
 			
+			l.add(dcat);
+		}
+		return l;
+	}
+	
+	public List<DataComentario> convertirComentarios(List<Comentario> lcat)
+	{
+		List<DataComentario> l = new LinkedList<DataComentario>();
 		
+		for(Comentario c : lcat)
+		{
+			DataComentario dcat = new DataComentario();
+			
+			dcat.setContenido(c.getContenido());
+			dcat.setFecha(c.getFecha());
+			dcat.setIdComentario(c.getIdComentario());
+			dcat.setUsuario(c.getUsuario().getIdUsuario());
+			
 			l.add(dcat);
 		}
 		return l;

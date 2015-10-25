@@ -55,9 +55,12 @@ public class Almacen implements Serializable {
 		this.idAlmacen = id;
 		
 	}
-
-	@OneToMany
+	
+	@ManyToMany (cascade={CascadeType.PERSIST, CascadeType.REMOVE, CascadeType.MERGE})
 	private List<Comentario> comentarios;
+	
+	//@OneToMany
+	//private List<Comentario> comentarios;
 
 	@ManyToMany
 	private List<Categoria> categorias;
@@ -68,6 +71,11 @@ public class Almacen implements Serializable {
 	public void agregarUsuarioCompartido(Usuario u) {
 		System.out.println("AGREGUE EL USUARIO: "+u.getEmail()+"AL ALMACEN : "+nombre);
 		this.usuarios.add(u);
+	}
+	
+	public void agregarComentario(Comentario c) {
+		System.out.println("AGREGUE EL COMENTARIO: "+c.getContenido()+" AL ALMACEN : "+nombre);
+		this.comentarios.add(c);
 	}
 
 	public int getIdAlmacen() {
@@ -166,6 +174,23 @@ public class Almacen implements Serializable {
 			if(!usuarios.isEmpty()){
 			for (Usuario u : usuarios) {
 				if (u.getEmail().equals(emailUsuario)) {
+					es = true;
+				}
+			}
+			}
+		} catch (Exception excep) {
+			throw excep;
+		}
+
+		return es;
+	}
+	
+	public boolean EsComentariodeAlmacen(int idComent) {
+		boolean es = false;
+		try {
+			if(!comentarios.isEmpty()){
+			for (Comentario c : comentarios) {
+				if (c.getIdComentario()==idComent) {
 					es = true;
 				}
 			}
