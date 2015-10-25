@@ -11,6 +11,14 @@ public class DataUsuario {
 	private String nombre;
 	private String email;
 	private String password;
+	private boolean premium;
+
+	public boolean isPremium() {
+		return premium;
+	}
+	public void setPremium(boolean premium) {
+		this.premium = premium;
+	}
 	private Date fecha;
 	public int getIdUsuario() {
 		return idUsuario;

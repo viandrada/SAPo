@@ -23,11 +23,11 @@ public class RegistroBean {
 	 * http://howtodoinjava.com/2014/11/11/java-regex-validate-email-address/
 	 */
 	@NotNull(message = "El email es requerido.")
-	@Pattern(regexp = "^[\\w!#$%&’*+/=?`{|}~^-]+(?:\\.[\\w!#$%&’*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$", message = "Email no válido.")
+	@Pattern(regexp = "^[\\w!#$%&*+/=?`{|}~^-]+(?:\\.[\\w!#$%&*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$", message = "Email no vï¿½lido.")
 	private String email;
-	@NotNull(message = "El teléfono es requerido.")
+	@NotNull(message = "El telÃ©fono es requerido.")
 	private String telefono;
-	@NotNull(message = "Debe ingresar una contraseña.")
+	@NotNull(message = "Debe ingresar una contraseÃ±a.")
 	private String password;
 
 	
