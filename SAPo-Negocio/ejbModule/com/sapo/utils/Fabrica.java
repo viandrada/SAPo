@@ -48,4 +48,14 @@ public class Fabrica
 		}
 		return l;
 	}
+	
+	public DataUsuario convertirUserAData (Usuario usuario){
+		DataUsuario dataUser = new DataUsuario();
+		dataUser.setEmail(usuario.getEmail());
+		dataUser.setNombre(usuario.getNombre());
+		dataUser.setPassword(usuario.getPassword());
+		dataUser.setPremium(usuario.isPremium());
+		return dataUser;
+		
+	}
 }
