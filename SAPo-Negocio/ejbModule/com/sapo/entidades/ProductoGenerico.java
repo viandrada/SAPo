@@ -7,7 +7,7 @@ import javax.persistence.*;
 
 @NamedQueries({
 
-@NamedQuery(name = "ProductosGenericos.getProductos", query = "SELECT p FROM ProductoGenerico p") })
+@NamedQuery(name = "ProductosGenericos.getProductos", query = "SELECT p FROM ProductoGenerico p where p.estaActivo = TRUE") })
 @Entity
 public class ProductoGenerico implements Serializable {
 
@@ -22,15 +22,19 @@ public class ProductoGenerico implements Serializable {
 	private String atributos;
 	private Date fechaAlta;
 	private boolean estaActivo;
-	
+
 	@OneToOne(cascade = { CascadeType.PERSIST, CascadeType.REMOVE,
 			CascadeType.MERGE })
 	private Categoria categoria;
-	
+
+	@OneToOne(cascade = { CascadeType.PERSIST, CascadeType.REMOVE,
+			CascadeType.MERGE })
+	private Imagen foto;
+
 	public ProductoGenerico() {
-			super();
+		super();
 	}
-		
+
 	public int getIdProductoGenerico() {
 		return idProductoGenerico;
 	}
@@ -99,5 +103,11 @@ public class ProductoGenerico implements Serializable {
 		this.categoria = categoria;
 	}
 
+	public Imagen getFoto() {
+		return foto;
+	}
 
+	public void setFoto(Imagen foto) {
+		this.foto = foto;
+	}
 }

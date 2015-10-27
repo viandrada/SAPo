@@ -7,24 +7,26 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.faces.context.FacesContext;
+import javax.faces.view.ViewScoped;
 
 import com.datatypes.DataProducto;
 import com.sapo.ejb.ProductoNegocio;
 
 @ManagedBean
-@RequestScoped
+@ViewScoped
 public class VerProductosBean {
-	public VerProductosBean(){
+	public VerProductosBean() {
 		this.productosGenericos = new ArrayList<DataProducto>();
 	}
-	
+
 	@EJB
 	ProductoNegocio productoNegocio;
 	private List<DataProducto> productosGenericos;
 	private String nombreProductoSeleccionado;
 	private int idProductoSeleccionado;
-	
-	
+	private String idProdEliminar;
+
 	public void setProductosGenericos(List<DataProducto> productosGenericos) {
 		this.productosGenericos = productosGenericos;
 	}
@@ -49,13 +51,29 @@ public class VerProductosBean {
 		this.idProductoSeleccionado = idProductoSeleccionado;
 	}
 
-	@PostConstruct
-	public void init(){
-		obtenerProductosGenericos();
+	public String getIdProdEliminar() {
+		return idProdEliminar;
 	}
-	
-	public void obtenerProductosGenericos(){
+
+	public void setIdProdEliminar(String idProdEliminar) {
+		this.idProdEliminar = idProdEliminar;
+	}
+
+	@PostConstruct
+	public void init() {
+		obtenerProductosGenericos();
+		  FacesContext facesContext = FacesContext.getCurrentInstance();
+	        this.idProdEliminar = facesContext.getExternalContext().getRequestParameterMap().get("idProdEliminar");
+	}
+
+	public void obtenerProductosGenericos() {
 		this.productosGenericos = productoNegocio.getProductosGenericos();
 	}
 
+	public String eliminar() {
+		this.productoNegocio.eliminarProductoGenerico(Integer.parseInt(this.idProdEliminar));
+		this.idProdEliminar = "0";
+		this.productosGenericos = productoNegocio.getProductosGenericos();
+		return "/index.xhtml?faces-redirect=true";
+	}
 }

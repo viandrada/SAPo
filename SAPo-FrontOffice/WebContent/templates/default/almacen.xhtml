@@ -54,7 +54,7 @@
 									action="detalleProducto.xhtml"
 									actionListener="#{detalleProductoBean.init(item.idProducto)}"
 									class="thumbnail">
-									<h:graphicImage class="img-responsive"
+									<h:graphicImage class="img-responsive" style="height:100px;"
 										value="Image/#{item.fotos.get(0).idImagen}">
 									</h:graphicImage>
 									<f:param name="Id" value="#{item.idProducto}" />

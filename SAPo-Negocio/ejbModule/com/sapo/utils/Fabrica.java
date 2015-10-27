@@ -44,39 +44,37 @@ public class Fabrica {
 			dcat.setNombre(c.getNombre());
 			dcat.setEmail(c.getEmail());
 			dcat.setPassword(c.getPassword());
-			//dcat.setFecha(c.);
-			
+			// dcat.setFecha(c.);
+
 			l.add(dcat);
 		}
 		return l;
 	}
-	
-	public List<DataComentario> convertirComentarios(List<Comentario> lcat)
-	{
+
+	public List<DataComentario> convertirComentarios(List<Comentario> lcat) {
 		List<DataComentario> l = new LinkedList<DataComentario>();
-		
-		for(Comentario c : lcat)
-		{
+
+		for (Comentario c : lcat) {
 			DataComentario dcat = new DataComentario();
-			
+
 			dcat.setContenido(c.getContenido());
 			dcat.setFecha(c.getFecha());
 			dcat.setIdComentario(c.getIdComentario());
 			dcat.setUsuario(c.getUsuario().getIdUsuario());
-			
+
 			l.add(dcat);
 		}
 		return l;
 	}
-	
-	public DataUsuario convertirUserAData (Usuario usuario){
+
+	public DataUsuario convertirUserAData(Usuario usuario) {
 		DataUsuario dataUser = new DataUsuario();
 		dataUser.setEmail(usuario.getEmail());
 		dataUser.setNombre(usuario.getNombre());
 		dataUser.setPassword(usuario.getPassword());
 		dataUser.setPremium(usuario.isPremium());
 		return dataUser;
-		
+
 	}
 
 	public List<DataProducto> toDataProducto(
@@ -91,8 +89,17 @@ public class Fabrica {
 			dProd.setEstaActivo(productosGenericos.get(i).getEstaActivo());
 			dProd.setFechaAlta(productosGenericos.get(i).getFechaAlta());
 			dProd.setPrecio(productosGenericos.get(i).getPrecio());
-			// dProd.setFotos(productosGenericos.get(i).g); TODO: falta agregar
-			// las fotos al producto generico
+			List<Imagen> img = new ArrayList<Imagen>();
+			if (productosGenericos.get(i).getFoto() != null) {
+				img.add(productosGenericos.get(i).getFoto());
+				dProd.setFotos(toDataImagen(img));
+			}
+			else{
+				Imagen dataImg = new Imagen();
+				dataImg.setIdImagen(1);//TODO settear imagen x defecto
+				img.add(dataImg);
+				dProd.setFotos(toDataImagen(img));
+			}
 			dProd.setAtributos(productosGenericos.get(i).getAtributos());
 
 			dataProductos.add(dProd);

@@ -1,0 +1,289 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition>
+	<div class="container-fluid">
+		<h:panelGrid class="row">
+			<h1>Editar producto</h1>
+		</h:panelGrid>
+		<h:form id="editarProducto" rendered="true"
+			enctype="multipart/form-data">
+
+			<!-- Nombre, descripcion y foto -->
+			<div class="row">
+				<div class="col-xs-12 col-sm-12 col-md-5 col-lg-5">
+					<label for="inputNombre">Nombre:</label>
+					<div class="form-group">
+						<h:inputText class="form-control" id="inputNombre"
+							value="#{editarProductoGenericoBean.dataProducto.nombre}"
+							a:placeholder="Nombre">
+							<f:validateBean for="inputNombre" />
+							<f:ajax event="keyup" render="inputTextMessage" />
+						</h:inputText>
+						<h:message id="inputTextMessage" for="inputNombre"
+							errorStyle="color:red;"></h:message>
+					</div>
+					<label for="inputNombre">Descripción:</label>
+					<div class="form-group">
+						<h:inputTextarea class="form-control" id="inputDescripcion"
+							value="#{editarProductoGenericoBean.dataProducto.descripcion}"
+							a:maxlength="500" rows="5"
+							a:placeholder="Escribe una descripcion aqui...">
+							<f:validateBean for="inputDescripcion" />
+							<f:ajax event="keyup" render="inputTextMessageDescripcion" />
+						</h:inputTextarea>
+						<h:message id="inputTextMessageDescripcion" for="inputDescripcion"
+							errorStyle="color:red;"></h:message>
+					</div>
+				</div>
+				<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+					<h:graphicImage class="img-responsive"
+						value="Image/#{editarProductoGenericoBean.dataProducto.fotos.get(0).idImagen}">
+					</h:graphicImage>
+				</div>
+				<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+					<h:graphicImage class="img-responsive" id="inputFotoPreview"
+						value="#{editarProductoGenericoBean.foto}" required="false">
+					</h:graphicImage>
+				</div>
+			</div>
+
+
+			<hr style="border-width: 3px;" />
+			<!-- Separador -->
+
+			<!-- Categoría -->
+			<div class="row">
+				<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+					<h4>Categoría</h4>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+					<div class="form-group">
+						<h:selectOneMenu
+							value="#{editarProductoGenericoBean.dataProducto.idCategoria}"
+							class="form-control" id="sel">
+							<f:selectItems value="#{altaProductoGenericoBean.categorias}"
+								var="c2" itemValue="#{c2.idCategoria}" itemLabel="#{c2.nombre}" />
+						</h:selectOneMenu>
+					</div>
+				</div>
+				<div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
+					<div class="form-group">
+						<div class="row">
+							<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+								<label for="sel1">Crear nueva:</label>
+							</div>
+							<div class="col-xs-12 col-sm-12 col-md-5 col-lg-5">
+								<h:inputText class="form-control" id="inputCatNueva"
+									value="#{editarProductoGenericoBean.categoriaNueva}"
+									a:placeholder="Ingrese el nombre">
+									<f:validateBean for="inputCatNueva" />
+									<f:ajax event="keyup" render="inputTextMessageCatNueva" />
+								</h:inputText>
+								<h:message id="inputTextMessageCatNueva" for="inputCatNueva"
+									errorStyle="color:red;"></h:message>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- Fin categoría -->
+
+			<div class="row">
+				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+					<hr style="border-width: 3px;" />
+					<!-- Separador -->
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+					<h4>Atributos</h4>
+				</div>
+			</div>
+
+			<h:dataTable value="#{editarProductoGenericoBean.atributosVista}"
+				var="item" id="tablaAtributos" class="table">
+				<h:column>
+					<f:facet name="header">Id</f:facet>
+					<h:outputText
+						value="#{editarProductoGenericoBean.atributosVista.indexOf(item)}" />
+				</h:column>
+				<h:column>
+					<f:facet name="header">Nombre</f:facet>
+					<h:outputText value="#{item.nombre}" />
+				</h:column>
+				<h:column>
+					<f:facet name="header">Tipo de dato</f:facet>
+					<h:outputText value="#{item.tipoDato}" />
+				</h:column>
+				<h:column>
+					<f:facet name="header">Valor</f:facet>
+					<h:outputText value="#{item.valor}" />
+				</h:column>
+				<h:column>
+					<f:facet name="header">Editar</f:facet>
+					<a href="" data-toggle="modal"
+						onclick="document.getElementById('idEliminar').value='#{o.idProducto}';return false;"
+						data-target="#myModaleditar"> <i class="fa fa-times fa-2x"></i>
+					</a>
+				</h:column>
+			</h:dataTable>
+
+			<!-- Atributos genericos -->
+			<div class="row">
+				<div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
+					<div class="form-group">
+						<h:inputText class="form-control" id="inputNombreAtr"
+							value="#{editarProductoGenericoBean.nombreAtributo}"
+							a:placeholder="Nombre del atributo">
+							<f:validateBean for="inputNombreAtr" />
+							<f:ajax event="keyup" render="inputTextMessage" />
+						</h:inputText>
+						<h:message id="inputTextMessageNombreAtr" for="inputNombreAtr"
+							errorStyle="color:red;"></h:message>
+					</div>
+				</div>
+				<div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
+					<div class="form-group">
+						<h:selectOneMenu value="#{editarProductoGenericoBean.tipoDato}"
+							class="form-control" id="tipoDato" onchange="mostrarComponente()">
+							<f:selectItems value="#{editarProductoGenericoBean.tipoDatoList}"
+								var="e" itemValue="#{e}" itemLabel="#{e}" id="tipoDatoSelect" />
+							<f:ajax event="change"
+								listener="#{editarProductoGenericoBean.comboChangeListener}"></f:ajax>
+						</h:selectOneMenu>
+					</div>
+				</div>
+				<div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
+					<div class="form-group" id="atributoTexto" style="display: block;">
+						<h:inputText class="form-control" id="inputValorAtr"
+							value="#{editarProductoGenericoBean.valorAtributoTexto}"
+							a:placeholder="Valor">
+							<f:validateBean for="inputNombreAtr" />
+							<f:ajax event="keyup" render="inputTextMessage" />
+						</h:inputText>
+						<h:message id="inputTextMessageValorAtr" for="inputValorAtr"
+							errorStyle="color:red;"></h:message>
+					</div>
+
+					<div class="form-group" id="atributoCalendario"
+						style="display: none;">
+						<p:calendar
+							value="#{editarProductoGenericoBean.valorAtributoFecha}"
+							pattern="dd/MM/yyyy">
+							<f:ajax event="dateSelect"
+								listener="#{editarProductoGenericoBean.handleDateSelect}" />
+						</p:calendar>
+					</div>
+
+					<div class="form-group" id="atributoNumero" style="display: none;">
+						<h:inputText class="form-control" id="atributoNumero"
+							value="#{editarProductoGenericoBean.valorAtributoNumero}"
+							a:placeholder="Valor">
+							<f:validateBean for="atributoNumero" />
+							<f:ajax event="keyup" render="inputTextMessage" />
+						</h:inputText>
+						<h:message id="inputTextMessageatributoNumero" for="inputValorAtr"
+							errorStyle="color:red;"></h:message>
+					</div>
+				</div>
+				<div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
+					<h:commandButton class="btn btn-primary" value="Agregar"
+						actionListener="#{editarProductoGenericoBean.add}">
+						<f:ajax render="@form" />
+					</h:commandButton>
+				</div>
+			</div>
+			<!-- Fin de: Atributos genericos -->
+
+			<div class="form-group">
+				<h:inputFile id="imagenProducto"
+					value="#{editarProductoGenericoBean.foto}"
+					onchange="loadFile(event)">
+				</h:inputFile>
+				<h:message for="imagenProducto" />
+			</div>
+			<div class="row">
+				<div
+					class="col-xs-12 col-sm-6 col-sm-offset-6 col-md-2 col-lg-2 col-md-offset-10 col-lg-offset-10">
+					<h:commandButton class="btn btn-primary btn-lg" value="Guardar"
+						type="submit"
+						action="#{navigationBean.goTo('verProductos.xhtml')}"
+						actionListener="#{editarProductoGenericoBean.guardarProducto()}">
+					</h:commandButton>
+				</div>
+			</div>
+		</h:form>
+	</div>
+
+	<!-- Modal atributos -->
+	<div class="modal fade" id="myModaleditar" role="dialog">
+		<div class="modal-dialog">
+			<!-- Modal content-->
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">X</button>
+					<h4 class="modal-title">Edición de producto</h4>
+				</div>
+				<div class="modal-body">
+
+					<h:inputText value="#{verProductosBean.nombreProductoSeleccionado}"
+						id="nombre" class="form-control" placeholder="Nombre"
+						readonly="false" />
+					<h:inputHidden value="#{verProductosBean.idProductoSeleccionado}"
+						id="idProducto" class="form-control" />
+
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-success" data-dismiss="modal"
+						onclick="return false;">Guardar</button>
+					<button type="button" class="btn btn-danger" data-dismiss="modal"
+						onclick="return false;">Cancelar</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script type="text/javascript">
+
+               function mostrarComponente()
+               {
+
+                  var tipoDato;
+                  tipoDato = document.getElementById('editarProducto:tipoDato').value;
+
+                  document.getElementById('atributoTexto').style.display='none';
+                  document.getElementById('atributoCalendario').style.display='none';
+                  document.getElementById('atributoNumero').style.display='none';
+
+                  switch(tipoDato)
+                  {
+                    case "Texto":
+                       document.getElementById('atributoTexto').style.display='block';
+                       break;
+                    case "Fecha":
+                       document.getElementById('atributoCalendario').style.display='block';      
+                       break;
+                    case "Numero":
+                        document.getElementById('atributoNumero').style.display='block';      
+                        break;
+                    default:
+                    	document.getElementById('atributoTexto').style.display='block';
+                        break;
+                  }
+                  
+               }
+     </script>
+	<script type="text/javascript">
+var loadFile = function(event){
+	var output = document.getElementById('editarProducto:inputFotoPreview');
+	output.src = URL.createObjectURL(event.target.files[0]);
+};
+</script>
+</ui:composition>
+</html>

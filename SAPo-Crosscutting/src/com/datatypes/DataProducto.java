@@ -19,6 +19,8 @@ public class DataProducto {
 	private Date fechaAlta;
 	private String atributos;
 	private int stock;
+	private int idCategoria;
+	private String nombreCategoria;
 
 	
 	public int getIdProducto() {
@@ -91,6 +93,22 @@ public class DataProducto {
 
 	public void setStock(int stock) {
 		this.stock = stock;
+	}
+
+	public int getIdCategoria() {
+		return idCategoria;
+	}
+
+	public void setIdCategoria(int idCategoria) {
+		this.idCategoria = idCategoria;
+	}
+
+	public String getNombreCategoria() {
+		return nombreCategoria;
+	}
+
+	public void setNombreCategoria(String nombreCategoria) {
+		this.nombreCategoria = nombreCategoria;
 	}
 
 }

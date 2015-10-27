@@ -13,6 +13,7 @@ import com.datatypes.DataImagen;
 import com.datatypes.DataProducto;
 import com.sapo.dao.AlmacenDAO;
 import com.sapo.dao.CategoriaDAO;
+import com.sapo.dao.ImagenDAO;
 import com.sapo.dao.ProductoDAO;
 import com.sapo.dao.ProductoGenericoDAO;
 import com.sapo.dao.UsuarioDAO;
@@ -39,6 +40,8 @@ public class ProductoNegocio {
 	private AlmacenDAO almacenDAO;
 	@EJB
 	private CategoriaDAO categoriaDAO;
+	@EJB
+	private ImagenDAO imagenDAO;
 
 	private Producto producto;
 
@@ -74,7 +77,8 @@ public class ProductoNegocio {
 			img.setDatos(productoData.getFotos().get(i).getDatos());
 			imgs.add(img);
 		}
-		this.producto.setFoto(imgs);
+		productoGenerico.setFoto(imgs.get(0));// Se puede cambiar para guardar
+												// más de na foto.
 
 		try {
 			this.productoGenericoDAO.insertarProductoGenerico(productoGenerico);
@@ -121,5 +125,74 @@ public class ProductoNegocio {
 		productosGenericos = fabrica.toDataProducto(productoGenericoDAO
 				.getProductosGenericos());
 		return productosGenericos;
+	}
+
+	public DataProducto getProductoGenericoPorId(int idProductoGenerico) {
+		DataProducto dataProducto = new DataProducto();
+		ProductoGenerico productoGenerico = this.productoGenericoDAO
+				.getProductoGenerico(idProductoGenerico);
+
+		dataProducto.setIdProducto(productoGenerico.getIdProductoGenerico());
+		dataProducto.setAtributos(productoGenerico.getAtributos());
+		dataProducto.setDescripcion(productoGenerico.getDescripcion());
+		dataProducto.setNombre(productoGenerico.getNombre());
+		dataProducto.setPrecio(productoGenerico.getPrecio());
+		List<DataImagen> imgs = new ArrayList<DataImagen>();
+		DataImagen i = new DataImagen();
+		if (productoGenerico.getFoto() != null) {
+			i.setIdImagen(productoGenerico.getFoto().getIdImagen());
+			i.setDatos(productoGenerico.getFoto().getDatos());
+			i.setMime(productoGenerico.getFoto().getMime());
+			i.setNombre(productoGenerico.getFoto().getNombre());
+		} else {
+			i.setIdImagen(1);
+		}
+		imgs.add(i);
+		dataProducto.setFotos(imgs);
+		dataProducto.setIdCategoria(productoGenerico.getCategoria()
+				.getIdCategoria());
+		dataProducto.setNombreCategoria(productoGenerico.getCategoria()
+				.getNombre());
+		return dataProducto;
+	}
+
+	public void eliminarProductoGenerico(int idProductoGenerico) {
+		this.productoGenericoDAO.eliminarProductoGenerico(idProductoGenerico);
+	}
+
+	public void modificarProductoGenerico(DataProducto dataProducto,
+			DataCategoria dataCategoria) {
+
+		ProductoGenerico pg = this.productoGenericoDAO
+				.getProductoGenerico(dataProducto.getIdProducto());
+
+		Categoria cat = this.categoriaDAO.getCategoria(dataCategoria
+				.getIdCategoria());
+		pg.setCategoria(cat);
+
+		pg.setAtributos(dataProducto.getAtributos());
+		pg.setNombre(dataProducto.getNombre());
+		pg.setDescripcion(dataProducto.getDescripcion());
+		pg.setEstaActivo(true);
+		pg.setPrecio(dataProducto.getPrecio());
+
+		List<Imagen> imgs = new ArrayList<Imagen>();
+		for (int i = 0; i < dataProducto.getFotos().size(); i++) {
+			Imagen img = new Imagen();
+			img.setDatos(dataProducto.getFotos().get(i).getDatos());
+			img.setNombre(dataProducto.getFotos().get(i).getNombre());
+			img.setIdImagen(dataProducto.getFotos().get(i).getIdImagen());
+			img.setMime(dataProducto.getFotos().get(i).getMime());
+			imgs.add(img);
+		}
+		if (imgs.get(0) != null && imgs.get(0).getDatos() == null) {
+			Imagen i = this.imagenDAO.getImagen(imgs.get(0).getIdImagen());
+			pg.setFoto(i);
+		} else {
+			pg.setFoto(imgs.get(0));
+		}
+
+		this.productoGenericoDAO.actualizarProductoGenerico(pg);
+
 	}
 }
