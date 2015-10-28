@@ -1,5 +1,7 @@
 package com.sapo.utils;
 
+import java.util.Date;
+
 public class Atributo {
 	
 	public Atributo() {
@@ -14,6 +16,8 @@ public class Atributo {
 	private String nombre;
 	private String tipoDato;
 	private String valor;
+	private Date valorFecha;
+	private double valorNumero;
 
 	public String getNombre() {
 		return nombre;
@@ -37,6 +41,22 @@ public class Atributo {
 
 	public void setValor(String valor) {
 		this.valor = valor;
+	}
+
+	public Date getValorFecha() {
+		return valorFecha;
+	}
+
+	public void setValorFecha(Date valorFecha) {
+		this.valorFecha = valorFecha;
+	}
+
+	public double getValorNumero() {
+		return valorNumero;
+	}
+
+	public void setValorNumero(double valorNumero) {
+		this.valorNumero = valorNumero;
 	}
 
 }

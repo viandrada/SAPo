@@ -8,6 +8,7 @@ import javax.ejb.EJB;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 
+import com.datatypes.DataAlmacen;
 import com.datatypes.DataCategoria;
 import com.datatypes.DataImagen;
 import com.datatypes.DataProducto;
@@ -17,6 +18,7 @@ import com.sapo.dao.ImagenDAO;
 import com.sapo.dao.ProductoDAO;
 import com.sapo.dao.ProductoGenericoDAO;
 import com.sapo.dao.UsuarioDAO;
+import com.sapo.entidades.Almacen;
 import com.sapo.entidades.Categoria;
 import com.sapo.entidades.Imagen;
 import com.sapo.entidades.Producto;
@@ -194,5 +196,38 @@ public class ProductoNegocio {
 
 		this.productoGenericoDAO.actualizarProductoGenerico(pg);
 
+	}
+
+	public void altaProductoDesdePlantilla(DataProducto dataProducto,
+			DataAlmacen dataAlmacen) {
+
+		Producto p = new Producto();
+		ProductoGenerico pg = this.productoGenericoDAO
+				.getProductoGenerico(dataProducto.getIdProductoGenerico());
+		p.setProductoGenerico(pg);
+		Categoria cat = this.categoriaDAO.getCategoria(dataProducto
+				.getIdCategoria());
+		p.setCategoria(cat);
+		Almacen a = new Almacen();
+		a = this.almacenDAO.getAlmacen(dataAlmacen.getIdAlmacen());
+		p.setAlmacen(a);
+
+		p.setAtributos(dataProducto.getAtributos());
+		p.setNombre(dataProducto.getNombre());
+		p.setDescripcion(dataProducto.getDescripcion());
+		p.setEstaActivo(true);
+		p.setPrecio(dataProducto.getPrecio());
+		p.setFechaAlta(new Date());
+		p.setStock(dataProducto.getStock());
+
+		List<Imagen> imgs = new ArrayList<Imagen>();
+		for (int i = 0; i < dataProducto.getFotos().size(); i++) {
+			Imagen img = new Imagen();
+			img.setDatos(dataProducto.getFotos().get(i).getDatos());
+			imgs.add(img);
+		}
+		p.setFoto(imgs);
+
+		this.productoDAO.insertarProducto(p);
 	}
 }

@@ -27,6 +27,7 @@ public class Producto implements Serializable {
 	@OneToMany(cascade = { CascadeType.PERSIST, CascadeType.REMOVE,
 			CascadeType.MERGE })
 	private List<Imagen> foto;
+	@Column(length = 1000)
 	private String atributos;
 	private Date fechaAlta;
 	private boolean estaActivo;
@@ -38,6 +39,10 @@ public class Producto implements Serializable {
 	@OneToOne(cascade = { CascadeType.PERSIST, CascadeType.REMOVE,
 			CascadeType.MERGE })
 	private Categoria categoria;
+
+	@OneToOne(cascade = { CascadeType.PERSIST, CascadeType.REMOVE,
+			CascadeType.MERGE })
+	private ProductoGenerico productoGenerico;
 
 	public Producto() {
 		super();
@@ -131,4 +136,11 @@ public class Producto implements Serializable {
 		this.stock = stock;
 	}
 
+	public ProductoGenerico getProductoGenerico() {
+		return productoGenerico;
+	}
+
+	public void setProductoGenerico(ProductoGenerico productoGenerico) {
+		this.productoGenerico = productoGenerico;
+	}
 }

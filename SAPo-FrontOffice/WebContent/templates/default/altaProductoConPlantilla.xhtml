@@ -1,0 +1,373 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition>
+	<div class="container-fluid">
+		<h:panelGrid class="row">
+			<h1>Producto nuevo</h1>
+		</h:panelGrid>
+		<h:form id="altaProductoPlantilla" rendered="true"
+			enctype="multipart/form-data">
+			<div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
+
+
+				<!-- Nombre, stock y precio -->
+				<div class="row">
+					<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+						<div class="form-group">
+							<h:outputText class="form-control" id="outputNombre"
+								value="#{altaProductoConPlantillaBean.productoGenerico.nombre}">
+							</h:outputText>
+						</div>
+					</div>
+					<div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
+						<div class="row">
+							<div class="form-group">
+								<div class="col-xs-12 col-sm-12 col-md-2 col-lg-2">
+									<h:outputText value="Stock " />
+								</div>
+								<div class="col-xs-12 col-sm-12 col-md-5 col-lg-5">
+									<h:inputText class="form-control input-lg" id="inputStock"
+										value="#{altaProductoConPlantillaBean.productoNuevo.stock}">
+										<f:validateBean for="inputStock" />
+										<f:ajax event="keyup" render="inputTextMessageStock" />
+									</h:inputText>
+									<h:message id="inputTextMessageStock" for="inputStock"
+										errorStyle="color:red;"></h:message>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-xs-12 col-sm-12 col-md-5 col-lg-5">
+						<div class="row">
+							<div class="col-xs-12 col-sm-12 col-md-2 col-lg-2">
+								<h:outputText value="Precio " />
+							</div>
+							<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+								<div class="form-group">
+									<h:inputText class="form-control input-lg" id="inputPrecio"
+										value="#{altaProductoConPlantillaBean.productoNuevo.precio}"
+										a:placeholder="Precio">
+										<f:validateBean for="inputPrecio" />
+										<f:ajax event="keyup" render="inputTextMessagePrecio" />
+									</h:inputText>
+									<h:message id="inputTextMessagePrecio" for="inputPrecio"
+										errorStyle="color:red;"></h:message>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+						<h:graphicImage class="img-responsive"
+							value="Image/#{altaProductoConPlantillaBean.productoGenerico.fotos.get(0).idImagen}">
+						</h:graphicImage>
+					</div>
+				</div>
+
+				<!-- Categoría -->
+				<div class="row">
+					<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+						<div class="form-group">
+							<label for="sel1">Categoría:</label>
+							<h:outputText class="form-control" id="inputNombreCat"
+								value="#{altaProductoConPlantillaBean.productoGenerico.nombreCategoria}">
+							</h:outputText>
+						</div>
+					</div>
+				</div>
+				<!-- Fin categoría -->
+
+				<hr style="border-width: 3px;" />
+				<!-- Separador -->
+
+				<div class="form-group">
+					<h:inputTextarea class="form-control" id="inputDescripcion"
+						value="#{altaProductoConPlantillaBean.productoGenerico.descripcion}"
+						a:maxlength="500" rows="5"
+						a:placeholder="Escribe una descripcion aqui...">
+						<f:validateBean for="inputDescripcion" />
+						<f:ajax event="keyup" render="inputTextMessageDescripcion" />
+					</h:inputTextarea>
+					<h:message id="inputTextMessageDescripcion" for="inputDescripcion"
+						errorStyle="color:red;"></h:message>
+				</div>
+
+				<!-- Atributos que ya estaban (se agrega/cambia el valor) -->
+				<h:dataTable value="#{altaProductoConPlantillaBean.atributosVista}"
+					var="item" id="tablaAtributos" class="table">
+					<h:column>
+						<f:facet name="header">Nombre</f:facet>
+						<h:outputText value="#{item.nombre}" />
+						<h:inputHidden id="tipoDatoHidden" value="#{item.tipoDato}" />
+					</h:column>
+					<h:column>
+						<f:facet name="header">Valor</f:facet>
+						<div class="form-group" id="atributoTextoTabla1"
+							style="display: block;">
+							<h:inputText class="form-control" id="inputValorAtrTabla1"
+								value="#{item.valor}" a:placeholder="Valor">
+								<f:validateBean for="inputValorAtrTabla1" />
+								<f:ajax event="keyup" render="inputTextMessage" />
+							</h:inputText>
+							<h:message id="inputTextMessageValorAtr"
+								for="inputValorAtrTabla1" errorStyle="color:red;"></h:message>
+						</div>
+						<div class="form-group" id="atributoCalendarioTabla1"
+							style="display: none;">
+							<p:calendar value="#{item.valorFecha}" pattern="dd/MM/yyyy">
+								<f:ajax event="dateSelect"
+									listener="#{altaProductoConPlantillaBean.handleDateSelect}" />
+							</p:calendar>
+						</div>
+
+						<div class="form-group" id="atributoNumeroTabla1"
+							style="display: none;">
+							<h:inputText class="form-control" id="atributoNumeroTabla1"
+								value="#{item.valorNumero}" a:placeholder="Valor">
+								<f:validateBean for="atributoNumeroTabla1" />
+								<f:ajax event="keyup" render="inputTextMessage" />
+							</h:inputText>
+							<h:message id="inputTextMessageatributoNumero"
+								for="inputValorAtr" errorStyle="color:red;"></h:message>
+						</div>
+					</h:column>
+				</h:dataTable>
+
+				<!-- Atributos nuevos (sólo se muestran porque el valor se setea en el momento) -->
+				<h:dataTable
+					value="#{altaProductoConPlantillaBean.atributosNuevosVista}"
+					var="item" id="tablaAtributosAgregados" class="table">
+					<h:column>
+						<f:facet name="header">Nombre</f:facet>
+						<h:outputText value="#{item.nombre}" />
+					</h:column>
+					<h:column>
+						<f:facet name="header">Valor</f:facet>
+						<div class="form-group" id="atributoTextoTabla2"
+							style="display: block;">
+							<h:outputText class="form-control" id="inputValorAtrTabla2"
+								value="#{item.valor}" a:placeholder="Valor">
+							</h:outputText>
+							<h:message id="inputTextMessageValorAtr"
+								for="inputValorAtrTabla2" errorStyle="color:red;"></h:message>
+						</div>
+					</h:column>
+				</h:dataTable>
+
+				<!-- Atributos genericos -->
+				<div class="row">
+					<div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
+						<div class="form-group">
+							<h:inputText class="form-control" id="inputNombreAtr"
+								value="#{altaProductoConPlantillaBean.nombreAtr}"
+								a:placeholder="Nombre del atributo">
+								<f:validateBean for="inputNombreAtr" />
+								<f:ajax event="keyup" render="inputTextMessage" />
+							</h:inputText>
+							<h:message id="inputTextMessageNombreAtr" for="inputNombreAtr"
+								errorStyle="color:red;"></h:message>
+						</div>
+					</div>
+					<div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
+						<div class="form-group">
+							<h:selectOneMenu
+								value="#{altaProductoConPlantillaBean.tipoDataAtr}"
+								class="form-control" id="tipoDato"
+								onchange="mostrarComponente()">
+								<f:selectItems
+									value="#{altaProductoConPlantillaBean.tipoDatoList}" var="e"
+									itemValue="#{e}" itemLabel="#{e}" id="tipoDatoSelect" />
+								<f:ajax event="change"
+									listener="#{altaProductoConPlantillaBean.comboChangeListener}"></f:ajax>
+							</h:selectOneMenu>
+						</div>
+					</div>
+					<div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
+						<div class="form-group" id="atributoTexto" style="display: block;">
+							<h:inputText class="form-control" id="inputValorAtr"
+								value="#{altaProductoConPlantillaBean.valorAtr}"
+								a:placeholder="Valor">
+								<f:validateBean for="inputNombreAtr" />
+								<f:ajax event="keyup" render="inputTextMessage" />
+							</h:inputText>
+							<h:message id="inputTextMessageValorAtr" for="inputValorAtr"
+								errorStyle="color:red;"></h:message>
+						</div>
+
+						<div class="form-group" id="atributoCalendario"
+							style="display: none;">
+							<p:calendar
+								value="#{altaProductoConPlantillaBean.valorAtributoFecha}"
+								pattern="dd/MM/yyyy">
+								<f:ajax event="dateSelect"
+									listener="#{altaProductoConPlantillaBean.handleDateSelect}" />
+							</p:calendar>
+						</div>
+
+						<div class="form-group" id="atributoNumero" style="display: none;">
+							<h:inputText class="form-control" id="atributoNumero"
+								value="#{altaProductoConPlantillaBean.valorAtributoNumero}"
+								a:placeholder="Valor">
+								<f:validateBean for="atributoNumero" />
+								<f:ajax event="keyup" render="inputTextMessage" />
+							</h:inputText>
+							<h:message id="inputTextMessageatributoNumero"
+								for="inputValorAtr" errorStyle="color:red;"></h:message>
+						</div>
+					</div>
+					<div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
+						<h:commandButton class="btn btn-primary" value="Agregar"
+							actionListener="#{altaProductoConPlantillaBean.add}">
+							<f:ajax
+								render="@form altaProductoPlantilla:tablaAtributosAgregados" />
+						</h:commandButton>
+					</div>
+				</div>
+				<!-- Fin de: Atributos -->
+
+				<div class="form-group">
+					<h:inputFile id="imagenProducto"
+						value="#{altaProductoConPlantillaBean.foto}"
+						onchange="loadFile(event)">
+					</h:inputFile>
+				</div>
+				<div class="form-group">
+					<h:inputFile id="imagenProducto2"
+						value="#{altaProductoConPlantillaBean.foto2}"
+						onchange="loadFile2(event)">
+					</h:inputFile>
+				</div>
+				<div class="form-group">
+					<h:inputFile id="imagenProducto3"
+						value="#{altaProductoConPlantillaBean.foto3}"
+						onchange="loadFile3(event)">
+					</h:inputFile>
+				</div>
+				<div class="form-group">
+					<h:inputFile id="imagenProducto4"
+						value="#{altaProductoConPlantillaBean.foto4}"
+						onchange="loadFile4(event)">
+					</h:inputFile>
+				</div>
+
+
+				<h:commandButton class="btn btn-primary" value="Crear" type="submit"
+					action="#{navigationAreaBean.goTo('almacen.xhtml')}"
+					actionListener="#{altaProductoConPlantillaBean.altaProducto}">
+				</h:commandButton>
+			</div>
+			<div class="col-xs-12 col-sm-12 col-md-2 col-lg-2">
+				<div class="form-group">
+					<img class="img-responsive img-thumbnail" id="inputFotoPreview"></img>
+				</div>
+			</div>
+			<div class="col-xs-12 col-sm-12 col-md-2 col-lg-2">
+				<div class="form-group">
+					<img class="img-responsive img-thumbnail" id="inputFotoPreview2"></img>
+				</div>
+			</div>
+			<div class="col-xs-12 col-sm-12 col-md-2 col-lg-2">
+				<div class="form-group">
+					<img class="img-responsive img-thumbnail" id="inputFotoPreview3"></img>
+				</div>
+			</div>
+			<div class="col-xs-12 col-sm-12 col-md-2 col-lg-2">
+				<div class="form-group">
+					<img class="img-responsive img-thumbnail" id="inputFotoPreview4"></img>
+				</div>
+			</div>
+			<h:outputScript name="js/fotoPreview.js" />
+		</h:form>
+	</div>
+	<script type="text/javascript">
+
+               function mostrarComponente()
+               {
+
+                  var tipoDato;
+                  tipoDato = document.getElementById('altaProductoPlantilla:tipoDato').value;
+
+                  document.getElementById('atributoTexto').style.display='none';
+                  document.getElementById('atributoCalendario').style.display='none';
+                  document.getElementById('atributoNumero').style.display='none';
+
+                  switch(tipoDato)
+                  {
+                    case "Texto":
+                       document.getElementById('atributoTexto').style.display='block';
+                       break;
+                    case "Fecha":
+                       document.getElementById('atributoCalendario').style.display='block';      
+                       break;
+                    case "Numero":
+                        document.getElementById('atributoNumero').style.display='block';      
+                        break;
+                    default:
+                    	document.getElementById('atributoTexto').style.display='block';
+                        break;
+                  }
+                  
+               }
+     </script>
+	<script type="text/javascript">
+
+               function cambiarControl()
+               {
+
+            	   var tipoDato;
+                   tipoDato = document.getElementById('altaProductoPlantilla:tipoDatoHidden2').value;
+
+                   document.getElementById('inputValorAtrTabla2').style.display='none';
+                   document.getElementById('atributoCalendarioTabla2').style.display='none';
+                   document.getElementById('atributoNumeroTabla2').style.display='none';
+
+                   switch(tipoDato)
+                   {
+                     case "Texto":
+                        document.getElementById('inputValorAtrTabla2').style.display='block';
+                        break;
+                     case "Fecha":
+                        document.getElementById('atributoCalendarioTabla2').style.display='block';      
+                        break;
+                     case "Numero":
+                         document.getElementById('atributoNumeroTabla2').style.display='block';      
+                         break;
+                     default:
+                     	document.getElementById('inputValorAtrTabla2').style.display='block';
+                         break;
+                   }
+                  
+               }
+     </script>
+	<script>
+     window.onload = function() {
+         var tipoDato;
+         tipoDato = document.getElementById('altaProductoPlantilla:tipoDatoHidden').value;
+
+         document.getElementById('inputValorAtrTabla1').style.display='none';
+         document.getElementById('atributoCalendarioTabla1').style.display='none';
+         document.getElementById('atributoNumeroTabla1').style.display='none';
+
+         switch(tipoDato)
+         {
+           case "Texto":
+              document.getElementById('inputValorAtrTabla1').style.display='block';
+              break;
+           case "Fecha":
+              document.getElementById('atributoCalendarioTabla1').style.display='block';      
+              break;
+           case "Numero":
+               document.getElementById('atributoNumeroTabla1').style.display='block';      
+               break;
+           default:
+           	document.getElementById('inputValorAtrTabla1').style.display='block';
+               break;
+         }
+    	};
+     </script>
+</ui:composition>
+</html>

@@ -33,9 +33,12 @@
 					<h:commandButton value="Comentarios"
 						action="#{navigationAreaBean.goTo('comentariosAlmacen.xhtml')}"
 						class="btn btn-primary btn-lg"></h:commandButton>
-					<h:commandButton value="+"
+					<h:commandButton value="Nuevo producto"
 						action="#{navigationAreaBean.goTo('altaProducto.xhtml')}"
 						actionListener="#{altaProductoBean.init()}"
+						class="btn btn-primary btn-lg"></h:commandButton>
+					<h:commandButton value="Nuevo producto (con plantilla)"
+						action="#{navigationAreaBean.goTo('listarProductosGenericos.xhtml')}"
 						class="btn btn-primary btn-lg"></h:commandButton>
 				</h:panelGroup>
 

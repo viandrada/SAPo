@@ -21,8 +21,9 @@ public class DataProducto {
 	private int stock;
 	private int idCategoria;
 	private String nombreCategoria;
+	private int idProductoGenerico;// En caso de usar un producto genérico como
+									// plantilla.
 
-	
 	public int getIdProducto() {
 		return idProducto;
 	}
@@ -111,4 +112,11 @@ public class DataProducto {
 		this.nombreCategoria = nombreCategoria;
 	}
 
+	public int getIdProductoGenerico() {
+		return idProductoGenerico;
+	}
+
+	public void setIdProductoGenerico(int idProductoGenerico) {
+		this.idProductoGenerico = idProductoGenerico;
+	}
 }
