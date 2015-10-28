@@ -1,6 +1,8 @@
 package com.sapo.beans;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -8,6 +10,7 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
+import javax.faces.event.AjaxBehaviorEvent;
 import javax.servlet.http.Part;
 
 import com.datatypes.DataAlmacen;
@@ -59,20 +62,24 @@ public class AltaProductoBean {
 	private Part foto4;
 	private int stock;
 	private List<Atributo> atributosVista;
+	private List<String> tipoDatoList;
 
 	private String nombreAtr;
 	private String tipoDataAtr;
 	private String valorAtr;
-
-	/*Categoría*/
+	private double valorAtributoNumero;
+	private Date valorAtributoFecha;
+	private boolean renderText;
+	
+	/* Categoría */
 	private List<DataCategoria> listDataCat;
 	private List<DataCategoria> listDataCatGeneticas;
 
 	public String nombreCatSeleccionada;
 	public int idCatSeleccionada;
 	private String catNueva;
-	
-	/*Getters and setteres*/
+
+	/* Getters and setteres */
 	public String getNombre() {
 		return nombre;
 	}
@@ -197,6 +204,14 @@ public class AltaProductoBean {
 		return atributosVista;
 	}
 
+	public List<String> getTipoDatoList() {
+		return tipoDatoList;
+	}
+
+	public void setTipoDatoList(List<String> tipoDatoList) {
+		this.tipoDatoList = tipoDatoList;
+	}
+
 	public void setAtributosVista(List<Atributo> atributosVista) {
 		this.atributosVista = atributosVista;
 	}
@@ -223,6 +238,30 @@ public class AltaProductoBean {
 
 	public void setValorAtr(String valorAtr) {
 		this.valorAtr = valorAtr;
+	}
+
+	public double getValorAtributoNumero() {
+		return valorAtributoNumero;
+	}
+
+	public void setValorAtributoNumero(double valorAtributoNumero) {
+		this.valorAtributoNumero = valorAtributoNumero;
+	}
+
+	public Date getValorAtributoFecha() {
+		return valorAtributoFecha;
+	}
+
+	public void setValorAtributoFecha(Date valorAtributoFecha) {
+		this.valorAtributoFecha = valorAtributoFecha;
+	}
+
+	public boolean isRenderText() {
+		return renderText;
+	}
+
+	public void setRenderText(boolean renderText) {
+		this.renderText = renderText;
 	}
 
 	public List<DataCategoria> getListDataCat() {
@@ -275,10 +314,11 @@ public class AltaProductoBean {
 
 	@PostConstruct
 	public void init() {
-		listDataCat=cNegocio.listDataCategoriasPersonal(this.usuarioLogueado.getEmail());
-		listDataCatGeneticas=cNegocio.listDataCategoriasGenericas();
-		nombreCatSeleccionada="Vacío";
-		idCatSeleccionada=1;
+		listDataCat = cNegocio.listDataCategoriasPersonal(this.usuarioLogueado
+				.getEmail());
+		listDataCatGeneticas = cNegocio.listDataCategoriasGenericas();
+		nombreCatSeleccionada = "Vacío";
+		idCatSeleccionada = 1;
 		this.nombre = "";
 		this.stock = 0;
 		this.precio = 0.0f;
@@ -290,6 +330,11 @@ public class AltaProductoBean {
 		this.foto3 = null;
 		this.foto4 = null;
 		this.fotos.clear();
+		this.tipoDatoList = new ArrayList<String>();
+		this.tipoDatoList.add("Texto");
+		this.tipoDatoList.add("Numero");
+		this.tipoDatoList.add("Fecha");
+		this.tipoDataAtr = "Texto";
 	}
 
 	public String altaProducto() {
@@ -332,18 +377,16 @@ public class AltaProductoBean {
 
 		this.dataProducto.setFotos(this.fotos);
 
-		//Procesando categoría...
-		if(this.catNueva == null || this.catNueva.isEmpty())
-		{
+		// Procesando categoría...
+		if (this.catNueva == null || this.catNueva.isEmpty()) {
 			this.dataCategoria.setIdCategoria(this.idCatSeleccionada);
-		}
-		else{
+		} else {
 			this.dataCategoria.setNombre(this.catNueva);
 		}
-		
+
 		this.dataUsuario.setEmail(this.usuarioLogueado.getEmail());
-		
-		//Alta producto
+
+		// Alta producto
 		this.almacenNegocio.altaProducto(this.dataProducto, this.dataAlmacen,
 				this.dataCategoria, this.dataUsuario);
 		return "almacen";
@@ -354,11 +397,38 @@ public class AltaProductoBean {
 		Atributo a = new Atributo();
 		a.setNombre(this.getNombreAtr());
 		a.setTipoDato(this.getTipoDataAtr());
-		a.setValor(this.getValorAtr());
+		
+		switch (this.getTipoDataAtr()) {
+		case "Texto":
+			a.setValor(this.valorAtr);
+			break;
+		case "Fecha":
+			SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+			a.setValor(format.format(this.valorAtributoFecha));
+			break;
+		case "Numero":
+			a.setValor(String.valueOf(this.valorAtributoNumero));
+			break;
+		default:
+			this.renderText = true;
+		}
+		
 		atributosVista.add(a);
 		this.nombreAtr = null;
-		this.tipoDataAtr = null;
+		this.tipoDataAtr = "Texto";
 		this.valorAtr = null;
+		this.valorAtributoFecha = null;
+		this.valorAtributoNumero = 0.0f;
 		return null;
+	}
+
+	public void comboChangeListener(AjaxBehaviorEvent event) {
+		System.out.println(this.tipoDataAtr);
+	}
+
+	public void handleDateSelect(AjaxBehaviorEvent event) {
+
+		SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+		System.out.println(format.format(this.valorAtributoFecha));
 	}
 }

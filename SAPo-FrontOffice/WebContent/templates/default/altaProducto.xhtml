@@ -2,7 +2,8 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
-	xmlns:ui="http://java.sun.com/jsf/facelets">
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
 
 <ui:composition>
 	<div class="container-fluid">
@@ -103,8 +104,9 @@
 				</div>
 				<!-- Fin categoría -->
 
-				<hr style="border-width: 3px;" /><!-- Separador -->
-				
+				<hr style="border-width: 3px;" />
+				<!-- Separador -->
+
 				<div class="form-group">
 					<h:inputTextarea class="form-control" id="inputDescripcion"
 						value="#{altaProductoBean.descripcion}" a:maxlength="500" rows="5"
@@ -149,18 +151,18 @@
 					</div>
 					<div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
 						<div class="form-group">
-							<h:inputText class="form-control" id="inputTipoDatoAtr"
-								value="#{altaProductoBean.tipoDataAtr}"
-								a:placeholder="Tipo de dato">
-								<f:validateBean for="inputTipoDatoAtr" />
-								<f:ajax event="keyup" render="inputTextMessage" />
-							</h:inputText>
-							<h:message id="inputTextMessageTipoDato" for="inputTipoDatoAtr"
-								errorStyle="color:red;"></h:message>
+							<h:selectOneMenu value="#{altaProductoBean.tipoDataAtr}"
+								class="form-control" id="inputTipoDatoAtr"
+								onchange="mostrarComponente()">
+								<f:selectItems value="#{altaProductoBean.tipoDatoList}" var="e"
+									itemValue="#{e}" itemLabel="#{e}" id="tipoDatoSelect" />
+								<f:ajax event="change"
+									listener="#{altaProductoBean.comboChangeListener}"></f:ajax>
+							</h:selectOneMenu>
 						</div>
 					</div>
 					<div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
-						<div class="form-group">
+						<div class="form-group" id="atributoTexto" style="display: block;">
 							<h:inputText class="form-control" id="inputValorAtr"
 								value="#{altaProductoBean.valorAtr}" a:placeholder="Valor">
 								<f:validateBean for="inputNombreAtr" />
@@ -168,6 +170,26 @@
 							</h:inputText>
 							<h:message id="inputTextMessageValorAtr" for="inputValorAtr"
 								errorStyle="color:red;"></h:message>
+						</div>
+						<div class="form-group" id="atributoCalendario"
+							style="display: none;">
+							<p:calendar
+								value="#{altaProductoBean.valorAtributoFecha}"
+								pattern="dd/MM/yyyy">
+								<f:ajax event="dateSelect"
+									listener="#{altaProductoBean.handleDateSelect}" />
+							</p:calendar>
+						</div>
+
+						<div class="form-group" id="atributoNumero" style="display: none;">
+							<h:inputText class="form-control" id="atributoNumero"
+								value="#{altaProductoBean.valorAtributoNumero}"
+								a:placeholder="Valor">
+								<f:validateBean for="atributoNumero" />
+								<f:ajax event="keyup" render="inputTextMessage" />
+							</h:inputText>
+							<h:message id="inputTextMessageatributoNumero"
+								for="inputValorAtr" errorStyle="color:red;"></h:message>
 						</div>
 					</div>
 					<div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
@@ -229,5 +251,35 @@
 			<h:outputScript name="js/fotoPreview.js" />
 		</h:form>
 	</div>
+		<script type="text/javascript">
+
+               function mostrarComponente()
+               {
+
+                  var tipoDato;
+                  tipoDato = document.getElementById('altaProducto:inputTipoDatoAtr').value;
+
+                  document.getElementById('atributoTexto').style.display='none';
+                  document.getElementById('atributoCalendario').style.display='none';
+                  document.getElementById('atributoNumero').style.display='none';
+
+                  switch(tipoDato)
+                  {
+                    case "Texto":
+                       document.getElementById('atributoTexto').style.display='block';
+                       break;
+                    case "Fecha":
+                       document.getElementById('atributoCalendario').style.display='block';      
+                       break;
+                    case "Numero":
+                        document.getElementById('atributoNumero').style.display='block';      
+                        break;
+                    default:
+                    	document.getElementById('atributoTexto').style.display='block';
+                        break;
+                  }
+                  
+               }
+     </script>
 </ui:composition>
 </html>
