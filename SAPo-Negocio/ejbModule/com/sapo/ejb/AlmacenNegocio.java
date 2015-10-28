@@ -271,6 +271,19 @@ public class AlmacenNegocio {
 						.getUsuarioPorEmail(email).getIdUsuario(), alma));
 	};
 
+
+	
+	
+	public List<DataUsuario> listDataUsuQueCompartenA(String email,
+			int idalma) {
+		// return fabrica.convertirUsu(usuarioDAO.getUsuarios());
+		Almacen alma = almacenDAO.getAlmacen(idalma);
+		return fabrica.convertirUsu(usuarioDAO
+				.getUsuariosMenosYOyLosqueSICompartenEsteAlmacen(usuarioDAO
+						.getUsuarioPorEmail(email).getIdUsuario(), alma));
+	};
+	
+	
 	public void compartirAlmacen(String emaildueno, String emailAmigo,
 			int idAlmacen) {
 		/*
