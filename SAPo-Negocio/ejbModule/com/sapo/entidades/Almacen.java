@@ -6,6 +6,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import javax.persistence.*;
+import javax.validation.constraints.Null;
 
 /**
  * Entity implementation class for Entity: Almacen
@@ -44,6 +45,12 @@ public class Almacen implements Serializable {
 
 	private Date fechaAlta;
 	private boolean estaActivo;
+	
+	@OneToOne(cascade = { CascadeType.PERSIST, CascadeType.REMOVE,
+			CascadeType.MERGE })
+	@Null
+	private AlmacenIdeal almacenIdeal;
+	
 
 	public Almacen() {
 		super();
@@ -158,6 +165,14 @@ public class Almacen implements Serializable {
 
 	public void setProductos(List<Producto> productos) {
 		this.productos = productos;
+	}
+
+	public AlmacenIdeal getAlmacenIdeal() {
+		return almacenIdeal;
+	}
+
+	public void setAlmacenIdeal(AlmacenIdeal almacenIdeal) {
+		this.almacenIdeal = almacenIdeal;
 	}
 
 	public Boolean getEstaActivo() {

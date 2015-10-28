@@ -103,7 +103,6 @@ public class AlmacenNegocio {
 			// TODO: handle exception
 		}
 		return idAlmacenGenerado;
-
 	}
 
 	public List<DataAlmacen> getAlmacenes(String emailUsr) {
@@ -131,11 +130,9 @@ public class AlmacenNegocio {
 	}
 	
 	public int getCantidadAlmacenesDeUsuario(String emailUsr) {
-		/*
-		 * En principio se muestra la cantidad de alamacenes a los
-		 * que el usuario accede.
-		 */
-		return this.almacenDAO.getCantAlmacenesUsuario(emailUsr);
+
+		int idUser = this.usuarioDAO.getUsuarioPorEmail(emailUsr).getIdUsuario();
+		return this.almacenDAO.getCantAlmacenesUsuario(idUser);
 	}
 	
 	public int getCantidadMaximaAlmacenes(String emailUsr){
@@ -153,6 +150,7 @@ public class AlmacenNegocio {
 		return cant;
 	}
 
+	
 	public DataAlmacen getAlmacenPorId(int idAlmacen) {
 		DataAlmacen dataAlmacen = new DataAlmacen();
 		Almacen almacen = this.almacenDAO.getAlmacenPorId(idAlmacen);

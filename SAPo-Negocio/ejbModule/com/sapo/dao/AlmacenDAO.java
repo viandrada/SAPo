@@ -81,12 +81,8 @@ public class AlmacenDAO {
 		return lisR;
 	}
 	
-	public int getCantAlmacenesUsuario(String emailUsuario) {
-		/*OBS: Este método cuenta todos los almacenes a los cuale el usuairo tiene
-		 * acceso, en principio no muestra la cantidad de almacenes de los que
-		 * es propietario
-		 */
-		
+	public int getCantAlmacenesUsuario(int idUser) {
+
 		List<Almacen> listaAlmacenes = new LinkedList<Almacen>();
 		List<Usuario> listaUsu = new LinkedList<Usuario>();
 		int cant = 0;
@@ -95,13 +91,8 @@ public class AlmacenDAO {
 			if (!listaAlmacenes.isEmpty()) {
 				for (Almacen a : listaAlmacenes) {
 					// listaUsu=a.getListaUsuariosPropietarios();
-					listaUsu = a.getUsuarios();
-					if (!listaUsu.isEmpty()) {
-						for (Usuario u : listaUsu) {
-							if (u.getEmail().equals(emailUsuario)) {
-								cant++;
-							}
-						}
+					if (a.getPropietario().getIdUsuario()==idUser){
+						cant++;
 					}
 				}
 			}

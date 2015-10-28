@@ -14,11 +14,12 @@ public class Configuracion implements Serializable {
 
 	@Id 
 	private String clave;
-	@Null
-	private int valorInt;
-	@Null
-	private float valorFloat;
 	
+	@Column(nullable = true)
+	private int valorInt;
+	
+	@Column(nullable = true)
+	private float valorFloat;
 	
 	
 	public Configuracion() {
