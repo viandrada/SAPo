@@ -8,7 +8,9 @@ import javax.ejb.TransactionManagement;
 import javax.ejb.TransactionManagementType;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+
 import com.sapo.entidades.Almacen;
+import com.sapo.entidades.AlmacenIdeal;
 import com.sapo.entidades.Usuario;
 
 @Stateless
@@ -28,8 +30,21 @@ public class AlmacenDAO {
 
 	public boolean existeAlmacen(int idAlmacen) {
 		return (em
-				.createQuery("SELECT a FROM Almacen a WHERE a.email=:idAlmacen")
+				.createQuery("SELECT a FROM Almacen a WHERE a.idAlmacen=:idAlmacen")
 				.setParameter("idAlmacen", idAlmacen).getResultList().size() == 1);
+	}
+	
+	public boolean tieneAlmacenIdeal(int idAlmacen){
+		Almacen almacen = (Almacen) em.createQuery("SELECT a FROM Almacen a WHERE a.idAlmacen=:idAlmacen");
+		return !(almacen.getAlmacenIdeal()==null);	
+	}
+	
+	public AlmacenIdeal getAlmacenIdealDeAlmacenReal(int idAlmacenReal){
+		Almacen almacen = (Almacen) em.createQuery("SELECT a FROM Almacen a WHERE a.idAlmacen=:idAlmacen");
+		if (almacen.getAlmacenIdeal()==null)
+			return null;
+		else
+			return almacen.getAlmacenIdeal();
 	}
 
 	public int insertarAlmacen(Almacen a) {
@@ -41,6 +56,8 @@ public class AlmacenDAO {
 		 //em.merge(a);
 		em.persist(a);
 	}
+	
+	
 
 	/*
 	 * public List<Almacen> getAlmacenesUsuario(String emailUsuario) {
