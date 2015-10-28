@@ -1,5 +1,6 @@
 package com.sapo.beans;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,7 +16,7 @@ import com.sapo.ejb.ProductoNegocio;
 
 @ManagedBean
 @ViewScoped
-public class VerProductosBean {
+public class VerProductosBean implements Serializable {
 	public VerProductosBean() {
 		this.productosGenericos = new ArrayList<DataProducto>();
 	}

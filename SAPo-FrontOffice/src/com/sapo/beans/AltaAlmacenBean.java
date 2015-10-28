@@ -38,6 +38,8 @@ public class AltaAlmacenBean {
 	private String descripcion;
 	private Part imagen;
 	private String fileContent;
+	private int cantAlmacenesActuales;
+	private int cantMaxAlmacenes;
 
 	public String getNombre() {
 		return nombre;
@@ -103,6 +105,31 @@ public class AltaAlmacenBean {
 		this.fileContent = fileContent;
 	}
 
+	
+	
+	public int getCantAlmacenesActuales() {
+		return cantAlmacenesActuales;
+	}
+
+	public void setCantAlmacenesActuales(int cantAlmacenesActuales) {
+		this.cantAlmacenesActuales = cantAlmacenesActuales;
+	}
+
+	public int getCantMaxAlmacenes() {
+		return cantMaxAlmacenes;
+	}
+
+	public void setCantMaxAlmacenes(int cantMaxAlmacenes) {
+		this.cantMaxAlmacenes = cantMaxAlmacenes;
+	}
+
+	public void getCantidadesAlmacenes(String emailUsr){
+		int cantActual=0;
+		int cantMax=0;
+		this.cantAlmacenesActuales=this.almacenNegocio.getCantidadAlmacenesDeUsuario(emailUsr);
+		this.cantMaxAlmacenes=this.almacenNegocio.getCantidadMaximaAlmacenes(emailUsr);
+	}
+	
 	public String altaAlmacen() {
 		//boolean ok = false;
 		int idAlmacenGenerado = 0;

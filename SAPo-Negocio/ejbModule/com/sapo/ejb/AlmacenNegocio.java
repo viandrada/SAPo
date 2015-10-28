@@ -12,6 +12,7 @@ import javax.ejb.Stateless;
 import com.sapo.dao.AlmacenDAO;
 import com.sapo.dao.CategoriaDAO;
 import com.sapo.dao.ComentarioDAO;
+import com.sapo.dao.ConfiguarcionDAO;
 import com.sapo.dao.ProductoDAO;
 import com.sapo.dao.UsuarioDAO;
 import com.datatypes.DataAlmacen;
@@ -23,6 +24,7 @@ import com.datatypes.DataUsuario;
 import com.sapo.entidades.Almacen;
 import com.sapo.entidades.Categoria;
 import com.sapo.entidades.Comentario;
+import com.sapo.entidades.Configuracion;
 import com.sapo.entidades.Imagen;
 import com.sapo.entidades.Producto;
 import com.sapo.entidades.Usuario;
@@ -54,6 +56,9 @@ public class AlmacenNegocio {
 	private CategoriaDAO categoriaDAO;
 	@EJB
 	private Fabrica fabrica;
+	@EJB
+	private ConfiguarcionDAO configuracionDAO;
+	
 
 	private Almacen almacen;
 
@@ -123,6 +128,29 @@ public class AlmacenNegocio {
 			listaDataAlmacen.add(dataAlmacen);
 		}
 		return listaDataAlmacen;
+	}
+	
+	public int getCantidadAlmacenesDeUsuario(String emailUsr) {
+		/*
+		 * En principio se muestra la cantidad de alamacenes a los
+		 * que el usuario accede.
+		 */
+		return this.almacenDAO.getCantAlmacenesUsuario(emailUsr);
+	}
+	
+	public int getCantidadMaximaAlmacenes(String emailUsr){
+		int cant = 0;
+		if (this.configuracionDAO.existeConfiguracion("maxCantAlmPremium")){
+			boolean premium = this.usuarioDAO.esPremium(emailUsr);
+			if (premium)
+				cant = this.configuracionDAO.getValorConfigInt("maxCantAlmPremium");
+			else
+				cant = this.configuracionDAO.getValorConfigInt("maxCantAlmComun");
+						
+		}
+		else
+			this.configuracionDAO.primeraConfiguracion();
+		return cant;
 	}
 
 	public DataAlmacen getAlmacenPorId(int idAlmacen) {

@@ -57,9 +57,7 @@ public class AlmacenDAO {
 		List<Usuario> listaUsu = new LinkedList<Usuario>();
 
 		List<Almacen> lisR = new LinkedList<Almacen>();
-
 		try {
-
 			listaAlmacenes = em.createQuery("SELECT a FROM Almacen a")
 					.getResultList();
 			if (!listaAlmacenes.isEmpty()) {
@@ -81,6 +79,37 @@ public class AlmacenDAO {
 		}
 
 		return lisR;
+	}
+	
+	public int getCantAlmacenesUsuario(String emailUsuario) {
+		/*OBS: Este método cuenta todos los almacenes a los cuale el usuairo tiene
+		 * acceso, en principio no muestra la cantidad de almacenes de los que
+		 * es propietario
+		 */
+		
+		List<Almacen> listaAlmacenes = new LinkedList<Almacen>();
+		List<Usuario> listaUsu = new LinkedList<Usuario>();
+		int cant = 0;
+		try {
+			listaAlmacenes = em.createQuery("SELECT a FROM Almacen a").getResultList();
+			if (!listaAlmacenes.isEmpty()) {
+				for (Almacen a : listaAlmacenes) {
+					// listaUsu=a.getListaUsuariosPropietarios();
+					listaUsu = a.getUsuarios();
+					if (!listaUsu.isEmpty()) {
+						for (Usuario u : listaUsu) {
+							if (u.getEmail().equals(emailUsuario)) {
+								cant++;
+							}
+						}
+					}
+				}
+			}
+
+		} catch (Exception excep) {
+			throw excep;
+		}
+		return cant;
 	}
 
 }

@@ -51,6 +51,11 @@ public class UsuarioDAO {
 				.setParameter("idUsuario", idUsuario).getResultList().size() == 1);
 	}
 
+	public boolean esPremium(String emailUser){
+		Usuario usr = getUsuarioPorEmail(emailUser);
+		return usr.isPremium();
+	}
+	
 	public void insertarUsuario(Usuario a) {
 		em.persist(a);
 	}

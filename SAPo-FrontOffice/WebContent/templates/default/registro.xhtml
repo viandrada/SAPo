@@ -29,15 +29,6 @@
 						<h:message id="inputTextMessageEmail" for="inputEmail" errorStyle="color:red;"></h:message>
 					</div>
 
-					<div class="form-group">
-						<h:outputText value="Teléfono : " />
-						<h:inputText class="form-control" id="inputTelefono"
-							value="#{registroBean.telefono}">
-							<f:validateBean for="inputTelefono" />
-							<f:ajax event="keyup" render="inputTextMessageTelefono" />
-						</h:inputText>
-						<h:message id="inputTextMessageTelefono" for="inputTelefono" errorStyle="color:red;"></h:message>
-					</div>
 
 					<div class="form-group">
 						<h:outputText value="Password : " />
