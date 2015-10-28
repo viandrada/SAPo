@@ -51,6 +51,11 @@ public class UsuarioDAO {
 				.setParameter("idUsuario", idUsuario).getResultList().size() == 1);
 	}
 
+	public boolean esPremium(String emailUser){
+		Usuario usr = getUsuarioPorEmail(emailUser);
+		return usr.isPremium();
+	}
+	
 	public void insertarUsuario(Usuario a) {
 		em.persist(a);
 	}
@@ -109,4 +114,25 @@ public class UsuarioDAO {
 		return lisR;
 	}
 
+	
+	@SuppressWarnings("unchecked")
+	public List<Usuario> getUsuariosMenosYOyLosqueSICompartenEsteAlmacen(
+			int idu, Almacen a) {
+		// return em.createQuery("SELECT u FROM Usuario u").getResultList();
+		List<Usuario> listaU = new LinkedList<Usuario>();
+		listaU = em
+				.createQuery("SELECT u FROM Usuario u  WHERE u.idUsuario!=:idu")
+				.setParameter("idu", idu).getResultList();
+		List<Usuario> lisR = new LinkedList<Usuario>();
+
+		if (!listaU.isEmpty()) {
+			for (Usuario u : listaU) {
+				if (a.EsUsuariodeEsteAlmacen(u.getEmail())) {
+					lisR.add(u);
+				}
+			}
+		}
+		return lisR;
+	}
+	
 }

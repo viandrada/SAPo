@@ -24,13 +24,6 @@ public class PerfilBean {
 	private String passwordNueva;
 	private boolean premium;
 
-	public boolean isPremium() {
-		return premium;
-	}
-
-	public void setPremium(boolean premium) {
-		this.premium = premium;
-	}
 
 	@ManagedProperty(value = "#{loginBean}")
 	LoginBean usuarioLogueado;
@@ -77,6 +70,14 @@ public class PerfilBean {
 
 	public String getEmail() {
 		return email;
+	}
+	
+	public boolean isPremium() {
+		return premium;
+	}
+
+	public void setPremium(boolean premium) {
+		this.premium = premium;
 	}
 	
 	public void getDatosUsuario(String email){

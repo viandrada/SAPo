@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.enterprise.context.RequestScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
@@ -13,7 +14,7 @@ import com.sapo.ejb.AlmacenNegocio;
 
 
 @ManagedBean
-@SessionScoped
+@RequestScoped
 public class CompartirAlmacenBean {
 
 	public CompartirAlmacenBean() {
@@ -25,6 +26,7 @@ public class CompartirAlmacenBean {
 	public void init() {
 		//listDataUsuarios=almacenNegocio.listDataUsuarios(usuarioLogueado.getEmail());
 		listDataUsuarios=almacenNegocio.listDataUsuariosParaCompartir(usuarioLogueado.getEmail(),nav.getIdAlmacenActual());
+		listDataUsuQueCompartenAlmacen=almacenNegocio.listDataUsuQueCompartenA(usuarioLogueado.getEmail(),nav.getIdAlmacenActual());
 	}
 
 	@EJB
@@ -38,9 +40,14 @@ public class CompartirAlmacenBean {
 	
 	private String nombreUsuSelect;
 	private String emailUsuSelect;
+	
+	private List<DataUsuario> listDataUsuarios;
+	private List<DataUsuario> listDataUsuQueCompartenAlmacen;
+	
 
-	public void compartirAlmacen(){
+	public String compartirAlmacen(){
 		almacenNegocio.compartirAlmacen(usuarioLogueado.getEmail(),emailUsuSelect, nav.getIdAlmacenActual());
+		return "index?faces-redirect=true";
 	}
 	
 	public String getNombreUsuSelect() {
@@ -59,8 +66,6 @@ public class CompartirAlmacenBean {
 		this.emailUsuSelect = emailUsuSelect;
 	}
 
-	private List<DataUsuario> listDataUsuarios;
-	
 	public List<DataUsuario> getListDataUsuarios() {
 		return listDataUsuarios;
 	}
@@ -83,5 +88,14 @@ public class CompartirAlmacenBean {
 
 	public void setNav(NavigationAreaBean nav) {
 		this.nav = nav;
+	}
+
+	public List<DataUsuario> getListDataUsuQueCompartenAlmacen() {
+		return listDataUsuQueCompartenAlmacen;
+	}
+
+	public void setListDataUsuQueCompartenAlmacen(
+			List<DataUsuario> listDataUsuQueCompartenAlmacen) {
+		this.listDataUsuQueCompartenAlmacen = listDataUsuQueCompartenAlmacen;
 	}
 }

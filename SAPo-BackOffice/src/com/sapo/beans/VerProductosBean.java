@@ -16,12 +16,7 @@ import com.sapo.ejb.ProductoNegocio;
 
 @ManagedBean
 @ViewScoped
-public class VerProductosBean implements Serializable{
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-
+public class VerProductosBean implements Serializable {
 	public VerProductosBean() {
 		this.productosGenericos = new ArrayList<DataProducto>();
 	}

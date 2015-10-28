@@ -5,95 +5,11 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 
 <ui:composition>
-
-	<!-- 	<div class="input-group">
-		<span class="input-group-addon">Busque el usuario aqui</span> <input
-			id="filter" type="text" class="form-control" placeholder="email"></input>
-	</div>
-	<table class="table table-striped">
-		<thead>
-			<tr>
-				<th>Code</th>
-				<th>Name</th>
-				<th>Default</th>
-				<th>Status</th>
-			</tr>
-		</thead>
-		<tbody class="searchable">
-			<tr>
-				<td>EUR</td>
-				<td>EURO</td>
-				<td></td>
-				<td>Active</td>
-			</tr>
-			<tr>
-				<td>GBP</td>
-				<td>Pound</td>
-				<td></td>
-				<td>Active</td>
-			</tr>
-			<tr>
-				<td>GEL</td>
-				<td>Georgian Lari</td>
-				<td><span class="glyphicon glyphicon-ok"></span></td>
-				<td>Active</td>
-			</tr>
-			<tr>
-				<td>USD</td>
-				<td>US Dollar</td>
-				<td></td>
-				<td>Active</td>
-			</tr>
-		</tbody>
-	</table> -->
-	<!-- 	<script type="text/javascript">
-/* $(document).ready(function () {
-
-    (function ($) {
-
-        $('#filter').keyup(function () {
-
-            var rex = new RegExp($(this).val(), 'i');
-            $('.searchable tr').hide();
-            $('.searchable tr').filter(function () {
-                return rex.test($(this).text());
-            }).show();
-
-        })
-
-    }(jQuery));
-
-}); */</script> -->
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+	
 	<div class="container-fluid">
 		<h:panelGrid class="row">
-			<h1>Compartir Almacen</h1>
+			<h1>Compartir Almacen>> #{almacenBean.almacen.nombre}</h1>
 		</h:panelGrid>
-
-
-
 
 		<script type="text/javascript">
 $(document).ready(function () {
@@ -150,24 +66,24 @@ $(document).ready(function () {
 						<div class="modal-header">
 							<button type="button" class="close" data-dismiss="modal">X</button>
 							<h4 class="modal-title">Estas seguro que quieres compartir
-								tu almacen?</h4>
+								#{almacenBean.almacen.nombre} ?</h4>
 						</div>
 						<div class="modal-body">
 
-							<h:inputText value="#{compartirAlmacenBean.emailUsuSelect}"
+							<h:inputHidden value="#{compartirAlmacenBean.emailUsuSelect}"
 								id="email" class="form-control" />
 
-							<h:inputText value="#{compartirAlmacenBean.nombreUsuSelect}"
-								id="nombre" class="form-control" placeholder="Nombre"
-								readonly="false" />
+							<h:inputHidden value="#{compartirAlmacenBean.nombreUsuSelect}"
+								id="nombre" class="form-control" />
+
 						</div>
 						<div class="modal-footer">
 
 							<h:commandButton class="btn btn-success" value="Aceptar"
 								type="submit" action="#{compartirAlmacenBean.compartirAlmacen}">
 							</h:commandButton>
-							
-							<button type="button" class="btn btn-danger" data-dismiss="modal"
+
+							<button type="button" class="btn btn-danger pull-left" data-dismiss="modal"
 								onclick="return false;">Cancelar</button>
 						</div>
 					</div>

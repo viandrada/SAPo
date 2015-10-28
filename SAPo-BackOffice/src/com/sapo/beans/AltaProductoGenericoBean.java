@@ -13,7 +13,7 @@ import javax.faces.event.AjaxBehaviorEvent;
 import javax.faces.event.ValueChangeEvent;
 import javax.servlet.http.Part;
 
-import org.primefaces.event.SelectEvent;
+//import org.primefaces.event.SelectEvent;
 
 import com.datatypes.DataCategoria;
 import com.datatypes.DataImagen;
@@ -217,12 +217,12 @@ public class AltaProductoGenericoBean {
 		dataProducto.setDescripcion(this.descripcion);
 		dataProducto.setEstaActivo(true);
 
-		// Conversión de atributos genéricos a json
+		// Conversiï¿½n de atributos genï¿½ricos a json
 		Gson gson = new Gson();
 		String json = gson.toJson(this.getAtributosVista());
 		System.out.println(json);
 		dataProducto.setAtributos(json);
-		// Fin de conversión a json
+		// Fin de conversiï¿½n a json
 
 		// Procesando imagen...
 		DataImagen dataImg = new DataImagen();
@@ -234,7 +234,7 @@ public class AltaProductoGenericoBean {
 		}
 		dataProducto.setFotos(imagenesData);
 
-		// Procesando categoría...
+		// Procesando categorï¿½a...
 		if (this.categoriaNueva == null || this.categoriaNueva.isEmpty()) {
 			dataCategoria.setIdCategoria(this.idCatSeleccionada);
 		} else {
@@ -248,7 +248,7 @@ public class AltaProductoGenericoBean {
 		return "index";
 	}
 
-	// Para agregar atributo genérico nuevo a la lista.
+	// Para agregar atributo genï¿½rico nuevo a la lista.
 	public String add() {
 		Atributo a = new Atributo();
 		a.setNombre(this.getNombreAtributo());
