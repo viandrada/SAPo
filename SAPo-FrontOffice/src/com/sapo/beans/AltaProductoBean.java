@@ -19,8 +19,10 @@ import com.datatypes.DataImagen;
 import com.datatypes.DataProducto;
 import com.datatypes.DataUsuario;
 import com.google.gson.Gson;
+import com.sapo.dao.UsuarioDAO;
 import com.sapo.ejb.AlmacenNegocio;
 import com.sapo.ejb.CategoriaNegocio;
+import com.sapo.ejb.UsuarioNegocio;
 import com.sapo.utils.Atributo;
 import com.sapo.utils.PartToByteArrayConverter;
 
@@ -45,6 +47,7 @@ public class AltaProductoBean {
 	CategoriaNegocio cNegocio;
 	@ManagedProperty(value = "#{loginBean}")
 	LoginBean usuarioLogueado;
+
 
 	private DataAlmacen dataAlmacen;
 	private DataCategoria dataCategoria;
@@ -71,7 +74,7 @@ public class AltaProductoBean {
 	private Date valorAtributoFecha;
 	private boolean renderText;
 	
-	/* Categoría */
+	/* Categorï¿½a */
 	private List<DataCategoria> listDataCat;
 	private List<DataCategoria> listDataCatGeneticas;
 
@@ -312,12 +315,13 @@ public class AltaProductoBean {
 		this.usuarioLogueado = usuarioLogueado;
 	}
 
+
 	@PostConstruct
 	public void init() {
 		listDataCat = cNegocio.listDataCategoriasPersonal(this.usuarioLogueado
 				.getEmail());
 		listDataCatGeneticas = cNegocio.listDataCategoriasGenericas();
-		nombreCatSeleccionada = "Vacío";
+		nombreCatSeleccionada = "Vacï¿½o";
 		idCatSeleccionada = 1;
 		this.nombre = "";
 		this.stock = 0;
@@ -345,14 +349,15 @@ public class AltaProductoBean {
 		this.dataProducto.setEsIdeal(false);
 		this.dataProducto.setPrecio(this.precio);
 		this.dataProducto.setStock(this.stock);
+		//this.dataProducto.setIdUsuario(this.idUsuario);
 
-		// Conversión de atributos genéricos a json
+		// Conversiï¿½n de atributos genï¿½ricos a json
 		Gson gson = new Gson();
 		// Type type = new TypeToken<List<Atributo>>() {}.getType();
 		String json = gson.toJson(this.getAtributosVista());
 		System.out.println(json);
 		this.dataProducto.setAtributos(json);
-		// Fin de conversión a json
+		// Fin de conversiï¿½n a json
 
 		// Procesando imagenes...
 		if (this.foto != null) {
@@ -378,7 +383,7 @@ public class AltaProductoBean {
 
 		this.dataProducto.setFotos(this.fotos);
 
-		// Procesando categoría...
+		// Procesando categorï¿½a...
 		if (this.catNueva == null || this.catNueva.isEmpty()) {
 			this.dataCategoria.setIdCategoria(this.idCatSeleccionada);
 		} else {
@@ -393,7 +398,7 @@ public class AltaProductoBean {
 		return "almacen";
 	}
 
-	// Para agregar atributo genérico nuevo a la lista.
+	// Para agregar atributo genï¿½rico nuevo a la lista.
 	public String add() {
 		Atributo a = new Atributo();
 		a.setNombre(this.getNombreAtr());
