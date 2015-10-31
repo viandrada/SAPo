@@ -6,48 +6,49 @@
 
 <ui:composition>
 	<h:panelGroup class="container">
-			<h:panelGroup class="row">
-				<h:form id="altaAlmacen" rendered="true"
-					enctype="multipart/form-data">
-					<h:panelGroup class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-								
-						<div class="form-group">
-							<h:inputText class="form-control" id="inputNombre"
-								value="#{altaAlmacenBean.nombre}" a:placeholder="Nombre">
-								<f:validateBean for="inputNombre" />
-								<f:ajax event="keyup" render="inputTextMessage" />
-							</h:inputText>
-							<h:message id="inputTextMessage" for="inputNombre"
-								errorStyle="color:red;"></h:message>
-						</div>
-						<div class="form-group">
-							<h:inputTextarea class="form-control" id="inputDescripcion"
-								value="#{altaAlmacenBean.descripcion}" a:maxlength="500"
-								rows="5" a:placeholder="Escriba una descripción aquí...">
-								<f:validateBean for="inputDescripcion" />
-								<f:ajax event="keyup" render="inputTextMessageDescripcion" />
-							</h:inputTextarea>
-							<h:message id="inputTextMessageDescripcion"
-								for="inputDescripcion" errorStyle="color:red;"></h:message>
-						</div>
-						<div class="form-group">
-							<h:inputFile id="imagenAlmacen" value="#{altaAlmacenBean.imagen}"
-								onchange="loadFile(event)">
-							</h:inputFile>
-						</div>
-						<h:commandButton class="btn btn-primary" value="Crear"
-							type="submit" action="#{altaAlmacenBean.altaAlmacen}">
-						</h:commandButton>
-					</h:panelGroup>
-					<h:panelGroup class="col-xs-12 col-sm-12 col-md-5 col-lg-5">
+		<h:panelGroup class="row">
+			<h:form id="altaAlmacen" rendered="true"
+				enctype="multipart/form-data">
+				<h:panelGroup class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
 
-						<h:panelGroup class="form-group">
-							<img class="img-responsive img-thumbnail" id="inputFotoPreview"></img>
-						</h:panelGroup>
+					<div class="form-group">
+						<h:inputText class="form-control" id="inputNombre"
+							value="#{altaAlmacenBean.nombre}" a:placeholder="Nombre">
+							<f:validateBean for="inputNombre" />
+							<f:ajax event="keyup" render="inputTextMessage" />
+						</h:inputText>
+						<h:message id="inputTextMessage" for="inputNombre"
+							errorStyle="color:red;"></h:message>
+					</div>
+					<div class="form-group">
+						<h:inputTextarea class="form-control" id="inputDescripcion"
+							value="#{altaAlmacenBean.descripcion}" a:maxlength="500" rows="5"
+							a:placeholder="Escriba una descripción aquí...">
+							<f:validateBean for="inputDescripcion" />
+							<f:ajax event="keyup" render="inputTextMessageDescripcion" />
+						</h:inputTextarea>
+						<h:message id="inputTextMessageDescripcion" for="inputDescripcion"
+							errorStyle="color:red;"></h:message>
+					</div>
+					<div class="form-group">
+						<h:inputFile id="imagenAlmacen" value="#{altaAlmacenBean.imagen}"
+							onchange="loadFile(event)">
+						</h:inputFile>
+					</div>
+					<h:commandButton class="btn btn-primary" value="Crear"
+						type="submit" action="#{altaAlmacenBean.altaAlmacen}"
+						>
+					</h:commandButton>
+				</h:panelGroup>
+				<h:panelGroup class="col-xs-12 col-sm-12 col-md-5 col-lg-5">
+
+					<h:panelGroup class="form-group">
+						<img class="img-responsive img-thumbnail" id="inputFotoPreview"></img>
 					</h:panelGroup>
-					<h:outputScript name="js/fotoPreview.js" />
-				</h:form>
-			</h:panelGroup>
+				</h:panelGroup>
+				<h:outputScript name="js/fotoPreview.js" />
+			</h:form>
+		</h:panelGroup>
 	</h:panelGroup>
 </ui:composition>
 </html>

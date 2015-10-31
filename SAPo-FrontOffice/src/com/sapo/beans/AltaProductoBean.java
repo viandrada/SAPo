@@ -342,6 +342,7 @@ public class AltaProductoBean {
 		this.dataProducto.setNombre(this.nombre);
 		this.dataProducto.setDescripcion(this.descripcion);
 		this.dataProducto.setEstaActivo(true);
+		this.dataProducto.setEsIdeal(false);
 		this.dataProducto.setPrecio(this.precio);
 		this.dataProducto.setStock(this.stock);
 

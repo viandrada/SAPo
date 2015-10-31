@@ -16,9 +16,12 @@ public class DataProducto {
 	private List<DataImagen> fotos;
 	private float precio;
 	private boolean estaActivo;
+	private boolean esIdeal;//Para el almacén ideal
+	private boolean agregado;//Para el almacén ideal
 	private Date fechaAlta;
 	private String atributos;
 	private int stock;
+	private int stockIdeal;
 	private int idCategoria;
 	private String nombreCategoria;
 	private int idProductoGenerico;// En caso de usar un producto genérico como
@@ -64,6 +67,22 @@ public class DataProducto {
 		this.estaActivo = estaActivo;
 	}
 
+	public boolean isEsIdeal() {
+		return esIdeal;
+	}
+
+	public void setEsIdeal(boolean esIdeal) {
+		this.esIdeal = esIdeal;
+	}
+
+	public boolean isAgregado() {
+		return agregado;
+	}
+
+	public void setAgregado(boolean agregado) {
+		this.agregado = agregado;
+	}
+
 	public List<DataImagen> getFotos() {
 		return fotos;
 	}
@@ -94,6 +113,14 @@ public class DataProducto {
 
 	public void setStock(int stock) {
 		this.stock = stock;
+	}
+
+	public int getStockIdeal() {
+		return stockIdeal;
+	}
+
+	public void setStockIdeal(int stockIdeal) {
+		this.stockIdeal = stockIdeal;
 	}
 
 	public int getIdCategoria() {

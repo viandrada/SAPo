@@ -10,10 +10,13 @@ import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 
 import com.sapo.dao.AlmacenDAO;
+import com.sapo.dao.AlmacenIdealDAO;
 import com.sapo.dao.CategoriaDAO;
 import com.sapo.dao.ComentarioDAO;
 import com.sapo.dao.ConfiguarcionDAO;
+import com.sapo.dao.ImagenDAO;
 import com.sapo.dao.ProductoDAO;
+import com.sapo.dao.ProductoGenericoDAO;
 import com.sapo.dao.UsuarioDAO;
 import com.datatypes.DataAlmacen;
 import com.datatypes.DataCategoria;
@@ -22,11 +25,12 @@ import com.datatypes.DataImagen;
 import com.datatypes.DataProducto;
 import com.datatypes.DataUsuario;
 import com.sapo.entidades.Almacen;
+import com.sapo.entidades.AlmacenIdeal;
 import com.sapo.entidades.Categoria;
 import com.sapo.entidades.Comentario;
-import com.sapo.entidades.Configuracion;
 import com.sapo.entidades.Imagen;
 import com.sapo.entidades.Producto;
+import com.sapo.entidades.ProductoGenerico;
 import com.sapo.entidades.Usuario;
 import com.sapo.utils.Fabrica;
 
@@ -47,19 +51,24 @@ public class AlmacenNegocio {
 	@EJB
 	private AlmacenDAO almacenDAO;
 	@EJB
+	private AlmacenIdealDAO almacenIdealDAO;
+	@EJB
 	private ComentarioDAO comentarioDAO;
 	@EJB
 	private UsuarioDAO usuarioDAO;
 	@EJB
 	private ProductoDAO productoDAO;
 	@EJB
+	private ProductoGenericoDAO productoGenericoDAO;
+	@EJB
 	private CategoriaDAO categoriaDAO;
 	@EJB
 	private Fabrica fabrica;
 	@EJB
 	private ConfiguarcionDAO configuracionDAO;
+	@EJB
+	private ImagenDAO imagenDAO;
 	
-
 	private Almacen almacen;
 
 	public int altaAlmacen(DataAlmacen almacen, DataUsuario usuario) {
@@ -128,29 +137,30 @@ public class AlmacenNegocio {
 		}
 		return listaDataAlmacen;
 	}
-	
+
 	public int getCantidadAlmacenesDeUsuario(String emailUsr) {
 
-		int idUser = this.usuarioDAO.getUsuarioPorEmail(emailUsr).getIdUsuario();
+		int idUser = this.usuarioDAO.getUsuarioPorEmail(emailUsr)
+				.getIdUsuario();
 		return this.almacenDAO.getCantAlmacenesUsuario(idUser);
 	}
-	
-	public int getCantidadMaximaAlmacenes(String emailUsr){
+
+	public int getCantidadMaximaAlmacenes(String emailUsr) {
 		int cant = 0;
-		if (this.configuracionDAO.existeConfiguracion("maxCantAlmPremium")){
+		if (this.configuracionDAO.existeConfiguracion("maxCantAlmPremium")) {
 			boolean premium = this.usuarioDAO.esPremium(emailUsr);
 			if (premium)
-				cant = this.configuracionDAO.getValorConfigInt("maxCantAlmPremium");
+				cant = this.configuracionDAO
+						.getValorConfigInt("maxCantAlmPremium");
 			else
-				cant = this.configuracionDAO.getValorConfigInt("maxCantAlmComun");
-						
-		}
-		else
+				cant = this.configuracionDAO
+						.getValorConfigInt("maxCantAlmComun");
+
+		} else
 			this.configuracionDAO.primeraConfiguracion();
 		return cant;
 	}
 
-	
 	public DataAlmacen getAlmacenPorId(int idAlmacen) {
 		DataAlmacen dataAlmacen = new DataAlmacen();
 		Almacen almacen = this.almacenDAO.getAlmacenPorId(idAlmacen);
@@ -160,6 +170,10 @@ public class AlmacenNegocio {
 		dataAlmacen.setIdFoto(almacen.getFoto().getIdImagen());
 		dataAlmacen.setBytesFoto(almacen.getFoto().getDatos());
 		dataAlmacen.setProductos(toDataProductos(almacen.getProductos()));
+		if (almacen.getAlmacenIdeal() != null) {
+			dataAlmacen.setIdAlmacenIdeal(almacen.getAlmacenIdeal()
+					.getIdAlmacenIdeal());
+		}
 		return dataAlmacen;
 	}
 
@@ -186,6 +200,7 @@ public class AlmacenNegocio {
 		productoGuardar.setNombre(producto.getNombre());
 		productoGuardar.setDescripcion(producto.getDescripcion());
 		productoGuardar.setEstaActivo(true);
+		productoGuardar.setEsIdeal(producto.isEsIdeal());
 		productoGuardar.setPrecio(producto.getPrecio());
 		productoGuardar.setAlmacen(almacenGuardar);
 		productoGuardar.setCategoria(catGuardar);
@@ -224,13 +239,26 @@ public class AlmacenNegocio {
 		for (int i = 0; i < productos.size(); i++) {
 			DataProducto dataProducto = new DataProducto();
 			dataProducto.setIdProducto(productos.get(i).getIdProducto());
+			if (productos.get(i).getProductoGenerico() != null) {
+				dataProducto.setIdProductoGenerico(productos.get(i)
+						.getProductoGenerico().getIdProductoGenerico());
+			}
 			dataProducto.setNombre(productos.get(i).getNombre());
 			dataProducto.setDescripcion(productos.get(i).getDescripcion());
 			dataProducto.setPrecio(productos.get(i).getPrecio());
 			// TODO Agregar mas campos al data (imagenes y atributos)
 			dataProducto.setAtributos(productos.get(i).getAtributos());
 			dataProducto.setStock(productos.get(i).getStock());
-			dataProducto.setFotos(toDataImagen(productos.get(i).getFoto()));
+			dataProducto.setStockIdeal(productos.get(i).getStockIdeal());
+			if (productos.get(i).getFoto().size() == 0) {
+				DataImagen di = new DataImagen();
+				di.setIdImagen(1);
+				List<DataImagen> imgList = new ArrayList<DataImagen>();
+				imgList.add(di);
+				dataProducto.setFotos(imgList);
+			} else {
+				dataProducto.setFotos(toDataImagen(productos.get(i).getFoto()));
+			}
 			dataProductos.add(dataProducto);
 		}
 		return dataProductos;
@@ -271,19 +299,14 @@ public class AlmacenNegocio {
 						.getUsuarioPorEmail(email).getIdUsuario(), alma));
 	};
 
-
-	
-	
-	public List<DataUsuario> listDataUsuQueCompartenA(String email,
-			int idalma) {
+	public List<DataUsuario> listDataUsuQueCompartenA(String email, int idalma) {
 		// return fabrica.convertirUsu(usuarioDAO.getUsuarios());
 		Almacen alma = almacenDAO.getAlmacen(idalma);
 		return fabrica.convertirUsu(usuarioDAO
 				.getUsuariosMenosYOyLosqueSICompartenEsteAlmacen(usuarioDAO
 						.getUsuarioPorEmail(email).getIdUsuario(), alma));
 	};
-	
-	
+
 	public void compartirAlmacen(String emaildueno, String emailAmigo,
 			int idAlmacen) {
 		/*
@@ -328,4 +351,94 @@ public class AlmacenNegocio {
 		almacenDAO.actualizarAlmacen(a);
 	};
 
+	public DataAlmacen getAlmacenIdealPorId(int idAlmacenIdeal) {
+		DataAlmacen dataAlmacen = new DataAlmacen();
+		AlmacenIdeal almacenIdeal = this.almacenIdealDAO
+				.getAlmacenIdeal(idAlmacenIdeal);
+		if (almacenIdeal != null) {
+			dataAlmacen.setNombre(almacenIdeal.getNombre());
+			dataAlmacen.setDescripcion(almacenIdeal.getDescripcion());
+			dataAlmacen.setProductos(toDataProductos(almacenIdeal
+					.getProductos()));
+			dataAlmacen.setIdAlmacen(almacenIdeal.getIdAlmacenIdeal());
+		}
+		return dataAlmacen;
+	}
+
+	public int crearAlmacenIdeal(int idAlmacen) {
+		// TODO Implementar crearAlmacenIdeal()
+		AlmacenIdeal ai = new AlmacenIdeal();
+		ai.setFechaAlta(new Date());
+		ai.setEstaActivo(true);
+
+		Almacen a = new Almacen();
+		a = this.almacenDAO.getAlmacen(idAlmacen);
+		a.setAlmacenIdeal(ai);
+		int idAlmacenINuevo = a.getAlmacenIdeal().getIdAlmacenIdeal();
+
+		this.almacenDAO.actualizarAlmacen(a);
+		return idAlmacenINuevo;
+	}
+
+	public void agregarGenericoAAlmacenIdeal(DataProducto dataProducto,
+			int idAlmacenIdeal, int idAlmacen) {
+		AlmacenIdeal ai = new AlmacenIdeal();
+		ai = this.almacenIdealDAO.getAlmacenIdeal(idAlmacenIdeal);
+		Producto p = new Producto();
+		// TODO Obtener el generico
+		ProductoGenerico pg = new ProductoGenerico();
+		pg = this.productoGenericoDAO.getProductoGenerico(dataProducto
+				.getIdProducto());
+		// Copiar todo al especifico
+		Almacen a = this.almacenDAO.getAlmacen(idAlmacen);
+		p.setAlmacen(a);
+		p.setAtributos(pg.getAtributos());
+		Categoria c = this.categoriaDAO.getCategoria(pg.getCategoria()
+				.getIdCategoria());
+		p.setCategoria(c);
+		p.setDescripcion(pg.getDescripcion());
+		p.setEstaActivo(true);
+		p.setFechaAlta(new Date());
+		List<Imagen> di = new ArrayList<Imagen>();
+		Imagen i = this.imagenDAO.getImagen(pg.getFoto().getIdImagen());
+		di.add(i);
+		p.setFoto(di);
+		p.setNombre(pg.getNombre());
+		p.setPrecio(pg.getPrecio());
+		p.setProductoGenerico(pg);
+		p.setStockIdeal(1);
+		p.setEsIdeal(true);// Booleano para indicar q es ideal, no se muestra en
+							// el almacén común.
+		// Persistirlo en el almacén común
+		this.productoDAO.insertarProducto(p);
+		// Asociarlo al almacen ideal
+		ai.getProductos().add(p);
+		this.almacenIdealDAO.actualizarAlmacenIdeal(ai);
+
+	}
+
+	public void agregarEspecificoAAlmacenIdeal(DataProducto dataProducto,
+			int idAlmacenIdeal) {
+		AlmacenIdeal ai = new AlmacenIdeal();
+		Producto p = this.productoDAO.getProducto(dataProducto.getIdProducto());
+		p.setStockIdeal(1);
+
+		ai = this.almacenIdealDAO.getAlmacenIdeal(idAlmacenIdeal);
+		ai.getProductos().add(p);
+
+		this.almacenIdealDAO.actualizarAlmacenIdeal(ai);
+	}
+
+	public List<Imagen> toImagen(List<DataImagen> dataImagenes) {
+		List<Imagen> imagenes = new ArrayList<Imagen>();
+		for (int i = 0; i < dataImagenes.size(); i++) {
+			Imagen img = new Imagen();
+			img.setIdImagen(dataImagenes.get(i).getIdImagen());
+			img.setNombre(dataImagenes.get(i).getNombre());
+			img.setMime(dataImagenes.get(i).getMime());
+			img.setDatos(dataImagenes.get(i).getDatos());
+			imagenes.add(img);
+		}
+		return imagenes;
+	}
 }

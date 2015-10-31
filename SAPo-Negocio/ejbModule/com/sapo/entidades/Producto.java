@@ -12,7 +12,7 @@ import javax.persistence.*;
  */
 @NamedQueries({
 
-@NamedQuery(name = "Productos.getProductosDeAlmacen.IdAlmacen", query = "SELECT p FROM Producto p WHERE p.almacen.idAlmacen = :idAlmacen") })
+@NamedQuery(name = "Productos.getProductosDeAlmacen.IdAlmacen", query = "SELECT p FROM Producto p WHERE p.almacen.idAlmacen = :idAlmacen and p.esIdeal = FALSE") })
 @Entity
 public class Producto implements Serializable {
 
@@ -31,7 +31,9 @@ public class Producto implements Serializable {
 	private String atributos;
 	private Date fechaAlta;
 	private boolean estaActivo;
+	private boolean esIdeal;
 	private int stock;
+	private int stockIdeal;
 
 	@ManyToOne
 	private Almacen almacen;
@@ -40,7 +42,7 @@ public class Producto implements Serializable {
 			CascadeType.MERGE })
 	private Categoria categoria;
 
-	@OneToOne(cascade = { CascadeType.PERSIST, CascadeType.REMOVE,
+	@OneToOne(cascade = { CascadeType.PERSIST,
 			CascadeType.MERGE })
 	private ProductoGenerico productoGenerico;
 
@@ -128,12 +130,28 @@ public class Producto implements Serializable {
 		return estaActivo;
 	}
 
+	public boolean isEsIdeal() {
+		return esIdeal;
+	}
+
+	public void setEsIdeal(boolean esIdeal) {
+		this.esIdeal = esIdeal;
+	}
+
 	public int getStock() {
 		return stock;
 	}
 
 	public void setStock(int stock) {
 		this.stock = stock;
+	}
+
+	public int getStockIdeal() {
+		return stockIdeal;
+	}
+
+	public void setStockIdeal(int stockIdeal) {
+		this.stockIdeal = stockIdeal;
 	}
 
 	public ProductoGenerico getProductoGenerico() {

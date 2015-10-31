@@ -11,6 +11,7 @@ public class DataAlmacen {
 	public DataAlmacen(){}
 	
 	private int idAlmacen;
+	private int idAlmacenIdeal;
 	private String nombre;
 	private String descripcion;
 	private int idFoto;
@@ -62,6 +63,12 @@ public class DataAlmacen {
 	}
 	public void setIdAlmacen(int idAlmacen) {
 		this.idAlmacen = idAlmacen;
+	}
+	public int getIdAlmacenIdeal() {
+		return idAlmacenIdeal;
+	}
+	public void setIdAlmacenIdeal(int idAlmacenIdeal) {
+		this.idAlmacenIdeal = idAlmacenIdeal;
 	}
 	public List<DataProducto> getProductos() {
 		return productos;

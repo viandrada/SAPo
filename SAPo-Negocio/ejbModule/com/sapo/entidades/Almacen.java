@@ -48,7 +48,6 @@ public class Almacen implements Serializable {
 	
 	@OneToOne(cascade = { CascadeType.PERSIST, CascadeType.REMOVE,
 			CascadeType.MERGE })
-	@Null
 	private AlmacenIdeal almacenIdeal;
 	
 

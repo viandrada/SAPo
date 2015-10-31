@@ -5,7 +5,7 @@
 
 <ui:composition>
 
-	
+
 	<script>
 	var wsocket;
 	//var serviceLocation = "ws://192.168.1.1:8080/hascode/chat/";
@@ -79,18 +79,18 @@
 	</script>
 
 	<style type="text/css">
-		.bodycontainer {
-			max-height: 200px;
-			width: 100%;
-			margin: 0;
-			overflow-y: auto;
-		}
+.bodycontainer {
+	max-height: 200px;
+	width: 100%;
+	margin: 0;
+	overflow-y: auto;
+}
 
-		.table-scrollable {
-			margin: 0;
-			padding: 0;
-		}
-	</style>
+.table-scrollable {
+	margin: 0;
+	padding: 0;
+}
+</style>
 
 
 	<div class="container chat-signin col-xs-4 col-md-4 col-sm-4 col-lg-4">
@@ -108,7 +108,7 @@
 
 		</form>
 	</div>
-	
+
 	<!-- <h:outputText value="Bienvenido, #{usuarioMB.mail}" rendered="#{not empty usuarioMB.mail}"/>/container -->
 
 	<div class="container chat-wrapper col-xs-6 col-md-6 col-sm-6 col-lg-6">
@@ -200,7 +200,7 @@
 					<h:commandButton value="Chat"
 						action="#{navigationAreaBean.goTo('Chat2.xhtml')}"
 						class="btn btn-primary btn-lg"></h:commandButton>
-					
+
 					<h:commandButton value="Compartir Almacen"
 						action="#{navigationAreaBean.goTo('compartirAlmacen.xhtml')}"
 						class="btn btn-primary btn-lg"></h:commandButton>
@@ -213,6 +213,9 @@
 						class="btn btn-primary btn-lg"></h:commandButton>
 					<h:commandButton value="Nuevo producto (con plantilla)"
 						action="#{navigationAreaBean.goTo('listarProductosGenericos.xhtml')}"
+						class="btn btn-primary btn-lg"></h:commandButton>
+					<h:commandButton value="Almacén ideal"
+						action="#{navigationAreaBean.goTo('almacenIdeal.xhtml')}"
 						class="btn btn-primary btn-lg"></h:commandButton>
 				</h:panelGroup>
 
@@ -238,8 +241,18 @@
 								</h:commandLink>
 								<div class="row">
 									<div
-										class="col-xs-6 col-md-4 col-sm-4 col-lg-4 col-sm-offset-8 col-lg-offset-8">
+										class="col-xs-6 col-md-4 col-sm-2 col-lg-2 col-sm-offset-4 col-lg-offset-4">
+										<h:commandButton
+											action="#{almacenBean.actualizarStock(item.idProducto,item.stock - 1)}"
+											value="-" />
+									</div>
+									<div class="col-xs-6 col-md-4 col-sm-3 col-lg-3">
 										<h:outputText value="#{item.stock}" class="form-control" />
+									</div>
+									<div class="col-xs-6 col-md-4 col-sm-2 col-lg-2">
+										<h:commandButton
+											action="#{almacenBean.actualizarStock(item.idProducto,item.stock + 1)}"
+											value="+" />
 									</div>
 								</div></li>
 

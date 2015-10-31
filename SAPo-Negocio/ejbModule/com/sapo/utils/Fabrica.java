@@ -89,6 +89,8 @@ public class Fabrica {
 			dProd.setEstaActivo(productosGenericos.get(i).getEstaActivo());
 			dProd.setFechaAlta(productosGenericos.get(i).getFechaAlta());
 			dProd.setPrecio(productosGenericos.get(i).getPrecio());
+			dProd.setIdCategoria(productosGenericos.get(i).getCategoria().getIdCategoria());
+			dProd.setNombreCategoria(productosGenericos.get(i).getCategoria().getNombre());
 			List<Imagen> img = new ArrayList<Imagen>();
 			if (productosGenericos.get(i).getFoto() != null) {
 				img.add(productosGenericos.get(i).getFoto());

@@ -13,12 +13,14 @@ import com.datatypes.DataCategoria;
 import com.datatypes.DataImagen;
 import com.datatypes.DataProducto;
 import com.sapo.dao.AlmacenDAO;
+import com.sapo.dao.AlmacenIdealDAO;
 import com.sapo.dao.CategoriaDAO;
 import com.sapo.dao.ImagenDAO;
 import com.sapo.dao.ProductoDAO;
 import com.sapo.dao.ProductoGenericoDAO;
 import com.sapo.dao.UsuarioDAO;
 import com.sapo.entidades.Almacen;
+import com.sapo.entidades.AlmacenIdeal;
 import com.sapo.entidades.Categoria;
 import com.sapo.entidades.Imagen;
 import com.sapo.entidades.Producto;
@@ -40,6 +42,8 @@ public class ProductoNegocio {
 	private UsuarioDAO usuarioDAO;
 	@EJB
 	private AlmacenDAO almacenDAO;
+	@EJB
+	private AlmacenIdealDAO almacenIdealDAO;
 	@EJB
 	private CategoriaDAO categoriaDAO;
 	@EJB
@@ -102,6 +106,7 @@ public class ProductoNegocio {
 		dataProducto.setNombre(producto.getNombre());
 		dataProducto.setPrecio(producto.getPrecio());
 		dataProducto.setStock(producto.getStock());
+		dataProducto.setStockIdeal(producto.getStockIdeal());
 		dataProducto.setFotos(toDataImagen(producto.getFoto()));
 
 		return dataProducto;
@@ -160,6 +165,21 @@ public class ProductoNegocio {
 
 	public void eliminarProductoGenerico(int idProductoGenerico) {
 		this.productoGenericoDAO.eliminarProductoGenerico(idProductoGenerico);
+	}
+	
+	public void eliminarProducto(int idProducto) {
+		this.productoDAO.eliminarProducto(idProducto);
+	}
+	
+	public void eliminarProductoAlmacenIdeal(int idProducto, int idAlmacenIdeal) {
+		AlmacenIdeal ai = this.almacenIdealDAO.getAlmacenIdeal(idAlmacenIdeal);
+		Producto p = this.productoDAO.getProducto(idProducto);
+		ai.getProductos().remove(p);
+		this.almacenIdealDAO.actualizarAlmacenIdeal(ai);
+		p.setEstaActivo(false);
+		if(p.isEsIdeal()){
+			this.productoDAO.deleteProducto(idProducto);
+		}
 	}
 
 	public void modificarProductoGenerico(DataProducto dataProducto,
@@ -229,5 +249,23 @@ public class ProductoNegocio {
 		p.setFoto(imgs);
 
 		this.productoDAO.insertarProducto(p);
+	}
+
+	public void actualizarStock(int idProducto, int stock) {
+		Producto p = new Producto();
+		if (stock >= 0) {
+			p = this.productoDAO.getProducto(idProducto);
+			p.setStock(stock);
+			this.productoDAO.actualizarProducto(p);
+		}
+	}
+	
+	public void actualizarStockIdeal(int idProducto, int stockIdeal) {
+		Producto p = new Producto();
+		if (stockIdeal >= 0) {
+			p = this.productoDAO.getProducto(idProducto);
+			p.setStockIdeal(stockIdeal);
+			this.productoDAO.actualizarProducto(p);
+		}
 	}
 }

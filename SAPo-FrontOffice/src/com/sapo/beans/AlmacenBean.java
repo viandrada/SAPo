@@ -13,6 +13,7 @@ import com.datatypes.DataAlmacen;
 import com.datatypes.DataImagen;
 import com.datatypes.DataProducto;
 import com.sapo.ejb.AlmacenNegocio;
+import com.sapo.ejb.ProductoNegocio;
 
 @ManagedBean
 @RequestScoped
@@ -24,6 +25,8 @@ public class AlmacenBean {
 	private List<DataProducto> productos;
 	@EJB
 	AlmacenNegocio almacenNegocio;
+	@EJB
+	ProductoNegocio productoNegocio;
 	@ManagedProperty(value = "#{navigationAreaBean}")
 	NavigationAreaBean nav;
 
@@ -74,5 +77,11 @@ public class AlmacenBean {
 	@PostConstruct
 	public void init(){
 		obtenerAlmacen();
+	}
+	
+	public String actualizarStock(int idProducto, int stock){
+		this.productoNegocio.actualizarStock(idProducto, stock);
+		init();
+		return "index.xhtml";
 	}
 }

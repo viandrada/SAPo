@@ -4,12 +4,11 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
-import javax.faces.context.ExternalContext;
-import javax.faces.context.FacesContext;
 import javax.servlet.http.Part;
 
 import com.datatypes.DataAlmacen;
@@ -172,19 +171,19 @@ public class AltaAlmacenBean {
 
 		if (idAlmacenGenerado != 0) {
 			System.out.println("Alta almacen exitosa");
-			this.nav.setRedirectTo("almacen.xhtml");
-			this.nav.setIdAlmacenActual(idAlmacenGenerado);
+			//this.nav.setRedirectTo("almacen.xhtml");
+			//this.nav.setIdAlmacenActual(idAlmacenGenerado);
 
-			FacesContext facesContext = FacesContext.getCurrentInstance();
+			/*FacesContext facesContext = FacesContext.getCurrentInstance();
 
 			ExternalContext externalContext = facesContext.getExternalContext();
 
 			try {
-				externalContext.redirect("/index.xhtml?faces-redirect=true");
+				externalContext.redirect("/SAPo-FrontOffice/index.xhtml");
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			}
+			}*/
 
 			//return "/index.xhtml?faces-redirect=true";
 		} else {
@@ -192,7 +191,17 @@ public class AltaAlmacenBean {
 			return null;
 		}
 		
-		return "/index.xhtml?faces-redirect=true";
+		//return "/index.xhtml";
+		return nav.irAlmacen(idAlmacenGenerado);
 	}
 
+	@PostConstruct
+	public void init(){
+		dataAlmacen = new DataAlmacen();
+		dataUsuario = new DataUsuario();
+		this.nombre = null;
+		this.descripcion = null;
+		this.imagen = null;
+		this.fileContent = null;
+	}
 }

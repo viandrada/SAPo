@@ -61,7 +61,7 @@ public class NavigationAreaBean {
 
 	public String goTo(String redirectTo) {
 		this.redirectTo = redirectTo;
-		return "index.xhtml?faces-redirect=true";
+		return "index.xhtml";
 	}
 
 	public String irAlmacen(int idAlmacen) {

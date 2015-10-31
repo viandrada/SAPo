@@ -1,6 +1,7 @@
 package com.sapo.entidades;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
@@ -22,26 +23,27 @@ public class AlmacenIdeal implements Serializable {
 	private int idAlmacenIdeal;
 	private String nombre;
 	private String descripcion;
-	
 
 	private Date fechaAlta;
 	private boolean estaActivo;
 
 	public AlmacenIdeal() {
 		super();
-		
+		productos = new ArrayList<Producto>();
+		productosGenericos = new ArrayList<ProductoGenerico>();
 	}
 
 	public AlmacenIdeal(int id) {
 		super();
-		this.idAlmacenIdeal = id;	
+		this.idAlmacenIdeal = id;
 	}
-	
 
 	@OneToMany(fetch = FetchType.EAGER)
 	private List<Producto> productos;
-
 	
+	@OneToMany(fetch = FetchType.EAGER)
+	private List<ProductoGenerico> productosGenericos;
+
 	public int getIdAlmacenIdeal() {
 		return idAlmacenIdeal;
 	}
@@ -66,7 +68,6 @@ public class AlmacenIdeal implements Serializable {
 		this.descripcion = descripcion;
 	}
 
-
 	public Date getFechaAlta() {
 		return fechaAlta;
 	}
@@ -74,7 +75,6 @@ public class AlmacenIdeal implements Serializable {
 	public void setFechaAlta(Date fechaAlta) {
 		this.fechaAlta = fechaAlta;
 	}
-
 
 	public List<Producto> getProductos() {
 		return productos;
@@ -84,6 +84,18 @@ public class AlmacenIdeal implements Serializable {
 		this.productos = productos;
 	}
 
+	public List<ProductoGenerico> getProductosGenericos() {
+		return productosGenericos;
+	}
+
+	public void setProductosGenericos(List<ProductoGenerico> productosGenericos) {
+		this.productosGenericos = productosGenericos;
+	}
+
+	public void setEstaActivo(boolean estaActivo) {
+		this.estaActivo = estaActivo;
+	}
+
 	public Boolean isEstaActivo() {
 		return estaActivo;
 	}
@@ -91,7 +103,4 @@ public class AlmacenIdeal implements Serializable {
 	public void setEstaActivo(Boolean estaActivo) {
 		this.estaActivo = estaActivo;
 	}
-
-
-
 }

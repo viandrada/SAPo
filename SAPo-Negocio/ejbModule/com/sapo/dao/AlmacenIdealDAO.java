@@ -11,6 +11,7 @@ import javax.persistence.PersistenceContext;
 
 import com.sapo.entidades.Almacen;
 import com.sapo.entidades.AlmacenIdeal;
+import com.sapo.entidades.Producto;
 import com.sapo.entidades.Usuario;
 
 @Stateless

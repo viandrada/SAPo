@@ -11,40 +11,48 @@ import javax.persistence.Query;
 
 import com.sapo.entidades.Producto;
 
-
 @Stateless
 @TransactionManagement(TransactionManagementType.CONTAINER)
 public class ProductoDAO {
-	
-	@PersistenceContext(unitName="SAPo-Negocio")
+
+	@PersistenceContext(unitName = "SAPo-Negocio")
 	EntityManager em;
-	
-	public Producto getProducto(int id){
+
+	public Producto getProducto(int id) {
 		return em.find(Producto.class, id);
 	}
-	
-	public List<Producto> getProductosAlmacen(int idAlmacen){
+
+	public List<Producto> getProductosAlmacen(int idAlmacen) {
 		Query consulta = this.em
 				.createNamedQuery("Productos.getProductosDeAlmacen.IdAlmacen");
 		consulta.setParameter("idAlmacen", idAlmacen);
-		List<Producto> productos = (List<Producto>)consulta.getResultList();
+		List<Producto> productos = (List<Producto>) consulta.getResultList();
 		return productos;
 	}
-	
-	public boolean existeProducto(int idProducto){
-		return (em.createQuery("SELECT a FROM Producto p WHERE a.idProducto=:idProducto")
-				.setParameter("idProducto", idProducto)
-				.getResultList().size()== 1);
+
+	public boolean existeProducto(int idProducto) {
+		return (em
+				.createQuery(
+						"SELECT a FROM Producto p WHERE a.idProducto=:idProducto")
+				.setParameter("idProducto", idProducto).getResultList().size() == 1);
 	}
 
-	
-	public void insertarProducto (Producto a){
+	public void insertarProducto(Producto a) {
 		em.persist(a);
 	}
-	
-	public void actualizarProducto(Producto a){
-		em.merge(a);		
+
+	public void actualizarProducto(Producto a) {
+		em.merge(a);
 	}
 
+	public void eliminarProducto(int idProducto) {
+		Producto p = getProducto(idProducto);
+		p.setEstaActivo(false);
+		actualizarProducto(p);
+	}
 
+	public void deleteProducto(int idProducto) {
+		Producto p = getProducto(idProducto);
+		em.remove(em.merge(p));
+	}
 }
