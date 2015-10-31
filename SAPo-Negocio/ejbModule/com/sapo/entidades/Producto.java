@@ -6,6 +6,9 @@ import java.util.List;
 
 import javax.persistence.*;
 
+import org.hibernate.envers.Audited;
+import org.hibernate.envers.RelationTargetAuditMode;
+
 /**
  * Entity implementation class for Entity: Producto
  *
@@ -14,6 +17,7 @@ import javax.persistence.*;
 
 @NamedQuery(name = "Productos.getProductosDeAlmacen.IdAlmacen", query = "SELECT p FROM Producto p WHERE p.almacen.idAlmacen = :idAlmacen and p.esIdeal = FALSE") })
 @Entity
+@Audited(targetAuditMode = RelationTargetAuditMode.NOT_AUDITED)
 public class Producto implements Serializable {
 
 	private static final long serialVersionUID = 1L;

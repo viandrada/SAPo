@@ -8,6 +8,9 @@ import java.util.List;
 import javax.persistence.*;
 import javax.validation.constraints.Null;
 
+import org.hibernate.envers.Audited;
+import org.hibernate.envers.RelationTargetAuditMode;
+
 /**
  * Entity implementation class for Entity: Almacen
  *
@@ -16,6 +19,7 @@ import javax.validation.constraints.Null;
 
 @NamedQuery(name = "Almacen.getAlmacenesUsuario.Email", query = "SELECT a FROM Almacen a WHERE a.propietario.email = :email") })
 @Entity
+@Audited(targetAuditMode = RelationTargetAuditMode.NOT_AUDITED)
 public class Almacen implements Serializable {
 
 	private static final long serialVersionUID = 1L;

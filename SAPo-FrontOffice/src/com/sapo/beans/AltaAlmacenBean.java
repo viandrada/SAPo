@@ -122,9 +122,7 @@ public class AltaAlmacenBean {
 		this.cantMaxAlmacenes = cantMaxAlmacenes;
 	}
 
-	public void getCantidadesAlmacenes(String emailUsr){
-		int cantActual=0;
-		int cantMax=0;
+	public void getCantidadesAlmacenes(String emailUsr){;
 		this.cantAlmacenesActuales=this.almacenNegocio.getCantidadAlmacenesDeUsuario(emailUsr);
 		this.cantMaxAlmacenes=this.almacenNegocio.getCantidadMaximaAlmacenes(emailUsr);
 	}
@@ -197,6 +195,7 @@ public class AltaAlmacenBean {
 
 	@PostConstruct
 	public void init(){
+		getCantidadesAlmacenes(usuarioLogueado.getEmail());
 		dataAlmacen = new DataAlmacen();
 		dataUsuario = new DataUsuario();
 		this.nombre = null;
