@@ -17,8 +17,8 @@ import javax.persistence.*;
 				+ "FROM Usuario u "
 				+ "WHERE u.email = :email and u.password = :pass"),
 		@NamedQuery(name = "Usuario.getUsuarioPorEmail.Email", query = "SELECT u "
-				+ "FROM Usuario u "
-				+ "WHERE u.email = :email") })
+				+ "FROM Usuario u " + "WHERE u.email = :email"),
+		@NamedQuery(name = "Usuario.getUsuarios", query = "SELECT u FROM Usuario u WHERE u.estaActivo = TRUE") })
 @Entity
 public class Usuario implements Serializable {
 
@@ -60,20 +60,18 @@ public class Usuario implements Serializable {
 		this.monto = monto;
 	}
 
-	/*@ManyToMany(cascade = { CascadeType.REMOVE,
-			CascadeType.MERGE })
-	private List<Almacen> almacenes;*/
-	
-	//@ManyToOne(cascade={CascadeType.MERGE, CascadeType.REMOVE})
-	//private Almacen almacen;
-/*
-	public Almacen getAlmacen() {
-		return almacen;
-	}
+	/*
+	 * @ManyToMany(cascade = { CascadeType.REMOVE, CascadeType.MERGE }) private
+	 * List<Almacen> almacenes;
+	 */
 
-	public void setAlmacen(Almacen almacen) {
-		this.almacen = almacen;
-	}*/
+	// @ManyToOne(cascade={CascadeType.MERGE, CascadeType.REMOVE})
+	// private Almacen almacen;
+	/*
+	 * public Almacen getAlmacen() { return almacen; }
+	 * 
+	 * public void setAlmacen(Almacen almacen) { this.almacen = almacen; }
+	 */
 
 	public int getIdUsuario() {
 		return idUsuario;
@@ -139,13 +137,12 @@ public class Usuario implements Serializable {
 		this.fecha = fecha;
 	}
 
-	/*public List<Almacen> getAlmacenes() {
-		return almacenes;
-	}
-
-	public void setAlmacenes(List<Almacen> almacenes) {
-		this.almacenes = almacenes;
-	}*/
+	/*
+	 * public List<Almacen> getAlmacenes() { return almacenes; }
+	 * 
+	 * public void setAlmacenes(List<Almacen> almacenes) { this.almacenes =
+	 * almacenes; }
+	 */
 
 	public Boolean getEstaActivo() {
 		return estaActivo;

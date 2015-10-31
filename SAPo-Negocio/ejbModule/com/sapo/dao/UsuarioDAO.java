@@ -1,5 +1,6 @@
 package com.sapo.dao;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -11,6 +12,7 @@ import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
+import com.datatypes.DataUsuario;
 import com.sapo.entidades.Almacen;
 import com.sapo.entidades.Usuario;
 
@@ -135,4 +137,17 @@ public class UsuarioDAO {
 		return lisR;
 	}
 	
+	public List<DataUsuario> getUsuariosActivos(){
+		List<Usuario> usuarios = new ArrayList<Usuario>();
+		List<DataUsuario> dataUsuarios = new ArrayList<DataUsuario>();
+		try {
+			Query consulta = this.em
+					.createNamedQuery("Usuario.getUsuarios");
+			usuarios = consulta.getResultList();
+		} catch (Exception excep) {
+			throw excep;
+		}
+		//TODO convertir a List<DataUsuario>
+		return dataUsuarios;
+	}
 }

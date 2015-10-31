@@ -12,6 +12,7 @@ public class DataUsuario {
 	private String email;
 	private String password;
 	private boolean premium;
+	private boolean estaActivo;
 
 	public boolean isPremium() {
 		return premium;
@@ -50,6 +51,10 @@ public class DataUsuario {
 	public void setFecha(Date fecha) {
 		this.fecha = fecha;
 	}
-	
-	
+	public boolean isEstaActivo() {
+		return estaActivo;
+	}
+	public void setEstaActivo(boolean estaActivo) {
+		this.estaActivo = estaActivo;
+	}
 }

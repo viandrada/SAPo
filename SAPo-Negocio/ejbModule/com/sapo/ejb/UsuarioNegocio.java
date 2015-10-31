@@ -1,5 +1,8 @@
 package com.sapo.ejb;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.ejb.EJB;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
@@ -115,5 +118,12 @@ public class UsuarioNegocio {
 		DataUsuario dataUser = f.convertirUserAData(usuarioDAO.getUsuarioPorEmail(email));
 		return dataUser;
 		
+	}
+	
+	public List<DataUsuario> getUsuarios(){
+		Fabrica f = new Fabrica();
+		List<DataUsuario> dataUsrLista = new ArrayList<DataUsuario>();
+		dataUsrLista = f.convertirUsu(this.usuarioDAO.getUsuarios());
+		return dataUsrLista;
 	}
 }
