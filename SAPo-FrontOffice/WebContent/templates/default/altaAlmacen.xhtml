@@ -11,6 +11,19 @@
 				enctype="multipart/form-data">
 				<h:panelGroup class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
 
+					div class="form-group">
+						<h:outputLabel value="Cantidad actual: "></h:outputLabel>
+						<h:outputText class="form-control" id="cantidadActual"
+							value="#{altaAlmacenBean.cantAlmacenesActuales}">
+						</h:outputText>
+						<h:outputLabel value=" / "></h:outputLabel>
+						<h:outputText class="form-control" id="cantidadeMaxima"
+							value="#{altaAlmacenBean.cantMaxAlmacenes}">
+						</h:outputText>
+					</div>
+
+
+
 					<div class="form-group">
 						<h:inputText class="form-control" id="inputNombre"
 							value="#{altaAlmacenBean.nombre}" a:placeholder="Nombre">

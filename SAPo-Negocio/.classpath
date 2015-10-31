@@ -13,5 +13,6 @@
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
 	<classpathentry kind="lib" path="/SAPo-BackOffice/WebContent/WEB-INF/lib/weld-osgi-bundle.jar"/>
+	<classpathentry kind="lib" path="lib/hibernate-envers-5.0.3.Final.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>
