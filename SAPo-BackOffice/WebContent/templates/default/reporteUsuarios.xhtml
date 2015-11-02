@@ -20,20 +20,20 @@
 							<th><h:outputText value="Nombre" /></th>
 							<th><h:outputText value="Email" /></th>
 							<th><h:outputText value="Premium" /></th>
+							<th><h:outputText value="Activo" /></th>
 							<th><h:outputText value="" /></th>
 						</tr>
 					</thead>
 					<tbody class="searchable">
-						<ui:repeat value="#{reporteUsuariosBean.listDataUsuarios}"
-							var="u">
+						<ui:repeat value="#{reporteUsuariosBean.listDataUsuarios}" var="u">
 							<tr>
 								<td><h:outputText value="#{u.nombre}" /></td>
 								<td><h:outputText value="#{u.email}" /></td>
 								<td><h:outputText value="#{u.premium}" /></td>
-
+								<td><h:outputText value="#{u.estaActivo}" /></td>
 								<td><button type="button" class="btn btn-success"
-										data-toggle="modal" data-target="#myModaleditar"
-										>Ver movimientos</button></td>
+										data-toggle="modal" data-target="#myModaleditar">Ver
+										movimientos</button></td>
 							</tr>
 						</ui:repeat>
 					</tbody>
@@ -46,8 +46,7 @@
 							<div class="modal-header">
 								<button type="button" class="close" data-dismiss="modal">X</button>
 							</div>
-							<div class="modal-body">
-							</div>
+							<div class="modal-body"></div>
 							<div class="modal-footer">
 								<button type="button" class="btn btn-danger pull-left"
 									data-dismiss="modal" onclick="return false;">Cancelar</button>

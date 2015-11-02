@@ -28,7 +28,7 @@ public class Producto implements Serializable {
 	private String nombre;
 	private String descripcion;
 	private float precio;
-	@OneToMany(cascade = { CascadeType.PERSIST, CascadeType.REMOVE,
+	@ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.REMOVE,
 			CascadeType.MERGE })
 	private List<Imagen> foto;
 	@Column(length = 1000)
