@@ -45,6 +45,11 @@ public class Producto implements Serializable {
 	@OneToOne(cascade = { CascadeType.PERSIST, CascadeType.REMOVE,
 			CascadeType.MERGE })
 	private Categoria categoria;
+	
+	@OneToOne(cascade = { CascadeType.PERSIST, CascadeType.REMOVE,
+			CascadeType.MERGE })
+	private Usuario usuario;
+	
 
 	@OneToOne(cascade = { CascadeType.PERSIST,
 			CascadeType.MERGE })
@@ -165,4 +170,14 @@ public class Producto implements Serializable {
 	public void setProductoGenerico(ProductoGenerico productoGenerico) {
 		this.productoGenerico = productoGenerico;
 	}
+
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
+	}
+	
+	
 }

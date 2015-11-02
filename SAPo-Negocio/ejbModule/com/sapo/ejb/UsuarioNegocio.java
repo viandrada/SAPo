@@ -117,6 +117,12 @@ public class UsuarioNegocio {
 		Fabrica f = new Fabrica();
 		DataUsuario dataUser = f.convertirUserAData(usuarioDAO.getUsuarioPorEmail(email));
 		return dataUser;
+	}
+	
+	public DataUsuario getUsuarioPorId(int id){
+		Fabrica f = new Fabrica();
+		DataUsuario dataUser = f.convertirUserAData(usuarioDAO.getUsuario(id));
+		return dataUser;
 		
 	}
 	

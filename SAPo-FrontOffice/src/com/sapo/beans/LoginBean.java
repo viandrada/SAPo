@@ -32,6 +32,7 @@ public class LoginBean {
 	NavigationBean nav;
 
     private String email;
+    private int idUsuario;
     private String nombre;
     private String password;
     private boolean premium;
@@ -49,7 +50,14 @@ public class LoginBean {
 		this.email = email;
 	}
 	
-	
+	public int getIdUsuario() {
+		return idUsuario;
+	}
+
+	public void setIdUsuario(int idUsuario) {
+		this.idUsuario = idUsuario;
+	}
+
 	public boolean isPremium() {
 		return premium;
 	}
@@ -148,6 +156,7 @@ public class LoginBean {
 			this.redirect = "Login OK!";
 		    this.logueado = true;
 		    
+		    this.idUsuario=dataUser.getIdUsuario();
 		    this.nombre=dataUser.getNombre();
 		    this.premium=dataUser.isPremium();
 		  		    

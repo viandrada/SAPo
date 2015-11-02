@@ -19,7 +19,7 @@ import org.hibernate.envers.RelationTargetAuditMode;
 
 @NamedQuery(name = "Almacen.getAlmacenesUsuario.Email", query = "SELECT a FROM Almacen a WHERE a.propietario.email = :email") })
 @Entity
-@Audited(targetAuditMode = RelationTargetAuditMode.NOT_AUDITED)
+//@Audited(targetAuditMode = RelationTargetAuditMode.NOT_AUDITED) // no necesario creo
 public class Almacen implements Serializable {
 
 	private static final long serialVersionUID = 1L;

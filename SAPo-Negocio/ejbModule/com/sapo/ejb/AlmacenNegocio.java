@@ -183,6 +183,8 @@ public class AlmacenNegocio {
 		Producto productoGuardar = new Producto();
 		Almacen almacenGuardar;// = new Almacen(almacen.getIdAlmacen());
 		almacenGuardar = this.almacenDAO.getAlmacen(almacen.getIdAlmacen());
+		
+		Usuario usr = this.usuarioDAO.getUsuarioPorEmail(usuario.getEmail());
 
 		Categoria catGuardar;
 		if (categoria.getNombre() == null) {
@@ -192,8 +194,7 @@ public class AlmacenNegocio {
 			catGuardar = new Categoria();
 			catGuardar.setNombre(categoria.getNombre());
 			catGuardar.setEsGenerica(false);
-			Usuario usr = this.usuarioDAO
-					.getUsuarioPorEmail(usuario.getEmail());
+			
 			catGuardar.setUsu(usr);
 		}
 
@@ -206,6 +207,7 @@ public class AlmacenNegocio {
 		productoGuardar.setCategoria(catGuardar);
 		productoGuardar.setAtributos(producto.getAtributos());
 		productoGuardar.setStock(producto.getStock());
+		productoGuardar.setUsuario(usr);
 		productoGuardar.setFechaAlta(new Date());
 
 		List<Imagen> imgs = new ArrayList<Imagen>();
@@ -407,8 +409,8 @@ public class AlmacenNegocio {
 		p.setProductoGenerico(pg);
 		p.setStockIdeal(1);
 		p.setEsIdeal(true);// Booleano para indicar q es ideal, no se muestra en
-							// el almacén común.
-		// Persistirlo en el almacén común
+							// el almacï¿½n comï¿½n.
+		// Persistirlo en el almacï¿½n comï¿½n
 		this.productoDAO.insertarProducto(p);
 		// Asociarlo al almacen ideal
 		ai.getProductos().add(p);

@@ -87,7 +87,7 @@ public class ProductoNegocio {
 			imgs.add(img);
 		}
 		productoGenerico.setFoto(imgs.get(0));// Se puede cambiar para guardar
-												// más de na foto.
+												// mï¿½s de na foto.
 
 		try {
 			this.productoGenericoDAO.insertarProductoGenerico(productoGenerico);
@@ -110,12 +110,13 @@ public class ProductoNegocio {
 		dataProducto.setPrecio(producto.getPrecio());
 		dataProducto.setStock(producto.getStock());
 		dataProducto.setStockIdeal(producto.getStockIdeal());
+		//dataProducto.setIdUsuario(producto.getUsuario().getIdUsuario());
 		dataProducto.setFotos(toDataImagen(producto.getFoto()));
 
 		return dataProducto;
 	}
 
-	// TODO función auxiliar q se usa bastante. Pasar a paquete utils.
+	// TODO funciï¿½n auxiliar q se usa bastante. Pasar a paquete utils.
 	public List<DataImagen> toDataImagen(List<Imagen> imagenes) {
 		List<DataImagen> dataImagenes = new ArrayList<DataImagen>();
 		for (int i = 0; i < imagenes.size(); i++) {
