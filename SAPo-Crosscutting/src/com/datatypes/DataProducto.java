@@ -16,15 +16,16 @@ public class DataProducto {
 	private List<DataImagen> fotos;
 	private float precio;
 	private boolean estaActivo;
-	private boolean esIdeal;//Para el almacén ideal
-	private boolean agregado;//Para el almacén ideal
+	private boolean esIdeal;//Para el almacï¿½n ideal
+	private boolean agregado;//Para el almacï¿½n ideal
 	private Date fechaAlta;
 	private String atributos;
 	private int stock;
 	private int stockIdeal;
 	private int idCategoria;
+	private int idUsuario;
 	private String nombreCategoria;
-	private int idProductoGenerico;// En caso de usar un producto genérico como
+	private int idProductoGenerico;// En caso de usar un producto genï¿½rico como
 									// plantilla.
 
 	public int getIdProducto() {
@@ -146,4 +147,14 @@ public class DataProducto {
 	public void setIdProductoGenerico(int idProductoGenerico) {
 		this.idProductoGenerico = idProductoGenerico;
 	}
+
+	public int getIdUsuario() {
+		return idUsuario;
+	}
+
+	public void setIdUsuario(int idUsuario) {
+		this.idUsuario = idUsuario;
+	}
+	
+	
 }

@@ -248,7 +248,6 @@ public class AlmacenNegocio {
 			dataProducto.setNombre(productos.get(i).getNombre());
 			dataProducto.setDescripcion(productos.get(i).getDescripcion());
 			dataProducto.setPrecio(productos.get(i).getPrecio());
-			// TODO Agregar mas campos al data (imagenes y atributos)
 			dataProducto.setAtributos(productos.get(i).getAtributos());
 			dataProducto.setStock(productos.get(i).getStock());
 			dataProducto.setStockIdeal(productos.get(i).getStockIdeal());

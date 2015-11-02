@@ -139,7 +139,7 @@ public class AlmacenIdealBean {
 																	// ese id.
 				}
 			}
-			//this.almacenIdeal.setProductos(dataProductos);
+			// this.almacenIdeal.setProductos(dataProductos);
 		} else {
 			this.idAlmacenIdeal = service.crearAlmacenIdeal(nav
 					.getIdAlmacenActual());
@@ -179,25 +179,33 @@ public class AlmacenIdealBean {
 	}
 
 	public void ocultarItemsAgregados() {
-		for (int i = 0; i < this.productosEspecificosLista.size(); i++) {
-			for (int j = 0; j < this.almacenIdeal.getProductos().size(); j++) {
-				if (this.almacenIdeal.getProductos().get(j).getIdProducto() == productosEspecificosLista.get(i).getIdProducto()) {
-					productosEspecificosLista.get(i).setAgregado(true);
+		if (this.productosEspecificosLista.size() != 0
+				&& this.almacenIdeal != null && this.almacenIdeal.getProductos().size() != 0) {
+			for (int i = 0; i < this.productosEspecificosLista.size(); i++) {
+				for (int j = 0; j < this.almacenIdeal.getProductos().size(); j++) {
+					if (this.almacenIdeal.getProductos().get(j).getIdProducto() == productosEspecificosLista
+							.get(i).getIdProducto()) {
+						productosEspecificosLista.get(i).setAgregado(true);
+					}
 				}
-			}
 
+			}
 		}
-		for (int i = 0; i < this.productosGenericosLista.size(); i++) {
-			for (int j = 0; j < this.almacenIdeal.getProductos().size(); j++) {
-				if (this.almacenIdeal.getProductos().get(j).getIdProductoGenerico() == productosGenericosLista
-						.get(i).getIdProducto()) {
-					productosGenericosLista.get(i).setAgregado(true);
+		if (this.productosGenericosLista.size() != 0
+				&& this.almacenIdeal != null && this.almacenIdeal.getProductos().size() != 0) {
+			for (int i = 0; i < this.productosGenericosLista.size(); i++) {
+				for (int j = 0; j < this.almacenIdeal.getProductos().size(); j++) {
+					if (this.almacenIdeal.getProductos().get(j)
+							.getIdProductoGenerico() == productosGenericosLista
+							.get(i).getIdProducto()) {
+						productosGenericosLista.get(i).setAgregado(true);
+					}
 				}
 			}
 		}
 	}
-	
-	public String actualizarStockIdeal(int idProducto, int stock){
+
+	public String actualizarStockIdeal(int idProducto, int stock) {
 		this.serviceProducto.actualizarStockIdeal(idProducto, stock);
 		init();
 		return "index.xhtml";

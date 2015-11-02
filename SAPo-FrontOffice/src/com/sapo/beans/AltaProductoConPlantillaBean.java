@@ -352,9 +352,10 @@ public class AltaProductoConPlantillaBean {
 		}
 
 		//Si no sube imagen, se guarda la del genérico.
-		if(this.fotos.isEmpty()){
+		if(this.fotos.size() == 0){
 			DataImagen dataImg = new DataImagen();
 			dataImg.setIdImagen(this.productoGenerico.getFotos().get(0).getIdImagen());
+			this.fotos.add(dataImg);
 		}
 		this.productoNuevo.setFotos(this.fotos);
 		

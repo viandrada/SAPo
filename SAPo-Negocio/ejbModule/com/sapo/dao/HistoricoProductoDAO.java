@@ -1,5 +1,11 @@
 package com.sapo.dao;
 
+import java.lang.reflect.Field;
+import java.sql.Array;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.ejb.Stateless;
 import javax.ejb.TransactionManagement;
 import javax.ejb.TransactionManagementType;
@@ -34,4 +40,8 @@ public class HistoricoProductoDAO {
 		em.merge(a);		
 	}
 
+	/*public void getMovimientosUsuario(){
+		ArrayList lista = (ArrayList) em.createNativeQuery("select * from producto_aud where almacen_idalmacen = 1").getResultList();
+
+	}*/
 }

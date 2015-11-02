@@ -44,6 +44,7 @@ public class Fabrica {
 			dcat.setNombre(c.getNombre());
 			dcat.setEmail(c.getEmail());
 			dcat.setPassword(c.getPassword());
+			dcat.setEstaActivo(c.getEstaActivo());
 			// dcat.setFecha(c.);
 
 			l.add(dcat);

@@ -15,6 +15,7 @@ import com.datatypes.DataProducto;
 import com.sapo.dao.AlmacenDAO;
 import com.sapo.dao.AlmacenIdealDAO;
 import com.sapo.dao.CategoriaDAO;
+import com.sapo.dao.HistoricoProductoDAO;
 import com.sapo.dao.ImagenDAO;
 import com.sapo.dao.ProductoDAO;
 import com.sapo.dao.ProductoGenericoDAO;
@@ -48,6 +49,8 @@ public class ProductoNegocio {
 	private CategoriaDAO categoriaDAO;
 	@EJB
 	private ImagenDAO imagenDAO;
+	@EJB
+	private HistoricoProductoDAO historicoDAO;
 
 	private Producto producto;
 
@@ -241,11 +244,18 @@ public class ProductoNegocio {
 		p.setFechaAlta(new Date());
 		p.setStock(dataProducto.getStock());
 
+		
 		List<Imagen> imgs = new ArrayList<Imagen>();
+		if(dataProducto.getFotos().get(0).getDatos() != null){
 		for (int i = 0; i < dataProducto.getFotos().size(); i++) {
 			Imagen img = new Imagen();
 			img.setDatos(dataProducto.getFotos().get(i).getDatos());
 			imgs.add(img);
+		}
+		}
+		else{
+			Imagen i = this.imagenDAO.getImagen(dataProducto.getFotos().get(0).getIdImagen());
+			imgs.add(i);
 		}
 		p.setFoto(imgs);
 
