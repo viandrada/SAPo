@@ -1,5 +1,6 @@
 package com.sapo.dao;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.Stateless;
@@ -8,6 +9,11 @@ import javax.ejb.TransactionManagementType;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+
+import org.hibernate.envers.AuditReader;
+import org.hibernate.envers.AuditReaderFactory;
+import org.hibernate.envers.RevisionType;
+import org.hibernate.envers.query.AuditEntity;
 
 import com.sapo.entidades.Producto;
 
@@ -55,4 +61,76 @@ public class ProductoDAO {
 		Producto p = getProducto(idProducto);
 		em.remove(em.merge(p));
 	}
+	
+	public void pruebaProducto(){
+		AuditReader reader = AuditReaderFactory.get(em);
+		List<Producto> query = (List<Producto>) reader.createQuery()
+			    .forEntitiesAtRevision(Producto.class, 4)
+			    .getResultList();
+		
+		//Producto prod = query.getClass();
+		//Producto prod = 
+		if (query!=null){
+			
+			System.out.println("Cant1: "+ query.size());
+			for (Producto lista : query){
+				System.out.println("Query1: "+lista.getNombre() + " - id: "+lista.getIdProducto());//.getNombre()+ " "+prueba.getDescripcion());
+			}
+		}
+		
+		
+		
+	}
+	
+	
+	/* Paso un id de un producto y obtengo el histórico de 
+	 * ese producto. Es decir, obengo una lista de productos
+	 * con todas sus versiones.
+	 */
+	public List<Producto> getHistoricoProductoPorId(int idProd){
+		AuditReader reader = AuditReaderFactory.get(em);
+		List query1 = reader.createQuery()
+			    .forRevisionsOfEntity(Producto.class, false,true)
+			    .add(AuditEntity.id().eq(idProd))   
+			    .getResultList();	
+		List<Producto> listaProd = new ArrayList<Producto>();		
+		if (query1!=null){	
+			for (int i=0; i<query1.size();i++){
+				Object[] objArray = (Object[])query1.get(i);
+				Producto prod = (Producto)objArray[0];
+				System.out.println("Lista Productos "+i+": "+prod.getNombre() + " - id: "+prod.getIdProducto());//.getNombre()+ " "+prueba.getDescripcion());	
+				listaProd.add(prod);
+				}
+			
+		}
+		return listaProd;
+	}
+	
+	/* Paso un id de un producto y obtengo el histórico de 
+	 * ese producto. Es decir, obengo una lista de productos
+	 * con todas sus versiones.
+	 */
+	public List<Producto> getHistoricoPreciosProductoPorId(int idProd){
+		AuditReader reader = AuditReaderFactory.get(em);
+		List query1 = reader.createQuery()
+			    .forRevisionsOfEntity(Producto.class, false,true)
+			    .add(AuditEntity.id().eq(idProd)) 
+			    //.add(AuditEntity.revisionType().eq(RevisionType.ADD))//para el primer stock - NO ANDA
+			    .add(AuditEntity.revisionType().eq(RevisionType.MOD))
+			    .getResultList();	
+		List<Producto> listaProd = new ArrayList<Producto>();		
+		if (query1!=null){	
+			for (int i=0; i<query1.size();i++){
+				Object[] objArray = (Object[])query1.get(i);
+				
+				Producto prod = (Producto)objArray[0];
+				System.out.println("Lista Productos Mod "+i+": "+prod.getNombre() + " - stock: "+prod.getStock());//.getNombre()+ " "+prueba.getDescripcion());	
+				listaProd.add(prod);
+				}
+			
+		}
+		return listaProd;
+	}
+	
+	
 }

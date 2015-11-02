@@ -269,4 +269,23 @@ public class ProductoNegocio {
 			this.productoDAO.actualizarProducto(p);
 		}
 	}
+	
+	
+	/*Paso un id de un producto y obtengo el histórico de 
+	 * ese producto en forma de lista de producto.
+	 */
+	public void buscarHistoricoProductoPorId (int idProducto){
+		
+		List<Producto> listaProd = this.productoDAO.getHistoricoProductoPorId(idProducto);
+		
+	}
+	
+	/*Paso un id de un producto y obtengo el histórico de 
+	 * ese producto (sólo las modificaciones)
+	 */
+	public void buscarHistoricoPreciosProductoPorId (int idProducto){
+		
+		List<Producto> listaProd = this.productoDAO.getHistoricoPreciosProductoPorId(idProducto);
+		
+	}
 }
