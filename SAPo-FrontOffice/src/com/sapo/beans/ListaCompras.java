@@ -10,77 +10,33 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
 
 import com.datatypes.DataAlmacen;
-import com.datatypes.DataImagen;
 import com.datatypes.DataProducto;
 import com.sapo.ejb.AlmacenNegocio;
 import com.sapo.ejb.ProductoNegocio;
 
 @ManagedBean
 @RequestScoped
-public class AlmacenBean {
+public class ListaCompras {
 
-	public AlmacenBean() {
-		this.listaCompras = new ArrayList<DataProducto>();
+	public ListaCompras() {
+		listaCompras = new ArrayList<DataProducto>();
 	}
 
-	private DataAlmacen almacen;
-	private List<DataProducto> productos;
 	private List<DataProducto> listaCompras;
-	@EJB
-	AlmacenNegocio almacenNegocio;
-	@EJB
-	ProductoNegocio productoNegocio;
-	@ManagedProperty(value = "#{navigationAreaBean}")
-	NavigationAreaBean nav;
-
-	public DataAlmacen getAlmacen() {
-		return almacen;
-	}
-
-	public void setAlmacen(DataAlmacen almacen) {
-		this.almacen = almacen;
-	}
-
-	public List<DataProducto> getProductos() {
-		return productos;
-	}
-
-	public void setProductos(List<DataProducto> productos) {
-		this.productos = productos;
-	}
 
 	public List<DataProducto> getListaCompras() {
 		return listaCompras;
 	}
 
+	@ManagedProperty(value = "#{navigationAreaBean}")
+	NavigationAreaBean nav;
+	@EJB
+	AlmacenNegocio almacenNegocio;
+	@EJB
+	ProductoNegocio productoNegocio;
+
 	public void setListaCompras(List<DataProducto> listaCompras) {
 		this.listaCompras = listaCompras;
-	}
-
-	public void obtenerAlmacen() {
-		this.almacen = almacenNegocio.getAlmacenPorId(nav.getIdAlmacenActual());
-		List<DataProducto> dataProductos = this.obtenerProductos(nav
-				.getIdAlmacenActual());
-		// Si el producto no tiene foto se indica una por defecto.
-		for (int i = 0; i < dataProductos.size(); i++) {
-			if (dataProductos.get(i).getFotos().isEmpty()) {
-				DataImagen dataImg = new DataImagen();
-				dataImg.setIdImagen(1);
-				dataProductos.get(i).getFotos().add(dataImg);// TODO Guardar en
-																// base una
-																// imagen por
-																// defecto y
-																// pasarle ese
-																// id.
-			}
-		}
-		this.almacen.setProductos(dataProductos);
-	}
-
-	public List<DataProducto> obtenerProductos(int idAlmacen) {
-		List<DataProducto> dataProductos = new ArrayList<DataProducto>();
-		dataProductos = almacenNegocio.getProductosDeAlmacen(idAlmacen);
-		return dataProductos;
 	}
 
 	public NavigationAreaBean getNav() {
@@ -90,20 +46,12 @@ public class AlmacenBean {
 	public void setNav(NavigationAreaBean nav) {
 		this.nav = nav;
 	}
-
 	@PostConstruct
 	public void init() {
-		obtenerAlmacen();
 		generarLista();
 	}
-
-	public String actualizarStock(int idProducto, int stock) {
-		this.productoNegocio.actualizarStock(idProducto, stock);
-		init();
-		return "index.xhtml";
-	}
-
 	public void generarLista() {
+		this.listaCompras = new ArrayList<DataProducto>();
 		DataAlmacen almacenReal = this.almacenNegocio.getAlmacenPorId(nav
 				.getIdAlmacenActual());
 		List<DataProducto> productosReal = this.obtenerProductos(nav
@@ -119,12 +67,14 @@ public class AlmacenBean {
 				int difStock = productosIdeal.get(i).getStockIdeal()
 						- dt.getStock();
 				if (difStock != 0) {
-					productosIdeal.get(i).setStock(productosIdeal.get(i).getStockIdeal());
+					productosIdeal.get(i).setStock(
+							productosIdeal.get(i).getStockIdeal());
 					this.listaCompras.add(productosIdeal.get(i));
 				}
 			}
-			if(dt == null){
-				productosIdeal.get(i).setStock(productosIdeal.get(i).getStockIdeal());
+			if (dt == null) {
+				productosIdeal.get(i).setStock(
+						productosIdeal.get(i).getStockIdeal());
 				this.listaCompras.add(productosIdeal.get(i));
 			}
 		}
@@ -139,8 +89,14 @@ public class AlmacenBean {
 		}
 		return null;
 	}
-	
-	public String sincronizarLista(int idProductoObtenido, int idAlmacen){
+
+	public List<DataProducto> obtenerProductos(int idAlmacen) {
+		List<DataProducto> dataProductos = new ArrayList<DataProducto>();
+		dataProductos = almacenNegocio.getProductosDeAlmacen(idAlmacen);
+		return dataProductos;
+	}
+
+	public String sincronizarLista(int idProductoObtenido, int idAlmacen) {
 		System.out.println("Sincronizar Lista");
 		this.almacenNegocio.sincronizarLista(idProductoObtenido, idAlmacen);
 		generarLista();

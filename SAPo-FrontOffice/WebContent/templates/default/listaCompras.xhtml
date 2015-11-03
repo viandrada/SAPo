@@ -5,42 +5,76 @@
 
 <ui:composition>
 	<h:outputScript name="js/buscador.js" />
+	<script type="text/javascript">
+	   $(window).load(function(){
+	        $('#listaComprasModal').modal('show');
+	    });
+	</script>
 	<div class="container-fluid">
-		<div class="row">
-			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-				<div class="input-group">
-					<span class="input-group-addon">Búsqueda</span> <input id="filter2"
-						type="text" class="form-control" placeholder="Nombre"></input>
-				</div>
-				<div class="table-responsive">
-					<table class="table table-striped table-hover table-condensed">
-						<thead>
-							<tr>
-								<th><h:outputText value="Nombre" /></th>
-								<th><h:outputText value="Cantidad" /></th>
-								<th><h:outputText value="Foto" /></th>
-								<th><h:outputText value="" /></th>
-							</tr>
-						</thead>
-						<tbody class="searchable">
-							<ui:repeat value="#{almacenBean.listaCompras}" var="o">
-								<tr>
-									<td><h:outputText value="#{o.nombre}" /></td>
-									<td><h:outputText value="#{o.stock}" /></td>
-									<td><h:graphicImage class="img-responsive"
-											value="Image/#{o.fotos.get(0).idImagen}" style="height:50px;">
-										</h:graphicImage></td>
-									<td><h:form id="detalleForm">
-											<h:commandLink class="btn btn-primary" action="#" value="Obtenido!">
-											</h:commandLink>
-										</h:form></td>
-								</tr>
-							</ui:repeat>
-						</tbody>
-					</table>
+		<!-- Modal -->
+		<div class="modal fade" id="listaComprasModal" tabindex="-1"
+			role="dialog" aria-labelledby="myModalLabel">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							aria-label="Close">
+							<span aria-hidden="true"></span>
+						</button>
+						<h4 class="modal-title" id="myModalLabel">Lista de compras</h4>
+					</div>
+					<div class="modal-body">
+						<div class="row">
+							<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+								<div class="input-group">
+									<span class="input-group-addon">Búsqueda</span> <input
+										id="filter2" type="text" class="form-control"
+										placeholder="Nombre"></input>
+								</div>
+								<div class="table-responsive">
+									<table class="table table-striped table-hover table-condensed">
+										<thead>
+											<tr>
+												<th><h:outputText value="Nombre" /></th>
+												<th><h:outputText value="Cantidad" /></th>
+												<th><h:outputText value="Foto" /></th>
+												<th><h:outputText value="" /></th>
+											</tr>
+										</thead>
+										<tbody class="searchable">
+											<ui:repeat value="#{listaCompras.listaCompras}" var="o">
+												<tr>
+													<td><h:outputText value="#{o.nombre}" /></td>
+													<td><h:outputText value="#{o.stock}" /></td>
+													<td><h:graphicImage class="img-responsive"
+															value="Image/#{o.fotos.get(0).idImagen}"
+															style="height:50px;">
+														</h:graphicImage></td>
+													<td><h:form id="detalleForm">
+															<h:commandButton class="btn btn-primary"
+																action="#{listaCompras.sincronizarLista(o.idProducto,navigationAreaBean.idAlmacenActual)}"
+																value="Obtenido!">
+															</h:commandButton>
+														</h:form></td>
+												</tr>
+											</ui:repeat>
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<h:form>
+							<h:commandButton class="btn btn-info" data-dismiss="modal"
+								action="#{navigationAreaBean.irAlmacen(navigationAreaBean.idAlmacenActual)}"
+								value="Cerrar"></h:commandButton>
+						</h:form>
+					</div>
 				</div>
 			</div>
 		</div>
+
 	</div>
 </ui:composition>
 </html>

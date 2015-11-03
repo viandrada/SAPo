@@ -92,7 +92,7 @@
 }
 </style>
 
-	<div class="row"></div>
+
 	<div class="container-fluid">
 
 		<!-- Datos del almacen -->
@@ -158,10 +158,13 @@
 				<h:commandButton value="Almacén ideal"
 					action="#{navigationAreaBean.goTo('almacenIdeal.xhtml')}"
 					class="btn btn-primary"></h:commandButton>
-				<button type="button" class="btn btn-primary" data-toggle="modal"
+				<h:commandButton value="Lista de compras"
+					action="#{navigationAreaBean.goTo('listaCompras.xhtml')}"
+					class="btn btn-primary"></h:commandButton>
+				<!-- button type="button" class="btn btn-primary" data-toggle="modal"
 					data-target="#myModalListaCompras"
 					onclick="#{listaComprasBean.init()}">Generar lista de
-					compras</button>
+					compras</button-->
 
 			</h:form>
 
@@ -199,34 +202,9 @@
 											value="+" />
 									</div>
 								</div></li>
-							<!-- Modal -->
-							<div class="modal fade" id="myModalListaCompras" tabindex="-1"
-								role="dialog" aria-labelledby="myModalLabel">
-								<div class="modal-dialog" role="document">
-									<div class="modal-content">
-										<div class="modal-header">
-											<button type="button" class="close" data-dismiss="modal"
-												aria-label="Close">
-												<span aria-hidden="true"></span>
-											</button>
-											<h4 class="modal-title" id="myModalLabel">Lista de
-												compras</h4>
-										</div>
-										<div class="modal-body">
-											<ui:include src="listaCompras.xhtml" />
-										</div>
-										<div class="modal-footer">
-											<button type="button" class="btn btn-info"
-												data-dismiss="modal">Cancelar</button>
-										</div>
-									</div>
-								</div>
-							</div>
-							<!-- Fin de ventana modal -->
-
 						</h:form>
-						<button type="button" class="btn btn-primary btn-lg"
-							data-toggle="modal" data-target="#myModal"
+						<button type="button" class="btn btn-primary" data-toggle="modal"
+							data-target="#myModal"
 							onclick="#{detalleProductoBean.init(item.idProducto)}">Ver
 							detalle</button>
 
@@ -258,31 +236,35 @@
 			</ul>
 		</div>
 		<!-- Fin de: Productos del almacen -->
-		<div class="row">
-			<div
-				class="container chat-signin col-xs-4 col-md-4 col-sm-4 col-lg-4 col-xs-offset-8 col-md-offset-8 col-sm-offset-8 col-lg-offset-8">
-				<form class="form-signin">
-					<!-- <label for="nickname">Nickname</label> -->
-					<h:inputHidden type="text" class="input-block-level"
-						value="#{loginBean.email}" placeholder="Nickname" id="nickname" />
 
-					<h:inputHidden type="text" class="input-block-level"
-						value="#{almacenBean.almacen.idAlmacen}" placeholder="chatroom2"
-						id="chatroom2" />
 
-					<button class="btn btn-large btn-primary" type="submit"
-						id="enterRoom">Chatear</button>
+		<footer class="footer">
+			<!-- div data-spy="affix" data-offset-top="0" data-offset-bottom="0"-->
+			<div class="navbar-fixed-bottom">
+				<div
+					class="container chat-signin col-xs-4 col-md-4 col-sm-4 col-lg-4 col-xs-offset-8 col-md-offset-8 col-sm-offset-8 col-lg-offset-8">
+					<form class="form-signin">
+						<!-- <label for="nickname">Nickname</label> -->
+						<h:inputHidden type="text" class="input-block-level"
+							value="#{loginBean.email}" placeholder="Nickname" id="nickname" />
 
-				</form>
-			</div>
+						<h:inputHidden type="text" class="input-block-level"
+							value="#{almacenBean.almacen.idAlmacen}" placeholder="chatroom2"
+							id="chatroom2" />
 
-			<!-- <h:outputText value="Bienvenido, #{usuarioMB.mail}" rendered="#{not empty usuarioMB.mail}"/>/container -->
+						<button style="width:100%" class="btn btn-primary" type="submit"
+							id="enterRoom">Chatear</button>
 
-			<div
-				class="chat-wrapper col-xs-4 col-md-4 col-sm-4 col-lg-4 col-xs-offset-8 col-md-offset-8 col-sm-offset-8 col-lg-offset-8">
-				<form id="do-chat">
-					<!-- <h2 class="alert alert-success"></h2> -->
-					<!-- 	<div class="col-md-12">
+					</form>
+				</div>
+
+				<!-- <h:outputText value="Bienvenido, #{usuarioMB.mail}" rendered="#{not empty usuarioMB.mail}"/>/container -->
+
+				<div
+					class="chat-wrapper col-xs-4 col-md-4 col-sm-4 col-lg-4 col-xs-offset-8 col-md-offset-8 col-sm-offset-8 col-lg-offset-8">
+					<form id="do-chat">
+						<!-- <h2 class="alert alert-success"></h2> -->
+						<!-- 	<div class="col-md-12">
 
 			<table id="response" class="table table-striped">
 			 <thead class="header">
@@ -296,29 +278,29 @@
           <tbody>
 				 </tbody>
 			</table> -->
-					<div class="bodycontainer scrollable">
-						<table id="response"
-							class="table table-hover table-striped table-condensed table-scrollable">
-						</table>
-					</div>
-
-					<fieldset>
-						<legend>Ingrese su mensaje...</legend>
-						<div class="controls">
-							<input type="text" class="form-control"
-								placeholder="mi mensaje..." id="message" /> <input
-								type="submit"
-								class="btn btn-large btn-block btn-primary pull-left"
-								style="margin-left: 0px;" value="Enviar" />
-							<button class="btn btn-large btn-block pull-left" type="button"
-								id="leave-room">Cerrar</button>
+						<div class="bodycontainer scrollable">
+							<table id="response"
+								class="table table-hover table-striped table-condensed table-scrollable">
+							</table>
 						</div>
-					</fieldset>
 
-				</form>
+						<fieldset>
+							<legend>Ingrese su mensaje...</legend>
+							<div class="controls">
+								<input type="text" class="form-control"
+									placeholder="mi mensaje..." id="message" /> <input
+									type="submit"
+									class="btn btn-large btn-block btn-primary pull-left"
+									style="margin-left: 0px;" value="Enviar" />
+								<button class="btn btn-large btn-block pull-left" type="button"
+									id="leave-room">Cerrar</button>
+							</div>
+						</fieldset>
+
+					</form>
+				</div>
 			</div>
-		</div>
+		</footer>
 	</div>
-
 </ui:composition>
 </html>
