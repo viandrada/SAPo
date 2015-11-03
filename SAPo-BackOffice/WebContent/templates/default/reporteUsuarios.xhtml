@@ -19,8 +19,12 @@
 						<tr>
 							<th><h:outputText value="Nombre" /></th>
 							<th><h:outputText value="Email" /></th>
-							<th><h:outputText value="Premium" /></th>
-							<th><h:outputText value="Activo" /></th>
+							<th><h:outputText value="Premium?" /></th>
+							<th><h:outputText value="Fecha de Pago" /></th>
+							<th><h:outputText value="Monto" /></th>
+
+							<th><h:outputText value="Activo?" /></th>
+
 							<th><h:outputText value="" /></th>
 						</tr>
 					</thead>
@@ -29,15 +33,36 @@
 							<tr>
 								<td><h:outputText value="#{u.nombre}" /></td>
 								<td><h:outputText value="#{u.email}" /></td>
-								<td><h:outputText value="#{u.premium}" /></td>
-								<td><h:outputText value="#{u.estaActivo}" /></td>
+
+								<td><h:outputText rendered="#{u.premium == true}"
+										value="SI" /> <h:outputText rendered="#{u.premium != true}"
+										value="NO" /></td>
+
+								<td><h:outputText rendered="#{u.premium == true}"
+										value="#{u.fechaPago}" /> <h:outputText
+										rendered="#{u.premium != true}" value="No Aplica" /></td>
+
+								<td><h:outputText rendered="#{u.premium == true}"
+										value="#{u.monto}" /> <h:outputText
+										rendered="#{u.premium != true}" value="No Aplica" /></td>
+
+								<td><h:outputText rendered="#{u.estaActivo == true}"
+										value="SI" /> <h:outputText
+										rendered="#{u.estaActivo != true}" value="NO" /></td>
+
 								<td><button type="button" class="btn btn-success"
 										data-toggle="modal" data-target="#myModaleditar">Ver
 										movimientos</button></td>
 							</tr>
 						</ui:repeat>
+
 					</tbody>
+
 				</table>
+
+				<f:facet name="footer">  
+		            El total de ganancia hasta el momento es U$D #{(reporteUsuarios.ganancia)}.  
+		        </f:facet>
 
 				<div class="modal fade" id="myModaleditar" role="dialog">
 					<div class="modal-dialog">
@@ -55,6 +80,10 @@
 					</div>
 				</div>
 			</h:form>
+
+			<f:facet name="footer">  
+		            El total de ganancia hasta el momento es U$D #{(reporteUsuarios.ganancia)}.  
+		        </f:facet>
 		</h:panelGrid>
 	</div>
 </ui:composition>

@@ -45,8 +45,11 @@ public class Fabrica {
 			dcat.setEmail(c.getEmail());
 			dcat.setPassword(c.getPassword());
 			dcat.setEstaActivo(c.getEstaActivo());
-			// dcat.setFecha(c.);
-
+			
+			dcat.setFecha(c.getFecha());
+			dcat.setFechaPago(c.getFechaPago());
+			dcat.setMonto(c.getMonto());
+			
 			l.add(dcat);
 		}
 		return l;
@@ -62,6 +65,8 @@ public class Fabrica {
 			dcat.setFecha(c.getFecha());
 			dcat.setIdComentario(c.getIdComentario());
 			dcat.setUsuario(c.getUsuario().getIdUsuario());
+			dcat.setNombreUsu(c.getUsuario().getNombre());
+			dcat.setEmailUsu(c.getUsuario().getEmail());
 
 			l.add(dcat);
 		}

@@ -17,6 +17,8 @@ public class DataComentario{
 	private String contenido;
 	private Date fecha;
 	private int usuario; 
+	private String emailUsu;
+	private String nombreUsu;
 	
 	public int getIdComentario() {
 		return idComentario;
@@ -48,6 +50,22 @@ public class DataComentario{
 
 	public void setUsuario(int usuario) {
 		this.usuario = usuario;
+	}
+
+	public String getEmailUsu() {
+		return emailUsu;
+	}
+
+	public void setEmailUsu(String emailUsu) {
+		this.emailUsu = emailUsu;
+	}
+
+	public String getNombreUsu() {
+		return nombreUsu;
+	}
+
+	public void setNombreUsu(String nombreUsu) {
+		this.nombreUsu = nombreUsu;
 	}
 
 	/*public Usuario getUsuario() {

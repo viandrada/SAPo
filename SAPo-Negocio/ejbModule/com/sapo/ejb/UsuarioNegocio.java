@@ -1,8 +1,9 @@
 package com.sapo.ejb;
 
+import java.util.Date;
+
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.ejb.EJB;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
@@ -101,6 +102,7 @@ public class UsuarioNegocio {
 	public boolean pasarAPremium(String usuarioLogueado) {
 		
 		usuario = usuarioDAO.getUsuarioPorEmail(usuarioLogueado); 
+		usuario.setFechaPago(new Date());
 		usuario.setPremium(true);
 		
 		try {
