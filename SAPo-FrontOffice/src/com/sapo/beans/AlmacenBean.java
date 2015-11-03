@@ -111,25 +111,27 @@ public class AlmacenBean {
 		List<DataProducto> productosIdeal = this.almacenNegocio
 				.getAlmacenIdealPorId(almacenReal.getIdAlmacenIdeal())
 				.getProductos();
-		for (int i = 0; i < productosIdeal.size(); i++) {
-
-			DataProducto dt = buscarProductoEnLista(productosReal,
-					productosIdeal.get(i).getIdProducto());
-			if (dt != null) {
-				int difStock = productosIdeal.get(i).getStockIdeal()
-						- dt.getStock();
-				if (difStock != 0) {
+		if (productosIdeal!=null){
+			for (int i = 0; i < productosIdeal.size(); i++) {
+	
+				DataProducto dt = buscarProductoEnLista(productosReal,
+						productosIdeal.get(i).getIdProducto());
+				if (dt != null) {
+					int difStock = productosIdeal.get(i).getStockIdeal()
+							- dt.getStock();
+					if (difStock != 0) {
+						productosIdeal.get(i).setStock(productosIdeal.get(i).getStockIdeal());
+						this.listaCompras.add(productosIdeal.get(i));
+					}
+				}
+				if(dt == null){
 					productosIdeal.get(i).setStock(productosIdeal.get(i).getStockIdeal());
 					this.listaCompras.add(productosIdeal.get(i));
 				}
 			}
-			if(dt == null){
-				productosIdeal.get(i).setStock(productosIdeal.get(i).getStockIdeal());
-				this.listaCompras.add(productosIdeal.get(i));
-			}
 		}
 	}
-
+	
 	public DataProducto buscarProductoEnLista(List<DataProducto> dataProducto,
 			int idProducto) {
 

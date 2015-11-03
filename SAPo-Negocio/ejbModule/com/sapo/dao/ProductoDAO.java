@@ -87,7 +87,7 @@ public class ProductoDAO {
 	 * ese producto. Es decir, obengo una lista de productos
 	 * con todas sus versiones.
 	 */
-	public List<Producto> getHistoricoProductoPorId(int idProd){
+	public List<Producto> getHistoricoProdPorId(int idProd){
 		AuditReader reader = AuditReaderFactory.get(em);
 		List query1 = reader.createQuery()
 			    .forRevisionsOfEntity(Producto.class, false,true)
@@ -98,7 +98,7 @@ public class ProductoDAO {
 			for (int i=0; i<query1.size();i++){
 				Object[] objArray = (Object[])query1.get(i);
 				Producto prod = (Producto)objArray[0];
-				System.out.println("Lista Productos "+i+": "+prod.getNombre() + " - id: "+prod.getIdProducto());//.getNombre()+ " "+prueba.getDescripcion());	
+				//System.out.println("Hist"+i+": "+prod.getNombre() + " - id: "+prod.getIdProducto());//.getNombre()+ " "+prueba.getDescripcion());	
 				listaProd.add(prod);
 				}
 			
@@ -107,30 +107,65 @@ public class ProductoDAO {
 	}
 	
 	/* Paso un id de un producto y obtengo el histórico de 
-	 * ese producto. Es decir, obengo una lista de productos
-	 * con todas sus versiones.
+	 * las MODIFICACIONES de ese producto. (sólo las modificaciones)
 	 */
-	public List<Producto> getHistoricoPreciosProductoPorId(int idProd){
+	public List<Producto> getHistoricoModificacionesProdPorId(int idProd){
 		AuditReader reader = AuditReaderFactory.get(em);
 		List query1 = reader.createQuery()
 			    .forRevisionsOfEntity(Producto.class, false,true)
 			    .add(AuditEntity.id().eq(idProd)) 
-			    //.add(AuditEntity.revisionType().eq(RevisionType.ADD))//para el primer stock - NO ANDA
 			    .add(AuditEntity.revisionType().eq(RevisionType.MOD))
+			    .getResultList();		
+		List<Producto> listaProd = new ArrayList<Producto>();	
+		if (query1!=null){	
+			for (int i=0; i<query1.size();i++){
+				Object[] objArray = (Object[])query1.get(i);
+				Producto prod = (Producto)objArray[0];
+				//System.out.println("Lista Productos Mod "+i+": "+prod.getNombre() + " - stock: "+prod.getStock());//.getNombre()+ " "+prueba.getDescripcion());	
+				listaProd.add(prod);
+				}		
+		}
+		return listaProd;
+	}
+	
+	/* Paso un id de un producto y obtengo el producto en su
+	 * estado inicial cuando se dió de alta. 
+	 */
+	public Producto getHistoricoInicialProdPorId(int idProd){
+		AuditReader reader = AuditReaderFactory.get(em);
+		Object query2 = reader.createQuery()
+			    .forRevisionsOfEntity(Producto.class, false,true)
+			    .add(AuditEntity.id().eq(idProd)) 
+			    .add(AuditEntity.revisionType().eq(RevisionType.ADD))
+			    .getSingleResult();	
+		Object[] objArray1 = (Object[])query2;
+		Producto primerProd = (Producto)objArray1[0];
+		System.out.println("Lista Productos Mod A: " +primerProd.getNombre() + " - stock: "+primerProd.getStock());//.getNombre()+ " "+prueba.getDescripcion());	
+		
+		return primerProd;
+	
+	}
+
+	/* creo que no anda
+	 * */
+	public List<Producto> getHistoricoProdPorUsuario(int idUsuario) {
+		
+		AuditReader reader = AuditReaderFactory.get(em);
+		List query1 = reader.createQuery()
+			    .forRevisionsOfEntity(Producto.class, false,true)
+			    .add(AuditEntity.property("usuario").eq(idUsuario))   
 			    .getResultList();	
 		List<Producto> listaProd = new ArrayList<Producto>();		
 		if (query1!=null){	
 			for (int i=0; i<query1.size();i++){
 				Object[] objArray = (Object[])query1.get(i);
-				
 				Producto prod = (Producto)objArray[0];
-				System.out.println("Lista Productos Mod "+i+": "+prod.getNombre() + " - stock: "+prod.getStock());//.getNombre()+ " "+prueba.getDescripcion());	
+				System.out.println("Hist usu"+i+": "+prod.getNombre() + " - id: "+prod.getIdProducto());//.getNombre()+ " "+prueba.getDescripcion());	
 				listaProd.add(prod);
 				}
 			
 		}
 		return listaProd;
+		
 	}
-	
-	
 }

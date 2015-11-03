@@ -102,7 +102,6 @@ public class ProductoNegocio {
 	public DataProducto getProductoPorId(int idProducto) {
 		DataProducto dataProducto = new DataProducto();
 		Producto producto = this.productoDAO.getProducto(idProducto);
-
 		dataProducto.setIdProducto(producto.getIdProducto());
 		dataProducto.setAtributos(producto.getAtributos());
 		dataProducto.setDescripcion(producto.getDescripcion());
@@ -283,19 +282,32 @@ public class ProductoNegocio {
 	
 	/*Paso un id de un producto y obtengo el histórico de 
 	 * ese producto en forma de lista de producto.
+	 * POR AHORA VOID, PUEDE CAMBIAR
 	 */
-	public void buscarHistoricoProductoPorId (int idProducto){
+	public void buscarHistoricoProdPorId (int idProducto){
 		
-		List<Producto> listaProd = this.productoDAO.getHistoricoProductoPorId(idProducto);
+		List<Producto> listaProd = this.productoDAO.getHistoricoProdPorId(idProducto);
 		
 	}
 	
 	/*Paso un id de un producto y obtengo el histórico de 
 	 * ese producto (sólo las modificaciones)
+	 * POR AHORA VOID, PUEDE CAMBIAR
 	 */
-	public void buscarHistoricoPreciosProductoPorId (int idProducto){
+	public void buscarHistoricoModificacionesProdPorId (int idProducto){
 		
-		List<Producto> listaProd = this.productoDAO.getHistoricoPreciosProductoPorId(idProducto);
+		List<Producto> listaProd = this.productoDAO.getHistoricoModificacionesProdPorId(idProducto);
 		
 	}
+	
+	
+	/* Paso un id de usuario y obtengo el histórico de productos
+	 * de ese usuario.
+	 * POR AHORA VOID, PUEDE CAMBIAR
+	 * */
+	public void buscarHistoricoProdPorUsuario(int idUsuario){
+		
+		List<Producto> listaProd = this.productoDAO.getHistoricoProdPorUsuario(idUsuario);
+	}
+	
 }

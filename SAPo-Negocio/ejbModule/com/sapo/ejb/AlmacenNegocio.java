@@ -139,9 +139,8 @@ public class AlmacenNegocio {
 	}
 
 	public int getCantidadAlmacenesDeUsuario(String emailUsr) {
-
-		int idUser = this.usuarioDAO.getUsuarioPorEmail(emailUsr)
-				.getIdUsuario();
+		int idUser = this.usuarioDAO.getUsuarioPorEmail(emailUsr).getIdUsuario();
+		buscarHistoricoAlmacenesPorUsuario(idUser);
 		return this.almacenDAO.getCantAlmacenesUsuario(idUser);
 	}
 
@@ -442,4 +441,15 @@ public class AlmacenNegocio {
 		}
 		return imagenes;
 	}
+	
+	/*
+	 * Devuelve una lista con todos los historicos de Almacenes de un usuario
+	 * particular.
+	 * Por ahora es VOID pero se puede cambiar
+	 */
+	public void buscarHistoricoAlmacenesPorUsuario(int idUsuario){
+		
+		List<Almacen> listaAlm = this.almacenDAO.getHistoricoAlmacenesPorUsuario(idUsuario);
+	}
+	
 }
