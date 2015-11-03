@@ -13,6 +13,9 @@ public class DataUsuario {
 	private String password;
 	private boolean premium;
 	private boolean estaActivo;
+	private Date fechaPago;
+	private float monto;
+	private String estilo;
 
 	public boolean isPremium() {
 		return premium;
@@ -56,5 +59,23 @@ public class DataUsuario {
 	}
 	public void setEstaActivo(boolean estaActivo) {
 		this.estaActivo = estaActivo;
+	}
+	public Date getFechaPago() {
+		return fechaPago;
+	}
+	public void setFechaPago(Date fechaPago) {
+		this.fechaPago = fechaPago;
+	}
+	public float getMonto() {
+		return monto;
+	}
+	public void setMonto(float monto) {
+		this.monto = monto;
+	}
+	public String getEstilo() {
+		return estilo;
+	}
+	public void setEstilo(String estilo) {
+		this.estilo = estilo;
 	}
 }
