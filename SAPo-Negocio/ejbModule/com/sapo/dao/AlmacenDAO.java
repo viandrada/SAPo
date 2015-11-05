@@ -144,10 +144,9 @@ public class AlmacenDAO {
 			for (int i=0; i<query1.size();i++){
 				Object[] objArray = (Object[])query1.get(i);
 				Almacen alm = (Almacen)objArray[0];
-				System.out.println("Hist almacen"+i+": "+alm.getNombre() + " - id: "+alm.getPropietario().getEmail());	
+				System.out.println("Hist Alm x Usr "+i+": "+alm.getNombre() + " - email: "+alm.getPropietario().getEmail());	
 				listaAlm.add(alm);
 				}
-			
 		}
 		return listaAlm;
 		

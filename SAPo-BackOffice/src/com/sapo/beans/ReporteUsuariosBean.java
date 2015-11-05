@@ -8,7 +8,9 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 
+import com.datatypes.DataReporteProducto;
 import com.datatypes.DataUsuario;
+import com.sapo.ejb.AlmacenNegocio;
 import com.sapo.ejb.ReporteNegocio;
 import com.sapo.ejb.UsuarioNegocio;
 
@@ -25,6 +27,9 @@ public class ReporteUsuariosBean {
 	@EJB
 	ReporteNegocio reporteNegocio;
 	
+	@EJB
+	AlmacenNegocio almacenNegocio;
+	
 	private List<DataUsuario> listDataUsuarios;
 	private float ganancia;
 
@@ -32,6 +37,9 @@ public class ReporteUsuariosBean {
 	public void init(){
 		listDataUsuarios = this.usuarioNegocio.getUsuarios();
 		ganancia=this.reporteNegocio.ganancias();
+		//para probar:
+		this.reporteNegocio.buscarHistoricoAlmacenesPorUsuario(2);
+		this.reporteNegocio.buscarHistoricoProdPorUsuario(2);
 	}
 
 	public float getGanancia() {
@@ -49,5 +57,10 @@ public class ReporteUsuariosBean {
 	public void setListDataUsuarios(List<DataUsuario> listDataUsuarios) {
 		this.listDataUsuarios = listDataUsuarios;
 	}
+	
+	//public List<DataReporteProducto> getListaMovsProdPorUsuario(){
+		
+		
+	//}
 	
 }
