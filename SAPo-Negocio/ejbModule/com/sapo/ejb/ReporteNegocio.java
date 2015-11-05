@@ -12,6 +12,8 @@ import org.hibernate.envers.AuditReaderFactory;
 import org.hibernate.envers.query.AuditEntity;
 
 import com.datatypes.DataAlmacen;
+import com.datatypes.DataReporteAlmacen;
+import com.datatypes.DataReporteProducto;
 import com.datatypes.DataUsuario;
 import com.sapo.dao.AlmacenDAO;
 import com.sapo.dao.ProductoDAO;
@@ -42,6 +44,9 @@ public class ReporteNegocio {
 	@EJB
 	private ProductoDAO productoDAO;
 	
+	@EJB
+	private Fabrica fabrica;
+	
 	
 	public float ganancias(){
 		
@@ -65,13 +70,44 @@ public class ReporteNegocio {
 	/*
 	 * Devuelve una lista con todos los historicos de Almacenes de un usuario
 	 * particular.
-	 * Por ahora es VOID pero se puede cambiar
 	 */
-	public void buscarHistoricoAlmacenesPorUsuario(int idUsuario){
-		
-		List<Almacen> listaAlm = this.almacenDAO.getHistoricoAlmacenesPorUsuario(idUsuario);
+	public List<DataReporteAlmacen> buscarHistoricoAlmacenesPorUsuario(int idUsuario){	
+		List listaAlm = this.almacenDAO.getHistoricoAlmacenesPorUsuario(idUsuario);
+		List<DataReporteAlmacen> listaRepAlm = new ArrayList<DataReporteAlmacen>();	
+		if (listaAlm!=null){	
+			for (int i=0; i<listaAlm.size();i++){
+				Object[] objArray = (Object[])listaAlm.get(i);
+				Almacen alm = (Almacen)objArray[0];
+				String tipoMov = objArray[2].toString();
+				DataReporteAlmacen dataRepAlm = this.fabrica.toDataReporteAlmacen(alm, tipoMov);
+				System.out.println("Hist Alm x Usr "+i+": "+alm.getNombre() + " - email: "+alm.getPropietario().getEmail()+
+						" TipoMov "+ tipoMov);	
+				listaRepAlm.add(dataRepAlm);
+				}
+		}
+		return  listaRepAlm;
 	}
+
 	
+	/* Paso un id de usuario y obtengo el histórico de productos
+	 * de ese usuario.
+	 * */
+	public  List<DataReporteProducto>  buscarHistoricoProdPorUsuario(int idUsuario){
+		List listaProd = this.productoDAO.getHistoricoProdPorUsuario(idUsuario);
+		List<DataReporteProducto> listaRepProd = new ArrayList<DataReporteProducto>();
+		if (listaProd!=null){	
+			for (int i=0; i<listaProd.size();i++){
+				Object[] objArray = (Object[])listaProd.get(i);
+				Producto prod = (Producto)objArray[0];
+				String tipoMov = objArray[2].toString();
+				DataReporteProducto dataRepProd = this.fabrica.toDataReporteProducto(prod, tipoMov);
+				System.out.println("Hist Prod x Usr "+i+": "+prod.getNombre() + " - id: "+prod.getIdProducto()+
+						" TipoMov "+ tipoMov);
+				listaRepProd.add(dataRepProd);
+				}		
+		}	
+		return listaRepProd;
+	}
 	
 
 	/*Paso un id de un producto y obtengo el histórico de 
@@ -94,15 +130,7 @@ public class ReporteNegocio {
 		
 	}
 	
-	
-	/* Paso un id de usuario y obtengo el histórico de productos
-	 * de ese usuario.
-	 * POR AHORA VOID, PUEDE CAMBIAR
-	 * */
-	public void buscarHistoricoProdPorUsuario(int idUsuario){
-		
-		List<Producto> listaProd = this.productoDAO.getHistoricoProdPorUsuario(idUsuario);
-	}
+
 	
 
 }

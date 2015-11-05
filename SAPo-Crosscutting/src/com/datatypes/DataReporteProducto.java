@@ -15,18 +15,14 @@ public class DataReporteProducto {
 	private List<DataImagen> fotos;
 	private float precio;
 	private boolean estaActivo;
-	//private boolean esIdeal;//Para el almac�n ideal
-	//private boolean agregado;//Para el almac�n ideal
+
 	private Date fechaAlta;
 	private String atributos;
 	private int stock;
-	//private int stockIdeal;
-	//private int idCategoria;
+
 	private int idUsuario;
-	private int idAlmacen;
 	private String nombreCategoria;
-	//private int idProductoGenerico;// En caso de usar un producto gen�rico como
-									// plantilla.
+
 	private String tipoMovimiento;
 	
 	public int getIdProducto() {
@@ -89,12 +85,6 @@ public class DataReporteProducto {
 	}
 	public void setIdUsuario(int idUsuario) {
 		this.idUsuario = idUsuario;
-	}
-	public int getIdAlmacen() {
-		return idAlmacen;
-	}
-	public void setIdAlmacen(int idAlmacen) {
-		this.idAlmacen = idAlmacen;
 	}
 	public String getNombreCategoria() {
 		return nombreCategoria;

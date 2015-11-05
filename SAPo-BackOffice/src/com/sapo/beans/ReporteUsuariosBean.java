@@ -32,14 +32,15 @@ public class ReporteUsuariosBean {
 	
 	private List<DataUsuario> listDataUsuarios;
 	private float ganancia;
+	
 
 	@PostConstruct
 	public void init(){
 		listDataUsuarios = this.usuarioNegocio.getUsuarios();
 		ganancia=this.reporteNegocio.ganancias();
 		//para probar:
-		this.reporteNegocio.buscarHistoricoAlmacenesPorUsuario(2);
-		this.reporteNegocio.buscarHistoricoProdPorUsuario(2);
+		this.reporteNegocio.buscarHistoricoAlmacenesPorUsuario(1);
+		this.reporteNegocio.buscarHistoricoProdPorUsuario(1);
 	}
 
 	public float getGanancia() {

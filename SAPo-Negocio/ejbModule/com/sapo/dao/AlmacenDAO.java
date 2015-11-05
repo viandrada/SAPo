@@ -126,30 +126,19 @@ public class AlmacenDAO {
 		}
 		return cant;
 	}
-
-
 	
 	/*
 	 * Obtiene una lista con los almacenes y sus históricos de un usuario.
 	 */
-	public List<Almacen> getHistoricoAlmacenesPorUsuario(int idUsuario) {
+	public List getHistoricoAlmacenesPorUsuario(int idUsuario) {
 		
 		AuditReader reader = AuditReaderFactory.get(em);
-		List query1 = reader.createQuery()
+		List queryAlmacen = reader.createQuery()
 			    .forRevisionsOfEntity(Almacen.class, false,true)
 			    .add(AuditEntity.relatedId("propietario").eq(idUsuario))
 			    .getResultList();	
-		List<Almacen> listaAlm = new ArrayList<Almacen>();		
-		if (query1!=null){	
-			for (int i=0; i<query1.size();i++){
-				Object[] objArray = (Object[])query1.get(i);
-				Almacen alm = (Almacen)objArray[0];
-				System.out.println("Hist Alm x Usr "+i+": "+alm.getNombre() + " - email: "+alm.getPropietario().getEmail());	
-				listaAlm.add(alm);
-				}
-		}
-		return listaAlm;
 		
+		return queryAlmacen;
 	}
 	
 }
