@@ -65,6 +65,8 @@ public class Fabrica {
 			dcat.setFecha(c.getFecha());
 			dcat.setIdComentario(c.getIdComentario());
 			dcat.setUsuario(c.getUsuario().getIdUsuario());
+			dcat.setNombreUsu(c.getUsuario().getNombre());
+			dcat.setEmailUsu(c.getUsuario().getEmail());
 
 			l.add(dcat);
 		}

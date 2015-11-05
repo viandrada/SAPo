@@ -141,4 +141,11 @@ public class AlmacenBean {
 		}
 		return null;
 	}
+	
+	public String sincronizarLista(int idProductoObtenido, int idAlmacen){
+		System.out.println("Sincronizar Lista");
+		this.almacenNegocio.sincronizarLista(idProductoObtenido, idAlmacen);
+		generarLista();
+		return "null";
+	}
 }

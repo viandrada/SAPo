@@ -33,7 +33,7 @@
 		<h:form id="ediCat2" rendered="true">
 			<div class="input-group">
 				<span class="input-group-addon">Buscar:</span> <input id="filter2"
-					type="text" class="form-control" placeholder="contenido"></input>
+					type="text" class="form-control" placeholder="Contenido/Usuario"></input>
 			</div>
 
 			<table class="table table-striped table-hover">
@@ -42,7 +42,7 @@
 						<th><h:outputText value="ID Comentario" /></th>
 						<th><h:outputText value="Contenido" /></th>
 						<th><h:outputText value="Fecha" /></th>
-						<th><h:outputText value="ID Usuario: proximanente nombre" /></th>
+						<th><h:outputText value="Usuario" /></th>
 					</tr>
 				</thead>
 				<tbody class="searchable">
@@ -52,7 +52,7 @@
 							<td><h:outputText value="#{u.idComentario}" /></td>
 							<td><h:outputText value="#{u.contenido}" /></td>
 							<td><h:outputText value="#{u.fecha}" /></td>
-							<td><h:outputText value="#{u.usuario}" /></td>
+							<td><h:outputText value="#{u.emailUsu}" /></td>
 
 						</tr>
 					</ui:repeat>

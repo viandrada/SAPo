@@ -68,7 +68,7 @@ public class AlmacenNegocio {
 	private ConfiguarcionDAO configuracionDAO;
 	@EJB
 	private ImagenDAO imagenDAO;
-	
+
 	private Almacen almacen;
 
 	public int altaAlmacen(DataAlmacen almacen, DataUsuario usuario) {
@@ -181,7 +181,7 @@ public class AlmacenNegocio {
 		Producto productoGuardar = new Producto();
 		Almacen almacenGuardar;// = new Almacen(almacen.getIdAlmacen());
 		almacenGuardar = this.almacenDAO.getAlmacen(almacen.getIdAlmacen());
-		
+
 		Usuario usr = this.usuarioDAO.getUsuarioPorEmail(usuario.getEmail());
 
 		Categoria catGuardar;
@@ -192,7 +192,7 @@ public class AlmacenNegocio {
 			catGuardar = new Categoria();
 			catGuardar.setNombre(categoria.getNombre());
 			catGuardar.setEsGenerica(false);
-			
+
 			catGuardar.setUsu(usr);
 		}
 
@@ -439,6 +439,27 @@ public class AlmacenNegocio {
 			imagenes.add(img);
 		}
 		return imagenes;
+	}
+
+	public void sincronizarLista(int idProductoObtenido, int idAlmacen) {
+		Producto p = new Producto();
+		Almacen a = this.almacenDAO.getAlmacen(idAlmacen);
+		AlmacenIdeal ai = this.almacenIdealDAO.getAlmacenIdeal(a
+				.getAlmacenIdeal().getIdAlmacenIdeal());
+		p = this.productoDAO.getProducto(idProductoObtenido);
+		if (p.isEsIdeal()) {
+			p.setStock(p.getStockIdeal());
+			p.setEsIdeal(false);
+
+		} else {
+			p.setStock(p.getStockIdeal());
+		}
+		p.setStockIdeal(0);
+		this.productoDAO.actualizarProducto(p);
+
+		ai.getProductos().remove(p);
+		this.almacenIdealDAO.actualizarAlmacenIdeal(ai);
+
 	}
 	
 	
