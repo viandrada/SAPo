@@ -462,7 +462,6 @@ public class AlmacenNegocio {
 
 	}
 	
-	
 	/*
 	 * Devuelve una lista con todos los historicos de Almacenes de un usuario
 	 * particular.
