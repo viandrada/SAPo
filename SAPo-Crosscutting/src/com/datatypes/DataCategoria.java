@@ -6,6 +6,7 @@ public class DataCategoria {
 
 	private int idCategoria;
 	private String nombre;
+	private String emailUsuario;
 
 	public String getNombre() {
 		return nombre;
@@ -23,4 +24,11 @@ public class DataCategoria {
 		this.idCategoria = idCategoria;
 	}
 
+	public String getEmailUsuario() {
+		return emailUsuario;
+	}
+
+	public void setEmailUsuario(String emailUsuario) {
+		this.emailUsuario = emailUsuario;
+	}
 }

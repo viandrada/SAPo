@@ -10,6 +10,7 @@ import javax.validation.constraints.Null;
 
 import org.hibernate.envers.Audited;
 import org.hibernate.envers.RelationTargetAuditMode;
+import org.hibernate.validator.constraints.NotEmpty;
 
 /**
  * Entity implementation class for Entity: Almacen
@@ -96,6 +97,7 @@ public class Almacen implements Serializable {
 		this.idAlmacen = idAlmacen;
 	}
 
+	
 	public String getNombre() {
 		return nombre;
 	}

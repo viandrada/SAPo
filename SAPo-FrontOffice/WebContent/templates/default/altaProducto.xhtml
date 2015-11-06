@@ -22,7 +22,6 @@
 							<h:inputText class="form-control input-lg" id="inputNombre"
 								value="#{altaProductoBean.nombre}" a:placeholder="Nombre">
 								<f:validateBean for="inputNombre" />
-								<f:ajax event="keyup" render="inputTextMessage" />
 							</h:inputText>
 							<h:message id="inputTextMessage" for="inputNombre"
 								errorStyle="color:red;"></h:message>
@@ -38,7 +37,6 @@
 									<h:inputText class="form-control input-lg" id="inputStock"
 										value="#{altaProductoBean.stock}">
 										<f:validateBean for="inputStock" />
-										<f:ajax event="keyup" render="inputTextMessageStock" />
 									</h:inputText>
 									<h:message id="inputTextMessageStock" for="inputStock"
 										errorStyle="color:red;"></h:message>
@@ -56,7 +54,6 @@
 									<h:inputText class="form-control input-lg" id="inputPrecio"
 										value="#{altaProductoBean.precio}" a:placeholder="Precio">
 										<f:validateBean for="inputPrecio" />
-										<f:ajax event="keyup" render="inputTextMessagePrecio" />
 									</h:inputText>
 									<h:message id="inputTextMessagePrecio" for="inputPrecio"
 										errorStyle="color:red;"></h:message>
@@ -68,7 +65,7 @@
 
 				<!-- Categoría -->
 				<div class="row">
-					<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+					<!-- div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
 						<div class="form-group">
 							<label for="sel1">Genérica:</label>
 							<h:selectOneMenu value="#{altaProductoBean.idCatSeleccionada}"
@@ -77,10 +74,10 @@
 									var="c2" itemValue="#{c2.idCategoria}" itemLabel="#{c2.nombre}" />
 							</h:selectOneMenu>
 						</div>
-					</div>
+					</div-->
 					<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
 						<div class="form-group">
-							<label for="sel1">Personal:</label>
+							<label for="sel1">Categoría:</label>
 							<h:selectOneMenu value="#{altaProductoBean.idCatSeleccionada}"
 								class="form-control" id="sel123">
 								<f:selectItems value="#{altaProductoBean.listDataCat}" var="c"
@@ -94,11 +91,7 @@
 							<h:inputText class="form-control" id="inputCatNueva"
 								value="#{altaProductoBean.catNueva}"
 								a:placeholder="Ingrese el nombre">
-								<f:validateBean for="inputCatNueva" />
-								<f:ajax event="keyup" render="inputTextMessageCatNueva" />
 							</h:inputText>
-							<h:message id="inputTextMessageCatNueva" for="inputCatNueva"
-								errorStyle="color:red;"></h:message>
 						</div>
 					</div>
 				</div>
@@ -111,16 +104,12 @@
 					<h:inputTextarea class="form-control" id="inputDescripcion"
 						value="#{altaProductoBean.descripcion}" a:maxlength="500" rows="5"
 						a:placeholder="Escribe una descripcion aqui...">
-						<f:validateBean for="inputDescripcion" />
-						<f:ajax event="keyup" render="inputTextMessageDescripcion" />
 					</h:inputTextarea>
-					<h:message id="inputTextMessageDescripcion" for="inputDescripcion"
-						errorStyle="color:red;"></h:message>
 				</div>
 
 
-				<h:dataTable value="#{altaProductoBean.atributosVista}" var="item"
-					id="tablaAtributos" class="table">
+				<h:dataTable value="#{atributosProductoBean.atributosVista}"
+					var="item" id="tablaAtributos" class="table">
 					<h:column>
 						<f:facet name="header">Nombre</f:facet>
 						<h:outputText value="#{item.nombre}" />
@@ -136,66 +125,58 @@
 				</h:dataTable>
 
 				<!-- Atributos genericos -->
-				<div class="row">
+				<div class="row" id="atributos">
 					<div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
 						<div class="form-group">
 							<h:inputText class="form-control" id="inputNombreAtr"
-								value="#{altaProductoBean.nombreAtr}"
+								value="#{atributosProductoBean.nombreAtr}"
 								a:placeholder="Nombre del atributo">
-								<f:validateBean for="inputNombreAtr" />
-								<f:ajax event="keyup" render="inputTextMessage" />
+								<f:ajax resetValues="true" />
 							</h:inputText>
-							<h:message id="inputTextMessageNombreAtr" for="inputNombreAtr"
-								errorStyle="color:red;"></h:message>
 						</div>
 					</div>
 					<div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
 						<div class="form-group">
-							<h:selectOneMenu value="#{altaProductoBean.tipoDataAtr}"
+							<h:selectOneMenu value="#{atributosProductoBean.tipoDataAtr}"
 								class="form-control" id="inputTipoDatoAtr"
 								onchange="mostrarComponente()">
-								<f:selectItems value="#{altaProductoBean.tipoDatoList}" var="e"
-									itemValue="#{e}" itemLabel="#{e}" id="tipoDatoSelect" />
+								<f:selectItems value="#{atributosProductoBean.tipoDatoList}"
+									var="e" itemValue="#{e}" itemLabel="#{e}" id="tipoDatoSelect" />
 								<f:ajax event="change"
-									listener="#{altaProductoBean.comboChangeListener}"></f:ajax>
+									listener="#{atributosProductoBean.comboChangeListener}"></f:ajax>
 							</h:selectOneMenu>
 						</div>
 					</div>
 					<div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
 						<div class="form-group" id="atributoTexto" style="display: block;">
 							<h:inputText class="form-control" id="inputValorAtr"
-								value="#{altaProductoBean.valorAtr}" a:placeholder="Valor">
-								<f:validateBean for="inputNombreAtr" />
-								<f:ajax event="keyup" render="inputTextMessage" />
+								value="#{atributosProductoBean.valorAtr}" a:placeholder="Valor">
+								<f:ajax resetValues="true" />
 							</h:inputText>
-							<h:message id="inputTextMessageValorAtr" for="inputValorAtr"
-								errorStyle="color:red;"></h:message>
 						</div>
 						<div class="form-group" id="atributoCalendario"
 							style="display: none;">
-							<p:calendar
-								value="#{altaProductoBean.valorAtributoFecha}"
+							<p:calendar value="#{atributosProductoBean.valorAtributoFecha}"
 								pattern="dd/MM/yyyy">
 								<f:ajax event="dateSelect"
-									listener="#{altaProductoBean.handleDateSelect}" />
+									listener="#{atributosProductoBean.handleDateSelect}" />
 							</p:calendar>
 						</div>
 
 						<div class="form-group" id="atributoNumero" style="display: none;">
 							<h:inputText class="form-control" id="atributoNumero"
-								value="#{altaProductoBean.valorAtributoNumero}"
+								value="#{atributosProductoBean.valorAtributoNumero}"
 								a:placeholder="Valor">
-								<f:validateBean for="atributoNumero" />
-								<f:ajax event="keyup" render="inputTextMessage" />
+								<f:ajax resetValues="true" />
 							</h:inputText>
-							<h:message id="inputTextMessageatributoNumero"
-								for="inputValorAtr" errorStyle="color:red;"></h:message>
 						</div>
 					</div>
 					<div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
 						<h:commandButton class="btn btn-primary" value="Agregar"
-							actionListener="#{altaProductoBean.add}">
-							<f:ajax render="@form" />
+							actionListener="#{atributosProductoBean.add}">
+							<f:ajax
+								render="inputValorAtr inputNombreAtr inputTipoDatoAtr atributoCalendario atributoNumero tablaAtributos"
+								resetValues="true" />
 						</h:commandButton>
 					</div>
 				</div>
@@ -251,7 +232,7 @@
 			<h:outputScript name="js/fotoPreview.js" />
 		</h:form>
 	</div>
-		<script type="text/javascript">
+	<script type="text/javascript">
 
                function mostrarComponente()
                {

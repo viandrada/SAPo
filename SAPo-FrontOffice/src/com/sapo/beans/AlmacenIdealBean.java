@@ -109,6 +109,7 @@ public class AlmacenIdealBean {
 
 	@PostConstruct
 	public void init() {
+		this.almacenIdeal = new DataAlmacen();
 		obtenerAlmacenIdeal();
 		cargarProductosDisponibles();
 		ocultarItemsAgregados();

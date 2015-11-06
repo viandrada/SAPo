@@ -14,9 +14,10 @@ import com.sapo.ejb.ProductoNegocio;
 
 @ManagedBean
 @RequestScoped
-public class DetalleProductoBean {
-	public DetalleProductoBean() {
+public class DetalleProductoEspBean {
+	public DetalleProductoEspBean() {
 	}
+	
 	
 	@EJB
 	ProductoNegocio productoNegocio;

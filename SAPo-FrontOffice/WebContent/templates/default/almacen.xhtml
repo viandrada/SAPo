@@ -176,11 +176,24 @@
 				<ui:repeat value="#{almacenBean.almacen.productos}" var="item">
 					<div class="col-xs-6 col-sm-6 col-md-2 col-lg-2">
 						<h:form id="modalForm">
-							<li class="list-group-item"><h:outputText
-									value="#{item.nombre}" /> <h:commandLink
-									action="detalleProducto.xhtml"
-									actionListener="#{detalleProductoBean.init(item.idProducto)}"
-									class="thumbnail">
+							<li class="list-group-item">
+								<div class="row">
+									<div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+										<h:outputText value="#{item.nombre}" />
+									</div>
+									<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+										<h:commandLink
+											action="#{editarProductoEspBean.getProducto(item.idProducto)}"
+											actionListener="#{navigationAreaBean.goTo('editarProductoEspecifico.xhtml')}"
+											value="">
+											<i class="fa fa-pencil-square-o"></i>
+										</h:commandLink>
+									</div>
+								</div> <h:commandLink
+									actionListener="#{detalleProductoEspBean.init(item.idProducto)}"
+									onclick="$('#myModal').modal('show');" immediate="true"
+									action="null" class="thumbnail">
+									<f:ajax execute="@this" render=":modalForm" />
 									<h:graphicImage class="img-responsive" style="height:100px;"
 										value="Image/#{item.fotos.get(0).idImagen}">
 									</h:graphicImage>
@@ -194,20 +207,17 @@
 											value="-" />
 									</div>
 									<div class="col-xs-6 col-md-4 col-sm-3 col-lg-3">
-										<h:outputText value="#{item.stock}" class="form-control" />
+										<h:outputText value="#{item.stock}"
+											class="form-control input-sm" />
 									</div>
 									<div class="col-xs-6 col-md-4 col-sm-2 col-lg-2">
 										<h:commandButton
 											action="#{almacenBean.actualizarStock(item.idProducto,item.stock + 1)}"
 											value="+" />
 									</div>
-								</div></li>
+								</div>
+							</li>
 						</h:form>
-						<button type="button" class="btn btn-primary" data-toggle="modal"
-							data-target="#myModal"
-							onclick="#{detalleProductoBean.init(item.idProducto)}">Ver
-							detalle</button>
-
 						<!-- Modal -->
 						<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
 							aria-labelledby="myModalLabel">
@@ -252,7 +262,7 @@
 							value="#{almacenBean.almacen.idAlmacen}" placeholder="chatroom2"
 							id="chatroom2" />
 
-						<button style="width:100%" class="btn btn-primary" type="submit"
+						<button style="width: 100%" class="btn btn-primary" type="submit"
 							id="enterRoom">Chatear</button>
 
 					</form>

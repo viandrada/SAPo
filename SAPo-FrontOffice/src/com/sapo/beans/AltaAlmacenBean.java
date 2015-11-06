@@ -11,6 +11,8 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
 import javax.servlet.http.Part;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
 import com.datatypes.DataAlmacen;
 import com.datatypes.DataUsuario;
 import com.sapo.ejb.AlmacenNegocio;
@@ -33,6 +35,7 @@ public class AltaAlmacenBean {
 	LoginBean usuarioLogueado;
 	@ManagedProperty(value = "#{navigationAreaBean}")
 	NavigationAreaBean nav;
+	@NotEmpty(message="Ups, parece que no ingresaste un nombre.")
 	private String nombre;
 	private String descripcion;
 	private Part imagen;
@@ -47,7 +50,7 @@ public class AltaAlmacenBean {
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
-
+	
 	public String getDescripcion() {
 		return descripcion;
 	}
