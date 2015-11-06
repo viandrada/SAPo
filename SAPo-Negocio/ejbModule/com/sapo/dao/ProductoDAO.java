@@ -62,30 +62,45 @@ public class ProductoDAO {
 		em.remove(em.merge(p));
 	}
 	
-	public void pruebaProducto(){
+	
+	/* Obtiene una lista con los productos y sus históricos de un usuario.
+	 * */
+	public List getHistoricoProdPorUsuario(int idUsuario) {
+		
 		AuditReader reader = AuditReaderFactory.get(em);
-		List<Producto> query = (List<Producto>) reader.createQuery()
-			    .forEntitiesAtRevision(Producto.class, 4)
-			    .getResultList();
+		List queryProducto = reader.createQuery()
+			    .forRevisionsOfEntity(Producto.class, false,true)
+			    .add(AuditEntity.relatedId("usuario").eq(idUsuario))   
+			    .getResultList();	
 		
-		//Producto prod = query.getClass();
-		//Producto prod = 
-		if (query!=null){
-			
-			System.out.println("Cant1: "+ query.size());
-			for (Producto lista : query){
-				System.out.println("Query1: "+lista.getNombre() + " - id: "+lista.getIdProducto());//.getNombre()+ " "+prueba.getDescripcion());
-			}
-		}
-		
-		
+		return queryProducto;
 		
 	}
+	
+	
+	/* Obtiene una lista con los productos y sus históricos de un usuario.
+	 * */
+	public List getHistoricoCambioStockProdPorAlmacen(int idAlmacen) {
+		
+		AuditReader reader = AuditReaderFactory.get(em);
+		List queryProducto = reader.createQuery()
+			    .forRevisionsOfEntity(Producto.class, false,true)
+			    .addOrder(AuditEntity.revisionNumber().desc())
+			    .add(AuditEntity.relatedId("almacen").eq(idAlmacen))  
+			    .add(AuditEntity.property("stock").hasChanged())
+			    .setMaxResults(5)
+			    .getResultList();	
+		
+		return queryProducto;
+		
+	}
+	
 	
 	
 	/* Paso un id de un producto y obtengo el histórico de 
 	 * ese producto. Es decir, obengo una lista de productos
 	 * con todas sus versiones.
+	 * SI SE USA HAY QUE REVISAR ESTO - getHistoricoProdPorUsuario
 	 */
 	public List<Producto> getHistoricoProdPorId(int idProd){
 		AuditReader reader = AuditReaderFactory.get(em);
@@ -108,6 +123,7 @@ public class ProductoDAO {
 	
 	/* Paso un id de un producto y obtengo el histórico de 
 	 * las MODIFICACIONES de ese producto. (sólo las modificaciones)
+	 * SI SE USA HAY QUE REVISAR ESTO - getHistoricoProdPorUsuario
 	 */
 	public List<Producto> getHistoricoModificacionesProdPorId(int idProd){
 		AuditReader reader = AuditReaderFactory.get(em);
@@ -130,6 +146,7 @@ public class ProductoDAO {
 	
 	/* Paso un id de un producto y obtengo el producto en su
 	 * estado inicial cuando se dió de alta. 
+	 * SI SE USA HAY QUE REVISAR ESTO - getHistoricoProdPorUsuario
 	 */
 	public Producto getHistoricoInicialProdPorId(int idProd){
 		AuditReader reader = AuditReaderFactory.get(em);
@@ -147,17 +164,5 @@ public class ProductoDAO {
 	}
 
 	
-	/* Obtiene una lista con los productos y sus históricos de un usuario.
-	 * */
-	public List getHistoricoProdPorUsuario(int idUsuario) {
-		
-		AuditReader reader = AuditReaderFactory.get(em);
-		List queryProducto = reader.createQuery()
-			    .forRevisionsOfEntity(Producto.class, false,true)
-			    .add(AuditEntity.relatedId("usuario").eq(idUsuario))   
-			    .getResultList();	
-		
-		return queryProducto;
-		
-	}
+
 }

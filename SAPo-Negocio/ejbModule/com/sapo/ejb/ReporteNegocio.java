@@ -109,6 +109,28 @@ public class ReporteNegocio {
 		return listaRepProd;
 	}
 	
+	
+	/* Paso un id de almacén y obtengo el histórico de productos 
+	 * que han cambiado de stock 
+	 * */
+	public  List<DataReporteProducto>  buscarHistoricoCambioStockProdPorAlmacen(int idAlmacen){
+		List listaProd = this.productoDAO.getHistoricoCambioStockProdPorAlmacen(idAlmacen);
+		List<DataReporteProducto> listaRepProd = new ArrayList<DataReporteProducto>();
+		if (listaProd!=null){	
+			for (int i=0; i<listaProd.size();i++){
+				Object[] objArray = (Object[])listaProd.get(i);
+				Producto prod = (Producto)objArray[0];
+				String tipoMov = objArray[2].toString();
+				DataReporteProducto dataRepProd = this.fabrica.toDataReporteProducto(prod, tipoMov);
+				System.out.println("Hist Stock Alm x Usr "+i+": "+prod.getNombre() + " - Stock: "+prod.getStock()+
+						" TipoMov "+ tipoMov);
+				listaRepProd.add(dataRepProd);
+				}		
+		}	
+		return listaRepProd;
+	}
+	
+	
 
 	/*Paso un id de un producto y obtengo el histórico de 
 	 * ese producto en forma de lista de producto.

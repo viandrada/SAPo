@@ -39,8 +39,9 @@ public class ReporteUsuariosBean {
 		listDataUsuarios = this.usuarioNegocio.getUsuarios();
 		ganancia=this.reporteNegocio.ganancias();
 		//para probar:
-		this.reporteNegocio.buscarHistoricoAlmacenesPorUsuario(1);
-		this.reporteNegocio.buscarHistoricoProdPorUsuario(1);
+		//this.reporteNegocio.buscarHistoricoAlmacenesPorUsuario(1);
+		//this.reporteNegocio.buscarHistoricoProdPorUsuario(1);
+		this.reporteNegocio.buscarHistoricoCambioStockProdPorAlmacen(1);
 	}
 
 	public float getGanancia() {
