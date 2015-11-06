@@ -15,6 +15,7 @@ function onSignIn(googleUser) {
 		xhr.send(null);
 		xhr.onload = function() {
 		  console.log('Signed in as: ' + xhr.responseText);
+		  window.location.reload();
 		};
 		
 		document.getElementById('inputHiddenForm:emailGmail').value = profile
@@ -24,4 +25,5 @@ function onSignIn(googleUser) {
 		window.location.replace(window.location.href);
 	}
 	window.location.replace(window.location.href);
+	
 }

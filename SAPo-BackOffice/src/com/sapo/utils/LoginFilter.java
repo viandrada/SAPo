@@ -10,14 +10,14 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 
-import com.sapo.beans.LoginBean;
+import com.sapo.beans.LoginAdminBean;
 
 public class LoginFilter implements Filter {
 	public void doFilter(ServletRequest request, ServletResponse response,
 			FilterChain chain) throws IOException, ServletException {
 		// Get the loginBean from session attribute
-		LoginBean loginBean = (LoginBean) ((HttpServletRequest) request)
-				.getSession().getAttribute("loginBean");
+		LoginAdminBean loginBean = (LoginAdminBean) ((HttpServletRequest) request)
+				.getSession().getAttribute("loginAdminBean");
 
 		// For the first application request there is no loginBean in the
 		// session so user needs to log in

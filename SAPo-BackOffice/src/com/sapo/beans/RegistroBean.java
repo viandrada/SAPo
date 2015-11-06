@@ -76,7 +76,7 @@ public class RegistroBean {
 
 		if (ok) {
 			System.out.println("Alta de Administrador exitosa");
-			return "/index.xhtml?faces-redirect=true";
+			return "/index.xhtml";
 		} else {
 			System.out.println("Error. El administrador no fue dado de alta.");
 			return null;

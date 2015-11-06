@@ -7,30 +7,60 @@
 <ui:composition>
 	<!-- Esta es la pagina central de cada usuario, muestra los almacenes que tiene creados. -->
 	<div class="container-fluid">
+
+		<!-- Jumbotron: Se muestra solo cuando no hay almacenes creados -->
+		<h:panelGrid rendered="#{homeUsuarioBean.sinAlmacenes}"
+			class="jumbotron">
+			<div class="jumbotron">
+				<h1>Todavía no tienes almacenes.</h1>
+				<p>Haz click en el siguiente botón para comenzar!</p>
+				<p>
+					<h:form>
+						<div class="row">
+							<div
+								class="col-xs-12 col-sm-6 col-md-4 col-md-4 col-md-offset-5 col-md-offset-5">
+								<h:commandLink value="Nuevo almacén"
+									action="#{navigationAreaBean.goTo('altaAlmacen.xhtml')}"
+									class="btn btn-primary btn-lg"></h:commandLink>
+							</div>
+						</div>
+					</h:form>
+				</p>
+			</div>
+		</h:panelGrid>
+
+		<!-- Fin de Jumbotron -->
+
 		<div class="row">
-			<!-- h:dataTable value="#{homeUsuarioBean.almacenes}" var="a"-->
-			<ul class="list-group">
-				<ui:repeat value="#{homeUsuarioBean.almacenes}" var="item">
-					<div class="col-xs-12 col-sm-6 col-md-4 col-md-3">
-						<h:form>
-							<li class="list-group-item"><h:outputText
-									value="#{item.nombre}" /> <h:commandLink
-									action="#{navigationAreaBean.irAlmacen(item.idAlmacen)}"
-									class="thumbnail">
-									<!--h:graphicImage class="img-responsive"
+			<div class="col-xs-12 col-sm-12 col-md-9 col-md-9">
+				<!-- h:dataTable value="#{homeUsuarioBean.almacenes}" var="a"-->
+				<ul class="list-group">
+					<ui:repeat value="#{homeUsuarioBean.almacenes}" var="item">
+						<div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
+							<h:form>
+								<li class="list-group-item"><h:outputText
+										value="#{item.nombre}" /> <h:commandLink
+										action="#{navigationAreaBean.irAlmacen(item.idAlmacen)}"
+										class="thumbnail">
+										<!--h:graphicImage class="img-responsive"
 										value="/resources/images/box.png">
 									</h:graphicImage-->
-									<h:graphicImage class="img-responsive imgDefault" style="height:200px;"
-										value="Image/#{item.idFoto}">
-									</h:graphicImage>
-								</h:commandLink></li>
-						</h:form>
-					</div>
+										<h:graphicImage class="img-responsive imgDefault"
+											style="height:200px;" value="Image/#{item.idFoto}">
+										</h:graphicImage>
+									</h:commandLink></li>
+							</h:form>
+						</div>
 
-				</ui:repeat>
-				<!-- /h:dataTable-->
-			</ul>
-
+					</ui:repeat>
+					<!-- /h:dataTable-->
+				</ul>
+			</div>
+			<h:panelGrid rendered="#{not homeUsuarioBean.sinAlmacenes}">
+			<div class="col-xs-12 col-sm-12 col-md-3 col-md-3">
+				<ui:include src="/templates/default/historicoMovimientos.xhtml" />
+			</div>
+			</h:panelGrid>
 		</div>
 	</div>
 </ui:composition>

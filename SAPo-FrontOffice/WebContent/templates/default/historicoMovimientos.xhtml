@@ -1,0 +1,26 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<ui:composition>
+	<div>
+		<h:dataTable value="#{homeUsuarioBean.movimientos}" var="item"
+			id="movimientos" class="table table-condensed table-responsive" style="background-color: #EBF2ED;">
+			<h:column>
+				<f:facet name="header">Fecha</f:facet>
+				<h:outputText value="#{item.fechaAlta}" />
+			</h:column>
+			<h:column>
+				<f:facet name="header">Producto</f:facet>
+				<h:outputText value="#{item.nombre}" />
+			</h:column>
+			<h:column>
+				<f:facet name="header">Movimiento</f:facet>
+				<h:outputText value="#{item.tipoMovimiento}" />
+			</h:column>
+		</h:dataTable>
+	</div>
+</ui:composition>
+</html>

@@ -311,5 +311,43 @@ public class ProductoNegocio {
 //		
 //		List<Producto> listaProd = this.productoDAO.getHistoricoProdPorUsuario(idUsuario);
 //	}
-	
+	public void modificarProductoEspecifico(DataProducto dataProducto,
+			DataCategoria dataCategoria, int idUsuario) {
+
+		Producto pg = this.productoDAO
+				.getProducto(dataProducto.getIdProducto());
+
+		Categoria cat = new Categoria();
+		if (dataCategoria.getNombre() == null) {
+			cat = this.categoriaDAO
+					.getCategoria(dataCategoria.getIdCategoria());
+		} else {
+			cat.setNombre(dataCategoria.getNombre());
+			cat.setEsGenerica(false);
+			Usuario u = this.usuarioDAO.getUsuarioPorEmail(dataCategoria.getEmailUsuario());
+			cat.setUsu(u);
+		}
+		pg.setCategoria(cat);
+
+		pg.setAtributos(dataProducto.getAtributos());
+		pg.setNombre(dataProducto.getNombre());
+		pg.setDescripcion(dataProducto.getDescripcion());
+		pg.setEstaActivo(true);
+		pg.setPrecio(dataProducto.getPrecio());
+		pg.setStock(dataProducto.getStock());
+
+		List<Imagen> imgs = new ArrayList<Imagen>();
+		for (int i = 0; i < dataProducto.getFotos().size(); i++) {
+			Imagen img = new Imagen();
+			img.setDatos(dataProducto.getFotos().get(i).getDatos());
+			img.setNombre(dataProducto.getFotos().get(i).getNombre());
+			img.setMime(dataProducto.getFotos().get(i).getMime());
+			this.imagenDAO.insertarImagen(img);
+			imgs.add(img);
+		}
+		pg.getFoto().addAll(imgs);
+
+		this.productoDAO.actualizarProducto(pg);
+
+	}
 }

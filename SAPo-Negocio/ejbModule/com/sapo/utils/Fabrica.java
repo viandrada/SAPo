@@ -83,6 +83,10 @@ public class Fabrica {
 		dataUser.setNombre(usuario.getNombre());
 		dataUser.setPassword(usuario.getPassword());
 		dataUser.setPremium(usuario.isPremium());
+		dataUser.setIdUsuario(usuario.getIdUsuario());
+		dataUser.setFecha(usuario.getFecha());
+		dataUser.setFechaPago(usuario.getFechaPago());
+		dataUser.setMonto(usuario.getMonto());
 		return dataUser;
 
 	}

@@ -1,5 +1,6 @@
 package com.sapo.beans;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -9,7 +10,9 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
 
 import com.datatypes.DataAlmacen;
+import com.datatypes.DataReporteProducto;
 import com.sapo.ejb.AlmacenNegocio;
+import com.sapo.ejb.ReporteNegocio;
 
 @ManagedBean
 @RequestScoped
@@ -19,8 +22,12 @@ public class HomeUsuarioBean {
 	}
 
 	private List<DataAlmacen> almacenes;
+	private List<DataReporteProducto> movimientos;
+	private boolean sinAlmacenes;
 	@EJB
 	AlmacenNegocio almacenNegocio;
+	@EJB
+	ReporteNegocio reporteNegocio;
 	@ManagedProperty(value = "#{loginBean}")
 	LoginBean usuarioLogueado;
 
@@ -40,15 +47,41 @@ public class HomeUsuarioBean {
 		this.usuarioLogueado = usuarioLogueado;
 	}
 
+	public boolean isSinAlmacenes() {
+		return sinAlmacenes;
+	}
+
+	public void setSinAlmacenes(boolean sinAlmacenes) {
+		this.sinAlmacenes = sinAlmacenes;
+	}
+
+	public List<DataReporteProducto> getMovimientos() {
+		return movimientos;
+	}
+
+	public void setMovimientos(List<DataReporteProducto> movimientos) {
+		this.movimientos = movimientos;
+	}
+
 	@PostConstruct
 	public void init() {
 		listarAlmacenes();
 		for (int i = 0; i < this.almacenes.size(); i++) {
-			if(this.almacenes.get(i).getBytesFoto()== null){
-				this.almacenes.get(i).setIdFoto(10);//TODO Guardar en base una imagen por defecto y pasarle ese id.
+			if (this.almacenes.get(i).getBytesFoto() == null) {
+				this.almacenes.get(i).setIdFoto(1);// TODO Guardar en base una
+													// imagen por defecto y
+													// pasarle ese id.
 			}
 		}
 		
+		/*Si no tiene almacenes muestra un mensaje*/
+		if (this.almacenes.size() == 0) {
+			this.sinAlmacenes = true;
+		}
+		
+		/*Carga los movimientos de stock por almacén*/
+		this.movimientos = new ArrayList<DataReporteProducto>();
+		this.obtenerMovimientos();
 	}
 
 	public void listarAlmacenes() {
@@ -56,14 +89,21 @@ public class HomeUsuarioBean {
 				.getEmail());
 	}
 
-	/*public static BufferedImage byteArrayToImage(byte[] bytes) {
-		BufferedImage bufferedImage = null;
-		try {
-			InputStream inputStream = new ByteArrayInputStream(bytes);
-			bufferedImage = ImageIO.read(inputStream);
-		} catch (IOException ex) {
-			System.out.println(ex.getMessage());
+	public void obtenerMovimientos() {
+		this.movimientos = this.reporteNegocio
+				.buscarHistoricoProdPorUsuario(this.usuarioLogueado
+						.getIdUsuario());
+		for (int i = 0; i < this.movimientos.size(); i++) {
+			switch(this.movimientos.get(i).getTipoMovimiento())
+			{
+			case "ADD":
+				this.movimientos.get(i).setTipoMovimiento("Agregado");
+				break;
+			case "MOD":
+				this.movimientos.get(i).setTipoMovimiento("Editado");
+				break;
+			}
 		}
-		return bufferedImage;
-	}*/
+		
+	}
 }

@@ -112,7 +112,9 @@ public class AlmacenIdealBean {
 		this.almacenIdeal = new DataAlmacen();
 		obtenerAlmacenIdeal();
 		cargarProductosDisponibles();
-		ocultarItemsAgregados();
+		if (this.almacenIdeal.getIdAlmacen() > 0 ) {
+			ocultarItemsAgregados();
+		}
 		FacesContext facesContext = FacesContext.getCurrentInstance();
 		this.idProdEliminar = facesContext.getExternalContext()
 				.getRequestParameterMap().get("idProdEliminar");
@@ -181,7 +183,8 @@ public class AlmacenIdealBean {
 
 	public void ocultarItemsAgregados() {
 		if (this.productosEspecificosLista.size() != 0
-				&& this.almacenIdeal != null && this.almacenIdeal.getProductos().size() != 0) {
+				&& this.almacenIdeal != null
+				&& this.almacenIdeal.getProductos().size() != 0) {
 			for (int i = 0; i < this.productosEspecificosLista.size(); i++) {
 				for (int j = 0; j < this.almacenIdeal.getProductos().size(); j++) {
 					if (this.almacenIdeal.getProductos().get(j).getIdProducto() == productosEspecificosLista
@@ -193,7 +196,8 @@ public class AlmacenIdealBean {
 			}
 		}
 		if (this.productosGenericosLista.size() != 0
-				&& this.almacenIdeal != null && this.almacenIdeal.getProductos().size() != 0) {
+				&& this.almacenIdeal != null
+				&& this.almacenIdeal.getProductos().size() != 0) {
 			for (int i = 0; i < this.productosGenericosLista.size(); i++) {
 				for (int j = 0; j < this.almacenIdeal.getProductos().size(); j++) {
 					if (this.almacenIdeal.getProductos().get(j)

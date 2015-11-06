@@ -41,6 +41,7 @@ public class UsuarioNegocio {
 		usuario.setEstaActivo(true);
 		usuario.setMonto(0f);
 		usuario.setPremium(false);
+		usuario.setFecha(new Date());
 
 		try {
 			Usuario existeUsuario = usuarioDAO.getUsuarioPorEmail(dataUsuario
@@ -52,6 +53,7 @@ public class UsuarioNegocio {
 				existeUsuario.setPassword(usuario.getPassword());
 				existeUsuario.setEstaActivo(true);
 				existeUsuario.setNombre(usuario.getNombre());
+				existeUsuario.setFecha(new Date());
 				
 				usuarioDAO.insertarUsuario(existeUsuario);
 			}

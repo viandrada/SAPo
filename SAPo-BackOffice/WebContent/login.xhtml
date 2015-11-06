@@ -44,7 +44,7 @@
 
 				<h:form class="form-signin" id="loginForm">
 					<h:panelGroup class="row">
-						<h:inputText id="loginEmail" value="#{loginBean.email}"
+						<h:inputText id="loginEmail" value="#{loginAdminBean.email}"
 							required="true" class="form-control" a:placeholder="Email">
 							<f:validateBean for="loginEmail" />
 							<f:ajax event="keyup" render="loginEmailMessage" />
@@ -52,7 +52,7 @@
 						<h:message id="loginEmailMessage" for="loginEmail"
 							errorStyle="color:red;"></h:message>
 					</h:panelGroup>
-					<h:inputSecret id="loginPass" value="#{loginBean.password}"
+					<h:inputSecret id="loginPass" value="#{loginAdminBean.password}"
 						required="true" class="form-control" a:placeholder="Password">
 						<f:validateBean for="loginPass" />
 						<f:ajax event="blur" render="loginPassMessage" />
@@ -66,7 +66,7 @@
 					</div>
 					<h:commandButton
 						class="btn btn-lg btn-primary btn-block btn-signin"
-						action="#{loginBean.login}" value="Ingresar"></h:commandButton>
+						action="#{loginAdminBean.login}" value="Ingresar"></h:commandButton>
 				</h:form>
 
 			</div>

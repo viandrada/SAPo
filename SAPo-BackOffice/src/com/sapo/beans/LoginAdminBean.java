@@ -12,9 +12,9 @@ import com.sapo.utils.Encrypter;
 
 @ManagedBean
 @SessionScoped
-public class LoginBean {
+public class LoginAdminBean {
 	
-	public LoginBean() {
+	public LoginAdminBean() {
 		//this.dataAdmin = new DataAdministrador();
 	}
 	//private DataAdministrador dataAdmin;
@@ -71,7 +71,7 @@ public class LoginBean {
 		if(ok){
 			this.redirect = "Login OK!";
 		    this.logueado = true;
-		    return "/index.xhtml?faces-redirect=true";
+		    return "/index.xhtml";
 		}
 		else{System.out.println("Todo mal");
 		return "error";}

@@ -78,4 +78,18 @@ public class AdministradorDAO {
 		return existe;
 	}
 
+	public boolean hayAdministradores(){
+		boolean hay = false;
+		try {
+			Query consulta = this.em
+					.createNamedQuery("Administrador.getAdministradores");
+					
+			if ((!consulta.getResultList().isEmpty())) {
+				hay = true;
+			}
+		} catch (Exception excep) {
+			throw excep;
+		}
+		return hay;
+	}
 }
