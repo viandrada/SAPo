@@ -17,7 +17,7 @@ import org.hibernate.envers.RelationTargetAuditMode;
 
 @NamedQuery(name = "Productos.getProductosDeAlmacen.IdAlmacen", query = "SELECT p FROM Producto p WHERE p.almacen.idAlmacen = :idAlmacen and p.esIdeal = FALSE") })
 @Entity
-@Audited(targetAuditMode = RelationTargetAuditMode.NOT_AUDITED)
+@Audited(withModifiedFlag = false, targetAuditMode = RelationTargetAuditMode.NOT_AUDITED)
 public class Producto implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -27,6 +27,8 @@ public class Producto implements Serializable {
 	private int idProducto;
 	private String nombre;
 	private String descripcion;
+	
+	@Audited(withModifiedFlag=true)
 	private float precio;
 	@ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.REMOVE,
 			CascadeType.MERGE })
@@ -36,6 +38,8 @@ public class Producto implements Serializable {
 	private Date fechaAlta;
 	private boolean estaActivo;
 	private boolean esIdeal;
+	
+	@Audited(withModifiedFlag=true)
 	private int stock;
 	private int stockIdeal;
 
