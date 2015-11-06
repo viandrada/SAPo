@@ -10,9 +10,13 @@ import com.datatypes.DataCategoria;
 import com.datatypes.DataImagen;
 import com.datatypes.DataProducto;
 import com.datatypes.DataComentario;
+import com.datatypes.DataReporteAlmacen;
+import com.datatypes.DataReporteProducto;
 import com.datatypes.DataUsuario;
+import com.sapo.entidades.Almacen;
 import com.sapo.entidades.Categoria;
 import com.sapo.entidades.Imagen;
+import com.sapo.entidades.Producto;
 import com.sapo.entidades.ProductoGenerico;
 import com.sapo.entidades.Comentario;
 import com.sapo.entidades.Usuario;
@@ -126,5 +130,45 @@ public class Fabrica {
 			dataImagenes.add(dataImg);
 		}
 		return dataImagenes;
+	}
+	
+	public DataReporteAlmacen toDataReporteAlmacen(Almacen alm, String mov){
+		DataReporteAlmacen dataRepAlm = new DataReporteAlmacen();
+		dataRepAlm.setActivo(alm.getEstaActivo());
+		dataRepAlm.setBytesFoto(alm.getFoto().getDatos());
+		dataRepAlm.setIdFoto(alm.getFoto().getIdImagen());
+		dataRepAlm.setDescripcion(alm.getDescripcion());
+		dataRepAlm.setFechaAlta(alm.getFechaAlta());
+		dataRepAlm.setIdAlmacen(alm.getIdAlmacen());
+		dataRepAlm.setNombre(alm.getNombre());
+		dataRepAlm.setTipoMovimiento(mov);
+		
+		if((alm.getAlmacenIdeal()==null))
+			dataRepAlm.setIdAlmacenIdeal(0);
+		else
+			dataRepAlm.setIdAlmacenIdeal(alm.getAlmacenIdeal().getIdAlmacenIdeal());
+		
+		return dataRepAlm;
+	}
+	
+	public DataReporteProducto toDataReporteProducto(Producto prod, String mov){
+		DataReporteProducto dataRepProd = new DataReporteProducto();
+		List<Imagen> listaImgs = prod.getFoto();
+		List<DataImagen> listaDataImgs = toDataImagen(listaImgs);
+		
+		dataRepProd.setAtributos(prod.getAtributos());
+		dataRepProd.setDescripcion(prod.getDescripcion());
+		dataRepProd.setEstaActivo(prod.getEstaActivo());
+		dataRepProd.setFechaAlta(prod.getFechaAlta());
+		dataRepProd.setFotos(listaDataImgs);
+		dataRepProd.setIdProducto(prod.getIdProducto());
+		dataRepProd.setIdUsuario(prod.getUsuario().getIdUsuario());
+		dataRepProd.setNombre(prod.getNombre());
+		dataRepProd.setNombreCategoria(prod.getCategoria().getNombre());
+		dataRepProd.setPrecio(prod.getPrecio());
+		dataRepProd.setStock(prod.getStock());
+		dataRepProd.setTipoMovimiento(mov);
+		
+		return dataRepProd;
 	}
 }

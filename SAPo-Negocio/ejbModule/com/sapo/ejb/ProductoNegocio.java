@@ -272,7 +272,6 @@ public class ProductoNegocio {
 			this.productoDAO.actualizarProducto(p);
 		}
 	}
-
 	public void actualizarStockIdeal(int idProducto, int stockIdeal) {
 		Producto p = new Producto();
 		if (stockIdeal >= 0) {
@@ -281,76 +280,36 @@ public class ProductoNegocio {
 			this.productoDAO.actualizarProducto(p);
 		}
 	}
-
-	/*
-	 * Paso un id de un producto y obtengo el histórico de ese producto en
-	 * forma de lista de producto. POR AHORA VOID, PUEDE CAMBIAR
-	 */
-	public void buscarHistoricoProdPorId(int idProducto) {
-
-		List<Producto> listaProd = this.productoDAO
-				.getHistoricoProdPorId(idProducto);
-
-	}
-
-	/*
-	 * Paso un id de un producto y obtengo el histórico de ese producto (sólo
-	 * las modificaciones) POR AHORA VOID, PUEDE CAMBIAR
-	 */
-	public void buscarHistoricoModificacionesProdPorId(int idProducto) {
-
-		List<Producto> listaProd = this.productoDAO
-				.getHistoricoModificacionesProdPorId(idProducto);
-
-	}
-
-	/*
-	 * Paso un id de usuario y obtengo el histórico de productos de ese
-	 * usuario. POR AHORA VOID, PUEDE CAMBIAR
-	 */
-	public void buscarHistoricoProdPorUsuario(int idUsuario) {
-
-		List<Producto> listaProd = this.productoDAO
-				.getHistoricoProdPorUsuario(idUsuario);
-	}
-
-	public void modificarProductoEspecifico(DataProducto dataProducto,
-			DataCategoria dataCategoria, int idUsuario) {
-
-		Producto pg = this.productoDAO
-				.getProducto(dataProducto.getIdProducto());
-
-		Categoria cat = new Categoria();
-		if (dataCategoria.getNombre() == null) {
-			cat = this.categoriaDAO
-					.getCategoria(dataCategoria.getIdCategoria());
-		} else {
-			cat.setNombre(dataCategoria.getNombre());
-			cat.setEsGenerica(false);
-			Usuario u = this.usuarioDAO.getUsuarioPorEmail(dataCategoria.getEmailUsuario());
-			cat.setUsu(u);
-		}
-		pg.setCategoria(cat);
-
-		pg.setAtributos(dataProducto.getAtributos());
-		pg.setNombre(dataProducto.getNombre());
-		pg.setDescripcion(dataProducto.getDescripcion());
-		pg.setEstaActivo(true);
-		pg.setPrecio(dataProducto.getPrecio());
-		pg.setStock(dataProducto.getStock());
-
-		List<Imagen> imgs = new ArrayList<Imagen>();
-		for (int i = 0; i < dataProducto.getFotos().size(); i++) {
-			Imagen img = new Imagen();
-			img.setDatos(dataProducto.getFotos().get(i).getDatos());
-			img.setNombre(dataProducto.getFotos().get(i).getNombre());
-			img.setMime(dataProducto.getFotos().get(i).getMime());
-			this.imagenDAO.insertarImagen(img);
-			imgs.add(img);
-		}
-		pg.getFoto().addAll(imgs);
-
-		this.productoDAO.actualizarProducto(pg);
-
-	}
+	
+//	
+//	/*Paso un id de un producto y obtengo el histórico de 
+//	 * ese producto en forma de lista de producto.
+//	 * POR AHORA VOID, PUEDE CAMBIAR
+//	 */
+//	public void buscarHistoricoProdPorId (int idProducto){
+//		
+//		List<Producto> listaProd = this.productoDAO.getHistoricoProdPorId(idProducto);
+//		
+//	}
+//	
+//	/*Paso un id de un producto y obtengo el histórico de 
+//	 * ese producto (sólo las modificaciones)
+//	 * POR AHORA VOID, PUEDE CAMBIAR
+//	 */
+//	public void buscarHistoricoModificacionesProdPorId (int idProducto){
+//		
+//		List<Producto> listaProd = this.productoDAO.getHistoricoModificacionesProdPorId(idProducto);
+//		
+//	}
+//	
+//	
+//	/* Paso un id de usuario y obtengo el histórico de productos
+//	 * de ese usuario.
+//	 * POR AHORA VOID, PUEDE CAMBIAR
+//	 * */
+//	public void buscarHistoricoProdPorUsuario(int idUsuario){
+//		
+//		List<Producto> listaProd = this.productoDAO.getHistoricoProdPorUsuario(idUsuario);
+//	}
+	
 }

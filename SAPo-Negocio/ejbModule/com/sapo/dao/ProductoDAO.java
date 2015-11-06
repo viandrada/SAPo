@@ -146,26 +146,18 @@ public class ProductoDAO {
 	
 	}
 
-	/* creo que no anda
+	
+	/* Obtiene una lista con los productos y sus históricos de un usuario.
 	 * */
-	public List<Producto> getHistoricoProdPorUsuario(int idUsuario) {
+	public List getHistoricoProdPorUsuario(int idUsuario) {
 		
 		AuditReader reader = AuditReaderFactory.get(em);
-		List query1 = reader.createQuery()
+		List queryProducto = reader.createQuery()
 			    .forRevisionsOfEntity(Producto.class, false,true)
-			    .add(AuditEntity.property("usuario").eq(idUsuario))   
+			    .add(AuditEntity.relatedId("usuario").eq(idUsuario))   
 			    .getResultList();	
-		List<Producto> listaProd = new ArrayList<Producto>();		
-		if (query1!=null){	
-			for (int i=0; i<query1.size();i++){
-				Object[] objArray = (Object[])query1.get(i);
-				Producto prod = (Producto)objArray[0];
-				System.out.println("Hist usu"+i+": "+prod.getNombre() + " - id: "+prod.getIdProducto());//.getNombre()+ " "+prueba.getDescripcion());	
-				listaProd.add(prod);
-				}
-			
-		}
-		return listaProd;
+		
+		return queryProducto;
 		
 	}
 }
