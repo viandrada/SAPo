@@ -1,6 +1,7 @@
 package com.sapo.beans;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -41,7 +42,9 @@ public class ReporteUsuariosBean {
 		//para probar:
 		//this.reporteNegocio.buscarHistoricoAlmacenesPorUsuario(1);
 		//this.reporteNegocio.buscarHistoricoProdPorUsuario(1);
-		this.reporteNegocio.buscarHistoricoCambioStockProdPorAlmacen(1);
+		//this.reporteNegocio.buscarHistoricoCambioStockProdPorAlmacen(1);
+		//Date finicio = new Date(2015,11,6,10,30);
+		//this.reporteNegocio.buscarHistoricoProdPorUsuarioEnFecha(1, finicio, new Date());
 	}
 
 	public float getGanancia() {

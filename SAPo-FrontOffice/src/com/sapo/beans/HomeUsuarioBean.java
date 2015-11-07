@@ -79,7 +79,7 @@ public class HomeUsuarioBean {
 			this.sinAlmacenes = true;
 		}
 		
-		/*Carga los movimientos de stock por almacén*/
+		/*Carga los movimientos de stock por almacï¿½n*/
 		this.movimientos = new ArrayList<DataReporteProducto>();
 		this.obtenerMovimientos();
 	}
@@ -90,20 +90,27 @@ public class HomeUsuarioBean {
 	}
 
 	public void obtenerMovimientos() {
-		this.movimientos = this.reporteNegocio
-				.buscarHistoricoProdPorUsuario(this.usuarioLogueado
-						.getIdUsuario());
-		for (int i = 0; i < this.movimientos.size(); i++) {
-			switch(this.movimientos.get(i).getTipoMovimiento())
-			{
-			case "ADD":
-				this.movimientos.get(i).setTipoMovimiento("Agregado");
-				break;
-			case "MOD":
-				this.movimientos.get(i).setTipoMovimiento("Editado");
-				break;
+		//por cada uno de los almacenes obtengo los Ãºltimos 5 movimientos de stock
+		//capaz que estoy sobreescribiendo los datos... hay que revisar
+		for(int j = 0; j < this.almacenes.size(); j++ ){
+			
+			this.movimientos = this.reporteNegocio
+				.buscarHistoricoCambioStockProdPorAlmacen(this.almacenes.get(j).getIdAlmacen());
+			for (int i = 0; i < this.movimientos.size(); i++) {
+				switch(this.movimientos.get(i).getTipoMovimiento())
+				{
+				case "ADD":
+					this.movimientos.get(i).setTipoMovimiento("Agregado");
+					break;
+				case "MOD":
+					this.movimientos.get(i).setTipoMovimiento("Editado");
+					break;
+				}
 			}
+			
 		}
+		
+
 		
 	}
 }

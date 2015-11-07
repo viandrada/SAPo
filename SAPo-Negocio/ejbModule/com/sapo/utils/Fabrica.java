@@ -1,6 +1,7 @@
 package com.sapo.utils;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -136,7 +137,7 @@ public class Fabrica {
 		return dataImagenes;
 	}
 	
-	public DataReporteAlmacen toDataReporteAlmacen(Almacen alm, String mov){
+	public DataReporteAlmacen toDataReporteAlmacen(Almacen alm, String mov, Date fechaMov){
 		DataReporteAlmacen dataRepAlm = new DataReporteAlmacen();
 		dataRepAlm.setActivo(alm.getEstaActivo());
 		dataRepAlm.setBytesFoto(alm.getFoto().getDatos());
@@ -146,6 +147,7 @@ public class Fabrica {
 		dataRepAlm.setIdAlmacen(alm.getIdAlmacen());
 		dataRepAlm.setNombre(alm.getNombre());
 		dataRepAlm.setTipoMovimiento(mov);
+		dataRepAlm.setFechaMovimiento(fechaMov);
 		
 		if((alm.getAlmacenIdeal()==null))
 			dataRepAlm.setIdAlmacenIdeal(0);
@@ -155,7 +157,7 @@ public class Fabrica {
 		return dataRepAlm;
 	}
 	
-	public DataReporteProducto toDataReporteProducto(Producto prod, String mov){
+	public DataReporteProducto toDataReporteProducto(Producto prod, String mov, Date fechaMov){
 		DataReporteProducto dataRepProd = new DataReporteProducto();
 		List<Imagen> listaImgs = prod.getFoto();
 		List<DataImagen> listaDataImgs = toDataImagen(listaImgs);
@@ -172,6 +174,7 @@ public class Fabrica {
 		dataRepProd.setPrecio(prod.getPrecio());
 		dataRepProd.setStock(prod.getStock());
 		dataRepProd.setTipoMovimiento(mov);
+		dataRepProd.setFechaMovimiento(fechaMov);
 		
 		return dataRepProd;
 	}

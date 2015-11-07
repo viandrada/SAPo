@@ -1,6 +1,7 @@
 package com.sapo.ejb;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.ejb.EJB;
@@ -9,6 +10,7 @@ import javax.ejb.Stateless;
 
 import org.hibernate.envers.AuditReader;
 import org.hibernate.envers.AuditReaderFactory;
+import org.hibernate.envers.DefaultRevisionEntity;
 import org.hibernate.envers.query.AuditEntity;
 
 import com.datatypes.DataAlmacen;
@@ -79,7 +81,8 @@ public class ReporteNegocio {
 				Object[] objArray = (Object[])listaAlm.get(i);
 				Almacen alm = (Almacen)objArray[0];
 				String tipoMov = objArray[2].toString();
-				DataReporteAlmacen dataRepAlm = this.fabrica.toDataReporteAlmacen(alm, tipoMov);
+				DefaultRevisionEntity info = (DefaultRevisionEntity) objArray[1];
+				DataReporteAlmacen dataRepAlm = this.fabrica.toDataReporteAlmacen(alm, tipoMov, info.getRevisionDate());
 				System.out.println("Hist Alm x Usr "+i+": "+alm.getNombre() + " - email: "+alm.getPropietario().getEmail()+
 						" TipoMov "+ tipoMov);	
 				listaRepAlm.add(dataRepAlm);
@@ -99,8 +102,9 @@ public class ReporteNegocio {
 			for (int i=0; i<listaProd.size();i++){
 				Object[] objArray = (Object[])listaProd.get(i);
 				Producto prod = (Producto)objArray[0];
+				DefaultRevisionEntity info = (DefaultRevisionEntity) objArray[1];
 				String tipoMov = objArray[2].toString();
-				DataReporteProducto dataRepProd = this.fabrica.toDataReporteProducto(prod, tipoMov);
+				DataReporteProducto dataRepProd = this.fabrica.toDataReporteProducto(prod, tipoMov, info.getRevisionDate());
 				System.out.println("Hist Prod x Usr "+i+": "+prod.getNombre() + " - id: "+prod.getIdProducto()+
 						" TipoMov "+ tipoMov);
 				listaRepProd.add(dataRepProd);
@@ -121,8 +125,27 @@ public class ReporteNegocio {
 				Object[] objArray = (Object[])listaProd.get(i);
 				Producto prod = (Producto)objArray[0];
 				String tipoMov = objArray[2].toString();
-				DataReporteProducto dataRepProd = this.fabrica.toDataReporteProducto(prod, tipoMov);
+				DefaultRevisionEntity info = (DefaultRevisionEntity) objArray[1];
+				DataReporteProducto dataRepProd = this.fabrica.toDataReporteProducto(prod, tipoMov, info.getRevisionDate());
 				System.out.println("Hist Stock Alm x Usr "+i+": "+prod.getNombre() + " - Stock: "+prod.getStock()+
+						" TipoMov "+ tipoMov + " Fecha " + info.getRevisionDate().toString());
+				listaRepProd.add(dataRepProd);
+				}		
+		}	
+		return listaRepProd;
+	}
+	
+	public  List<DataReporteProducto>  buscarHistoricoProdPorUsuarioEnFecha(int idUsuario, Date fInicio, Date fFin){
+		List listaProd = this.productoDAO.getHistoricoProdPorUsuarioEnFecha(idUsuario, fInicio, fFin);
+		List<DataReporteProducto> listaRepProd = new ArrayList<DataReporteProducto>();
+		if (listaProd!=null){	
+			for (int i=0; i<listaProd.size();i++){
+				Object[] objArray = (Object[])listaProd.get(i);
+				Producto prod = (Producto)objArray[0];
+				String tipoMov = objArray[2].toString();
+				DefaultRevisionEntity info = (DefaultRevisionEntity) objArray[1];
+				DataReporteProducto dataRepProd = this.fabrica.toDataReporteProducto(prod, tipoMov, info.getRevisionDate());
+				System.out.println("Hist Prod en Fecha x Usu "+i+": "+prod.getNombre() + " - Stock: "+prod.getStock()+
 						" TipoMov "+ tipoMov);
 				listaRepProd.add(dataRepProd);
 				}		

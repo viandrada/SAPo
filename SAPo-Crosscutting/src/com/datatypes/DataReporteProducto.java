@@ -24,6 +24,7 @@ public class DataReporteProducto {
 	private String nombreCategoria;
 
 	private String tipoMovimiento;
+	private Date fechaMovimiento;
 	
 	public int getIdProducto() {
 		return idProducto;
@@ -98,8 +99,11 @@ public class DataReporteProducto {
 	public void setTipoMovimiento(String tipoMovimiento) {
 		this.tipoMovimiento = tipoMovimiento;
 	}
-
-	
-	
+	public Date getFechaMovimiento() {
+		return fechaMovimiento;
+	}
+	public void setFechaMovimiento (Date fechaMovimiento) {
+		this.fechaMovimiento = fechaMovimiento;
+	}
 
 }

@@ -9,8 +9,8 @@
 		<h:dataTable value="#{homeUsuarioBean.movimientos}" var="item"
 			id="movimientos" class="table table-condensed table-responsive" style="background-color: #EBF2ED;">
 			<h:column>
-				<f:facet name="header">Fecha</f:facet>
-				<h:outputText value="#{item.fechaAlta}" />
+				<f:facet name="header">Fecha Movimiento</f:facet>
+				<h:outputText value="#{item.fechaMovimiento}" />
 			</h:column>
 			<h:column>
 				<f:facet name="header">Producto</f:facet>
