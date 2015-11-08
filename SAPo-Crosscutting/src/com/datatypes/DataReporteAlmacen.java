@@ -18,6 +18,7 @@ public DataReporteAlmacen(){}
 	private Date fechaAlta;
 	//private List<DataProducto> productos;
 	private String tipoMovimiento;
+	private Date fechaMovimiento;
 	
 	public int getIdAlmacen() {
 		return idAlmacen;
@@ -73,7 +74,11 @@ public DataReporteAlmacen(){}
 	public void setTipoMovimiento(String tipoMovimiento) {
 		this.tipoMovimiento = tipoMovimiento;
 	}
+	public Date getFechaMovimiento() {
+		return fechaMovimiento;
+	}
+	public void setFechaMovimiento(Date fechaMovimiento) {
+		this.fechaMovimiento = fechaMovimiento;
+	}
 	
-	
-
 }

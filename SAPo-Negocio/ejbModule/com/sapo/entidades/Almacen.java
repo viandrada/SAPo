@@ -66,18 +66,84 @@ public class Almacen implements Serializable {
 		this.idAlmacen = id;
 		
 	}
-	
+		
+/////////////////////////////////////////////////////////////////////////////////////
 	@ManyToMany (cascade={CascadeType.PERSIST, CascadeType.REMOVE, CascadeType.MERGE})
 	private List<Comentario> comentarios;
 	
-	//@OneToMany
-	//private List<Comentario> comentarios;
-
 	@ManyToMany
 	private List<Categoria> categorias;
 
-	@OneToMany(fetch = FetchType.EAGER)
+	@OneToMany(fetch = FetchType.EAGER,cascade={CascadeType.PERSIST, CascadeType.REMOVE, CascadeType.MERGE})
 	private List<Producto> productos;
+
+public void movProducto(Producto p) {
+		System.out.println("AGREGUE EL PRODUCTO ESTOY EN ALMACEN: "+p.getNombre()+"AL ALMACEN : "+nombre);
+		this.productos.add(p);
+	}
+	
+	public void sacarProducto(Producto p) {
+		/*List<Producto> listProd=this.productos;
+		
+		if (!listProd.isEmpty()){
+			//ACA NO ENTRO NO SACO EL PRODUCTO
+			for (Producto q :listProd){
+				if (q.getIdProducto()==p.getIdProducto()){
+					this.productos.remove(q);
+					System.out.println("SAQUE EL PRODUCTO ESTOY EN ALMACEN: "+p.getNombre()+"AL ALMACEN : "+nombre);
+				}
+			}
+		}*/
+		System.out.println("LA LISTA DE PRODUCTOS ES VACIA= "+this.productos.isEmpty());
+		if (!this.productos.isEmpty()){
+			System.out.println("LA LISTA DE PRODUCTOS NO ES VACIA");
+			//ACA NO ENTRO NO SACO EL PRODUCTO
+			for (Producto q :this.productos){
+				if (q.getIdProducto()==p.getIdProducto()){
+					this.productos.remove(q);
+					System.out.println("SAQUE EL PRODUCTO ESTOY EN ALMACEN: ("+p.getNombre()+"="+q.getNombre()+") AL ALMACEN : "+nombre);
+				}
+			}
+		}
+		
+	}
+
+
+public boolean EsUsuariodeEsteAlmacen(String emailUsuario) {
+		boolean es = false;
+		try {
+			if(!usuarios.isEmpty()){
+			for (Usuario u : usuarios) {
+				if (u.getEmail().equals(emailUsuario)) {
+					es = true;
+				}
+			}
+			}
+		} catch (Exception excep) {
+			throw excep;
+		}
+
+		return es;
+	}
+	
+	public boolean EsComentariodeAlmacen(int idComent) {
+		boolean es = false;
+		try {
+			if(!comentarios.isEmpty()){
+			for (Comentario c : comentarios) {
+				if (c.getIdComentario()==idComent) {
+					es = true;
+				}
+			}
+			}
+		} catch (Exception excep) {
+			throw excep;
+		}
+
+		return es;
+	}
+
+	///////////////////////////////////////////////////////////////////////////////////////////
 
 	public void agregarUsuarioCompartido(Usuario u) {
 		System.out.println("AGREGUE EL USUARIO: "+u.getEmail()+"AL ALMACEN : "+nombre);
@@ -187,40 +253,7 @@ public class Almacen implements Serializable {
 	public void setEstaActivo(Boolean estaActivo) {
 		this.estaActivo = estaActivo;
 	}
-
-	public boolean EsUsuariodeEsteAlmacen(String emailUsuario) {
-		boolean es = false;
-		try {
-			if(!usuarios.isEmpty()){
-			for (Usuario u : usuarios) {
-				if (u.getEmail().equals(emailUsuario)) {
-					es = true;
-				}
-			}
-			}
-		} catch (Exception excep) {
-			throw excep;
-		}
-
-		return es;
-	}
 	
-	public boolean EsComentariodeAlmacen(int idComent) {
-		boolean es = false;
-		try {
-			if(!comentarios.isEmpty()){
-			for (Comentario c : comentarios) {
-				if (c.getIdComentario()==idComent) {
-					es = true;
-				}
-			}
-			}
-		} catch (Exception excep) {
-			throw excep;
-		}
-
-		return es;
-	}
 	/*
 	 * public List<Usuario> getListaUsuariosPropietarios() { return
 	 * listaUsuariosPropietarios; }

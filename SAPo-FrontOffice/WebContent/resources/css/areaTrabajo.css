@@ -21,3 +21,15 @@
 @media only screen and (max-width: 500px) {
     
 }
+
+.bodycontainer {
+		max-height: 200px;
+		width: 100%;
+		margin: 0;
+		overflow-y: auto;
+	}
+	
+	.table-scrollable {
+		margin: 0;
+		padding: 0;
+	}

@@ -6,77 +6,9 @@
 
 <ui:composition>
 
-	<script>
-	var wsocket;
-	//var serviceLocation = "ws://192.168.1.1:8080/hascode/chat/";
-	
-	var serviceLocation = "ws://localhost:8080/SAPo-FrontOffice/chat/";
-	
-	var $nickName;
-	var $message;
-	var $chatWindow;
-	var $aux;
-	var room = '';
- 
-	function onMessageReceived(evt) {
-		//var msg = eval('(' + evt.data + ')');
-		var msg = JSON.parse(evt.data); // native API
-		var $messageLine = $('<tr> <td class=" pull-left col-xs-3" >' + msg.received
-				+ '</td> <td class=" pull-left col-xs-4" >' + msg.sender
-				+ '</td> <td class=" pull-left col-xs-5" >' + msg.message
-				+ '</td></tr>');
-		$chatWindow.append($messageLine);
-		//$chatWindow.prepend($messageLine);
-
-	}
-	function sendMessage() {
-		var msg = '{"message":"' + $message.val() + '", "sender":"'
-				+ $nickName.val() + '", "received":""}';
-		wsocket.send(msg);
-		$message.val('').focus();
-	}
- 
-	function connectToChatserver() {
-		//room = $('#chatroom option:selected').val();
-		room = $('#chatroom2').val();
-		wsocket = new WebSocket(serviceLocation + room);
-		wsocket.onmessage = onMessageReceived;
-	}
- 
-	function leaveRoom() {
-		wsocket.close();
-		$chatWindow.empty();
-		$('.chat-wrapper').hide();
-		$('.chat-signin').show();
-		$nickName.focus();
-	}
- 
-	$(document).ready(function() {
-		$nickName = $('#nickname');
-		$message = $('#message');
-		$chatWindow = $('#response');
-		$('.chat-wrapper').hide();
-		//$('.chat-wrapper').show();
-		$nickName.focus();
- 
-		$('#enterRoom').click(function(evt) {
-			evt.preventDefault();
-			connectToChatserver();
-			$('.chat-wrapper h2').text('Chat # '+$nickName.val() + "@" + room);
-			$('.chat-signin').hide();
-			$('.chat-wrapper').show();
-			$message.focus();
-		});
-		$('#do-chat').submit(function(evt) {
-			evt.preventDefault();
-			sendMessage()
-		});
- 
-		$('#leave-room').click(function(){
-			leaveRoom();
-		});
-	});
-	</script>
+	<script src="resources/js/chat.js"></script>
+	<link href="resources/css/areaTrabajo.css" />
+	<!-- no me anduvo  -->
 
 	<style type="text/css">
 .bodycontainer {
@@ -248,6 +180,14 @@
 											action="#{almacenBean.actualizarStock(item.idProducto,item.stock + 1)}"
 											value="+" />
 									</div>
+									<h:form id="formMover">
+										<h:commandLink value="Mover" class="btn btn-primary btn-xs"
+											rendered="#{moverProductoBean.cantAlamcenenDeUsusario >= 2}"
+											onclick="$('#myModal2').modal('show');document.getElementById('nombreCambiar:inputStock').value='#{item.stock}';document.getElementById('nombreCambiar:idProductoSelec').value='#{item.idProducto}';"
+											immediate="true">
+											<f:ajax execute="@this" render="formMover" />
+										</h:commandLink>
+									</h:form>
 								</div>
 							</li>
 						</h:form>
@@ -277,6 +217,54 @@
 					</div>
 				</ui:repeat>
 			</ul>
+					<!-- Modal para Mover producto -->
+						<div class="modal fade" id="myModal2" tabindex="-1" role="dialog"
+							aria-labelledby="myModalLabel">
+							<h:form id="nombreCambiar">
+								<div class="modal-dialog">
+									<div class="modal-content">
+										<div class="modal-header">
+											<button type="button" class="close" data-dismiss="modal">X</button>
+											<h4 class="modal-title">Selecciona que cantidad y en que
+												almacen quieres hacerlo...</h4>
+										</div>
+										<div class="modal-body">
+											<div class="form-group">
+
+												<h:inputHidden value="#{moverProductoBean.idProductoSelec}"
+													id="idProductoSelec" name="idProductoSelec" class="form-control" />
+
+												<label for="inputStock2">Stock:</label>
+												<h:inputText class="form-control input-xs" id="inputStock" name="inputStock"
+													value="#{moverProductoBean.cantStockAMover}">
+												</h:inputText>
+
+												<label for="sel1">Almacenes:</label>
+												<h:selectOneMenu value="#{moverProductoBean.idAlmacenSelec}"
+													class="form-control" id="sel12">
+													<f:selectItems
+														value="#{moverProductoBean.listaAlmacenesDeUsuarioMenosenElqueEsta}"
+														var="c2" itemValue="#{c2.idAlmacen}"
+														itemLabel="#{c2.nombre}" />
+												</h:selectOneMenu>
+											</div>
+
+
+										</div>
+										<div class="modal-footer">
+											<h:commandButton class="btn btn-success" value="Mover"
+												action="#{moverProductoBean.moverProducto}">
+											</h:commandButton>
+
+											<button type="button" class="btn btn-danger pull-left"
+												data-dismiss="modal" onclick="return false;">Cancelar</button>
+										</div>
+									</div>
+								</div>
+							</h:form>
+						</div>
+
+						<!-- Fin de ventana modal -->
 		</div>
 		<!-- Fin de: Productos del almacen -->
 

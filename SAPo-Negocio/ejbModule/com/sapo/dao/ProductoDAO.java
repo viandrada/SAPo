@@ -1,6 +1,7 @@
 package com.sapo.dao;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.ejb.Stateless;
@@ -35,7 +36,7 @@ public class ProductoDAO {
 		List<Producto> productos = (List<Producto>) consulta.getResultList();
 		return productos;
 	}
-
+	
 	public boolean existeProducto(int idProducto) {
 		return (em
 				.createQuery(
@@ -95,6 +96,25 @@ public class ProductoDAO {
 		
 	}
 	
+	
+	/* Obtiene una lista con los productos y sus históricos de un usuario
+	 * dentro de un lapso de tiempo.
+	 * */
+	public List getHistoricoProdPorUsuarioEnFecha(int idUsuario, Date fechaInicio, Date fechaFin) {
+		
+		AuditReader reader = AuditReaderFactory.get(em);
+		Number fInicio = reader.getRevisionNumberForDate(fechaInicio);
+		Number fFin = reader.getRevisionNumberForDate(fechaFin);
+		
+		List queryProducto = reader.createQuery()
+			    .forRevisionsOfEntity(Producto.class, false,true)
+			    .addOrder(AuditEntity.revisionNumber().desc())
+			    .add(AuditEntity.relatedId("usuario").eq(idUsuario))  
+			    .add(AuditEntity.revisionNumber().between(fInicio, fFin))
+			    .getResultList();		
+		return queryProducto;
+		
+	}
 	
 	
 	/* Paso un id de un producto y obtengo el histórico de 
@@ -162,6 +182,7 @@ public class ProductoDAO {
 		return primerProd;
 	
 	}
+
 
 	
 
