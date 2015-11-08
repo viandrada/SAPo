@@ -2,6 +2,7 @@ package com.sapo.entidades;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 
 import javax.persistence.*;
@@ -18,7 +19,7 @@ import org.hibernate.envers.RelationTargetAuditMode;
 @NamedQuery(name = "Productos.getProductosDeAlmacen.IdAlmacen", query = "SELECT p FROM Producto p WHERE p.almacen.idAlmacen = :idAlmacen and p.esIdeal = FALSE") })
 @Entity
 @Audited(withModifiedFlag = false, targetAuditMode = RelationTargetAuditMode.NOT_AUDITED)
-public class Producto implements Serializable {
+public class Producto implements Serializable, Cloneable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -62,6 +63,64 @@ public class Producto implements Serializable {
 	public Producto() {
 		super();
 	}
+	
+	public Producto copiarProducto(){
+		Producto copiado=new Producto();
+		//apunto al mismo Almacen que su clon OJO!!!!!
+		copiado.almacen=this.almacen;
+		
+		copiado.atributos=this.atributos;
+		copiado.categoria=this.categoria;
+		copiado.descripcion=this.descripcion;
+		copiado.esIdeal=this.esIdeal;
+		copiado.estaActivo=this.estaActivo;
+		copiado.fechaAlta=this.fechaAlta;
+		//copia de fotos// OJO se DUPLICA LISTA PERO FOTOS LAS COMPARTEN
+		List<Imagen> fotoCopia=new LinkedList<Imagen>();
+		if (!this.foto.isEmpty()){
+			for (Imagen i: this.foto){
+				
+				Imagen x=new Imagen();
+				x.setDatos(i.getDatos()); 
+				//x.setIdImagen(i.getIdImagen());
+				x.setMime(i.getMime());
+				x.setNombre(i.getNombre());
+				
+				fotoCopia.add(/*i*/x);
+			}
+		}
+		
+		copiado.foto=fotoCopia;
+		//copiado.idProducto=this.idProducto;
+		copiado.nombre=this.nombre;
+		copiado.precio=this.precio;
+		//apunto al mismo producto generico que su clon OJO!!!!!!!
+		copiado.productoGenerico=this.productoGenerico;
+		copiado.stock=this.stock;
+		copiado.stockIdeal=this.stockIdeal;
+		//apunto al mismo USUARIO que su clon OJO!!!!!!!
+		copiado.usuario=this.usuario;
+		return copiado;
+	}
+
+	 /*public Object clone(){
+	        Producto obj=null;
+	        try{
+	            obj=(Producto)super.clone();
+	        }catch(CloneNotSupportedException ex){
+	            System.out.println(" no se puede CLONAR");
+	        }
+	       	       
+	        List<Imagen> fotoCopia=new LinkedList<Imagen>();
+			if (!this.foto.isEmpty()){
+				for (Imagen i: this.foto){
+					fotoCopia.add(i.);
+				}
+			}
+			
+	    
+	        return obj;
+	    }*/
 
 	public int getIdProducto() {
 		return idProducto;

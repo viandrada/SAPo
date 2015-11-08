@@ -1,5 +1,6 @@
 package com.sapo.beans;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,6 +9,7 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
+import javax.faces.bean.ViewScoped;
 
 import com.datatypes.DataAlmacen;
 import com.datatypes.DataImagen;
@@ -17,30 +19,36 @@ import com.sapo.ejb.ProductoNegocio;
 
 @ManagedBean
 @RequestScoped
-public class AlmacenBean {
+public class MoverProductoBean implements Serializable{
 
-	public AlmacenBean() {
-		this.listaCompras = new ArrayList<DataProducto>();
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	public MoverProductoBean() {
+		
 	}
 
-	private DataAlmacen almacen;
+	/*private DataAlmacen almacen;
 	private List<DataProducto> productos;
-	private List<DataProducto> listaCompras;
+	private List<DataProducto> listaCompras;*/
+	
+	private List<DataAlmacen> listaAlmacenesDeUsuarioMenosenElqueEsta;
+	private int cantAlamcenenDeUsusario;
+
+	public int idAlmacenActual;
+	public int idAlmacenSelec;
+	public int idProductoSelec;
+	public int cantStockAMover;
+
 	@EJB
 	AlmacenNegocio almacenNegocio;
 	@EJB
 	ProductoNegocio productoNegocio;
 	@ManagedProperty(value = "#{navigationAreaBean}")
 	NavigationAreaBean nav;
-
-	private List<DataAlmacen> listaAlmacenesDeUsuarioMenosenElqueEsta;
-	private int cantAlamcenenDeUsusario;
-
-	private int idAlmacenActual;
-	private int idAlmacenSelec;
-	private int idProductoSelec;
-	private int cantStockAMover;
-
 	@ManagedProperty(value = "#{loginBean}")
 	LoginBean usuarioLogueado;
 
@@ -52,7 +60,7 @@ public class AlmacenBean {
 		this.usuarioLogueado = usuarioLogueado;
 	}
 
-	public DataAlmacen getAlmacen() {
+	/*public DataAlmacen getAlmacen() {
 		return almacen;
 	}
 
@@ -94,7 +102,7 @@ public class AlmacenBean {
 			}
 		}
 		this.almacen.setProductos(dataProductos);
-	}
+	}*/
 
 	public List<DataProducto> obtenerProductos(int idAlmacen) {
 		List<DataProducto> dataProductos = new ArrayList<DataProducto>();
@@ -109,25 +117,30 @@ public class AlmacenBean {
 	public void setNav(NavigationAreaBean nav) {
 		this.nav = nav;
 	}
-	
+
 	@PostConstruct
 	public void init() {
-		obtenerAlmacen();
-		generarLista();
+		//obtenerAlmacen();
+		//generarLista();
 		listaAlmacenesDeUsuarioMenosenElqueEsta = almacenNegocio
 				.getAlmacenesMenosUno(nav.getIdAlmacenActual(),
 						usuarioLogueado.getEmail());
 		cantAlamcenenDeUsusario = almacenNegocio
 				.getCantidadAlmacenesDeUsuario(usuarioLogueado.getEmail());
+		
+		this.idAlmacenActual=0;
+		this.idAlmacenSelec=0;
+		this.idProductoSelec=0;
+		this.cantStockAMover=0;
 	}
 
-	public String actualizarStock(int idProducto, int stock) {
+/*	public String actualizarStock(int idProducto, int stock) {
 		this.productoNegocio.actualizarStock(idProducto, stock);
 		init();
 		return "index.xhtml";
-	}
+	}*/
 
-	public void generarLista() {
+	/*public void generarLista() {
 		DataAlmacen almacenReal = this.almacenNegocio.getAlmacenPorId(nav
 				.getIdAlmacenActual());
 		List<DataProducto> productosReal = this.obtenerProductos(nav
@@ -166,28 +179,14 @@ public class AlmacenBean {
 				return dataProducto.get(i);
 		}
 		return null;
-	}
+	}*/
 
-	public String sincronizarLista(int idProductoObtenido, int idAlmacen) {
-		System.out.println("Sincronizar Lista");
-		this.almacenNegocio.sincronizarLista(idProductoObtenido, idAlmacen);
-		generarLista();
-		return "null";
-	}
 	/*
 	 * 
 	 * public List<DataAlmacen> getAlmacenesMenosUno(){ return
 	 * almacenNegocio.getAlmacenesMenosUno
 	 * (idAlmacenActual,usuarioLogueado.getEmail()); }
 	 */
-
-	public int getIdAlmacenActual() {
-		return idAlmacenActual;
-	}
-
-	public void setIdAlmacenActual(int idAlmacenActual) {
-		this.idAlmacenActual = idAlmacenActual;
-	}
 
 	public List<DataAlmacen> getListaAlmacenesDeUsuarioMenosenElqueEsta() {
 		return listaAlmacenesDeUsuarioMenosenElqueEsta;
@@ -198,14 +197,6 @@ public class AlmacenBean {
 		this.listaAlmacenesDeUsuarioMenosenElqueEsta = listaAlmacenesDeUsuarioMenosenElqueEsta;
 	}
 
-	public int getIdAlmacenSelec() {
-		return idAlmacenSelec;
-	}
-
-	public void setIdAlmacenSelec(int idAlmacenSelec) {
-		this.idAlmacenSelec = idAlmacenSelec;
-	}
-
 	public int getCantAlamcenenDeUsusario() {
 		return cantAlamcenenDeUsusario;
 	}
@@ -214,14 +205,7 @@ public class AlmacenBean {
 		this.cantAlamcenenDeUsusario = cantAlamcenenDeUsusario;
 	}
 
-	public int getIdProductoSelec() {
-		return idProductoSelec;
-	}
-
-	public void setIdProductoSelec(int idProductoSelec) {
-		this.idProductoSelec = idProductoSelec;
-	}
-
+	
 	/*
 	 * public void actualizarSeleccion(int num1,int num2, int num3){
 	 * System.out.println("IDALMA DESTINO: " + num1 + " IDPRODUCTO: " + num2 +
@@ -235,7 +219,7 @@ public class AlmacenBean {
 
 	public String moverProducto() {
 
-		System.out.println("HOLA ESTOY MOVIENDO ");
+		System.out.println("HOLA ESTOY MOVIENDO MOVERPRODUCTO BEAN");
 		System.out.println("IDALMA DESTINO: " + this.idAlmacenSelec
 				+ " IDPRODUCTO: " + this.idProductoSelec + " CANTSTOCK: "
 				+ this.cantStockAMover + "IDALMAORIGEN: "
@@ -255,13 +239,41 @@ public class AlmacenBean {
 		
 		return "index?faces-redirect=true";
 	}
+	
+	public int getIdAlmacenActual() {
+		return idAlmacenActual;
+	}
+
+	public void setIdAlmacenActual(int idAlmacenActual) {
+		System.out.println("setIdAlmacenActual(int idAlmacenActual) CON EL VALOR: "+ idAlmacenActual);
+		this.idAlmacenActual = idAlmacenActual;
+	}
+
+	public int getIdAlmacenSelec() {
+		return idAlmacenSelec;
+	}
+
+	public void setIdAlmacenSelec(int idAlmacenSelec) {
+		System.out.println("setIdAlmacenSelec(int idAlmacenSelec)CON EL VALOR: "+ idAlmacenSelec);
+		this.idAlmacenSelec = idAlmacenSelec;
+	}
+
+	public int getIdProductoSelec() {
+		return idProductoSelec;
+	}
+
+	public void setIdProductoSelec(int idProductoSelec) {
+		System.out.println("setIdProductoSelec(int idProductoSelec)CON EL VALOR: "+ idProductoSelec);
+		this.idProductoSelec = idProductoSelec;
+	}
 
 	public int getCantStockAMover() {
 		return cantStockAMover;
 	}
 
 	public void setCantStockAMover(int cantStockAMover) {
-		
+		System.out.println("setCantStockAMover(int cantStockAMover) CON EL VALOR: "+ cantStockAMover);
 		this.cantStockAMover = cantStockAMover;
 	}
+	
 }

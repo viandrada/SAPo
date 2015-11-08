@@ -59,13 +59,6 @@ public class AlmacenDAO {
 		return a.getIdAlmacen();
 	}
 
-	public void actualizarAlmacen(Almacen a) {
-		 //em.merge(a);
-		em.persist(a);
-	}
-	
-	
-
 	/*
 	 * public List<Almacen> getAlmacenesUsuario(String emailUsuario) {
 	 * List<Almacen> listaAlmacenes = new ArrayList<Almacen>(); try { Query
@@ -139,6 +132,12 @@ public class AlmacenDAO {
 			    .getResultList();	
 		
 		return queryAlmacen;
+	}
+	
+	public void actualizarAlmacen(Almacen a) {
+		 em.merge(a);
+		System.out.println("ACTUALIZANDO ALMACEN ");
+		//em.persist(a);
 	}
 	
 }

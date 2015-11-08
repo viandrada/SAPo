@@ -7,6 +7,7 @@ import java.util.List;
 
 import javax.ejb.Stateless;
 
+import com.datatypes.DataAlmacen;
 import com.datatypes.DataCategoria;
 import com.datatypes.DataImagen;
 import com.datatypes.DataProducto;
@@ -177,5 +178,20 @@ public class Fabrica {
 		dataRepProd.setFechaMovimiento(fechaMov);
 		
 		return dataRepProd;
+	}
+	
+	public List<DataAlmacen> convertirAlmacenes(List<Almacen> lcat) {
+		List<DataAlmacen> l = new LinkedList<DataAlmacen>();
+		for (Almacen c : lcat) {
+			DataAlmacen dataAlmacen = new DataAlmacen();
+			dataAlmacen.setNombre(c.getNombre());
+			dataAlmacen.setDescripcion(c.getDescripcion());
+			dataAlmacen.setBytesFoto(c.getFoto().getDatos());
+			dataAlmacen.setIdFoto(c.getFoto().getIdImagen());
+			dataAlmacen.setIdAlmacen(c.getIdAlmacen());
+
+			l.add(dataAlmacen);
+		}
+		return l;
 	}
 }

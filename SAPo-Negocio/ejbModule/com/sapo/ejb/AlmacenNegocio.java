@@ -472,4 +472,117 @@ public class AlmacenNegocio {
 		List<Almacen> listaAlm = this.almacenDAO.getHistoricoAlmacenesPorUsuario(idUsuario);
 	}*/
 	
+	public void moverProducto(int idAlmacenDestino, int idProducto,
+			int cantStock, int idAlmacenOrigen) {
+		System.out.println("HOLA ESTOY MOVIENDO MOVERPRODUCTO NEGOCIO");
+		System.out.println("LLEGO IDALMA DESTINO: " + idAlmacenDestino + " IDPRODUCTO: " + idProducto+" CANTSTOCK: "+cantStock+"IDALMAORIGEN: "+idAlmacenOrigen);
+		
+
+		Almacen aDestino = almacenDAO.getAlmacen(idAlmacenDestino);
+		System.out.println("pido almacen DESTINO: "+aDestino.getNombre());
+		// List<Producto> listProductDestino = aDestino.getProductos();
+		Almacen aOrigen = almacenDAO.getAlmacen(idAlmacenOrigen);
+		System.out.println("pido almacen ORIGEN: "+aOrigen.getNombre());
+		
+		List<Producto> listProductOrigen = new LinkedList<Producto>();
+		
+		/*listProductOrigen=aOrigen.getProductos();*/
+		
+		listProductOrigen=productoDAO.getProductosAlmacen(aOrigen.getIdAlmacen());
+		
+		System.out.println("pido la lista del almacen ORIGEN, es VACIA: "+listProductOrigen.isEmpty());
+		
+		if (!listProductOrigen.isEmpty()) {
+			System.out.println("LA LISTA DE PRODUCTOS DE ALMA ORIGEN NO ES VACIA");
+			for (Producto p : listProductOrigen) {
+
+				if (p.getIdProducto() == idProducto) {
+					System.out.println("ENCONTRE EL PRODUCTO A MOVER");
+					if (p.getStock() - cantStock <= 0) {
+						System.out.println("ESTOY MOVIENDO EL PRODUCTO LITERAL, EN NEGOCIO tengo el stock:"+p.getStock()+" y voy a mover:"+cantStock);
+						
+						p.setAlmacen(aDestino);//le seteo al producto el almacen a donde va
+						
+						//aDestino.movProducto(p);
+						System.out.println("LO AGREGO AL ALMACEN DE DESTINO");
+						//almacenDAO.actualizarAlmacen(aDestino);
+						productoDAO.actualizarProducto(p);
+						
+						//aOrigen.sacarProducto(p);
+						//System.out.println("LO SACO DEL ALMACEN DE ORIGEN");
+						//almacenDAO.actualizarAlmacen(aOrigen);
+
+					} else {
+						System.out.println("ESTOY COPIANDO Y CANBIANDO STOCKS, EN NEGOCIO");
+						// de lo contrario!!! resto el stock de este producto y
+						// creo
+						// uno igual y lo agrego a los productos del almacen
+						// seleccionado
+
+						// resto el stock al producto origen
+						p.setStock(p.getStock() - cantStock);
+
+						// copio el producto
+						Producto nuevoProd;// = new Producto();
+
+						nuevoProd = p.copiarProducto();
+
+						nuevoProd.setAlmacen(aDestino);// seteo a la copia el almacen a donde va
+
+						nuevoProd.setStock(cantStock);// seteo a la copia el stock que muevo
+						
+						//aDestino.movProducto(nuevoProd);
+						
+						productoDAO.actualizarProducto(p);
+						productoDAO.insertarProducto(nuevoProd);
+						
+						
+					}
+					/*almacenDAO.actualizarAlmacen(aDestino);
+					System.out.println("ACTUALIZO ALMACEN DESTINO");
+					almacenDAO.actualizarAlmacen(aOrigen);
+					System.out.println("ACTUALIZO ALMACEN ORIGEN");*/
+				}
+				
+				
+			}
+		}
+
+		/*
+		 * Almacen e = almacenDAO.getAlmacen(idAlmacen);
+		 * 
+		 * if (e.EsUsuariodeEsteAlmacen(emailAmigo)){
+		 * 
+		 * System.out.println("LO AGREGO BIEN"); };
+		 */
+
+	}
+	
+	public List<DataAlmacen> getAlmacenesMenosUno(int idAlmacen,
+			String emailUsuario) {
+
+		List<Almacen> listAlma = almacenDAO.getAlmacenesUsuario(emailUsuario);
+		List<Almacen> lisR = new LinkedList<Almacen>();
+
+		try {
+
+			if (!listAlma.isEmpty()) {
+				for (Almacen a : listAlma) {
+
+					if (a.getIdAlmacen() != idAlmacen) {
+						lisR.add(a);
+					}
+				}
+
+			}
+
+		} catch (Exception excep) {
+			throw excep;
+		}
+
+		return fabrica.convertirAlmacenes(lisR);
+
+	}
+	
+	
 }

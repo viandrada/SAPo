@@ -36,7 +36,7 @@ public class ProductoDAO {
 		List<Producto> productos = (List<Producto>) consulta.getResultList();
 		return productos;
 	}
-
+	
 	public boolean existeProducto(int idProducto) {
 		return (em
 				.createQuery(
@@ -182,6 +182,7 @@ public class ProductoDAO {
 		return primerProd;
 	
 	}
+
 
 	
 
