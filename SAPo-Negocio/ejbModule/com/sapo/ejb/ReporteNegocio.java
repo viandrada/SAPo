@@ -18,7 +18,9 @@ import com.datatypes.DataReporteAlmacen;
 import com.datatypes.DataReporteProducto;
 import com.datatypes.DataUsuario;
 import com.sapo.dao.AlmacenDAO;
+import com.sapo.dao.AlmacenIdealDAO;
 import com.sapo.dao.ProductoDAO;
+import com.sapo.dao.ProductoGenericoDAO;
 import com.sapo.dao.UsuarioDAO;
 import com.sapo.entidades.Almacen;
 import com.sapo.entidades.Producto;
@@ -42,6 +44,9 @@ public class ReporteNegocio {
 	
 	@EJB
 	private AlmacenDAO almacenDAO;
+	
+	@EJB
+	private ProductoGenericoDAO prodGenericoDAO;
 	
 	@EJB
 	private ProductoDAO productoDAO;
@@ -135,7 +140,9 @@ public class ReporteNegocio {
 		return listaRepProd;
 	}
 	
-	public  List<DataReporteProducto>  buscarHistoricoProdPorUsuarioEnFecha(int idUsuario, Date fInicio, Date fFin){
+	/*Devuelve los históricos de productos de un usuario entre determinadas fechas
+	 * */
+	public List<DataReporteProducto>  buscarHistoricoProdPorUsuarioEnFecha(int idUsuario, Date fInicio, Date fFin){
 		List listaProd = this.productoDAO.getHistoricoProdPorUsuarioEnFecha(idUsuario, fInicio, fFin);
 		List<DataReporteProducto> listaRepProd = new ArrayList<DataReporteProducto>();
 		if (listaProd!=null){	
@@ -148,6 +155,48 @@ public class ReporteNegocio {
 				System.out.println("Hist Prod en Fecha x Usu "+i+": "+prod.getNombre() + " - Stock: "+prod.getStock()+
 						" TipoMov "+ tipoMov);
 				listaRepProd.add(dataRepProd);
+			}		
+		}	
+		return listaRepProd;
+	}
+	
+	/*Devuelve los históricos de productos de un usuario para un almacén determinado
+	 * */
+	public List<DataReporteProducto> buscarHistoricoProdPorUsuarioYAlmacen(int idUsuario, int idAlmacen){
+		List listaProd = this.productoDAO.getHistoricoProdPorUsuarioEnAlmacen(idUsuario, idAlmacen);
+		List<DataReporteProducto> listaRepProd = new ArrayList<DataReporteProducto>();
+		if (listaProd!=null){	
+			for (int i=0; i<listaProd.size();i++){
+				Object[] objArray = (Object[])listaProd.get(i);
+				Producto prod = (Producto)objArray[0];
+				String tipoMov = objArray[2].toString();
+				DefaultRevisionEntity info = (DefaultRevisionEntity) objArray[1];
+				DataReporteProducto dataRepProd = this.fabrica.toDataReporteProducto(prod, tipoMov, info.getRevisionDate());
+				System.out.println("Hist Prod por usr y alm "+i+": "+prod.getNombre() + " - Stock: "+prod.getStock()+
+						" TipoMov "+ tipoMov);
+				listaRepProd.add(dataRepProd);
+			}		
+		}	
+		return listaRepProd;
+	}
+	
+	
+	/* Obtengo una lista con los prductos genéricos utilizados más veces
+	 * */
+	public  List<DataReporteProducto>  buscarProductosGenericosMasUtilizados(){
+		List listaProd = this.prodGenericoDAO.getProductosGenericoMasUsados();
+		List<DataReporteProducto> listaRepProd = new ArrayList<DataReporteProducto>();
+		if (listaProd!=null){	
+			for (int i=0; i<listaProd.size();i++){
+				Object obj = (Object)listaProd.get(i);
+//				Producto prod = (Producto)objArray[0];
+//				DefaultRevisionEntity info = (DefaultRevisionEntity) objArray[1];
+//				String tipoMov = objArray[2].toString();
+//				DataReporteProducto dataRepProd = this.fabrica.toDataReporteProducto(prod, tipoMov, info.getRevisionDate());
+//				System.out.println("Prod Generico + Usado "+i+": "+prod.getNombre() + " - id: "+prod.getIdProducto()+
+//						" Id Prod Gen "+ prod.getProductoGenerico().getIdProductoGenerico());
+//				listaRepProd.add(dataRepProd);
+				System.out.println("prod gen más usado" + i + " " + obj.toString());
 				}		
 		}	
 		return listaRepProd;

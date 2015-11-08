@@ -45,6 +45,7 @@ public class ReporteUsuariosBean {
 		//this.reporteNegocio.buscarHistoricoCambioStockProdPorAlmacen(1);
 		//Date finicio = new Date(2015,11,6,10,30);
 		//this.reporteNegocio.buscarHistoricoProdPorUsuarioEnFecha(1, finicio, new Date());
+		this.reporteNegocio.buscarProductosGenericosMasUtilizados();
 	}
 
 	public float getGanancia() {

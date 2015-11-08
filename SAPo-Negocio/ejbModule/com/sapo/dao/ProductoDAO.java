@@ -117,6 +117,24 @@ public class ProductoDAO {
 	}
 	
 	
+	/* Obtiene una lista con los productos y sus históricos de un usuario
+	 * dentro específicamente para un almacén
+	 * */
+	public List getHistoricoProdPorUsuarioEnAlmacen(int idUsuario, int idAlmacen) {
+		AuditReader reader = AuditReaderFactory.get(em);
+				
+		List queryProducto = reader.createQuery()
+			    .forRevisionsOfEntity(Producto.class, false,true)
+			    .addOrder(AuditEntity.revisionNumber().desc())
+			    .add(AuditEntity.relatedId("usuario").eq(idUsuario))  
+			    .add(AuditEntity.relatedId("almacen").eq(idAlmacen))
+			    .getResultList();		
+		return queryProducto;
+		
+	}
+	
+	
+	
 	/* Paso un id de un producto y obtengo el histórico de 
 	 * ese producto. Es decir, obengo una lista de productos
 	 * con todas sus versiones.
