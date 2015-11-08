@@ -5,7 +5,7 @@
 
 <ui:composition>
 	<h:panelGroup class="container">
-		<ul class="nav nav-pills nav-stacked">
+		<ul class="nav nav-pills nav-stacked visible-md visible-lg">
 			<h:form class="form">
 				<div class="row">
 					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -38,6 +38,53 @@
 				</div>
 			</h:form>
 		</ul>
+
+		<div class="dropdown visible-xs visible-sm">
+			<button class="btn btn-info" style="width:100%" id="dLabel" type="button" data-toggle="dropdown"
+				aria-haspopup="true" aria-expanded="false">
+				Menú<span class="caret"></span>
+			</button>
+			<ul class="dropdown-menu list-group"  style="width:100%" aria-labelledby="dLabel">
+				<h:form class="form">
+					<li>
+						<div class="row">
+							<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+								<h:commandLink value="Mis almacenes     "
+									action="#{navigationAreaBean.goTo('homeUsuario.xhtml')}"
+									class="list-group-item"></h:commandLink>
+							</div>
+						</div>
+					</li>
+					<li>
+						<div class="row">
+							<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+								<h:commandLink value="Nuevo almacén"
+									action="#{navigationAreaBean.goTo('altaAlmacen.xhtml')}"
+									class="list-group-item"></h:commandLink>
+							</div>
+						</div>
+					</li>
+					<li>
+						<div class="row">
+							<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+								<h:commandLink value="Reportes"
+									action="#{navigationAreaBean.goTo('reportes.xhtml')}"
+									class="list-group-item"></h:commandLink>
+							</div>
+						</div>
+					</li>
+					<li>
+						<div class="row">
+							<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+								<h:commandLink value="Perfil    "
+									action="#{navigationAreaBean.goTo('perfilUsuario.xhtml')}"
+									class="list-group-item"></h:commandLink>
+							</div>
+						</div>
+					</li>
+				</h:form>
+			</ul>
+		</div>
 	</h:panelGroup>
 </ui:composition>
 </html>

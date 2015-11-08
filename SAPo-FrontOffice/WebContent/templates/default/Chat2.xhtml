@@ -80,16 +80,29 @@
 
 	<div class="container chat-signin">
 		<form class="form-signin">
-			<h2 class="form-signin-heading">Chat sign in</h2>
-			
+			<div class="row">
+				<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+					<h2 class="form-signin-heading">Chat ingresar</h2>
+				</div>
+				<h:form>
+					<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+						<h:commandLink
+							action="#{navigationAreaBean.goTo('almacen.xhtml')}">
+							<i class="fa fa-times fa-2x">Cerrar</i>
+						</h:commandLink>
+					</div>
+				</h:form>
+			</div>
+
 			<!-- <label for="nickname">Nickname</label> -->
-			<input type="text"
-				class="input-block-level" value="#{loginBean.email}" placeholder="Nickname" id="nickname" />
-				
-			<input type="text"
-				class="input-block-level" value="#{almacenBean.almacen.idAlmacen}" placeholder="chatroom2" id="chatroom2" />	
-		
-		<!-- 		
+			<input type="text" class="input-block-level"
+				value="#{loginBean.email}" placeholder="Nickname" id="nickname" />
+
+			<input type="text" class="input-block-level"
+				value="#{almacenBean.almacen.idAlmacen}" placeholder="chatroom2"
+				id="chatroom2" />
+
+			<!-- 		
 			<div class="btn-group">
 				<label for="chatroom">Chatroom #{almacenBean.almacen.nombre}</label> 
 				<select size="1"

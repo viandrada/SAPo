@@ -5,11 +5,21 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 
 <ui:composition>
-	
+
 	<div class="container-fluid">
-		<h:panelGrid class="row">
-			<h1>Compartir Almacen>> #{almacenBean.almacen.nombre}</h1>
-		</h:panelGrid>
+		<div class="row">
+			<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+				<h1>Compartir Almacen>> #{almacenBean.almacen.nombre}</h1>
+			</div>
+			<h:form>
+				<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+					<h:commandLink
+						action="#{navigationAreaBean.goTo('almacen.xhtml')}">
+						<i class="fa fa-times fa-2x">Cerrar</i>
+					</h:commandLink>
+				</div>
+			</h:form>
+		</div>
 
 		<script type="text/javascript">
 $(document).ready(function () {
@@ -83,8 +93,8 @@ $(document).ready(function () {
 								type="submit" action="#{compartirAlmacenBean.compartirAlmacen}">
 							</h:commandButton>
 
-							<button type="button" class="btn btn-danger pull-left" data-dismiss="modal"
-								onclick="return false;">Cancelar</button>
+							<button type="button" class="btn btn-danger pull-left"
+								data-dismiss="modal" onclick="return false;">Cancelar</button>
 						</div>
 					</div>
 				</div>

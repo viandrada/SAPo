@@ -9,11 +9,24 @@
 	<div class="container-fluid">
 		<div class="row">
 			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-				<h1>
-					<h:outputText value="Paso 1 " />
-					<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-					<h:outputText value=" Seleccione una plantilla para continuar." />
-				</h1>
+				<div class="row">
+					<div class="col-xs-8 col-sm-8 col-md-10 col-lg-10">
+						<h1>
+							<h:outputText value="Paso 1 " />
+							<span class="glyphicon glyphicon-chevron-right"
+								aria-hidden="true"></span>
+							<h:outputText value=" Seleccione una plantilla para continuar." />
+						</h1>
+					</div>
+					<h:form>
+						<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+							<h:commandLink
+								action="#{navigationAreaBean.goTo('almacen.xhtml')}">
+								<i class="fa fa-times fa-2x">Cerrar</i>
+							</h:commandLink>
+						</div>
+					</h:form>
+				</div>
 				<div class="input-group">
 					<span class="input-group-addon">Búsqueda</span> <input id="filter2"
 						type="text" class="form-control" placeholder="Nombre"></input>
@@ -49,8 +62,10 @@
 									<td><h:form id="crearForm">
 											<h:commandLink class="btn btn-primary btn-lg"
 												action="index.xhtml">
-												 <f:actionListener binding="#{navigationAreaBean.irPlantilla(o.idProducto)}" />
-												<f:actionListener binding="#{altaProductoConPlantillaBean.init()}" />
+												<f:actionListener
+													binding="#{navigationAreaBean.irPlantilla(o.idProducto)}" />
+												<f:actionListener
+													binding="#{altaProductoConPlantillaBean.init()}" />
 												Usar
 												<span class="glyphicon glyphicon-chevron-right"
 													aria-hidden="true"></span>
