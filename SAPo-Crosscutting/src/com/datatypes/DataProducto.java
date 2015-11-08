@@ -27,6 +27,7 @@ public class DataProducto {
 	private String nombreCategoria;
 	private int idProductoGenerico;// En caso de usar un producto gen�rico como
 									// plantilla.
+	private int idHermano;
 
 	public int getIdProducto() {
 		return idProducto;
@@ -154,6 +155,14 @@ public class DataProducto {
 
 	public void setIdUsuario(int idUsuario) {
 		this.idUsuario = idUsuario;
+	}
+
+	public int getIdHermano() {
+		return idHermano;
+	}
+
+	public void setIdHermano(int idHermano) {
+		this.idHermano = idHermano;
 	}
 	
 	

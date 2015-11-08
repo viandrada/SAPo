@@ -201,7 +201,23 @@ public class ProductoDAO {
 	
 	}
 
-
+	public boolean existeProductoHermano(int idAlmacen, int idHermano) {
+		Query consulta = this.em
+				.createNamedQuery("Productos.getProductosDeAlmacen.IdHermano");
+		consulta.setParameter("idAlmacen", idAlmacen);
+		consulta.setParameter("idHermano", idHermano);
+		//List<Producto> productos = (List<Producto>) consulta.getResultList();
+		return (consulta.getResultList().size()>=1);
+	}
+	
+	public Producto getProductoHermano(int idAlmacen, int idHermano) {
+		Query consulta = this.em
+				.createNamedQuery("Productos.getProductosDeAlmacen.IdHermano");
+		consulta.setParameter("idAlmacen", idAlmacen);
+		consulta.setParameter("idHermano", idHermano);
+		//List<Producto> productos = (List<Producto>) consulta.getResultList();
+		return (Producto) consulta.getResultList().get(0);
+	}
 	
 
 }

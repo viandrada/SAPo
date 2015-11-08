@@ -119,7 +119,9 @@ public class Fabrica {
 				dProd.setFotos(toDataImagen(img));
 			}
 			dProd.setAtributos(productosGenericos.get(i).getAtributos());
-
+			////////////////////////////////////le seteo en id hermano el id del prod generico
+			dProd.setIdHermano(productosGenericos.get(i).getIdProductoGenerico());
+			
 			dataProductos.add(dProd);
 		}
 		return dataProductos;
