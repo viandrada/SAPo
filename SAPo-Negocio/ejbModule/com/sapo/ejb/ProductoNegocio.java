@@ -115,7 +115,9 @@ public class ProductoNegocio {
 		dataProducto.setNombreCategoria(producto.getCategoria().getNombre());
 		// dataProducto.setIdUsuario(producto.getUsuario().getIdUsuario());
 		dataProducto.setFotos(toDataImagen(producto.getFoto()));
-
+		
+		dataProducto.setIdHermano(producto.getIdHermano());////////////////////////////////////////////////////
+		
 		return dataProducto;
 	}
 
@@ -167,6 +169,9 @@ public class ProductoNegocio {
 				.getIdCategoria());
 		dataProducto.setNombreCategoria(productoGenerico.getCategoria()
 				.getNombre());
+		////////////////////seteo en id hermano del data el id del producto generico////////////////
+		dataProducto.setIdHermano(productoGenerico.getIdProductoGenerico());
+		
 		return dataProducto;
 	}
 
@@ -262,6 +267,11 @@ public class ProductoNegocio {
 		p.setFoto(imgs);
 
 		this.productoDAO.insertarProducto(p);
+		/////////////////////////////////////////////////////////////////////////////////////////
+		p.setIdHermano(p.getIdProducto());
+		//////////////////////////////////////////guardo en idHermano el id de el mismo
+		this.productoDAO.actualizarProducto(p);
+		
 	}
 
 	public void actualizarStock(int idProducto, int stock) {
@@ -347,6 +357,10 @@ public class ProductoNegocio {
 		}
 		pg.getFoto().addAll(imgs);
 
+		this.productoDAO.actualizarProducto(pg);
+		///////////cuando edito el producto el id de hermano el mosmo ya que es unico al haberlo editado
+		pg.setIdHermano(pg.getIdProducto());
+		
 		this.productoDAO.actualizarProducto(pg);
 
 	}
