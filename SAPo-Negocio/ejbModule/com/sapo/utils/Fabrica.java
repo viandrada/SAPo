@@ -1,5 +1,7 @@
 package com.sapo.utils;
 
+import java.math.BigInteger;
+import java.time.DayOfWeek;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedList;
@@ -14,6 +16,7 @@ import com.datatypes.DataProducto;
 import com.datatypes.DataComentario;
 import com.datatypes.DataReporteAlmacen;
 import com.datatypes.DataReporteProducto;
+import com.datatypes.DataReporteProductoGenerico;
 import com.datatypes.DataUsuario;
 import com.sapo.entidades.Almacen;
 import com.sapo.entidades.Categoria;
@@ -178,6 +181,21 @@ public class Fabrica {
 		dataRepProd.setFechaMovimiento(fechaMov);
 		
 		return dataRepProd;
+	}
+	
+	public DataReporteProductoGenerico toDataReporteProductoGenerico (ProductoGenerico prodGen, BigInteger cantUsos){
+		DataReporteProductoGenerico dataRepProdGen = new DataReporteProductoGenerico();
+	
+		dataRepProdGen.setAtributos(prodGen.getAtributos());
+		dataRepProdGen.setDescripcion(prodGen.getDescripcion());
+		dataRepProdGen.setEstaActivo(prodGen.getEstaActivo());
+		dataRepProdGen.setFechaAlta(prodGen.getFechaAlta());
+		dataRepProdGen.setIdProductoGenerico(prodGen.getIdProductoGenerico());
+		dataRepProdGen.setNombre(prodGen.getNombre());
+		dataRepProdGen.setNombreCategoria(prodGen.getCategoria().getNombre());
+		dataRepProdGen.setCantidadUsos(cantUsos.intValue());
+		
+		return dataRepProdGen;
 	}
 	
 	public List<DataAlmacen> convertirAlmacenes(List<Almacen> lcat) {

@@ -74,32 +74,18 @@ public class ProductoGenericoDAO {
 		actualizarProductoGenerico(p);
 	}
 	
-	/*CORREGIR
+	/*Obtengo una lista con el id del producto genérico y la cantidad de usos
 	 * */
 	public List getProductosGenericoMasUsados(){
-		//Me parece que no se puede hacer así ya que no hay un group by
-		//Hay que hacerlo por sql. La consulta en SQL es: (comprobado que anda)
 		String sqlQuery = "select productogenerico_idproductogenerico, "
 				+ "count(productogenerico_idproductogenerico) as count_generico"
 				+ "	from producto where productogenerico_idproductogenerico is"
 				+ " not null group by productogenerico_idproductogenerico "
 				+ "order by count_generico desc";
 		
+
 		Query queryProdGen = em.createNativeQuery(sqlQuery);
 		return queryProdGen.getResultList();
-		
-		//Lo que andaría pero no hace el group by, sólo devuelve todos los productos
-		//que se hicieron desde un genérico:
-//		AuditReader reader = AuditReaderFactory.get(em);
-//		List queryProducto = reader.createQuery()
-//			    .forRevisionsOfEntity(Producto.class, false,true)
-//			    .add(AuditEntity.relatedId("productogenerico").ne(null)) 
-//			    .add(AuditEntity.revisionType().eq(RevisionType.ADD))
-//			    .addProjection(AuditEntity.id().count())
-//			    //.addOrder(AuditEntity.property("productogenerico").desc())
-//			    .getResultList();	
-//		
-//		return queryProducto;
 		
 	}
 }
