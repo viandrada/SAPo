@@ -219,5 +219,15 @@ public class ProductoDAO {
 		return (Producto) consulta.getResultList().get(0);
 	}
 	
+	@SuppressWarnings("unchecked")
+	public List<Producto> getProductosHermanos(int idHermano) {
+		Query consulta = this.em
+				.createNamedQuery("Productos.getProductos.Hermanos");
+		consulta.setParameter("idHermano", idHermano);
+		//return List<Producto> productos = (List<Producto>) consulta.getResultList();
+		//return (Producto) consulta.getResultList().get(0);
+		return (List<Producto>) consulta.getResultList();
+	}
+	
 
 }

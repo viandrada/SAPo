@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
 import com.datatypes.DataAlmacen;
@@ -15,6 +16,9 @@ import com.datatypes.DataComentario;
 import com.datatypes.DataReporteAlmacen;
 import com.datatypes.DataReporteProducto;
 import com.datatypes.DataUsuario;
+import com.sapo.dao.CategoriaDAO;
+import com.sapo.dao.ImagenDAO;
+import com.sapo.dao.UsuarioDAO;
 import com.sapo.entidades.Almacen;
 import com.sapo.entidades.Categoria;
 import com.sapo.entidades.Imagen;
@@ -25,6 +29,15 @@ import com.sapo.entidades.Usuario;
 
 @Stateless
 public class Fabrica {
+	
+	@EJB
+	private CategoriaDAO categoriaDAO;
+	
+	@EJB
+	private UsuarioDAO usuarioDAO;
+	
+	@EJB
+	private ImagenDAO imagenDAO;
 
 	public List<DataCategoria> convertirCat(List<Categoria> lcat) {
 		List<DataCategoria> l = new LinkedList<DataCategoria>();
@@ -195,5 +208,49 @@ public class Fabrica {
 			l.add(dataAlmacen);
 		}
 		return l;
+	}
+	
+	public DataProducto convertirProducto(Producto producto/*, DataCategoria dataCategoria*/){
+	
+			/*Producto pg = this.productoDAO
+					.getProducto(dataProducto.getIdProducto());*/
+				
+			DataProducto pg = new DataProducto();
+		
+			/*Categoria cat = new Categoria();
+			if (dataCategoria.getNombre() == null) {
+				cat = this.categoriaDAO
+						.getCategoria(dataCategoria.getIdCategoria());
+			} else {
+				cat.setNombre(dataCategoria.getNombre());
+				cat.setEsGenerica(false);
+				Usuario u = this.usuarioDAO.getUsuarioPorEmail(dataCategoria.getEmailUsuario());
+				cat.setUsu(u);
+			}*/
+			//pg.setCategoria(cat);
+			//pg.setIdCategoria(cat.getIdCategoria());
+			pg.setIdCategoria(producto.getCategoria().getIdCategoria());
+			//pg.
+			pg.setAtributos(producto.getAtributos());
+			pg.setNombre(producto.getNombre());
+			pg.setDescripcion(producto.getDescripcion());
+			pg.setEstaActivo(true);
+			pg.setPrecio(producto.getPrecio());
+			pg.setStock(producto.getStock());
+		
+			List<DataImagen> imgs = new ArrayList<DataImagen>();
+			for (int i = 0; i < producto.getFoto().size(); i++) {
+				DataImagen img = new DataImagen();
+				img.setDatos(producto.getFoto().get(i).getDatos());
+				img.setNombre(producto.getFoto().get(i).getNombre());
+				img.setMime(producto.getFoto().get(i).getMime());
+				//this.imagenDAO.insertarImagen(img);
+				imgs.add(img);
+			}
+			pg.getFotos().addAll(imgs);
+	
+	
+	return pg;
+	
 	}
 }

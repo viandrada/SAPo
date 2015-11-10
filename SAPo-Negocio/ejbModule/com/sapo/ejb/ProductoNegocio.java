@@ -53,6 +53,8 @@ public class ProductoNegocio {
 	private ImagenDAO imagenDAO;
 	@EJB
 	private HistoricoProductoDAO historicoDAO;
+	@EJB
+	private Fabrica fabrica;
 
 	private Producto producto;
 
@@ -358,10 +360,62 @@ public class ProductoNegocio {
 		pg.getFoto().addAll(imgs);
 
 		this.productoDAO.actualizarProducto(pg);
-		///////////cuando edito el producto el id de hermano el mosmo ya que es unico al haberlo editado
-		pg.setIdHermano(pg.getIdProducto());
+		///////////cuando edito el producto el id de hermano el mismo ya que es unico al haberlo editado
+		//pg.setIdHermano(pg.getIdProducto());
+		//this.productoDAO.actualizarProducto(pg);
 		
-		this.productoDAO.actualizarProducto(pg);
+		
+		
+		///Tengo que editar a todos los hermanitos
+		//List<Producto> listHermanos =productoDAO.getProductosHermanos(dataProducto.getIdHermano());
+		List<Producto> listHermanos =productoDAO.getProductosHermanos(pg.getIdHermano());
+		
+		if (!listHermanos.isEmpty()){
+			for (Producto aux:listHermanos){
+				if ((aux.getIdProducto()!=pg.getIdProducto())){
+					//modificarProductoEspecifico(fabrica.convertirProducto(aux), dataCategoria, idUsuario);
+					Producto pg2 = this.productoDAO
+							.getProducto(aux.getIdProducto());
+
+					Categoria cat2 = new Categoria();
+					if (dataCategoria.getNombre() == null) {
+						cat2 = this.categoriaDAO
+								.getCategoria(dataCategoria.getIdCategoria());
+					} else {
+						cat2.setNombre(dataCategoria.getNombre());
+						cat2.setEsGenerica(false);
+						Usuario u2 = this.usuarioDAO.getUsuarioPorEmail(dataCategoria.getEmailUsuario());
+						cat2.setUsu(u2);
+					}
+					pg2.setCategoria(cat2);
+
+					pg2.setAtributos(dataProducto.getAtributos());
+					pg2.setNombre(dataProducto.getNombre());
+					pg2.setDescripcion(dataProducto.getDescripcion());
+					pg2.setEstaActivo(true);
+					pg2.setPrecio(dataProducto.getPrecio());
+					//pg2.setStock(dataProducto.getStock()); El stock para los hermanos no se toca
+
+					List<Imagen> imgs2 = new ArrayList<Imagen>();
+					for (int i = 0; i < dataProducto.getFotos().size(); i++) {
+						Imagen img2 = new Imagen();
+						img2.setDatos(dataProducto.getFotos().get(i).getDatos());
+						img2.setNombre(dataProducto.getFotos().get(i).getNombre());
+						img2.setMime(dataProducto.getFotos().get(i).getMime());
+						this.imagenDAO.insertarImagen(img2);
+						imgs2.add(img2);
+					}
+					pg2.getFoto().addAll(imgs2);
+
+					this.productoDAO.actualizarProducto(pg2);
+				
+				}//if no es el que edite anteriormente
+			}//for hermanos
+		}//if tengo hermanos
+	
+		
+		
+		
 
 	}
 }
