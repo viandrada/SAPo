@@ -1,5 +1,6 @@
 package com.sapo.ejb;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -16,6 +17,7 @@ import org.hibernate.envers.query.AuditEntity;
 import com.datatypes.DataAlmacen;
 import com.datatypes.DataReporteAlmacen;
 import com.datatypes.DataReporteProducto;
+import com.datatypes.DataReporteProductoGenerico;
 import com.datatypes.DataUsuario;
 import com.sapo.dao.AlmacenDAO;
 import com.sapo.dao.AlmacenIdealDAO;
@@ -24,6 +26,7 @@ import com.sapo.dao.ProductoGenericoDAO;
 import com.sapo.dao.UsuarioDAO;
 import com.sapo.entidades.Almacen;
 import com.sapo.entidades.Producto;
+import com.sapo.entidades.ProductoGenerico;
 import com.sapo.entidades.Usuario;
 import com.sapo.utils.Fabrica;
 
@@ -183,23 +186,23 @@ public class ReporteNegocio {
 	
 	/* Obtengo una lista con los prductos genéricos utilizados más veces
 	 * */
-	public  List<DataReporteProducto>  buscarProductosGenericosMasUtilizados(){
+	public  List<DataReporteProductoGenerico>  buscarProductosGenericosMasUtilizados(){
 		List listaProd = this.prodGenericoDAO.getProductosGenericoMasUsados();
-		List<DataReporteProducto> listaRepProd = new ArrayList<DataReporteProducto>();
+		List<DataReporteProductoGenerico> listaRepProdGen = new ArrayList<DataReporteProductoGenerico>();
 		if (listaProd!=null){	
 			for (int i=0; i<listaProd.size();i++){
-				Object obj = (Object)listaProd.get(i);
-//				Producto prod = (Producto)objArray[0];
-//				DefaultRevisionEntity info = (DefaultRevisionEntity) objArray[1];
-//				String tipoMov = objArray[2].toString();
-//				DataReporteProducto dataRepProd = this.fabrica.toDataReporteProducto(prod, tipoMov, info.getRevisionDate());
-//				System.out.println("Prod Generico + Usado "+i+": "+prod.getNombre() + " - id: "+prod.getIdProducto()+
-//						" Id Prod Gen "+ prod.getProductoGenerico().getIdProductoGenerico());
-//				listaRepProd.add(dataRepProd);
-				System.out.println("prod gen más usado" + i + " " + obj.toString());
+				Object[] objArray = (Object[])listaProd.get(i);
+				
+				int idProdGen = (int) objArray[0];
+				BigInteger cantidad = (BigInteger) objArray[1];
+				ProductoGenerico prodGen = this.prodGenericoDAO.getProductoGenerico(idProdGen);
+				DataReporteProductoGenerico dataProdGen = this.fabrica.toDataReporteProductoGenerico(prodGen, cantidad); 
+				
+				System.out.println("prod gen más usado " + i + " id prod " + idProdGen + " cant " + cantidad);
+				listaRepProdGen.add(dataProdGen);
 				}		
 		}	
-		return listaRepProd;
+		return listaRepProdGen;
 	}
 	
 	
