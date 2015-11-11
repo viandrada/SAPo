@@ -7,10 +7,13 @@
 <ui:composition>
 	<div>
 		<h:dataTable value="#{homeUsuarioBean.movimientos}" var="item"
-			 class="table table-condensed table-responsive" style="background-color: #EBF2ED;">
+			class="table table-condensed table-responsive"
+			style="background-color: #EBF2ED;">
 			<h:column>
 				<f:facet name="header">Fecha Movimiento</f:facet>
-				<h:outputText value="#{item.fechaMovimiento}" />
+				<h:outputText value="#{item.fechaMovimiento}">
+					<f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss" locale="es" />
+				</h:outputText>
 			</h:column>
 			<h:column>
 				<f:facet name="header">Producto</f:facet>

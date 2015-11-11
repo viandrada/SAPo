@@ -14,6 +14,7 @@ import com.datatypes.DataAlmacen;
 import com.datatypes.DataCategoria;
 import com.datatypes.DataImagen;
 import com.datatypes.DataNotificacion;
+import com.datatypes.DataNotificacionConfig;
 import com.datatypes.DataProducto;
 import com.datatypes.DataComentario;
 import com.datatypes.DataReporteAlmacen;
@@ -27,6 +28,7 @@ import com.sapo.entidades.Almacen;
 import com.sapo.entidades.Categoria;
 import com.sapo.entidades.Imagen;
 import com.sapo.entidades.Notificacion;
+import com.sapo.entidades.NotificacionConfig;
 import com.sapo.entidades.Producto;
 import com.sapo.entidades.ProductoGenerico;
 import com.sapo.entidades.Comentario;
@@ -290,5 +292,21 @@ public class Fabrica {
 			dataNotificaciones.add(dn);
 		}
 		return dataNotificaciones;
+	}
+	
+	public List<DataNotificacionConfig> toDataNotificacionConfig(
+			List<NotificacionConfig> configuraciones) {
+		List<DataNotificacionConfig> dataNotificacionesConfig = new ArrayList<DataNotificacionConfig>();
+		for (int i = 0; i < configuraciones.size(); i++) {
+			DataNotificacionConfig dn = new DataNotificacionConfig();
+			dn.setIdNotificacionConfig(configuraciones.get(i).getIdNotificacionConfig());
+			dn.setIdUsuario(configuraciones.get(i).getUsuario().getIdUsuario());
+			dn.setIdProducto(configuraciones.get(i).getProducto().getIdProducto());
+			dn.setNombreCampo(configuraciones.get(i).getNombreCampo());
+			dn.setOperador(configuraciones.get(i).getOperador());
+			dn.setValor( Double.valueOf(configuraciones.get(i).getValor()));
+			dataNotificacionesConfig.add(dn);
+		}
+		return dataNotificacionesConfig;
 	}
 }

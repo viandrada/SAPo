@@ -1,6 +1,9 @@
 package com.sapo.beans;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -106,6 +109,7 @@ public class HomeUsuarioBean {
 					this.movimientos.get(i).setTipoMovimiento("Editado");
 					break;
 				}
+				
 			}
 			
 		}

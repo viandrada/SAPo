@@ -92,4 +92,11 @@ public class NotificacionNegocio {
 			this.notificacionDAO.actualizarNotificacion(n);
 		}
 	}
+	
+	public List<DataNotificacionConfig> obtenerConfiguracionNotificaciones(int idProducto){
+		List<DataNotificacionConfig> dn = new ArrayList<DataNotificacionConfig>();
+		Fabrica f = new Fabrica();
+		dn = f.toDataNotificacionConfig(this.notificacionConfigDAO.getNotificacionesCongifPorProducto(idProducto));
+		return dn;
+	}
 }
