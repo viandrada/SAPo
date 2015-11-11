@@ -17,6 +17,9 @@ public class HistoricoProducto implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
 	
+	// NOV 2015
+	// ESTO NO SE ESTÁ USANDO, SE PODRÍA BORRAR SI CONFIRMAMOS QUE NO ESTÁ EN USO
+	//
 	
 	//Seccion comentarios
 	//POR EL MOMENTO GUARDAMOS TODOS LOS DATOS, LA IDEA ES GUARDAR SOLO

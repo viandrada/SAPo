@@ -10,20 +10,26 @@ var wsocket;
 	var room = '';
  
 	function onMessageReceived(evt) {
+		//$('.chat-wrapper').show();
 		//var msg = eval('(' + evt.data + ')');
 		var msg = JSON.parse(evt.data); // native API
-		var $messageLine = $('<tr> <td class=" pull-left col-xs-3" >' + msg.received
-				+ '</td> <td class=" pull-left col-xs-4" >' + msg.sender
-				+ '</td> <td class=" pull-left col-xs-5" >' + msg.message
+
+		var $messageLine = $('<tr > <td  > <h4><span class="label label-default">' + msg.received +'</span></h4>'
+				+ '</td> <td  ><h4><span class="label label-default">'+ msg.sender +'</span></h4>'
+				+ '</td> <td  ><h4><span class="label label-default">' + msg.message +'</span></h4>'
 				+ '</td></tr>');
 		$chatWindow.append($messageLine);
+	
 		//$chatWindow.prepend($messageLine);
 
 	}
+	
 	function sendMessage() {
 		var msg = '{"message":"' + $message.val() + '", "sender":"'
 				+ $nickName.val() + '", "received":""}';
 		wsocket.send(msg);
+		
+		//$('.chat-wrapper').show();
 		$message.val('').focus();
 	}
  

@@ -16,7 +16,9 @@ import org.hibernate.envers.RelationTargetAuditMode;
  */
 @NamedQueries({
 
-@NamedQuery(name = "Productos.getProductosDeAlmacen.IdAlmacen", query = "SELECT p FROM Producto p WHERE p.almacen.idAlmacen = :idAlmacen and p.esIdeal = FALSE") })
+@NamedQuery(name = "Productos.getProductosDeAlmacen.IdAlmacen", query = "SELECT p FROM Producto p WHERE p.almacen.idAlmacen = :idAlmacen and p.esIdeal = FALSE"),
+@NamedQuery(name = "Productos.getProductosDeAlmacen.IdHermano", query = "SELECT p FROM Producto p WHERE p.almacen.idAlmacen = :idAlmacen and p.esIdeal = FALSE and p.idHermano = :idHermano"),
+@NamedQuery(name = "Productos.getProductos.Hermanos", query = "SELECT p FROM Producto p WHERE p.esIdeal = FALSE and p.idHermano = :idHermano") })
 @Entity
 @Audited(withModifiedFlag = false, targetAuditMode = RelationTargetAuditMode.NOT_AUDITED)
 public class Producto implements Serializable, Cloneable {
@@ -28,6 +30,7 @@ public class Producto implements Serializable, Cloneable {
 	private int idProducto;
 	private String nombre;
 	private String descripcion;
+	private int idHermano;
 	
 	@Audited(withModifiedFlag=true)
 	private float precio;
@@ -100,6 +103,11 @@ public class Producto implements Serializable, Cloneable {
 		copiado.stockIdeal=this.stockIdeal;
 		//apunto al mismo USUARIO que su clon OJO!!!!!!!
 		copiado.usuario=this.usuario;
+		
+		
+		//copiado.idHermano=this.getIdHermano();
+		copiado.idHermano=this.idProducto;
+		
 		return copiado;
 	}
 
@@ -240,6 +248,14 @@ public class Producto implements Serializable, Cloneable {
 
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
+	}
+
+	public int getIdHermano() {
+		return idHermano;
+	}
+
+	public void setIdHermano(int idHermano) {
+		this.idHermano = idHermano;
 	}
 	
 	
