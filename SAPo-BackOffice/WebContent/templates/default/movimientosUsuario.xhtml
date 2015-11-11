@@ -14,8 +14,8 @@
 			$(document).ready(function () {
 			
 			    (function ($) {
-			
-			        $('#filter2').keyup(function () {
+			    					
+			        $('#filter1').keyup(function () {
 			
 			            var rex = new RegExp($(this).val(), 'i');
 			            $('.searchable tr').hide();
@@ -24,18 +24,31 @@
 			            }).show();
 			
 			        })
+
+			         $('#filter2').keyup(function () {
+			
+			            var rex = new RegExp($(this).val(), 'i');
+			            $('.searchable2 tr').hide();
+			            $('.searchable2 tr').filter(function () {
+			                return rex.test($(this).text());
+			            }).show();
+			
+			        })
 			
 			    }(jQuery));
 					
 			});
+
+			
 		</script>
 
 		<h:form id="tablaMovsAlmacen" rendered="true">
 			<div class="input-group">
-				<span class="input-group-addon">Buscar:</span> <input id="filter2"
+				<span class="input-group-addon">Buscar:</span> <input id="filter1"
 					type="text" class="form-control" placeholder="Almacén"></input>
+					
 			</div>
-
+			
 			<table class="table table-striped table-hover">
 				<thead>
 					<tr>
@@ -83,7 +96,7 @@
 						<th><h:outputText value="Tipo Mov" /></th>
 					</tr>
 				</thead>
-				<tbody class="searchable">
+				<tbody class="searchable2">
 					<ui:repeat value="#{movimientosUsuarioBean.listaMovsProductos}"
 						var="p">
 						<tr>
