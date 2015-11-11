@@ -130,10 +130,16 @@ public class AlmacenNegocio {
 		System.out.print(" NOMBRE ALMACEN TRAIDO: "+a.getNombre());
 		
 		
+		if(almacen.getBytesFoto()!=null){
+		
 		Imagen img = new Imagen();
 		// List<Usuario> usus=new LinkedList<Usuario>();
 
 		img.setDatos(almacen.getBytesFoto());
+		
+		a.setFoto(img);
+		}
+		
 		//usr = this.usuarioDAO.getUsuarioPorEmail(usuario.getEmail());
 
 		a.setNombre(almacen.getNombre());
@@ -141,7 +147,7 @@ public class AlmacenNegocio {
 		//this.almacen.setEstaActivo(true);
 		//this.almacen.setFechaAlta(new Date());
 		//this.almacen.setPropietario(usr);
-		a.setFoto(img);
+		
 
 		// usus.add(usr);
 		// this.almacen.agregarUsuarioCompartido(usr);
