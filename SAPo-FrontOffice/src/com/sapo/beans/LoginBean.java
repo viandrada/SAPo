@@ -2,15 +2,19 @@ package com.sapo.beans;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
+import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
-import javax.faces.event.ValueChangeEvent;
 
+import com.datatypes.DataNotificacion;
 import com.datatypes.DataUsuario;
+import com.sapo.ejb.NotificacionNegocio;
 import com.sapo.ejb.UsuarioNegocio;
 
 
@@ -30,6 +34,10 @@ public class LoginBean {
 	UsuarioNegocio usuarioNegocio;
 	@ManagedProperty(value="#{navigationBean}")
 	NavigationBean nav;
+	private List<DataNotificacion> notificaciones;
+	private int cantNotificaciones;
+	@EJB
+	NotificacionNegocio notificacionService;
 
     private String email;
     private int idUsuario;
@@ -126,6 +134,35 @@ public class LoginBean {
 		this.contadorLogin = contadorLogin;
 	}
 
+	public DataUsuario getDataUsuario() {
+		return dataUsuario;
+	}
+
+	public void setDataUsuario(DataUsuario dataUsuario) {
+		this.dataUsuario = dataUsuario;
+	}
+
+	public List<DataNotificacion> getNotificaciones() {
+		return notificaciones;
+	}
+
+	public void setNotificaciones(List<DataNotificacion> notificaciones) {
+		this.notificaciones = notificaciones;
+	}
+
+	public int getCantNotificaciones() {
+		return cantNotificaciones;
+	}
+
+	public void setCantNotificaciones(int cantNotificaciones) {
+		this.cantNotificaciones = cantNotificaciones;
+	}
+
+	@PostConstruct
+	public void init() {
+		this.notificaciones = new ArrayList<DataNotificacion>();
+	}
+	
 	public String login() {
 		this.dataUsuario.setEmail(this.email);
 		
@@ -162,6 +199,9 @@ public class LoginBean {
 		  		    
 		    this.nav.setRedirectTo("areaTrabajo.xhtml");
 		    this.shownLogin = false;
+		    
+		    this.generarNotificaciones();
+		    this.obtenerNotificaciones();
 		    return "/index.xhtml?faces-redirect=true";
 		}
 		else{System.out.println("Todo mal");
@@ -180,4 +220,18 @@ public class LoginBean {
 		 dUsu.setEmail(email);
 		 this.usuarioNegocio.loginExterno(dUsu);
 	 }
+	 
+		public void obtenerNotificaciones() {
+			this.notificaciones = this.notificacionService.obtenerNotificaciones(this.getIdUsuario());
+			this.cantNotificaciones = this.notificaciones.size();
+		}
+		
+		public void generarNotificaciones(){
+			this.notificacionService.generarNotificaciones(this.getIdUsuario());
+		}
+		
+		public void leidas(){
+			this.notificacionService.actualizarNotificaciones(this.notificaciones);
+			this.cantNotificaciones = 0;
+		}
 }
