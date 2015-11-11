@@ -113,6 +113,65 @@ public class AlmacenNegocio {
 		}
 		return idAlmacenGenerado;
 	}
+	
+	public void editarAlmacen(DataAlmacen almacen/*, DataUsuario usuario*/) {
+		//int idAlmacenGenerado = 0;
+		//Usuario usr;
+		System.out.println("LLEGUE A EDITAR NEGOCIO");
+		
+		System.out.println(" NOMBRE ALMACEN: "+almacen.getNombre());
+		
+		System.out.println(" ID ALMACEN: "+almacen.getIdAlmacen());
+		
+		Almacen a = almacenDAO.getAlmacen(almacen.getIdAlmacen());
+		
+		
+		
+		System.out.print(" NOMBRE ALMACEN TRAIDO: "+a.getNombre());
+		
+		
+		Imagen img = new Imagen();
+		// List<Usuario> usus=new LinkedList<Usuario>();
+
+		img.setDatos(almacen.getBytesFoto());
+		//usr = this.usuarioDAO.getUsuarioPorEmail(usuario.getEmail());
+
+		a.setNombre(almacen.getNombre());
+		a.setDescripcion(almacen.getDescripcion());
+		//this.almacen.setEstaActivo(true);
+		//this.almacen.setFechaAlta(new Date());
+		//this.almacen.setPropietario(usr);
+		a.setFoto(img);
+
+		// usus.add(usr);
+		// this.almacen.agregarUsuarioCompartido(usr);
+		// this.almacen.setUsuarios(usus);
+
+		try {
+
+			//List<Usuario> listAux = new LinkedList<>();
+			//listAux.add(usr);
+
+			//this.almacen.setUsuarios(listAux);
+
+			//idAlmacenGenerado = this.almacenDAO.insertarAlmacen(this.almacen);
+
+			// almacenDAO.actualizarAlmacen(a);agregado x vic
+
+			// a.agregarUsuarioCompartido(usr);
+
+			/*if (this.almacen.EsUsuariodeEsteAlmacen(usr.getEmail())) {
+				System.out.println("SI YYYYYYA LO AGREGO AL ALMACEN");
+			}*/
+			
+			almacenDAO.actualizarAlmacen(a);
+			
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		//return idAlmacenGenerado;
+	}
 
 	public List<DataAlmacen> getAlmacenes(String emailUsr) {
 
@@ -164,6 +223,9 @@ public class AlmacenNegocio {
 		DataAlmacen dataAlmacen = new DataAlmacen();
 		Almacen almacen = this.almacenDAO.getAlmacenPorId(idAlmacen);
 
+		dataAlmacen.setIdAlmacen(almacen.getIdAlmacen());
+		System.out.println("SETEO ID EN DATA ES: "+dataAlmacen.getIdAlmacen());
+		
 		dataAlmacen.setNombre(almacen.getNombre());
 		dataAlmacen.setDescripcion(almacen.getDescripcion());
 		dataAlmacen.setIdFoto(almacen.getFoto().getIdImagen());
