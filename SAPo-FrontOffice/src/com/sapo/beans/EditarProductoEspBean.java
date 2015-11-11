@@ -346,7 +346,7 @@ public class EditarProductoEspBean {
 				|| this.nombreCatSeleccionada.isEmpty()) {
 			dataCategoria.setIdCategoria(this.productoAEditar.getIdCategoria());
 		} else {
-			
+
 			dataCategoria.setNombre(this.nombreCatSeleccionada);
 			dataCategoria.setEmailUsuario(this.usuarioLogueado.getEmail());
 		}
@@ -362,7 +362,7 @@ public class EditarProductoEspBean {
 		System.out.println(json);
 		this.productoAEditar.setAtributos(json);
 		// Fin de conversión a json
-		
+
 		// Procesando imagenes...
 		DataImagen dataImg = new DataImagen();
 		List<DataImagen> imagenesData = new ArrayList<DataImagen>();
@@ -370,36 +370,44 @@ public class EditarProductoEspBean {
 			dataImg.setDatos(PartToByteArrayConverter.toByteArray(this.foto));
 			imagenesData.add(dataImg);
 		} else {
-			if(!this.productoAEditar.getFotos().isEmpty() && this.productoAEditar.getFotos().get(0) != null){
-			dataImg.setIdImagen(this.productoAEditar.getFotos().get(0).getIdImagen());
-			imagenesData.add(dataImg);
+			if (!this.productoAEditar.getFotos().isEmpty()
+					&& this.productoAEditar.getFotos().get(0) != null) {
+				dataImg.setIdImagen(this.productoAEditar.getFotos().get(0)
+						.getIdImagen());
+				imagenesData.add(dataImg);
 			}
 		}
 		if (this.foto2 != null) {
 			dataImg.setDatos(PartToByteArrayConverter.toByteArray(this.foto2));
 			imagenesData.add(dataImg);
 		} else {
-			if(!this.productoAEditar.getFotos().isEmpty() && this.productoAEditar.getFotos().size() > 1){
-			dataImg.setIdImagen(this.productoAEditar.getFotos().get(1).getIdImagen());
-			imagenesData.add(dataImg);
+			if (!this.productoAEditar.getFotos().isEmpty()
+					&& this.productoAEditar.getFotos().size() > 1) {
+				dataImg.setIdImagen(this.productoAEditar.getFotos().get(1)
+						.getIdImagen());
+				imagenesData.add(dataImg);
 			}
 		}
 		if (this.foto3 != null) {
 			dataImg.setDatos(PartToByteArrayConverter.toByteArray(this.foto3));
 			imagenesData.add(dataImg);
 		} else {
-			if(!this.productoAEditar.getFotos().isEmpty() && this.productoAEditar.getFotos().size() > 2){
-			dataImg.setIdImagen(this.productoAEditar.getFotos().get(2).getIdImagen());
-			imagenesData.add(dataImg);
+			if (!this.productoAEditar.getFotos().isEmpty()
+					&& this.productoAEditar.getFotos().size() > 2) {
+				dataImg.setIdImagen(this.productoAEditar.getFotos().get(2)
+						.getIdImagen());
+				imagenesData.add(dataImg);
 			}
 		}
 		if (this.foto4 != null) {
 			dataImg.setDatos(PartToByteArrayConverter.toByteArray(this.foto4));
 			imagenesData.add(dataImg);
 		} else {
-			if(!this.productoAEditar.getFotos().isEmpty() && this.productoAEditar.getFotos().size() > 3){
-			dataImg.setIdImagen(this.productoAEditar.getFotos().get(3).getIdImagen());
-			imagenesData.add(dataImg);
+			if (!this.productoAEditar.getFotos().isEmpty()
+					&& this.productoAEditar.getFotos().size() > 3) {
+				dataImg.setIdImagen(this.productoAEditar.getFotos().get(3)
+						.getIdImagen());
+				imagenesData.add(dataImg);
 			}
 		}
 		this.productoAEditar.setFotos(imagenesData);
@@ -409,7 +417,10 @@ public class EditarProductoEspBean {
 
 		this.init();
 		this.nav.setRedirectTo("verProductos.xhtml");
-
+		
+		this.usuarioLogueado.generarNotificaciones();
+		this.usuarioLogueado.obtenerNotificaciones();
+		
 		return "/index.xhtml";
 
 	}

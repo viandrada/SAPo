@@ -1,0 +1,73 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<ui:composition>
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+				<div class="page-header">
+					<h1>Configuración de notificaciones</h1>
+				</div>
+			</div>
+		</div>
+		<h:form id="configNotificacion">
+		<h:inputHidden class="form-control" id="idProducto"
+							value="#{configurarNotificacionBean.idProducto}">
+						</h:inputHidden>
+			<div class="row">
+				<div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
+					<div class="form-group">
+						<h:selectOneMenu value="#{configurarNotificacionBean.nombreCampo}"
+							class="form-control" id="nombreCampo"
+							onchange="mostrarComponente()">
+							<f:selectItems value="#{configurarNotificacionBean.listaCampos}"
+								var="e" itemValue="#{e}" itemLabel="#{e}" id="campoSeleccionado" />
+
+						<f:validateBean for="nombreCampo" />
+						</h:selectOneMenu>
+					</div>
+					<h:message id="inputTextMessage" for="nombreCampo"
+							errorStyle="color:red;"></h:message>
+				</div>
+				<div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
+					<div class="form-group">
+						<h:selectOneMenu value="#{configurarNotificacionBean.operador}"
+							class="form-control" id="operadores">
+							<f:selectItems
+								value="#{configurarNotificacionBean.listaOperadores}" var="e"
+								itemValue="#{e}" itemLabel="#{e}" id="operadorSeleccionado" />
+<f:validateBean for="operadores" />
+						</h:selectOneMenu>
+						
+					</div>
+					<h:message id="operadorMessage" for="nombreCampo"
+							errorStyle="color:red;"></h:message>
+				</div>
+				<div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
+					<div class="form-group">
+						<h:inputText class="form-control" id="valor"
+							value="#{configurarNotificacionBean.valor}" a:placeholder="Valor">
+							<f:validateBean for="valor" />
+						</h:inputText>
+						
+					</div>
+						<h:message id="valorMessage" for="nombreCampo"
+							errorStyle="color:red;"></h:message>
+				</div>
+
+				<div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
+					<h:commandButton class="btn btn-primary" value="Guardar"
+						type="submit" actionListener="#{navigationAreaBean.goTo('almacen.xhtml')}"
+						action="#{configurarNotificacionBean.configurarNotificacion()}">
+					</h:commandButton>
+				</div>
+			</div>
+
+		</h:form>
+	</div>
+
+</ui:composition>
+</html>
