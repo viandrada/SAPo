@@ -42,11 +42,8 @@
 			</div>
 
 			<div id="navbar" class="navbar-collapse collapse">
+
 				<h:panelGroup id="loginPanel" rendered="#{loginBean.shownLogin}">
-					<h:form id="inputHiddenForm">
-						<h:inputHidden id="contadorLogin"
-							value="#{loginBean.contadorLogin}" />
-					</h:form>
 
 					<h:form class="navbar-form navbar-right">
 						<div class="form-group">
@@ -76,14 +73,36 @@
 				</h:panelGroup>
 
 
+				<h:panelGroup id="todo" rendered="#{!loginBean.shownLogin}">
+					<h:panelGroup class="btn btn-danger col-lg-offset-9" id="notif"
+						rel="popover" title="Notificaciones">
+						<span id="badge" class="badge">#{loginBean.cantNotificaciones}</span>
+						<f:ajax event="click" listener="#{loginBean.leidas}"/>
+					</h:panelGroup>
+				</h:panelGroup>
+				<script>
+                               $(document).ready(function() {
+                               $("#notif").popover({
+                               html: true,
+                               animation: false,
+                               content: '<ul class="list-group"><ui:repeat value="#{loginBean.notificaciones}" var="item"><li class="list-group-item"><h:outputText value="#{item.mensaje}"/></li></ui:repeat></ul>',
+                               placement: "bottom"
+                              });
+                             });
+                            </script>
 				<!--/.navbar-collapse -->
-				<h:panelGroup
-					class="navbar-form navbar-right"
-					id="logoutPanel" rendered="#{!loginBean.shownLogin}">
-					<ui:include src="logout.xhtml" />
+				<h:panelGroup class="navbar-form navbar-right" id="logoutPanel"
+					rendered="#{!loginBean.shownLogin}">
+					<div class="row">
+
+						<div class="col-xs-4 col-sm-6 col-md-6 col-lg-6">
+							<ui:include src="logout.xhtml" />
+						</div>
+					</div>
 				</h:panelGroup>
 			</div>
 		</div>
 	</nav>
+
 </ui:composition>
 </html>

@@ -20,6 +20,7 @@
 				</div>
 			</h:form>
 		</div>
+		<h:messages id="messages" globalOnly="true" />
 		<h:form id="altaProducto" rendered="true"
 			enctype="multipart/form-data">
 			<div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
@@ -167,10 +168,14 @@
 						<div class="form-group" id="atributoCalendario"
 							style="display: none;">
 							<p:calendar value="#{atributosProductoBean.valorAtributoFecha}"
-								pattern="dd/MM/yyyy">
+								pattern="dd/MM/yyyy" id="cal">
 								<f:ajax event="dateSelect"
 									listener="#{atributosProductoBean.handleDateSelect}" />
+									<f:validateBean for="cal" />
+									<f:ajax resetValues="true" />
 							</p:calendar>
+							<h:message id="inputTextMessageCalendario" for="cal"
+										errorStyle="color:red;"></h:message>
 						</div>
 
 						<div class="form-group" id="atributoNumero" style="display: none;">
@@ -214,9 +219,9 @@
 				</div>
 
 
-				<h:commandButton class="btn btn-primary" value="Crear" type="submit"
+				<h:commandButton class="btn btn-primary" value="Crear"
 					action="#{navigationAreaBean.goTo('almacen.xhtml')}"
-					actionListener="#{altaProductoBean.altaProducto}">
+					actionListener="#{altaProductoBean.altaProducto}"  ajax="false">
 				</h:commandButton>
 			</div>
 			<div class="col-xs-12 col-sm-12 col-md-2 col-lg-2">

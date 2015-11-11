@@ -8,6 +8,8 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
+import javax.faces.bean.SessionScoped;
+import javax.faces.view.ViewScoped;
 import javax.servlet.http.Part;
 import javax.validation.constraints.Min;
 
@@ -24,7 +26,7 @@ import com.sapo.ejb.CategoriaNegocio;
 import com.sapo.utils.PartToByteArrayConverter;
 
 @ManagedBean
-@RequestScoped
+@SessionScoped
 public class AltaProductoBean {
 
 	public AltaProductoBean() {
@@ -340,8 +342,8 @@ public class AltaProductoBean {
 		// Alta producto
 		this.almacenNegocio.altaProducto(this.dataProducto, this.dataAlmacen,
 				this.dataCategoria, this.dataUsuario);
-		
+		this.init();
 		this.atributosProductoBean.init();
-		return "almacen";
+		return "index";
 	}
 }

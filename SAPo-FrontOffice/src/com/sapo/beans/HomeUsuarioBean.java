@@ -92,6 +92,8 @@ public class HomeUsuarioBean {
 	public void obtenerMovimientos() {
 		//por cada uno de los almacenes obtengo los últimos 5 movimientos de stock
 		//capaz que estoy sobreescribiendo los datos... hay que revisar
+		
+		List<DataReporteProducto>listaTodosMovs=new ArrayList<DataReporteProducto>();
 		for(int j = 0; j < this.almacenes.size(); j++ ){
 			
 			this.movimientos = this.reporteNegocio
@@ -107,10 +109,11 @@ public class HomeUsuarioBean {
 					break;
 				}
 			}
-			
+			listaTodosMovs.addAll(this.movimientos);			
 		}
+		//Acá lo mejor sería ordenar por fecha y filtrar resultados (hacer top)
 		
-
+		this.movimientos = listaTodosMovs;
 		
 	}
 }

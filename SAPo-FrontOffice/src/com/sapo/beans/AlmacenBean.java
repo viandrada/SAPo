@@ -124,6 +124,8 @@ public class AlmacenBean {
 	public String actualizarStock(int idProducto, int stock) {
 		this.productoNegocio.actualizarStock(idProducto, stock);
 		init();
+		this.usuarioLogueado.generarNotificaciones();
+		this.usuarioLogueado.obtenerNotificaciones();
 		return "index.xhtml";
 	}
 

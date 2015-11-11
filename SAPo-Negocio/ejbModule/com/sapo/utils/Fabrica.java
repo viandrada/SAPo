@@ -13,6 +13,7 @@ import javax.ejb.Stateless;
 import com.datatypes.DataAlmacen;
 import com.datatypes.DataCategoria;
 import com.datatypes.DataImagen;
+import com.datatypes.DataNotificacion;
 import com.datatypes.DataProducto;
 import com.datatypes.DataComentario;
 import com.datatypes.DataReporteAlmacen;
@@ -25,6 +26,7 @@ import com.sapo.dao.UsuarioDAO;
 import com.sapo.entidades.Almacen;
 import com.sapo.entidades.Categoria;
 import com.sapo.entidades.Imagen;
+import com.sapo.entidades.Notificacion;
 import com.sapo.entidades.Producto;
 import com.sapo.entidades.ProductoGenerico;
 import com.sapo.entidades.Comentario;
@@ -67,11 +69,11 @@ public class Fabrica {
 			dcat.setEmail(c.getEmail());
 			dcat.setPassword(c.getPassword());
 			dcat.setEstaActivo(c.getEstaActivo());
-			
+
 			dcat.setFecha(c.getFecha());
 			dcat.setFechaPago(c.getFechaPago());
 			dcat.setMonto(c.getMonto());
-			
+
 			l.add(dcat);
 		}
 		return l;
@@ -121,16 +123,17 @@ public class Fabrica {
 			dProd.setEstaActivo(productosGenericos.get(i).getEstaActivo());
 			dProd.setFechaAlta(productosGenericos.get(i).getFechaAlta());
 			dProd.setPrecio(productosGenericos.get(i).getPrecio());
-			dProd.setIdCategoria(productosGenericos.get(i).getCategoria().getIdCategoria());
-			dProd.setNombreCategoria(productosGenericos.get(i).getCategoria().getNombre());
+			dProd.setIdCategoria(productosGenericos.get(i).getCategoria()
+					.getIdCategoria());
+			dProd.setNombreCategoria(productosGenericos.get(i).getCategoria()
+					.getNombre());
 			List<Imagen> img = new ArrayList<Imagen>();
 			if (productosGenericos.get(i).getFoto() != null) {
 				img.add(productosGenericos.get(i).getFoto());
 				dProd.setFotos(toDataImagen(img));
-			}
-			else{
+			} else {
 				Imagen dataImg = new Imagen();
-				dataImg.setIdImagen(1);//TODO settear imagen x defecto
+				dataImg.setIdImagen(1);// TODO settear imagen x defecto
 				img.add(dataImg);
 				dProd.setFotos(toDataImagen(img));
 			}
@@ -155,8 +158,9 @@ public class Fabrica {
 		}
 		return dataImagenes;
 	}
-	
-	public DataReporteAlmacen toDataReporteAlmacen(Almacen alm, String mov, Date fechaMov){
+
+	public DataReporteAlmacen toDataReporteAlmacen(Almacen alm, String mov,
+			Date fechaMov) {
 		DataReporteAlmacen dataRepAlm = new DataReporteAlmacen();
 		dataRepAlm.setActivo(alm.getEstaActivo());
 		dataRepAlm.setBytesFoto(alm.getFoto().getDatos());
@@ -167,20 +171,22 @@ public class Fabrica {
 		dataRepAlm.setNombre(alm.getNombre());
 		dataRepAlm.setTipoMovimiento(mov);
 		dataRepAlm.setFechaMovimiento(fechaMov);
-		
-		if((alm.getAlmacenIdeal()==null))
+
+		if ((alm.getAlmacenIdeal() == null))
 			dataRepAlm.setIdAlmacenIdeal(0);
 		else
-			dataRepAlm.setIdAlmacenIdeal(alm.getAlmacenIdeal().getIdAlmacenIdeal());
-		
+			dataRepAlm.setIdAlmacenIdeal(alm.getAlmacenIdeal()
+					.getIdAlmacenIdeal());
+
 		return dataRepAlm;
 	}
-	
-	public DataReporteProducto toDataReporteProducto(Producto prod, String mov, Date fechaMov){
+
+	public DataReporteProducto toDataReporteProducto(Producto prod, String mov,
+			Date fechaMov) {
 		DataReporteProducto dataRepProd = new DataReporteProducto();
 		List<Imagen> listaImgs = prod.getFoto();
 		List<DataImagen> listaDataImgs = toDataImagen(listaImgs);
-		
+
 		dataRepProd.setAtributos(prod.getAtributos());
 		dataRepProd.setDescripcion(prod.getDescripcion());
 		dataRepProd.setEstaActivo(prod.getEstaActivo());
@@ -194,10 +200,10 @@ public class Fabrica {
 		dataRepProd.setStock(prod.getStock());
 		dataRepProd.setTipoMovimiento(mov);
 		dataRepProd.setFechaMovimiento(fechaMov);
-		
+
 		return dataRepProd;
 	}
-	
+
 	public DataReporteProductoGenerico toDataReporteProductoGenerico (ProductoGenerico prodGen, BigInteger cantUsos){
 		DataReporteProductoGenerico dataRepProdGen = new DataReporteProductoGenerico();
 	
@@ -270,5 +276,19 @@ public class Fabrica {
 	
 	return pg;
 	
+	}
+
+	public List<DataNotificacion> toDataNotificacion(
+			List<Notificacion> notificaciones) {
+		List<DataNotificacion> dataNotificaciones = new ArrayList<DataNotificacion>();
+		for (int i = 0; i < notificaciones.size(); i++) {
+			DataNotificacion dn = new DataNotificacion();
+			dn.setIdNotificacion(notificaciones.get(i).getIdNotificacion());
+			dn.setIdUsuario(notificaciones.get(i).getUsuario().getIdUsuario());
+			dn.setLeida(notificaciones.get(i).isLeida());
+			dn.setMensaje(notificaciones.get(i).getMensaje());
+			dataNotificaciones.add(dn);
+		}
+		return dataNotificaciones;
 	}
 }

@@ -64,7 +64,7 @@ public class ProductoDAO {
 	}
 	
 	
-	/* Obtiene una lista con los productos y sus histÃ³ricos de un usuario.
+	/* Obtiene una lista con los productos y sus históricos de un usuario.
 	 * */
 	public List getHistoricoProdPorUsuario(int idUsuario) {
 		
@@ -79,7 +79,7 @@ public class ProductoDAO {
 	}
 	
 	
-	/* Obtiene una lista con los productos y sus histÃ³ricos de un usuario.
+	/* Obtiene una lista con los productos y sus históricos de un usuario.
 	 * */
 	public List getHistoricoCambioStockProdPorAlmacen(int idAlmacen) {
 		
@@ -97,7 +97,7 @@ public class ProductoDAO {
 	}
 	
 	
-	/* Obtiene una lista con los productos y sus histÃ³ricos de un usuario
+	/* Obtiene una lista con los productos y sus históricos de un usuario
 	 * dentro de un lapso de tiempo.
 	 * */
 	public List getHistoricoProdPorUsuarioEnFecha(int idUsuario, Date fechaInicio, Date fechaFin) {
@@ -117,8 +117,8 @@ public class ProductoDAO {
 	}
 	
 	
-	/* Obtiene una lista con los productos y sus histÃ³ricos de un usuario
-	 * dentro especÃ­ficamente para un almacÃ©n
+	/* Obtiene una lista con los productos y sus históricos de un usuario
+	 * dentro específicamente para un almacén
 	 * */
 	public List getHistoricoProdPorUsuarioEnAlmacen(int idUsuario, int idAlmacen) {
 		AuditReader reader = AuditReaderFactory.get(em);
@@ -135,7 +135,7 @@ public class ProductoDAO {
 	
 	
 	
-	/* Paso un id de un producto y obtengo el histÃ³rico de 
+	/* Paso un id de un producto y obtengo el histórico de 
 	 * ese producto. Es decir, obengo una lista de productos
 	 * con todas sus versiones.
 	 * SI SE USA HAY QUE REVISAR ESTO - getHistoricoProdPorUsuario
@@ -159,8 +159,8 @@ public class ProductoDAO {
 		return listaProd;
 	}
 	
-	/* Paso un id de un producto y obtengo el histÃ³rico de 
-	 * las MODIFICACIONES de ese producto. (sÃ³lo las modificaciones)
+	/* Paso un id de un producto y obtengo el histórico de 
+	 * las MODIFICACIONES de ese producto. (sólo las modificaciones)
 	 * SI SE USA HAY QUE REVISAR ESTO - getHistoricoProdPorUsuario
 	 */
 	public List<Producto> getHistoricoModificacionesProdPorId(int idProd){
@@ -183,7 +183,7 @@ public class ProductoDAO {
 	}
 	
 	/* Paso un id de un producto y obtengo el producto en su
-	 * estado inicial cuando se diÃ³ de alta. 
+	 * estado inicial cuando se dió de alta. 
 	 * SI SE USA HAY QUE REVISAR ESTO - getHistoricoProdPorUsuario
 	 */
 	public Producto getHistoricoInicialProdPorId(int idProd){
@@ -228,6 +228,15 @@ public class ProductoDAO {
 		//return (Producto) consulta.getResultList().get(0);
 		return (List<Producto>) consulta.getResultList();
 	}
-	
+
+	public Producto verificarNotificacion(String query) {
+		Query consulta = em.createQuery(query);
+		List<Producto> pl = (List<Producto>) consulta.getResultList();
+		Producto p = new Producto();
+		if (!pl.isEmpty()) {
+			p = pl.get(0);
+		}
+		return p;
+	}
 
 }
