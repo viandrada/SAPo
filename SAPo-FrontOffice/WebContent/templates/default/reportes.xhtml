@@ -4,8 +4,80 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 
 <ui:composition>
-	<div class="container">
-		Reportes - Todavia no hay nada.
-	</div>
+
+	<h:form id="seleccionarReporte" rendered="true"
+		enctype="multipart/form-data">
+
+		<div class="row" id="seleccionReporte">
+
+			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+				<div class="form-group">
+					<h:selectOneMenu value="#{reportesBean.tipoReporte}"
+						class="form-control" id="inputTipoReporte"
+						onchange="mostrarComponente()">
+						<f:selectItems value="#{reportesBean.listaReportes}" var="e"
+							itemValue="#{e}" itemLabel="#{e}" id="listaReporteSelect" />
+						<f:ajax event="change"
+							render="seleccionReporte1 seleccionReporte2"
+							listener="#{reportesBean.comboChangeListener}"></f:ajax>
+					</h:selectOneMenu>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+				<div class="form-group" id="seleccionReporte1"
+					style="display: block;">
+					<h:inputText class="form-control" id="reportePorAlmacen"
+						value="Reporte 1">
+						<f:ajax></f:ajax>
+					</h:inputText>
+				</div>
+				<div class="form-group" id="seleccionReporte2"
+					style="display: none;">
+					<h:inputText class="form-control" id="reportePorFechas"
+						value="Reporte 2">
+						<f:ajax></f:ajax>
+					</h:inputText>
+				</div>
+			</div>
+		</div>
+
+
+
+	</h:form>
+
+
+
+	<script type="text/javascript">
+
+               function mostrarComponente()
+               {
+
+                  var tipoDato;
+                  tipoDato = document.getElementById('seleccionarReporte:inputTipoReporte').value;
+
+                  document.getElementById('seleccionReporte1').style.display='none';
+                  document.getElementById('seleccionReporte2').style.display='none';
+console.log(tipoDato);
+                  switch(tipoDato)
+                  {
+                    case "seleccionReporte1":
+                        
+                       document.getElementById('seleccionReporte1').style.display='block';
+                       document.getElementById('seleccionReporte2').style.display='none';
+                       break;
+                    case "seleccionReporte2":
+                        document.getElementById('seleccionReporte2').style.display='block'; 
+                        document.getElementById('seleccionReporte1').style.display='none';     
+                        break;
+                    default:
+                    	document.getElementById('seleccionReporte1').style.display='block';
+                        break;
+                  }
+                  
+               }
+     </script>
+
 </ui:composition>
 </html>

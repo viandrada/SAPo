@@ -35,9 +35,27 @@
 				<ul class="list-group">
 					<ui:repeat value="#{homeUsuarioBean.almacenes}" var="item">
 						<div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
+
 							<h:form>
-								<li class="list-group-item"><h:outputText
-										value="#{item.nombre}" /> <h:commandLink
+								<li class="list-group-item">
+									<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+										<h:outputText value="#{item.nombre}" />
+									</div>
+									<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+										<h:commandLink
+											action="#{editarAlmacenBean.getAlmacen(item.idAlmacen)}"
+											actionListener="#{navigationAreaBean.goTo('editarAlmacen.xhtml')}"
+											value="">
+											<i class="fa fa-pencil-square-o"></i>
+										</h:commandLink>
+
+										<h:commandLink
+											action="#{editarAlmacenBean.getAlmacen(item.idAlmacen)}"
+											actionListener="#{navigationAreaBean.goTo('editarAlmacen.xhtml')}"
+											value="">
+											<i class="fa fa-times"></i>
+										</h:commandLink>
+									</div> <h:commandLink
 										action="#{navigationAreaBean.irAlmacen(item.idAlmacen)}"
 										class="thumbnail">
 										<!--h:graphicImage class="img-responsive"
@@ -46,24 +64,29 @@
 										<h:graphicImage class="img-responsive imgDefault"
 											style="height:200px;" value="Image/#{item.idFoto}">
 										</h:graphicImage>
-									</h:commandLink></li>
+									</h:commandLink>
+								</li>
 							</h:form>
 						</div>
 
 					</ui:repeat>
 					<!-- /h:dataTable-->
 				</ul>
+
+				
 			</div>
-			<h:panelGrid rendered="#{not homeUsuarioBean.sinAlmacenes}" class=" visible-md visible-lg">
+			<h:panelGrid rendered="#{not homeUsuarioBean.sinAlmacenes}"
+				class=" visible-md visible-lg">
 				<div class="col-md-3 col-lg-3">
 					<ui:include src="/templates/default/historicoMovimientos.xhtml" />
 				</div>
 			</h:panelGrid>
 		</div>
-		<hr/>
+		<hr />
 		<div class="row visible-xs visible-sm">
-			<h:panelGrid rendered="#{not homeUsuarioBean.sinAlmacenes}" class="col-xs-10 col-sm-10 col-xs-offset-1 col-sm-offset-1">
-					<ui:include src="/templates/default/historicoMovimientos.xhtml" />
+			<h:panelGrid rendered="#{not homeUsuarioBean.sinAlmacenes}"
+				class="col-xs-10 col-sm-10 col-xs-offset-1 col-sm-offset-1">
+				<ui:include src="/templates/default/historicoMovimientos.xhtml" />
 			</h:panelGrid>
 		</div>
 	</div>
