@@ -46,10 +46,16 @@ public class ListaCompras {
 	public void setNav(NavigationAreaBean nav) {
 		this.nav = nav;
 	}
+
 	@PostConstruct
 	public void init() {
-		generarLista();
+		DataAlmacen a = this.almacenNegocio.getAlmacenPorId(nav
+				.getIdAlmacenActual());
+		if (a.getIdAlmacenIdeal() != 0) {
+			generarLista();
+		}
 	}
+
 	public void generarLista() {
 		this.listaCompras = new ArrayList<DataProducto>();
 		DataAlmacen almacenReal = this.almacenNegocio.getAlmacenPorId(nav

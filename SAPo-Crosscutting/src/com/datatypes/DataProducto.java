@@ -16,8 +16,8 @@ public class DataProducto {
 	private List<DataImagen> fotos;
 	private float precio;
 	private boolean estaActivo;
-	private boolean esIdeal;//Para el almac�n ideal
-	private boolean agregado;//Para el almac�n ideal
+	private boolean esIdeal;// Para el almac�n ideal
+	private boolean agregado;// Para el almac�n ideal
 	private Date fechaAlta;
 	private String atributos;
 	private int stock;
@@ -25,9 +25,11 @@ public class DataProducto {
 	private int idCategoria;
 	private int idUsuario;
 	private String nombreCategoria;
-	private int idProductoGenerico;// En caso de usar un producto gen�rico como
+	private int idProductoGenerico;// En caso de usar un producto gen�rico
+									// como
 									// plantilla.
 	private int idHermano;
+	private boolean recomendado;
 
 	public int getIdProducto() {
 		return idProducto;
@@ -164,6 +166,12 @@ public class DataProducto {
 	public void setIdHermano(int idHermano) {
 		this.idHermano = idHermano;
 	}
-	
-	
+
+	public boolean isRecomendado() {
+		return recomendado;
+	}
+
+	public void setRecomendado(boolean recomendado) {
+		this.recomendado = recomendado;
+	}
 }
