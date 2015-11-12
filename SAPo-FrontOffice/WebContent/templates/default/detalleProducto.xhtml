@@ -8,7 +8,13 @@
 	<div class="container-fluid">
 		<div class="row">
 			<div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
-				<h1>Detalle</h1>
+				<div class="row">
+					<h1>
+						#{detalleProductoEspBean.producto.nombre}<small> Ítems <span
+							class="badge">#{detalleProductoEspBean.producto.stock}</span></small>
+					</h1>
+
+				</div>
 			</div>
 			<h:form>
 				<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
@@ -19,82 +25,9 @@
 			</h:form>
 		</div>
 		<h:form id="detalleProducto" rendered="true">
-			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-
-
-				<!-- Nombre, stock y precio -->
-				<div class="row">
-					<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
-						<div class="form-group">
-							<h:inputText class="form-control input-lg" id="inputNombre"
-								value="#{detalleProductoEspBean.producto.nombre}"
-								a:placeholder="Nombre">
-								<f:validateBean for="inputNombre" />
-								<f:ajax event="keyup" render="inputTextMessage" />
-							</h:inputText>
-							<h:message id="inputTextMessage" for="inputNombre"
-								errorStyle="color:red;"></h:message>
-						</div>
-					</div>
-					<div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
-						<div class="row">
-							<div class="form-group">
-								<div class="col-xs-12 col-sm-12 col-md-2 col-lg-2">
-									<h:outputText value="Stock " />
-								</div>
-								<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
-									<h:inputText class="form-control input-lg" id="inputStock"
-										value="#{detalleProductoEspBean.producto.stock}">
-										<f:validateBean for="inputStock" />
-										<f:ajax event="keyup" render="inputTextMessageStock" />
-									</h:inputText>
-									<h:message id="inputTextMessageStock" for="inputStock"
-										errorStyle="color:red;"></h:message>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="col-xs-12 col-sm-12 col-md-5 col-lg-5">
-						<div class="row">
-							<div class="col-xs-12 col-sm-12 col-md-2 col-lg-2">
-								<h:outputText value="Precio " />
-							</div>
-							<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-								<div class="form-group">
-									<h:inputText class="form-control input-lg" id="inputPrecio"
-										value="#{detalleProductoEspBean.producto.precio}"
-										a:placeholder="Precio">
-										<f:validateBean for="inputPrecio" />
-										<f:ajax event="keyup" render="inputTextMessagePrecio" />
-									</h:inputText>
-									<h:message id="inputTextMessagePrecio" for="inputPrecio"
-										errorStyle="color:red;"></h:message>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-
-				<!-- Categoría -->
+			<div class="row">
+				<!-- Carrusel -->
 				<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-					<div class="form-group">
-						<h:outputText class="form-control input-lg" id="inputCategoria"
-							value="">
-						</h:outputText>
-					</div>
-				</div>
-				<!-- Fin categoría -->
-
-				<hr style="border-width: 3px;" />
-				<!-- Separador -->
-
-				<div class="form-group">
-					<h:inputTextarea class="form-control" id="inputDescripcion"
-						value="#{detalleProductoEspBean.producto.descripcion}">
-					</h:inputTextarea>
-				</div>
-				
-				<div class="col-xs-12 col-sm-12 col-md-5 col-lg-5 col-md-offset-3 col-lg-offset-3">
 					<div id="carousel-example-generic" class="carousel slide"
 						data-ride="carousel">
 						<!-- Indicators -->
@@ -108,12 +41,11 @@
 						<div class="carousel-inner" role="listbox">
 							<div class="item active">
 								<h:graphicImage class="img-responsive" style="min-height: 20em;"
-									value="Image/#{detalleProductoEspBean.producto.fotos.get(0).idImagen}">
+									value="Image/#{detalleProductoEspBean.fotos.get(0).idImagen}">
 								</h:graphicImage>
 								<div class="carousel-caption"></div>
 							</div>
-							<ui:repeat var="o"
-								value="#{detalleProductoEspBean.producto.fotos}"
+							<ui:repeat var="o" value="#{detalleProductoEspBean.fotos}"
 								varStatus="status">
 								<div class="item">
 									<h:graphicImage class="img-responsive"
@@ -136,7 +68,65 @@
 						</a>
 					</div>
 				</div>
-
+				<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+					<div class="row">
+						<div class="form-group">
+							<h:inputTextarea class="form-control" id="inputDescripcion"
+								value="#{detalleProductoEspBean.producto.descripcion}">
+							</h:inputTextarea>
+						</div>
+					</div>
+					<div class="row">
+						<!-- Categoría -->
+						<div class="col-xs-12 col-sm-12 col-md-2 col-lg-2">
+							<h:outputText value="Categoría " />
+						</div>
+						<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+							<h:outputLabel class="input-lg" id="inputCategoria"
+								value="#{detalleProductoEspBean.producto.nombreCategoria}">
+							</h:outputLabel>
+						</div>
+						<!-- Fin categoría -->
+					</div>
+					<div class="row">
+						<div class="col-xs-12 col-sm-12 col-md-2 col-lg-2">
+							<h:outputText value="Precio " />
+						</div>
+						<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+							<h:outputLabel class="input-lg" id="inputPrecio"
+								value="#{detalleProductoEspBean.producto.precio}">
+							</h:outputLabel>
+						</div>
+					</div>
+					<div class="row">
+						<!-- Fecha alta -->
+						<div class="col-xs-12 col-sm-12 col-md-2 col-lg-2">
+							<h:outputText value="Fecha alta " />
+						</div>
+						<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+							<h:outputLabel class="input-lg" id="outputFecha"
+								value="#{detalleProductoEspBean.producto.fechaAlta}">
+							</h:outputLabel>
+						</div>
+						<!-- Fin Fecha alta -->
+					</div>
+				</div>
+			</div>
+			<hr style="border-width: 3px;" />
+			<!-- Separador -->
+			<div class="row">
+				<div class="table-responsive">
+					<h:dataTable value="#{detalleProductoEspBean.atributosVista}"
+						var="item" id="tablaAtributos"
+						class="table table-hover">
+						<h:column>
+							<h:outputText value="#{item.nombre}" />
+						</h:column>
+						<h:column>
+							<h:outputText value="#{item.valor}" />
+						</h:column>
+					</h:dataTable>
+				</div>
 			</div>
 		</h:form>
 	</div>
