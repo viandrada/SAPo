@@ -290,6 +290,13 @@ public class EditarProductoEspBean {
 			this.atributosVista.add(atributo);
 
 		}
+		
+		this.fotos = new ArrayList<DataImagen>();
+		for (int i = 0; i < this.productoAEditar.getFotos().size(); i++) {
+			if(this.productoAEditar.getFotos().get(i).getIdImagen() != 0){
+				this.fotos.add(this.productoAEditar.getFotos().get(i));
+			}
+		}
 	}
 
 	// Para agregar atributo genérico nuevo a la lista.

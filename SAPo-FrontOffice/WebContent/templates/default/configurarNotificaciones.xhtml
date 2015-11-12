@@ -14,59 +14,92 @@
 			</div>
 		</div>
 		<h:form id="configNotificacion">
-		<h:inputHidden class="form-control" id="idProducto"
-							value="#{configurarNotificacionBean.idProducto}">
-						</h:inputHidden>
+			<h:inputHidden class="form-control" id="idProducto"
+				value="#{configurarNotificacionBean.idProducto}">
+			</h:inputHidden>
 			<div class="row">
 				<div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
 					<div class="form-group">
+					<h:outputLabel value="Campo" />
 						<h:selectOneMenu value="#{configurarNotificacionBean.nombreCampo}"
 							class="form-control" id="nombreCampo"
 							onchange="mostrarComponente()">
 							<f:selectItems value="#{configurarNotificacionBean.listaCampos}"
 								var="e" itemValue="#{e}" itemLabel="#{e}" id="campoSeleccionado" />
 
-						<f:validateBean for="nombreCampo" />
+							<f:validateBean for="nombreCampo" />
 						</h:selectOneMenu>
 					</div>
 					<h:message id="inputTextMessage" for="nombreCampo"
-							errorStyle="color:red;"></h:message>
+						errorStyle="color:red;"></h:message>
 				</div>
 				<div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
 					<div class="form-group">
+					<h:outputLabel value="Operador" />
 						<h:selectOneMenu value="#{configurarNotificacionBean.operador}"
 							class="form-control" id="operadores">
 							<f:selectItems
 								value="#{configurarNotificacionBean.listaOperadores}" var="e"
 								itemValue="#{e}" itemLabel="#{e}" id="operadorSeleccionado" />
-<f:validateBean for="operadores" />
+							<f:validateBean for="operadores" />
 						</h:selectOneMenu>
-						
+
 					</div>
 					<h:message id="operadorMessage" for="nombreCampo"
-							errorStyle="color:red;"></h:message>
+						errorStyle="color:red;"></h:message>
 				</div>
 				<div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
 					<div class="form-group">
+					<h:outputLabel value="Valor" />
 						<h:inputText class="form-control" id="valor"
 							value="#{configurarNotificacionBean.valor}" a:placeholder="Valor">
 							<f:validateBean for="valor" />
 						</h:inputText>
-						
+
 					</div>
-						<h:message id="valorMessage" for="nombreCampo"
-							errorStyle="color:red;"></h:message>
+					<h:message id="valorMessage" for="nombreCampo"
+						errorStyle="color:red;"></h:message>
 				</div>
 
 				<div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
 					<h:commandButton class="btn btn-primary" value="Guardar"
-						type="submit" actionListener="#{navigationAreaBean.goTo('almacen.xhtml')}"
+						type="submit"
+						actionListener="#{navigationAreaBean.goTo('almacen.xhtml')}"
 						action="#{configurarNotificacionBean.configurarNotificacion()}">
 					</h:commandButton>
 				</div>
 			</div>
 
 		</h:form>
+		<hr/>
+		<h2>Lista de configuraciones</h2>
+		<div class="row">
+			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+						<div class="table-responsive">
+					<table class="table table-striped table-hover table-condensed">
+						<thead>
+							<tr>
+								<th><h:outputText value="Campo" /></th>
+								<th><h:outputText value="Operador" /></th>
+								<th><h:outputText value="Valor" /></th>
+								<th><h:outputText value="Deshabilitar" /></th>
+							</tr>
+						</thead>
+						<tbody class="searchable">
+							<ui:repeat
+								value="#{configurarNotificacionBean.listaConfiguraciones}" var="o">
+								<tr>
+									<td><h:outputText value="#{o.nombreCampo}" /></td>
+									<td><h:outputText value="#{o.operador}" /></td>
+									<td><h:outputText value="#{o.valor}" /></td>
+									<td></td>
+								</tr>
+							</ui:repeat>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
 	</div>
 
 </ui:composition>

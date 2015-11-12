@@ -58,4 +58,17 @@ public class NotificacionConfigDAO {
 		}
 		return configs;
 	}
+	
+	public List<NotificacionConfig> getNotificacionesCongifPorProducto(int idProducto){
+		List<NotificacionConfig> configs = new ArrayList<NotificacionConfig>();
+		try {
+			Query consulta = this.em
+					.createNamedQuery("NotificacionConfig.getConfiguracionesPorProducto");
+			consulta.setParameter("idProducto", idProducto);
+			configs = consulta.getResultList();
+		} catch (NoResultException e) {
+			System.out.print("No se encontró la configuración de la notificación.");
+		}
+		return configs;
+	}
 }

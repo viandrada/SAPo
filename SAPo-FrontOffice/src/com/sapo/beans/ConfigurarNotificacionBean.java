@@ -32,6 +32,8 @@ public class ConfigurarNotificacionBean {
 	private String operador;
 	private double valor;
 	
+	private List<DataNotificacionConfig> listaConfiguraciones;
+	
 	@EJB
 	ProductoNegocio productoService;
 	@EJB
@@ -103,11 +105,22 @@ public class ConfigurarNotificacionBean {
 		this.usuarioLogueado = usuarioLogueado;
 	}
 
+	public List<DataNotificacionConfig> getListaConfiguraciones() {
+		return listaConfiguraciones;
+	}
+
+	public void setListaConfiguraciones(
+			List<DataNotificacionConfig> listaConfiguraciones) {
+		this.listaConfiguraciones = listaConfiguraciones;
+	}
+
 	@PostConstruct
 	public void init(int idProducto) {
 		
 		this.listaCampos = new HashMap<>();
 		this.listaOperadores = new ArrayList<String>();
+		this.listaConfiguraciones = new ArrayList<DataNotificacionConfig>();
+		this.listaConfiguraciones = this.notificacionService.obtenerConfiguracionNotificaciones(idProducto);
 		this.setIdProducto(idProducto);
 		this.producto = this.productoService.getProductoPorId(idProducto);//Cargo el producto para después obtener los atributos.
 		//Cargo los operadores
