@@ -49,12 +49,14 @@
 											<i class="fa fa-pencil-square-o"></i>
 										</h:commandLink>
 
-										<h:commandLink
-											action="#{editarAlmacenBean.getAlmacen(item.idAlmacen)}"
-											actionListener="#{navigationAreaBean.goTo('editarAlmacen.xhtml')}"
-											value="">
-											<i class="fa fa-times"></i>
-										</h:commandLink>
+							
+										<a href="" data-toggle="modal"
+										onclick="document.getElementById('idAlmaEliminar').value='#{item.idAlmacen}'; #{editarAlmacenBean.getAlmacen(item.idAlmacen)};return false;"
+										data-target="#myModabaja"> <i
+											class="fa fa-times"></i>
+										</a>
+										
+										
 									</div> <h:commandLink
 										action="#{navigationAreaBean.irAlmacen(item.idAlmacen)}"
 										class="thumbnail">
@@ -82,6 +84,49 @@
 				</div>
 			</h:panelGrid>
 		</div>
+	
+		
+		
+		<h:form>
+					<div class="modal fade" id="myModabaja" role="dialog">
+						<div class="modal-dialog">
+							<!-- Modal content-->
+							<div class="modal-content">
+								<div class="modal-header">
+									<button type="button" class="close" data-dismiss="modal">X</button>
+									<h4 class="modal-title">Estas seguro que quieres dar de baja el Almacen: 
+										#{editarAlmacenBean.dataAlmacen.nombre} ?</h4>
+								</div>
+								<div class="modal-body">
+									<h5 class="modal-title">Ten en cuenta!!! Si en el futuro quieres recuperar tu almacen tal cual lo dejaste, deberas hacerte usuario Premium.</h5>
+									
+									<h:inputHidden value="#{editarAlmacenBean.dataAlmacen.idAlmacen}"
+										id="idAlmaEliminar" class="form-control" />
+
+								</div>
+								<div class="modal-footer">
+
+									<h:commandButton class="btn btn-success" value="Aceptar"
+										type="submit"
+										action="#{editarAlmacenBean.bajaAlmacen}">
+									</h:commandButton>
+
+									<button type="button" class="btn btn-danger pull-left"
+										data-dismiss="modal" onclick="return false;">Cancelar</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</h:form>
+		
+		
+		
+		
+		
+	
+		
+		
+		
 		<hr />
 		<div class="row visible-xs visible-sm">
 			<h:panelGrid rendered="#{not homeUsuarioBean.sinAlmacenes}"

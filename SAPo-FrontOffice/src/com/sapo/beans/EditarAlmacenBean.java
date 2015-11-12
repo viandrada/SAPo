@@ -191,6 +191,15 @@ public class EditarAlmacenBean {
 		return "/index.xhtml";
 		//return nav.irAlmacen(idAlmacenGenerado);
 	}
+	
+	public String bajaAlmacen(){
+		
+		//almacenNegocio.editarAlmacen(this.dataAlmacen/*, usuario*/);
+		almacenNegocio.bajaAlmacen(this.dataAlmacen);
+		nav.setRedirectTo("homeUsuario.xhtml");
+		return "/index.xhtml";
+		
+	}
 
 	public void getAlmacen (int idAlmacen){
 		

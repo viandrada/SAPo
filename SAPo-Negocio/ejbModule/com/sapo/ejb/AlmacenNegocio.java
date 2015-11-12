@@ -178,6 +178,22 @@ public class AlmacenNegocio {
 		}
 		//return idAlmacenGenerado;
 	}
+	
+	public void bajaAlmacen(DataAlmacen almacen/*, DataUsuario usuario*/) {
+		
+		Almacen a = almacenDAO.getAlmacen(almacen.getIdAlmacen());
+		
+		System.out.println(" ID ALMACEN PARA DAR DE BAJA: "+a.getIdAlmacen());
+		
+		a.setEstaActivo(false);
+		
+		
+		System.out.println(" SETEO ALMACEN ESTA ACTIVO EN FALSE: "+a.getEstaActivo());
+		almacenDAO.actualizarAlmacen(a);
+		
+		System.out.println(" ACTUALIZO: "+a.getEstaActivo());
+		
+	}
 
 	public List<DataAlmacen> getAlmacenes(String emailUsr) {
 
@@ -207,6 +223,12 @@ public class AlmacenNegocio {
 		int idUser = this.usuarioDAO.getUsuarioPorEmail(emailUsr)
 				.getIdUsuario();
 		return this.almacenDAO.getCantAlmacenesUsuario(idUser);
+	}
+	
+	public int getCantidadAlmacenesDeUsuarioHabilitados(String emailUsr) {
+		int idUser = this.usuarioDAO.getUsuarioPorEmail(emailUsr)
+				.getIdUsuario();
+		return this.almacenDAO.getCantAlmacenesUsuarioHabilitados(idUser);
 	}
 
 	public int getCantidadMaximaAlmacenes(String emailUsr) {

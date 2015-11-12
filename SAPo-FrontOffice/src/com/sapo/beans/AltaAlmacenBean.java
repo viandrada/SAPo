@@ -42,6 +42,7 @@ public class AltaAlmacenBean {
 	private String fileContent;
 	private int cantAlmacenesActuales;
 	private int cantMaxAlmacenes;
+	private boolean estoyProrDebajoDeAlmacenesPermtidos;
 
 	public String getNombre() {
 		return nombre;
@@ -126,10 +127,21 @@ public class AltaAlmacenBean {
 	}
 
 	public void getCantidadesAlmacenes(String emailUsr){;
-		this.cantAlmacenesActuales=this.almacenNegocio.getCantidadAlmacenesDeUsuario(emailUsr);
+		//this.cantAlmacenesActuales=this.almacenNegocio.getCantidadAlmacenesDeUsuario(emailUsr);
+	this.cantAlmacenesActuales=this.almacenNegocio.getCantidadAlmacenesDeUsuarioHabilitados(emailUsr);
 		this.cantMaxAlmacenes=this.almacenNegocio.getCantidadMaximaAlmacenes(emailUsr);
+		this.estoyProrDebajoDeAlmacenesPermtidos=(cantAlmacenesActuales<cantMaxAlmacenes);
 	}
 	
+	public boolean isEstoyProrDebajoDeAlmacenesPermtidos() {
+		return estoyProrDebajoDeAlmacenesPermtidos;
+	}
+
+	public void setEstoyProrDebajoDeAlmacenesPermtidos(
+			boolean estoyProrDebajoDeAlmacenesPermtidos) {
+		this.estoyProrDebajoDeAlmacenesPermtidos = estoyProrDebajoDeAlmacenesPermtidos;
+	}
+
 	public String altaAlmacen() {
 		//boolean ok = false;
 		int idAlmacenGenerado = 0;
