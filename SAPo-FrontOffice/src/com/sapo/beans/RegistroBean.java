@@ -102,6 +102,7 @@ public class RegistroBean {
 	public String registrar() {
 		this.dataUsuario.setNombre(this.nombre);
 		this.dataUsuario.setEmail(this.email);
+		this.dataUsuario.setEstilo("areaTrabajo.css");//Estilo por defecto, el usuario lo puede cambiar después.
 
 		/*
 		 * Encriptar password ->

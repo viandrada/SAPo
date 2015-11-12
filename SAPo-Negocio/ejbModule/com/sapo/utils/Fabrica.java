@@ -109,6 +109,7 @@ public class Fabrica {
 		dataUser.setFecha(usuario.getFecha());
 		dataUser.setFechaPago(usuario.getFechaPago());
 		dataUser.setMonto(usuario.getMonto());
+		dataUser.setEstilo(usuario.getEstilo());
 		return dataUser;
 
 	}
