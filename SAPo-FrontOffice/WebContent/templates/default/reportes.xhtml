@@ -29,7 +29,7 @@
 		<div class="row">
 			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 				<div class="form-group" id="seleccionReporte1"
-					style="display: block;">
+					style="display: none;">
 					<h:outputText class="form-control" id="reportePorAlmacen"
 						value="Reporte 1">
 						
@@ -41,6 +41,12 @@
 							itemValue="#{e.idAlmacen}" itemLabel="#{e.nombre}" id="listaAlmacenSelect" />
 
 					</h:selectOneMenu>
+					<h:commandLink value="Ver movimientos de almacén"
+							onclick="document.getElementById('seleccionarReporte:inputUser').value='#{u.idUsuario}';"
+							actionListener="#{reportesBean.iniciarReporteAlmacen(u.idUsuario,e.idAlmacen)}"
+							action="#{navigationBean.goTo('movimientosPorAlmacen.xhtml')}">
+																			
+					</h:commandLink>
 					
 				</div>
 				<div class="form-group" id="seleccionReporte2"
@@ -73,6 +79,12 @@
 							<h:message id="inputTextMessageCalendarioFin" for="calFin"
 										errorStyle="color:red;"></h:message>
 					</div>
+					<h:commandLink value="Ver movimientos entre fechas"
+							onclick="document.getElementById('seleccionarReporte:inputUser').value='#{u.idUsuario}';"
+							actionListener="#{reportesBean.listaReportesPorFechas(idUsuario, calInicio, calFin)}"
+							action="#{navigationBean.goTo('movimientosPorFecha.xhtml')}">
+																			
+					</h:commandLink>
 					
 				</div>
 			</div>

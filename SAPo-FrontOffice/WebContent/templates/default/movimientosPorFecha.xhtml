@@ -1,0 +1,82 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<ui:composition>
+	<div class="container-fluid">
+		<h:panelGrid class="row">
+			<h1>Movimientos del usuario por fecha</h1>
+		</h:panelGrid>
+
+		<script type="text/javascript">
+			$(document).ready(function () {
+			
+			    (function ($) {
+			    					
+			        $('#filter1').keyup(function () {
+			
+			            var rex = new RegExp($(this).val(), 'i');
+			            $('.searchable tr').hide();
+			            $('.searchable tr').filter(function () {
+			                return rex.test($(this).text());
+			            }).show();
+			
+			        })
+
+			  			
+			    }(jQuery));
+					
+			});
+
+			
+		</script>
+
+		
+		
+		<h:form id="tablaMovsProdPorUsr" rendered="true">
+			<div class="input-group">
+				<span class="input-group-addon">Buscar:</span> <input id="filter"
+					type="text" class="form-control" placeholder="Producto"></input>
+			</div>
+
+			<table class="table table-striped table-hover">
+				<thead>
+					<tr>
+						<th><h:outputText value="ID Prod" /></th>
+						<th><h:outputText value="Nombre" /></th>
+						<th><h:outputText value="Descripción" /></th>
+						<th><h:outputText value="Fecha Mov" /></th>
+						<th><h:outputText value="Precio" /></th>
+						<th><h:outputText value="Stock" /></th>
+						<th><h:outputText value="Categoría" /></th>
+						<th><h:outputText value="Atributos" /></th>
+						<th><h:outputText value="Tipo Mov" /></th>
+					</tr>
+				</thead>
+				<tbody class="searchable">
+					<ui:repeat value="#{reportesBean.listaReportesPorAlmacen}"
+						var="p">
+						<tr>
+							<td><h:outputText value="#{p.idProducto}" /></td>
+							<td><h:outputText value="#{p.nombre}" /></td>
+							<td><h:outputText value="#{p.descripcion}" /></td>
+							<td><h:outputText value="#{p.fechaMovimiento}" /></td>
+							<td><h:outputText value="#{p.precio}" /></td>
+							<td><h:outputText value="#{p.stock}" /></td>
+							<td><h:outputText value="#{p.nombreCategoria}" /></td>
+							<td><h:outputText value="#{p.atributos}" /></td>
+							<td><h:outputText value="#{p.tipoMovimiento}" /></td>
+						</tr>
+					</ui:repeat>
+				</tbody>
+			</table>
+
+			
+		</h:form>
+	</div>
+</ui:composition>
+
+
+</html>
