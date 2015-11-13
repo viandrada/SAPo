@@ -1,7 +1,9 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:ui="http://java.sun.com/jsf/facelets">
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	
+	xmlns:p="http://primefaces.org/ui">
 
 <ui:composition>
 
@@ -12,9 +14,9 @@
 
 			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 				<div class="form-group">
-					<h:selectOneMenu value="#{reportesBean.tipoReporte}"
+					<h:selectOneMenu value="Seleccione un tipo de reporte"
 						class="form-control" id="inputTipoReporte"
-						onchange="mostrarComponente()">
+						onchange="mostrarComboReporte()">
 						<f:selectItems value="#{reportesBean.listaReportes}" var="e"
 							itemValue="#{e}" itemLabel="#{e}" id="listaReporteSelect" />
 						<f:ajax event="change"
@@ -28,17 +30,50 @@
 			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 				<div class="form-group" id="seleccionReporte1"
 					style="display: block;">
-					<h:inputText class="form-control" id="reportePorAlmacen"
+					<h:outputText class="form-control" id="reportePorAlmacen"
 						value="Reporte 1">
-						<f:ajax></f:ajax>
-					</h:inputText>
+						
+					</h:outputText>
+					<h:selectOneMenu value="Seleccione un almacén"
+						class="form-control" id="inputAlmacenSeleccionado"
+						>
+						<f:selectItems value="#{reportesBean.almacenes}" var="e"
+							itemValue="#{e.idAlmacen}" itemLabel="#{e.nombre}" id="listaAlmacenSelect" />
+
+					</h:selectOneMenu>
+					
 				</div>
 				<div class="form-group" id="seleccionReporte2"
 					style="display: none;">
-					<h:inputText class="form-control" id="reportePorFechas"
+					<h:outputText class="form-control" id="reportePorFechas"
 						value="Reporte 2">
-						<f:ajax></f:ajax>
-					</h:inputText>
+						
+					</h:outputText>
+					<div class="form-group" id="seleccionCalendarioInicio"
+							style="display: block;">
+							<p:calendar value="#{reportesBean.valorFechaInicio}"
+								pattern="dd/MM/yyyy" id="calInicio">
+								<f:ajax event="dateSelect"
+									listener="#{reportesBean.handleDateSelect}" />
+									<f:validateBean for="calInicio" />
+									<f:ajax resetValues="true" />
+							</p:calendar>
+							<h:message id="inputTextMessageCalendarioInicio" for="calInicio"
+										errorStyle="color:red;"></h:message>
+					</div>
+					<div class="form-group" id="seleccionCalendarioFin"
+							style="display: block;">
+							<p:calendar value="#{reportesBean.valorFechaFin}"
+								pattern="dd/MM/yyyy" id="calFin">
+								<f:ajax event="dateSelect"
+									listener="#{reportesBean.handleDateSelect}" />
+									<f:validateBean for="calFin" />
+									<f:ajax resetValues="true" />
+							</p:calendar>
+							<h:message id="inputTextMessageCalendarioFin" for="calFin"
+										errorStyle="color:red;"></h:message>
+					</div>
+					
 				</div>
 			</div>
 		</div>
@@ -51,7 +86,7 @@
 
 	<script type="text/javascript">
 
-               function mostrarComponente()
+               function mostrarComboReporte()
                {
 
                   var tipoDato;
@@ -59,7 +94,7 @@
 
                   document.getElementById('seleccionReporte1').style.display='none';
                   document.getElementById('seleccionReporte2').style.display='none';
-console.log(tipoDato);
+
                   switch(tipoDato)
                   {
                     case "seleccionReporte1":
@@ -72,7 +107,8 @@ console.log(tipoDato);
                         document.getElementById('seleccionReporte1').style.display='none';     
                         break;
                     default:
-                    	document.getElementById('seleccionReporte1').style.display='block';
+                    	document.getElementById('seleccionReporte1').style.display='none';
+                	    document.getElementById('seleccionReporte2').style.display='none';
                         break;
                   }
                   
