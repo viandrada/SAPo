@@ -13,8 +13,10 @@ import javax.faces.context.FacesContext;
 import com.datatypes.DataAlmacen;
 import com.datatypes.DataImagen;
 import com.datatypes.DataProducto;
+import com.datatypes.DataReporteProductoGenerico;
 import com.sapo.ejb.AlmacenNegocio;
 import com.sapo.ejb.ProductoNegocio;
+import com.sapo.ejb.ReporteNegocio;
 
 @ManagedBean
 @RequestScoped
@@ -37,6 +39,9 @@ public class AlmacenIdealBean {
 
 	@EJB
 	ProductoNegocio serviceProducto;
+	
+	@EJB
+	ReporteNegocio reporteNegocio;
 
 	@ManagedProperty(value = "#{navigationAreaBean}")
 	NavigationAreaBean nav;
@@ -153,6 +158,9 @@ public class AlmacenIdealBean {
 		// Son los productos genéricos y todos los del almacén.
 		this.productosGenericosLista = this.serviceProducto
 				.getProductosGenericos();
+		//Muestro los recomendados primero.
+		this.productosGenericosLista = this.ordenarProductosGenericosPorRecomendados();
+		
 		this.productosEspecificosLista = this.service.getProductosDeAlmacen(nav
 				.getIdAlmacenActual());
 	}
@@ -214,5 +222,26 @@ public class AlmacenIdealBean {
 		this.serviceProducto.actualizarStockIdeal(idProducto, stock);
 		init();
 		return "index.xhtml";
+	}
+	
+	public List<DataProducto> ordenarProductosGenericosPorRecomendados(){
+		List<DataProducto> listaOrdenada = new ArrayList<DataProducto>();
+		List<DataReporteProductoGenerico> recomendados = this.reporteNegocio.buscarProductosGenericosMasUtilizados();
+		int indice = 0;
+		for (int i = 0; i < recomendados.size(); i++) {
+			for (int j = 0; j < this.productosGenericosLista.size(); j++) {
+				if(recomendados.get(i).getIdProductoGenerico() == this.productosGenericosLista.get(j).getIdProducto())
+				{
+					//Si el id está en la lista de recomendados, agrego el producto al pricipio.
+					listaOrdenada.add(indice, this.productosGenericosLista.get(j));
+					listaOrdenada.get(indice).setRecomendado(true);
+					//Lo saco de la lista original para agregarlos al final cuando ya estén los recomendados al principio.
+					this.productosGenericosLista.remove(j);
+					indice++;
+				}
+			}
+		}
+		listaOrdenada.addAll(this.productosGenericosLista);
+		return listaOrdenada;
 	}
 }

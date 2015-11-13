@@ -1,12 +1,14 @@
 package com.sapo.beans;
 
+import java.util.HashMap;
+
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
-import javax.faces.bean.SessionScoped;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
+import javax.faces.context.FacesContext;
 
 import com.datatypes.DataUsuario;
 import com.sapo.ejb.UsuarioNegocio;
@@ -23,11 +25,12 @@ public class PerfilBean {
 	private String passwordActual;
 	private String passwordNueva;
 	private boolean premium;
-
+	private String css;
+	private HashMap<String,String> listaCSS;
 
 	@ManagedProperty(value = "#{loginBean}")
 	LoginBean usuarioLogueado;
-
+	
 	@EJB
 	UsuarioNegocio usuarioNegocio;
 
@@ -38,7 +41,6 @@ public class PerfilBean {
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
-
 
 	public String getPasswordActual() {
 		return passwordActual;
@@ -71,7 +73,7 @@ public class PerfilBean {
 	public String getEmail() {
 		return email;
 	}
-	
+
 	public boolean isPremium() {
 		return premium;
 	}
@@ -79,11 +81,44 @@ public class PerfilBean {
 	public void setPremium(boolean premium) {
 		this.premium = premium;
 	}
-	
-	public void getDatosUsuario(String email){
-		DataUsuario dataUser = usuarioNegocio.getUsuarioPorEmail(email); 
+
+	public String getCss() {
+		return css;
+	}
+
+	public void setCss(String css) {
+		this.css = css;
+	}
+
+	public HashMap<String, String> getListaCSS() {
+		return listaCSS;
+	}
+
+	public void setListaCSS(HashMap<String, String> listaCSS) {
+		this.listaCSS = listaCSS;
+	}
+
+	public void getDatosUsuario(String email) {
+		DataUsuario dataUser = usuarioNegocio.getUsuarioPorEmail(email);
 		this.email = dataUser.getEmail();
 		this.nombre = dataUser.getNombre();
 		this.premium = dataUser.isPremium();
+	}
+
+	@PostConstruct
+	public void inti() {
+		//TODO Cargar nombres de css -> como mejora: levantar los nombres de la
+		// carpeta css de resources.
+		this.listaCSS = new HashMap<String, String>();
+		this.listaCSS.put("Default","areaTrabajo.css");
+		this.listaCSS.put("Rosado","rosado.css");
+		this.listaCSS.put("Verde","verde.css");
+		
+	}
+	
+	public void guardarEstilo(){
+		this.usuarioNegocio.guardarEstilo(this.usuarioLogueado.getIdUsuario(), this.css);
+		FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "OK", "Estilo guardado. Debes volver a iniciar sesión para poder ver tu nuevo estilo.");
+		FacesContext.getCurrentInstance().addMessage(null, message);
 	}
 }

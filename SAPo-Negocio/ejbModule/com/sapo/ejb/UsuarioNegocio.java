@@ -37,6 +37,7 @@ public class UsuarioNegocio {
 		usuario.setNombre(dataUsuario.getNombre());
 		usuario.setEmail(dataUsuario.getEmail());
 		usuario.setPassword(dataUsuario.getPassword());
+		usuario.setEstilo(dataUsuario.getEstilo());
 
 		usuario.setEstaActivo(true);
 		usuario.setMonto(0f);
@@ -54,6 +55,7 @@ public class UsuarioNegocio {
 				existeUsuario.setEstaActivo(true);
 				existeUsuario.setNombre(usuario.getNombre());
 				existeUsuario.setFecha(new Date());
+				existeUsuario.setEstilo(usuario.getEstilo());
 				
 				usuarioDAO.insertarUsuario(existeUsuario);
 			}
@@ -135,5 +137,12 @@ public class UsuarioNegocio {
 		List<DataUsuario> dataUsrLista = new ArrayList<DataUsuario>();
 		dataUsrLista = f.convertirUsu(this.usuarioDAO.getUsuarios());
 		return dataUsrLista;
+	}
+	
+	public void guardarEstilo(int idUsuario, String estilo){
+		Usuario u = new Usuario();
+		u = this.usuarioDAO.getUsuario(idUsuario);
+		u.setEstilo(estilo);
+		this.usuarioDAO.actualizarUsuario(u);
 	}
 }

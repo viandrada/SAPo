@@ -124,9 +124,76 @@
 		<!-- Productos disponibles para agregar -->
 		<div class="row">
 			<ul class="list-group">
+				<ui:repeat value="#{almacenIdealBean.productosGenericosLista}"
+					var="item">
+					<div class="col-xs-12 col-sm-6 col-md-2 col-lg-2">
+						<h:form id="modalForm">
+							<li class="list-group-item">
+								<div class="row">
+									<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+										<h:outputText value="#{item.nombre}" />
+									</div>
+									<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+										<p class="text-right">
+											<h:graphicImage class="img-responsive"
+												rendered="#{item.recomendado}"
+												value="/resources/images/recomendado.jpg"
+												style="max-height:3em;display: inline;position: absolute;z-index: 100;margin: -8px 0 -2px -22px;"
+												data-toggle="tooltip" data-placement="top"
+												title="Recomendado">
+											</h:graphicImage>
+										</p>
+									</div>
+								</div> <h:commandLink action="#" class="thumbnail">
+									<h:graphicImage class="img-responsive" style="height:100px;"
+										value="Image/#{item.fotos.get(0).idImagen}">
+									</h:graphicImage>
+									<f:param name="Id" value="#{item.idProducto}" />
+								</h:commandLink>
+								<div class="row">
+									<div class="col-xs-12 col-md-12 col-sm-12 col-lg-12">
+										<h:commandButton
+											action="#{almacenIdealBean.agregarGenerico(item)}"
+											value="Agregar" rendered="#{!item.agregado}" />
+										<h:outputLabel value="Agregado" rendered="#{item.agregado}" />
+										<button type="button" class="" data-toggle="modal"
+											data-target="#myModal">Ver más</button>
+									</div>
+								</div>
+							</li>
+
+						</h:form>
+
+
+						<!-- Modal -->
+						<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+							aria-labelledby="myModalLabel">
+							<div class="modal-dialog" role="document">
+								<div class="modal-content">
+									<div class="modal-header">
+										<button type="button" class="close" data-dismiss="modal"
+											aria-label="Close">
+											<span aria-hidden="true"></span>
+										</button>
+										<h4 class="modal-title" id="myModalLabel">Detalle</h4>
+									</div>
+									<div class="modal-body">
+										<!-- Include -->
+									</div>
+									<div class="modal-footer">
+										<button type="button" class="btn btn-info"
+											data-dismiss="modal">Cancelar</button>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- Fin de ventana modal -->
+					</div>
+					
+				</ui:repeat>
 				<ui:repeat value="#{almacenIdealBean.productosEspecificosLista}"
 					var="item">
-					<div class="col-xs-6 col-sm-6 col-md-2 col-lg-2">
+					<div class="col-xs-12 col-sm-6 col-md-2 col-lg-2">
 						<h:form id="modalForm">
 							<li class="list-group-item"><h:outputText
 									value="#{item.nombre}" /> <h:commandLink action="#"
@@ -162,59 +229,6 @@
 									</div>
 									<div class="modal-body">
 										<!-- Aca va el include /-->
-									</div>
-									<div class="modal-footer">
-										<button type="button" class="btn btn-info"
-											data-dismiss="modal">Cancelar</button>
-									</div>
-								</div>
-							</div>
-						</div>
-						<!-- Fin de ventana modal -->
-					</div>
-				</ui:repeat>
-			</ul>
-			<ul class="list-group">
-				<ui:repeat value="#{almacenIdealBean.productosGenericosLista}"
-					var="item">
-					<div class="col-xs-6 col-sm-6 col-md-2 col-lg-2">
-						<h:form id="modalForm">
-							<li class="list-group-item"><h:outputText
-									value="#{item.nombre}" /> <h:commandLink action="#"
-									class="thumbnail">
-									<h:graphicImage class="img-responsive" style="height:100px;"
-										value="Image/#{item.fotos.get(0).idImagen}">
-									</h:graphicImage>
-									<f:param name="Id" value="#{item.idProducto}" />
-								</h:commandLink>
-								<div class="row">
-									<div class="col-xs-12 col-md-12 col-sm-12 col-lg-12">
-										<h:commandButton
-											action="#{almacenIdealBean.agregarGenerico(item)}"
-											value="Agregar" rendered="#{!item.agregado}" />
-										<h:outputLabel value="Agregado" rendered="#{item.agregado}" />
-										<button type="button" class="" data-toggle="modal"
-											data-target="#myModal">Ver más</button>
-									</div>
-								</div></li>
-
-						</h:form>
-
-
-						<!-- Modal -->
-						<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
-							aria-labelledby="myModalLabel">
-							<div class="modal-dialog" role="document">
-								<div class="modal-content">
-									<div class="modal-header">
-										<button type="button" class="close" data-dismiss="modal"
-											aria-label="Close">
-											<span aria-hidden="true"></span>
-										</button>
-										<h4 class="modal-title" id="myModalLabel">Detalle</h4>
-									</div>
-									<div class="modal-body">
-										<!-- Include -->
 									</div>
 									<div class="modal-footer">
 										<button type="button" class="btn btn-info"

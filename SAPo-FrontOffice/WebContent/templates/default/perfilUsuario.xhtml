@@ -1,15 +1,25 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:ui="http://java.sun.com/jsf/facelets">
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
 
 <ui:composition>
+	<style type="text/css">
+.ui-growl {
+	position: absolute;
+	top: 70px;
+	width: 301px;
+	z-index: 9999;
+}
+</style>
 	<div class="container">
-		Probando PayPal - Todavia no hay nada.
-	</div>
-	
-	<div class="row">
-			<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6" >
+
+		<div class="row">
+			<h1>Mi perfil</h1>
+		</div>
+		<div class="row">
+			<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
 				<h:form id="perfilUsuario" rendered="true">
 
 					<div class="form-group">
@@ -29,15 +39,53 @@
 				</h:form>
 			</div>
 		</div>
-	
-	<div class="container">
-		<form action="https://www.sandbox.paypal.com/cgi-bin/webscr" method="post" target="_top">
-			<input type="hidden" name="cmd" value="_s-xclick"></input>
-			<input type="hidden" name="hosted_button_id" value="5EGNZUCXH93MS"></input>
-			<input type="hidden" name="on0" value="#{loginBean.email}"></input>
-			<input type="image" src="https://www.sandbox.paypal.com/es_ES/ES/i/btn/btn_buynowCC_LG.gif" border="0" name="submit" alt="PayPal. La forma rápida y segura de pagar en Internet."></input>
-			<img alt="" border="0" src="https://www.sandbox.paypal.com/en_US/i/scr/pixel.gif" width="1" height="1"></img>
-		</form>	
+		<hr/>
+		<h4>Cuenta</h4>
+		<div class="row">
+			<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+				<h2>Quiero ser usuario Premium</h2>
+			</div>
+		</div>
+		<div class="row">
+			<div
+				class="col-xs-6 col-sm-2 col-md-2 col-lg-2 col-sm-offset-2 col-md-offset-2 col-lg-offset-2">
+				<form action="https://www.sandbox.paypal.com/cgi-bin/webscr"
+					method="post" target="_top">
+					<input type="hidden" name="cmd" value="_s-xclick"></input> <input
+						type="hidden" name="hosted_button_id" value="5EGNZUCXH93MS"></input>
+					<input type="hidden" name="on0" value="#{loginBean.email}"></input>
+					<input type="image"
+						src="https://www.sandbox.paypal.com/es_ES/ES/i/btn/btn_buynowCC_LG.gif"
+						border="0" name="submit"
+						alt="PayPal. La forma rápida y segura de pagar en Internet."></input>
+					<img alt="" border="0"
+						src="https://www.sandbox.paypal.com/en_US/i/scr/pixel.gif"
+						width="1" height="1"></img>
+				</form>
+			</div>
+		</div>
+		<hr/>
+		<div class="row">
+			<h3>Cambiar estilo</h3>
+
+			<h:form>
+				<div class="col-xs-6 col-sm-2 col-md-2 col-lg-2">
+					<h:selectOneMenu value="#{perfilBean.css}" class="form-control"
+						id="estilo" onchange="previsualizar()">
+						<f:selectItems value="#{perfilBean.listaCSS}" var="e"
+							itemValue="#{e}" itemLabel="#{e}" id="cssSeleccionado" />
+
+						<f:validateBean for="nombreCampo" />
+					</h:selectOneMenu>
+				</div>
+				<div class="col-xs-6 col-sm-2 col-md-2 col-lg-2">
+					<h:commandButton class="btn" action="#{perfilBean.guardarEstilo()}"
+						value="Guardar" update=":message" />
+				</div>
+				<p:growl id="message" showDetail="true" />
+			</h:form>
+
+		</div>
 	</div>
 </ui:composition>
 </html>
