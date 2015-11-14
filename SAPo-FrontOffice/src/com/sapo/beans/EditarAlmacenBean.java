@@ -205,7 +205,7 @@ public class EditarAlmacenBean {
 		
 		this.dataAlmacen = almacenNegocio.getAlmacenPorId(idAlmacen);
 		
-		System.out.println("GET ALMACEN ID EN BEAN ES: "+dataAlmacen.getIdAlmacen());
+		System.out.println("GET ALMACEN ID EN BEAN ES ID VIENE DEL REPEART: "+dataAlmacen.getIdAlmacen());
 		//this.nombre = dataAlmacen.getNombre();
 		//this.descripcion = dataAlmacen.getDescripcion();
 		
