@@ -116,7 +116,7 @@ public class HomeUsuarioBean {
 			listaTodosMovs.addAll(this.movimientos);			
 		}
 		//Acá lo mejor sería ordenar por fecha y filtrar resultados (hacer top)
-		
+				
 		this.movimientos = listaTodosMovs;
 		
 	}
