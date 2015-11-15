@@ -187,17 +187,25 @@ public class EditarAlmacenBean {
 			System.out.println("Error. El almacen no fue EDITADO.");
 			return null;
 		}*/
+			
 		nav.setRedirectTo("homeUsuario.xhtml");
 		return "/index.xhtml";
+		
 		//return nav.irAlmacen(idAlmacenGenerado);
+		
+		//return "index?faces-redirect=true";
 	}
 	
 	public String bajaAlmacen(){
 		
 		//almacenNegocio.editarAlmacen(this.dataAlmacen/*, usuario*/);
 		almacenNegocio.bajaAlmacen(this.dataAlmacen);
-		nav.setRedirectTo("homeUsuario.xhtml");
-		return "/index.xhtml";
+		
+		
+		//nav.setRedirectTo("homeUsuario.xhtml");
+		//return "/index.xhtml";
+		
+		return "index?faces-redirect=true";
 		
 	}
 
