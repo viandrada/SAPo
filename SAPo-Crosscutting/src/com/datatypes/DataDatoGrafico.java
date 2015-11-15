@@ -1,6 +1,8 @@
 package com.datatypes;
 
-public class DataDatoGrafico {
+
+
+public class DataDatoGrafico implements Comparable<DataDatoGrafico> {
 	public DataDatoGrafico() {
 	}
 	
@@ -8,11 +10,16 @@ public class DataDatoGrafico {
 		this.mes=mes;
 		this.anio=anio;
 		this.gananciaMes=ganancia;
+		this.orden=mes+anio;
 	}
 
 	private float gananciaMes;
 	private int mes;
 	private int anio;
+	private int orden;
+	
+	
+	
 	public float getGananciaMes() {
 		return gananciaMes;
 	}
@@ -35,6 +42,24 @@ public class DataDatoGrafico {
 
 	public void setAnio(int anio) {
 		this.anio = anio;
+	}
+
+	public int getOrden() {
+		return orden;
+	}
+
+	public void setOrden(int orden) {
+		this.orden = orden;
+	}
+
+	@Override
+	public int compareTo(DataDatoGrafico o) {
+		
+		if (this.orden<o.getOrden())
+			return -1;
+		else return 1;
+					
+		//return orden.compareTo(o.orden);
 	}
 	
 	

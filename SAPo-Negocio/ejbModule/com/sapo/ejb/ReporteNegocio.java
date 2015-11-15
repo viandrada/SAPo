@@ -3,6 +3,7 @@ package com.sapo.ejb;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
@@ -94,6 +95,66 @@ public class ReporteNegocio {
 		return max;
 	};
 
+	public boolean compararFechasAMayorB(DataDatoGrafico a, DataDatoGrafico b) {
+		boolean esMayor = false;
+
+		if (a.getAnio() > b.getAnio()) {
+			esMayor = true;
+		} else if (a.getAnio() == b.getAnio()) {
+
+			if (a.getMes() > b.getMes())
+				esMayor = true;
+		}
+		return esMayor;
+	}
+
+	/*public List<DataDatoGrafico> ordenarPorFecha(
+			List<DataDatoGrafico> sinOrdenar) {
+		List<DataDatoGrafico> ordenada = new LinkedList<DataDatoGrafico>();
+
+		if (!sinOrdenar.isEmpty()) {
+			
+			for (DataDatoGrafico d : sinOrdenar) {
+				
+				if (!ordenada.isEmpty()) {
+					
+					for (int i = 0; i < ordenada.size(); i++) {
+					
+						if (compararFechasAMayorB(d,ordenada.get(i))){
+							System.out.println("ES MAYOR");
+							
+						}else{
+							System.out.println("ES MENOR");
+							int j=i;
+							while (j<=ordenada.size()){
+								j=j+1;
+								if (j==ordenada.size())
+									ordenada.add(d);
+								else{
+									
+								}
+									
+								
+							}
+							
+							
+							
+							
+							ordenada.add(i, d);
+						}
+
+					}// for
+
+				}// if
+				else  ordenada.add(d);
+
+			}// for
+
+		}// if
+
+		return ordenada;
+	}*/
+
 	public List<DataDatoGrafico> getDatosGraficoGanancias() {
 
 		List<Usuario> listUsus = usuarioDAO.getUsuarios();
@@ -109,6 +170,7 @@ public class ReporteNegocio {
 			cal.setTime(date);
 			int month = cal.get(Calendar.MONTH) + 1;
 			int year = cal.get(Calendar.YEAR);
+			int orden =(int) cal.getTimeInMillis();
 
 			if (existeDato(month, year, listaDatosResult)) {
 
@@ -125,12 +187,16 @@ public class ReporteNegocio {
 				dato.setAnio(year);
 				dato.setMes(month);
 				dato.setGananciaMes(u.getMonto());
+				dato.setOrden(orden);
 
 				listaDatosResult.add(dato);
 			}
 
 		}
-
+		//listaDatosResult=ordenarPorFecha(listaDatosResult);
+		//ESTO ES PARA ORDENAR LA LISTA EN ORDEN ASCENDENTE
+		Collections.sort(listaDatosResult,Collections.reverseOrder());
+		
 		return listaDatosResult;
 	}
 
