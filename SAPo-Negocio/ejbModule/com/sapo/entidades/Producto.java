@@ -15,7 +15,7 @@ import org.hibernate.envers.RelationTargetAuditMode;
  *
  */
 @NamedQueries({
-
+	@NamedQuery(name = "Productos.getProductosActivosDeAlmacen.IdAlmacen", query = "SELECT p FROM Producto p WHERE p.almacen.idAlmacen = :idAlmacen and p.esIdeal = FALSE and p.estaActivo = TRUE"),
 @NamedQuery(name = "Productos.getProductosDeAlmacen.IdAlmacen", query = "SELECT p FROM Producto p WHERE p.almacen.idAlmacen = :idAlmacen and p.esIdeal = FALSE"),
 @NamedQuery(name = "Productos.getProductosDeAlmacen.IdHermano", query = "SELECT p FROM Producto p WHERE p.almacen.idAlmacen = :idAlmacen and p.esIdeal = FALSE and p.idHermano = :idHermano"),
 @NamedQuery(name = "Productos.getProductos.Hermanos", query = "SELECT p FROM Producto p WHERE p.esIdeal = FALSE and p.idHermano = :idHermano") })

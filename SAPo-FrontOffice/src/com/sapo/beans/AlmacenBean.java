@@ -34,12 +34,14 @@ public class AlmacenBean {
 	NavigationAreaBean nav;
 
 	private List<DataAlmacen> listaAlmacenesDeUsuarioMenosenElqueEsta;
+	private List<DataProducto> listaProductosActivos;
 	private int cantAlamcenenDeUsusario;
 
 	private int idAlmacenActual;
 	private int idAlmacenSelec;
 	private int idProductoSelec;
 	private int cantStockAMover;
+	//private String nombreproductoSelec;
 
 	@ManagedProperty(value = "#{loginBean}")
 	LoginBean usuarioLogueado;
@@ -78,6 +80,9 @@ public class AlmacenBean {
 
 	public void obtenerAlmacen() {
 		this.almacen = almacenNegocio.getAlmacenPorId(nav.getIdAlmacenActual());
+		
+		this.listaProductosActivos = almacenNegocio.getProductosActivosDeAlmacen(this.almacen.getIdAlmacen());
+		
 		List<DataProducto> dataProductos = this.obtenerProductos(nav
 				.getIdAlmacenActual());
 		// Si el producto no tiene foto se indica una por defecto.
@@ -266,4 +271,20 @@ public class AlmacenBean {
 		
 		this.cantStockAMover = cantStockAMover;
 	}
+
+	public List<DataProducto> getListaProductosActivos() {
+		return listaProductosActivos;
+	}
+
+	public void setListaProductosActivos(List<DataProducto> listaProductosActivos) {
+		this.listaProductosActivos = listaProductosActivos;
+	}
+
+	/*public String getNombreproductoSelec() {
+		return nombreproductoSelec;
+	}
+
+	public void setNombreproductoSelec(String nombreproductoSelec) {
+		this.nombreproductoSelec = nombreproductoSelec;
+	}*/
 }

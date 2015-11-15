@@ -38,6 +38,7 @@
 
 							<h:form>
 								<li class="list-group-item">
+
 									<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
 										<h:outputText value="#{item.nombre}" />
 									</div>
@@ -48,20 +49,13 @@
 											value="">
 											<i class="fa fa-pencil-square-o"></i>
 										</h:commandLink>
-
-
-
-										
-										<h:commandLink value=""
+										<h:commandLink value=" "
+											class="btn btn-danger btn-xs"
 											action="#{editarAlmacenBean.getAlmacen(item.idAlmacen)}"
 											onclick="$('#myModabaja').modal('show');" immediate="true">
 											<i class="fa fa-times"></i>
 											<f:ajax execute="@this" render=":modalBa" />
 										</h:commandLink>
-
-
-
-
 									</div> <h:commandLink
 										action="#{navigationAreaBean.irAlmacen(item.idAlmacen)}"
 										class="thumbnail">
@@ -80,7 +74,6 @@
 					<!-- /h:dataTable-->
 				</ul>
 
-
 			</div>
 			<h:panelGrid rendered="#{not homeUsuarioBean.sinAlmacenes}"
 				class=" visible-md visible-lg">
@@ -89,9 +82,6 @@
 				</div>
 			</h:panelGrid>
 		</div>
-
-
-
 
 		<div class="modal fade" id="myModabaja" tabindex="-1" role="dialog">
 			<div class="modal-dialog">
@@ -125,15 +115,6 @@
 				</div>
 			</div>
 		</div>
-
-
-
-
-
-
-
-
-
 
 		<hr />
 		<div class="row visible-xs visible-sm">

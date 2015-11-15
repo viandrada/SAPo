@@ -329,6 +329,14 @@ public class AlmacenNegocio {
 		dataProductos = this.toDataProductos(productos);
 		return dataProductos;
 	}
+	
+	public List<DataProducto> getProductosActivosDeAlmacen(int idAlmacen) {
+		List<DataProducto> dataProductos = new ArrayList<DataProducto>();
+		List<Producto> productos = this.productoDAO
+				.getProductosActivosAlmacen(idAlmacen);
+		dataProductos = this.toDataProductos(productos);
+		return dataProductos;
+	}
 
 	public List<DataProducto> toDataProductos(List<Producto> productos) {
 		List<DataProducto> dataProductos = new ArrayList<DataProducto>();
@@ -684,6 +692,46 @@ public class AlmacenNegocio {
 		 * System.out.println("LO AGREGO BIEN"); };
 		 */
 
+	}
+	
+	public void bajaProducto(int idAlmacenOrigen, int idProducto) {
+		System.out.println("HOLA ESTOY BAJANDO NEGOCIO");
+		System.out.println(" IDPRODUCTO: " + idProducto + "IDALMAORIGEN: " + idAlmacenOrigen);
+
+		Almacen aOrigen = almacenDAO.getAlmacen(idAlmacenOrigen);
+		System.out.println("pido almacen ORIGEN: " + aOrigen.getNombre());
+
+		List<Producto> listProductOrigen = new LinkedList<Producto>();
+		// List<Producto> listProductDestino = new LinkedList<Producto>();
+		/* listProductOrigen=aOrigen.getProductos(); */
+
+		listProductOrigen = productoDAO.getProductosAlmacen(aOrigen
+				.getIdAlmacen());
+
+		// listProductDestino=productoDAO.getProductosAlmacen(aDestino.getIdAlmacen());
+
+		System.out.println("pido la lista del almacen ORIGEN, es VACIA: "
+				+ listProductOrigen.isEmpty());
+
+		if (!listProductOrigen.isEmpty()) {
+			System.out
+					.println("LA LISTA DE PRODUCTOS DE ALMA ORIGEN NO ES VACIA(EN DAR DE BAJA)");
+			for (Producto p : listProductOrigen) {
+
+				if (p.getIdProducto() == idProducto) {
+					System.out.println("ENCONTRE EL PRODUCTO A DAR DE BAJA");
+					
+						p.setEstaActivo(false);
+						
+						System.out.println("DOY DE BAJA A: "+p.getNombre());
+						// almacenDAO.actualizarAlmacen(aDestino);
+					
+						productoDAO.actualizarProducto(p);
+
+					}
+
+			}// for
+		}// if lista de prod no es vacia
 	}
 
 	public List<DataAlmacen> getAlmacenesMenosUno(int idAlmacen,
