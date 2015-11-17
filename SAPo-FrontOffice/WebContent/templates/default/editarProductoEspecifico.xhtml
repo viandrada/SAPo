@@ -1,4 +1,5 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:rich="http://richfaces.org/rich"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
@@ -13,8 +14,7 @@
 			</div>
 			<h:form>
 				<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
-					<h:commandLink
-						action="#{navigationAreaBean.goTo('almacen.xhtml')}">
+					<h:commandLink action="#{navigationAreaBean.goTo('almacen.xhtml')}">
 						<i class="fa fa-times fa-2x">Cerrar</i>
 					</h:commandLink>
 				</div>
@@ -346,11 +346,12 @@
 
 						<div class="form-group" id="atributoCalendario"
 							style="display: none;">
-							<p:calendar value="#{editarProductoEspBean.valorAtributoFecha}"
+							<rich:calendar
+								value="#{editarProductoEspBean.valorAtributoFecha}"
 								pattern="dd/MM/yyyy">
-								<f:ajax event="dateSelect"
+								<f:ajax event="change"
 									listener="#{editarProductoEspBean.handleDateSelect}" />
-							</p:calendar>
+							</rich:calendar>
 						</div>
 
 						<div class="form-group" id="atributoNumero" style="display: none;">

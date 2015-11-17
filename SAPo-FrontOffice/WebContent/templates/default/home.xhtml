@@ -1,6 +1,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:ui="http://java.sun.com/jsf/facelets">
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
 
 <ui:composition>
 
@@ -9,8 +10,8 @@
 		<div class="container">
 			<h1>Bienvenido a Mi Almacén</h1>
 			<p>A través de Mi Almacén podrás mantener sincronizado de forma
-				virtual cualquier grupo de items que desees, pudiendo acceder a ellos
-				a partir de difentes dispositivos. Para poder crear tu primer
+				virtual cualquier grupo de items que desees, pudiendo acceder a
+				ellos a partir de difentes dispositivos. Para poder crear tu primer
 				almacén y usarlo de forma gratuita, deberás registrarte primero.</p>
 			<p>
 				<!-- Boton para mostrar ventana modal -->
@@ -33,8 +34,7 @@
 							<ui:include src="/templates/default/registro.xhtml" />
 						</div>
 						<div class="modal-footer">
-							<button type="button" class="btn btn-info"
-								data-dismiss="modal">Cancelar</button>
+							<button type="button" class="btn btn-info" data-dismiss="modal">Cancelar</button>
 						</div>
 					</div>
 				</div>
@@ -51,7 +51,7 @@
 				<h2>Quiénes somos</h2>
 				<p>Somos...</p>
 				<p>
-					<a class="btn btn-default" href="#" role="button">Ver más </a>
+					<a class="btn btn-info" href="#" role="button">Ver más </a>
 				</p>
 			</div>
 			<div class="col-md-4">
@@ -59,18 +59,40 @@
 				<p>Aquí encontrará una guía para rápidamente comenzar a usar Mi
 					Almacén</p>
 				<p>
-					<a class="btn btn-default" href="#" role="button">Ver más </a>
+					<button type="button" class="btn btn-info" data-toggle="modal"
+						data-target="#tutorialModal">Ver tutorial</button>
 				</p>
 			</div>
 			<div class="col-md-4">
 				<h2>Contactanos</h2>
 				<p>Por consultas, envíenos un correo a mialmacen@mialmacen.com</p>
 				<p>
-					<a class="btn btn-default" href="#" role="button">Ver más </a>
+					<a class="btn btn-info" href="#" role="button">Ver más </a>
 				</p>
 			</div>
 		</div>
-
+		<!-- Modal tutorial -->
+		<div class="modal fade" id="tutorialModal" tabindex="-1" role="dialog"
+			aria-labelledby="myModalLabel">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							aria-label="Close">
+							<span aria-hidden="true"></span>
+						</button>
+						<h4 class="modal-title" id="myModalLabel">Tutorial</h4>
+					</div>
+					<div class="modal-body">
+						<h:graphicImage value="/resources/videos/TutorialMiAlmacen.gif">
+						</h:graphicImage>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-info" data-dismiss="modal">Cerrar</button>
+					</div>
+				</div>
+			</div>
+		</div>
 	</div>
 	<!-- /container -->
 
