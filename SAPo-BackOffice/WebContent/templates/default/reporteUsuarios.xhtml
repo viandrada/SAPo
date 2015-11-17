@@ -21,7 +21,7 @@
 							<th><h:outputText value="Email" /></th>
 							<th><h:outputText value="Premium?" /></th>
 							<th><h:outputText value="Fecha de Pago" /></th>
-							<th><h:outputText value="Monto" /></th>
+							<th><h:outputText value="Monto (U$D)" /></th>
 
 							<th><h:outputText value="Activo?" /></th>
 
@@ -65,9 +65,7 @@
 
 				</table>
 
-				<f:facet name="footer">  
-		            El total de ganancia hasta el momento es U$D #{(reporteUsuarios.ganancia)}.  
-		        </f:facet>
+	
 
 			
 				<div class="modal fade" id="modalMovsProd"  tabindex="-1" role="dialog">
@@ -91,7 +89,7 @@
 			</h:form>
 
 			<f:facet name="footer">  
-		            El total de ganancia hasta el momento es U$D #{(reporteUsuarios.ganancia)}.  
+		            El total de ganancia hasta el momento es U$D #{reporteUsuariosBean.ganancia}.  
 		        </f:facet>
 		</h:panelGrid>
 	</div>

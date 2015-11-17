@@ -42,6 +42,7 @@ public class MoverProductoBean implements Serializable{
 	public int idAlmacenSelec;
 	public int idProductoSelec;
 	public int cantStockAMover;
+	private String nombreproductoSelec;
 
 	@EJB
 	AlmacenNegocio almacenNegocio;
@@ -224,9 +225,7 @@ public class MoverProductoBean implements Serializable{
 				+ " IDPRODUCTO: " + this.idProductoSelec + " CANTSTOCK: "
 				+ this.cantStockAMover + "IDALMAORIGEN: "
 				+ nav.getIdAlmacenActual());
-		
-		
-		
+	
 		if (this.idAlmacenSelec != 0 && this.idProductoSelec != 0
 				&& this.cantStockAMover != 0) {
 			
@@ -236,6 +235,17 @@ public class MoverProductoBean implements Serializable{
 					nav.getIdAlmacenActual());
 		}
 		else System.out.println("NO HICE NADA ES TODO CERO//////////////////////////////");
+		
+		return "index?faces-redirect=true";
+	}
+	
+	public String darDeBajaProducto() {
+
+		System.out.println("HOLA ESTOY DANDO DE BAJA");
+		System.out.println("IDALMA : " + nav.getIdAlmacenActual()
+				+ " IDPRODUCTO: " + this.idProductoSelec);
+
+			almacenNegocio.bajaProducto(nav.getIdAlmacenActual(),this.idProductoSelec);
 		
 		return "index?faces-redirect=true";
 	}
@@ -274,6 +284,14 @@ public class MoverProductoBean implements Serializable{
 	public void setCantStockAMover(int cantStockAMover) {
 		System.out.println("setCantStockAMover(int cantStockAMover) CON EL VALOR: "+ cantStockAMover);
 		this.cantStockAMover = cantStockAMover;
+	}
+
+	public String getNombreproductoSelec() {
+		return nombreproductoSelec;
+	}
+
+	public void setNombreproductoSelec(String nombreproductoSelec) {
+		this.nombreproductoSelec = nombreproductoSelec;
 	}
 	
 }

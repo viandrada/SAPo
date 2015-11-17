@@ -72,6 +72,8 @@ public class Fabrica {
 			dcat.setPassword(c.getPassword());
 			dcat.setEstaActivo(c.getEstaActivo());
 
+			dcat.setPremium(c.isPremium());
+			
 			dcat.setFecha(c.getFecha());
 			dcat.setFechaPago(c.getFechaPago());
 			dcat.setMonto(c.getMonto());

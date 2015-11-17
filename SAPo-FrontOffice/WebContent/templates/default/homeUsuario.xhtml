@@ -38,6 +38,7 @@
 
 							<h:form>
 								<li class="list-group-item">
+
 									<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
 										<h:outputText value="#{item.nombre}" />
 									</div>
@@ -48,12 +49,12 @@
 											value="">
 											<i class="fa fa-pencil-square-o"></i>
 										</h:commandLink>
-
-										<h:commandLink
+										<h:commandLink value=" "
+											class="btn btn-danger btn-xs"
 											action="#{editarAlmacenBean.getAlmacen(item.idAlmacen)}"
-											actionListener="#{navigationAreaBean.goTo('editarAlmacen.xhtml')}"
-											value="">
+											onclick="$('#myModabaja').modal('show');" immediate="true">
 											<i class="fa fa-times"></i>
+											<f:ajax execute="@this" render=":modalBa" />
 										</h:commandLink>
 									</div> <h:commandLink
 										action="#{navigationAreaBean.irAlmacen(item.idAlmacen)}"
@@ -73,7 +74,6 @@
 					<!-- /h:dataTable-->
 				</ul>
 
-				
 			</div>
 			<h:panelGrid rendered="#{not homeUsuarioBean.sinAlmacenes}"
 				class=" visible-md visible-lg">
@@ -82,6 +82,40 @@
 				</div>
 			</h:panelGrid>
 		</div>
+
+		<div class="modal fade" id="myModabaja" tabindex="-1" role="dialog">
+			<div class="modal-dialog">
+				<!-- Modal content-->
+				<div class="modal-content">
+					<h:form id="modalBa">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal">X</button>
+							<h4 class="modal-title">Estas seguro que quieres dar de baja
+								el Almacen: #{editarAlmacenBean.dataAlmacen.nombre} ?</h4>
+						</div>
+						<div class="modal-body">
+							<h5 class="modal-title">Ten en cuenta!!! Si en el futuro
+								quieres recuperar tu almacen tal cual lo dejaste, deberas
+								hacerte usuario Premium.</h5>
+
+							<h:inputHidden value="#{editarAlmacenBean.dataAlmacen.idAlmacen}"
+								id="idAlmaEliminar" class="form-control" />
+
+						</div>
+						<div class="modal-footer">
+
+							<h:commandButton class="btn btn-success" value="Aceptar"
+								type="submit" action="#{editarAlmacenBean.bajaAlmacen}">
+							</h:commandButton>
+
+							<button type="button" class="btn btn-danger pull-left"
+								data-dismiss="modal" onclick="return false;">Cancelar</button>
+						</div>
+					</h:form>
+				</div>
+			</div>
+		</div>
+
 		<hr />
 		<div class="row visible-xs visible-sm">
 			<h:panelGrid rendered="#{not homeUsuarioBean.sinAlmacenes}"

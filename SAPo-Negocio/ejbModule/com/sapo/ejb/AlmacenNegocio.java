@@ -175,6 +175,22 @@ public class AlmacenNegocio {
 		}
 		// return idAlmacenGenerado;
 	}
+	
+	public void bajaAlmacen(DataAlmacen almacen/*, DataUsuario usuario*/) {
+		
+		Almacen a = almacenDAO.getAlmacen(almacen.getIdAlmacen());
+		
+		System.out.println(" ID ALMACEN PARA DAR DE BAJA: "+a.getIdAlmacen());
+		
+		a.setEstaActivo(false);
+		
+		
+		System.out.println(" SETEO ALMACEN ESTA ACTIVO EN FALSE: "+a.getEstaActivo());
+		almacenDAO.actualizarAlmacen(a);
+		
+		System.out.println(" ACTUALIZO: "+a.getEstaActivo());
+		
+	}
 
 	public List<DataAlmacen> getAlmacenes(String emailUsr) {
 
@@ -204,6 +220,12 @@ public class AlmacenNegocio {
 		int idUser = this.usuarioDAO.getUsuarioPorEmail(emailUsr)
 				.getIdUsuario();
 		return this.almacenDAO.getCantAlmacenesUsuario(idUser);
+	}
+	
+	public int getCantidadAlmacenesDeUsuarioHabilitados(String emailUsr) {
+		int idUser = this.usuarioDAO.getUsuarioPorEmail(emailUsr)
+				.getIdUsuario();
+		return this.almacenDAO.getCantAlmacenesUsuarioHabilitados(idUser);
 	}
 
 	public int getCantidadMaximaAlmacenes(String emailUsr) {
@@ -304,6 +326,14 @@ public class AlmacenNegocio {
 		List<DataProducto> dataProductos = new ArrayList<DataProducto>();
 		List<Producto> productos = this.productoDAO
 				.getProductosAlmacen(idAlmacen);
+		dataProductos = this.toDataProductos(productos);
+		return dataProductos;
+	}
+	
+	public List<DataProducto> getProductosActivosDeAlmacen(int idAlmacen) {
+		List<DataProducto> dataProductos = new ArrayList<DataProducto>();
+		List<Producto> productos = this.productoDAO
+				.getProductosActivosAlmacen(idAlmacen);
 		dataProductos = this.toDataProductos(productos);
 		return dataProductos;
 	}
@@ -664,6 +694,46 @@ public class AlmacenNegocio {
 		 * System.out.println("LO AGREGO BIEN"); };
 		 */
 
+	}
+	
+	public void bajaProducto(int idAlmacenOrigen, int idProducto) {
+		System.out.println("HOLA ESTOY BAJANDO NEGOCIO");
+		System.out.println(" IDPRODUCTO: " + idProducto + "IDALMAORIGEN: " + idAlmacenOrigen);
+
+		Almacen aOrigen = almacenDAO.getAlmacen(idAlmacenOrigen);
+		System.out.println("pido almacen ORIGEN: " + aOrigen.getNombre());
+
+		List<Producto> listProductOrigen = new LinkedList<Producto>();
+		// List<Producto> listProductDestino = new LinkedList<Producto>();
+		/* listProductOrigen=aOrigen.getProductos(); */
+
+		listProductOrigen = productoDAO.getProductosAlmacen(aOrigen
+				.getIdAlmacen());
+
+		// listProductDestino=productoDAO.getProductosAlmacen(aDestino.getIdAlmacen());
+
+		System.out.println("pido la lista del almacen ORIGEN, es VACIA: "
+				+ listProductOrigen.isEmpty());
+
+		if (!listProductOrigen.isEmpty()) {
+			System.out
+					.println("LA LISTA DE PRODUCTOS DE ALMA ORIGEN NO ES VACIA(EN DAR DE BAJA)");
+			for (Producto p : listProductOrigen) {
+
+				if (p.getIdProducto() == idProducto) {
+					System.out.println("ENCONTRE EL PRODUCTO A DAR DE BAJA");
+					
+						p.setEstaActivo(false);
+						
+						System.out.println("DOY DE BAJA A: "+p.getNombre());
+						// almacenDAO.actualizarAlmacen(aDestino);
+					
+						productoDAO.actualizarProducto(p);
+
+					}
+
+			}// for
+		}// if lista de prod no es vacia
 	}
 
 	public List<DataAlmacen> getAlmacenesMenosUno(int idAlmacen,

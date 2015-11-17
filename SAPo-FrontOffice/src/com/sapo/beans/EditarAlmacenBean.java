@@ -187,16 +187,33 @@ public class EditarAlmacenBean {
 			System.out.println("Error. El almacen no fue EDITADO.");
 			return null;
 		}*/
+			
 		nav.setRedirectTo("homeUsuario.xhtml");
 		return "/index.xhtml";
+		
 		//return nav.irAlmacen(idAlmacenGenerado);
+		
+		//return "index?faces-redirect=true";
+	}
+	
+	public String bajaAlmacen(){
+		
+		//almacenNegocio.editarAlmacen(this.dataAlmacen/*, usuario*/);
+		almacenNegocio.bajaAlmacen(this.dataAlmacen);
+		
+		
+		//nav.setRedirectTo("homeUsuario.xhtml");
+		//return "/index.xhtml";
+		
+		return "index?faces-redirect=true";
+		
 	}
 
 	public void getAlmacen (int idAlmacen){
 		
 		this.dataAlmacen = almacenNegocio.getAlmacenPorId(idAlmacen);
 		
-		System.out.println("GET ALMACEN ID EN BEAN ES: "+dataAlmacen.getIdAlmacen());
+		System.out.println("GET ALMACEN ID EN BEAN ES ID VIENE DEL REPEART: "+dataAlmacen.getIdAlmacen());
 		//this.nombre = dataAlmacen.getNombre();
 		//this.descripcion = dataAlmacen.getDescripcion();
 		

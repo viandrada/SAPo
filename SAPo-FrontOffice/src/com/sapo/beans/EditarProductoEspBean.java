@@ -37,11 +37,11 @@ public class EditarProductoEspBean {
 		this.fotos = new ArrayList<DataImagen>();
 	}
 
-	/* Categorías para mostrar en los combo box */
-	private List<DataCategoria> listDataCat;// Categorías del usuario
-	private List<DataCategoria> listDataCatGeneticas;// Categorías genéricas
+	/* Categorï¿½as para mostrar en los combo box */
+	private List<DataCategoria> listDataCat;// Categorï¿½as del usuario
+	private List<DataCategoria> listDataCatGeneticas;// Categorï¿½as genï¿½ricas
 
-	public String nombreCatSeleccionada;// Nombre de la categoría en caso de
+	public String nombreCatSeleccionada;// Nombre de la categorï¿½a en caso de
 										// crear una nueva
 
 	private DataProducto productoAEditar;
@@ -299,7 +299,7 @@ public class EditarProductoEspBean {
 		}
 	}
 
-	// Para agregar atributo genérico nuevo a la lista.
+	// Para agregar atributo genï¿½rico nuevo a la lista.
 	public String add() {
 		Atributo a = new Atributo();
 		a.setNombre(this.nombreAtr);
@@ -348,7 +348,7 @@ public class EditarProductoEspBean {
 
 		DataCategoria dataCategoria = new DataCategoria();
 
-		// Procesando categoría...
+		// Procesando categorï¿½a...
 		if (this.nombreCatSeleccionada == null
 				|| this.nombreCatSeleccionada.isEmpty()) {
 			dataCategoria.setIdCategoria(this.productoAEditar.getIdCategoria());
@@ -358,17 +358,17 @@ public class EditarProductoEspBean {
 			dataCategoria.setEmailUsuario(this.usuarioLogueado.getEmail());
 		}
 
-		// Conversión de atributos genéricos a json
+		// Conversiï¿½n de atributos genï¿½ricos a json
 		Gson gson = new Gson();
 		this.atributosVista.addAll(this.getAtributosNuevosVista());
 		String json = gson.toJson(this.getAtributosVista());// Se incluyen los
-															// que agregó el
+															// que agregï¿½ el
 															// usuario a los que
-															// ya tenía el
-															// genérico.
+															// ya tenï¿½a el
+															// genï¿½rico.
 		System.out.println(json);
 		this.productoAEditar.setAtributos(json);
-		// Fin de conversión a json
+		// Fin de conversiï¿½n a json
 
 		// Procesando imagenes...
 		DataImagen dataImg = new DataImagen();
@@ -428,7 +428,11 @@ public class EditarProductoEspBean {
 		this.usuarioLogueado.generarNotificaciones();
 		this.usuarioLogueado.obtenerNotificaciones();
 		
-		return "/index.xhtml";
+		nav.setRedirectTo("almacen.xhtml");
+		return "index?faces-redirect=true";
+		
+		//nav.setRedirectTo("almacen.xhtml");
+		//return "/index.xhtml";
 
 	}
 }

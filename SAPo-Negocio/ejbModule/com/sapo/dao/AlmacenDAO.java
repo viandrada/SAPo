@@ -75,7 +75,7 @@ public class AlmacenDAO {
 
 		List<Almacen> lisR = new LinkedList<Almacen>();
 		try {
-			listaAlmacenes = em.createQuery("SELECT a FROM Almacen a")
+			listaAlmacenes = em.createQuery("SELECT a FROM Almacen a WHERE a.estaActivo != FALSE")
 					.getResultList();
 			if (!listaAlmacenes.isEmpty()) {
 				for (Almacen a : listaAlmacenes) {
@@ -119,6 +119,30 @@ public class AlmacenDAO {
 		}
 		return cant;
 	}
+	
+	public int getCantAlmacenesUsuarioHabilitados(int idUser) {
+		
+		List<Almacen> listaAlmacenes = new LinkedList<Almacen>();
+		List<Usuario> listaUsu = new LinkedList<Usuario>();
+		int cant = 0;
+		try {
+			listaAlmacenes = em.createQuery("SELECT a FROM Almacen a WHERE a.estaActivo != FALSE").getResultList();
+			if (!listaAlmacenes.isEmpty()) {
+				for (Almacen a : listaAlmacenes) {
+					// listaUsu=a.getListaUsuariosPropietarios();
+					if (a.getPropietario().getIdUsuario()==idUser){
+						cant++;
+					}
+				}
+			}
+
+		} catch (Exception excep) {
+			throw excep;
+		}
+		return cant;
+	}
+	
+	
 	
 	/*
 	 * Obtiene una lista con los almacenes y sus históricos de un usuario.
