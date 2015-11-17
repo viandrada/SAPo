@@ -15,6 +15,7 @@ import com.datatypes.DataCategoria;
 import com.datatypes.DataImagen;
 import com.datatypes.DataNotificacion;
 import com.datatypes.DataNotificacionConfig;
+import com.datatypes.DataNotificacionGenericaConfig;
 import com.datatypes.DataProducto;
 import com.datatypes.DataComentario;
 import com.datatypes.DataReporteAlmacen;
@@ -29,6 +30,7 @@ import com.sapo.entidades.Categoria;
 import com.sapo.entidades.Imagen;
 import com.sapo.entidades.Notificacion;
 import com.sapo.entidades.NotificacionConfig;
+import com.sapo.entidades.NotificacionGenericaConfig;
 import com.sapo.entidades.Producto;
 import com.sapo.entidades.ProductoGenerico;
 import com.sapo.entidades.Comentario;
@@ -311,5 +313,19 @@ public class Fabrica {
 			dataNotificacionesConfig.add(dn);
 		}
 		return dataNotificacionesConfig;
+	}
+	
+	public List<DataNotificacionGenericaConfig> toDataNotificacionGenericaConfig(
+			List<NotificacionGenericaConfig> configuraciones) {
+		List<DataNotificacionGenericaConfig> dataNotificacionesGenericaConfig = new ArrayList<DataNotificacionGenericaConfig>();
+		for (int i = 0; i < configuraciones.size(); i++) {
+			DataNotificacionGenericaConfig dn = new DataNotificacionGenericaConfig();
+			dn.setIdNotificacionGenericaConfig(configuraciones.get(i).getIdNotificacionGenericaConfig());
+			dn.setNombreParametro(configuraciones.get(i).getNombreParametro());
+			dn.setValor( configuraciones.get(i).getValor());
+			dn.setActiva(configuraciones.get(i).isActiva());
+			dataNotificacionesGenericaConfig.add(dn);
+		}
+		return dataNotificacionesGenericaConfig;
 	}
 }
