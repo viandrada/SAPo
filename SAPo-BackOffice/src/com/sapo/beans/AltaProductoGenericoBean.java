@@ -10,7 +10,6 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.event.AjaxBehaviorEvent;
-import javax.faces.event.ValueChangeEvent;
 import javax.servlet.http.Part;
 
 //import org.primefaces.event.SelectEvent;
@@ -18,7 +17,6 @@ import javax.servlet.http.Part;
 import com.datatypes.DataCategoria;
 import com.datatypes.DataImagen;
 import com.datatypes.DataProducto;
-import com.datatypes.TipoDato;
 import com.google.gson.Gson;
 import com.sapo.ejb.CategoriaNegocio;
 import com.sapo.ejb.ProductoNegocio;
@@ -207,6 +205,10 @@ public class AltaProductoGenericoBean {
 		this.tipoDatoList.add("Numero");
 		this.tipoDatoList.add("Fecha");
 		this.tipoDato = "Texto";
+	}
+	
+	public void initPromover(String nombre){
+		this.setNombre(nombre);
 	}
 
 	public String altaProductoGenerico() {
