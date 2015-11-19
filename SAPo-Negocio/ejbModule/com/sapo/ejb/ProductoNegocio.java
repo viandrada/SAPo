@@ -116,20 +116,25 @@ public class ProductoNegocio {
 		dataProducto.setNombreCategoria(producto.getCategoria().getNombre());
 		// dataProducto.setIdUsuario(producto.getUsuario().getIdUsuario());
 		List<DataImagen> imgs = new ArrayList<DataImagen>();
-		for (int i = 0; i < producto.getFoto().size(); i++) {
-			DataImagen im = new DataImagen();
-			if (producto.getFoto() != null) {
-				im.setIdImagen(producto.getFoto().get(i).getIdImagen());
-				im.setDatos(producto.getFoto().get(i).getDatos());
-				im.setMime(producto.getFoto().get(i).getMime());
-				im.setNombre(producto.getFoto().get(i).getNombre());
-			} else {
-				im.setIdImagen(1);
+		if (producto.getFoto().size() != 0) {
+			for (int i = 0; i < producto.getFoto().size(); i++) {
+				DataImagen im = new DataImagen();
+				if (producto.getFoto() != null) {
+					im.setIdImagen(producto.getFoto().get(i).getIdImagen());
+					im.setDatos(producto.getFoto().get(i).getDatos());
+					im.setMime(producto.getFoto().get(i).getMime());
+					im.setNombre(producto.getFoto().get(i).getNombre());
+					imgs.add(im);
+				}
 			}
+		} else {
+			DataImagen im = new DataImagen();
+			im.setIdImagen(1);
 			imgs.add(im);
 		}
+
 		dataProducto.setFotos(imgs);
-		dataProducto.setFotos(toDataImagen(producto.getFoto()));
+		//dataProducto.setFotos(toDataImagen(producto.getFoto()));
 
 		dataProducto.setIdHermano(producto.getIdHermano());// //////////////////////////////////////////////////
 

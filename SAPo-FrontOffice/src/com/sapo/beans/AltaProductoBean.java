@@ -392,7 +392,7 @@ public class AltaProductoBean {
 		// Fin de conversiï¿½n a json
 
 		// Procesando imagenes...
-		if (this.foto != null) {
+		/*if (this.foto != null) {
 			DataImagen dataImg = new DataImagen();
 			dataImg.setDatos(PartToByteArrayConverter.toByteArray(this.foto));
 			this.getFotos().add(dataImg);
@@ -411,7 +411,7 @@ public class AltaProductoBean {
 			DataImagen dataImg = new DataImagen();
 			dataImg.setDatos(PartToByteArrayConverter.toByteArray(this.foto4));
 			this.getFotos().add(dataImg);
-		}
+		}*/
 
 		this.dataProducto.setFotos(this.fotos);
 
@@ -442,6 +442,7 @@ public class AltaProductoBean {
 		System.out.println(format.format(this.valorAtributoFecha));
 	}
 
+	/* Ésto es para agregar atributos genéricos */
 	public String add() {
 		Atributo a = new Atributo();
 		a.setNombre(this.getNombreAtr());
@@ -471,12 +472,13 @@ public class AltaProductoBean {
 		return null;
 	}
 
-	/* Probando subir imagenes con Richfaces */
+	/* Ésto es para subir imagenes con Richfaces */
 	public void paint(OutputStream stream, Object object) throws IOException {
 		stream.write(getFotos().get((Integer) object).getDatos());
 		stream.close();
 	}
 
+	/* Ésto es para subir imagenes con Richfaces */
 	public void listener(FileUploadEvent event) throws Exception {
 		UploadedFile item = event.getUploadedFile();
 		DataImagen file = new DataImagen();
@@ -485,15 +487,18 @@ public class AltaProductoBean {
 		fotos.add(file);
 	}
 
+	/* Ésto es para subir imagenes con Richfaces */
 	public String clearUploadData() {
 		fotos.clear();
 		return null;
 	}
 
+	/* Ésto es para subir imagenes con Richfaces */
 	public long getTimeStamp() {
 		return System.currentTimeMillis();
 	}
 	
+	/* Ésto es para subir imagenes con Richfaces */
     public int getSize() {
         if (getFotos().size() > 0) {
             return getFotos().size();

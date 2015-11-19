@@ -1,5 +1,7 @@
 package com.sapo.beans;
 
+import java.io.IOException;
+import java.io.OutputStream;
 import java.lang.reflect.Type;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -16,11 +18,12 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.event.AjaxBehaviorEvent;
 import javax.servlet.http.Part;
 
+import org.richfaces.event.FileUploadEvent;
+import org.richfaces.model.UploadedFile;
+
 import com.datatypes.DataAlmacen;
-import com.datatypes.DataCategoria;
 import com.datatypes.DataImagen;
 import com.datatypes.DataProducto;
-import com.datatypes.DataUsuario;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.sapo.ejb.ProductoNegocio;
@@ -330,7 +333,7 @@ public class AltaProductoConPlantillaBean {
 		// Fin de conversión a json
 		
 		// Procesando imagenes...
-		if (this.foto != null) {
+		/*if (this.foto != null) {
 			DataImagen dataImg = new DataImagen();
 			dataImg.setDatos(PartToByteArrayConverter.toByteArray(this.foto));
 			this.getFotos().add(dataImg);
@@ -349,7 +352,7 @@ public class AltaProductoConPlantillaBean {
 			DataImagen dataImg = new DataImagen();
 			dataImg.setDatos(PartToByteArrayConverter.toByteArray(this.foto4));
 			this.getFotos().add(dataImg);
-		}
+		}*/
 
 		//Si no sube imagen, se guarda la del genérico.
 		if(this.fotos.size() == 0){
@@ -361,4 +364,39 @@ public class AltaProductoConPlantillaBean {
 		
 		this.service.altaProductoDesdePlantilla(this.productoNuevo, dataAlmacen);
 	}
+	
+	/* Ésto es para subir imagenes con Richfaces */
+	public void paint(OutputStream stream, Object object) throws IOException {
+		stream.write(getFotos().get((Integer) object).getDatos());
+		stream.close();
+	}
+
+	/* Ésto es para subir imagenes con Richfaces */
+	public void listener(FileUploadEvent event) throws Exception {
+		UploadedFile item = event.getUploadedFile();
+		DataImagen file = new DataImagen();
+		file.setNombre(item.getName());
+		file.setDatos(item.getData());
+		fotos.add(file);
+	}
+
+	/* Ésto es para subir imagenes con Richfaces */
+	public String clearUploadData() {
+		fotos.clear();
+		return null;
+	}
+
+	/* Ésto es para subir imagenes con Richfaces */
+	public long getTimeStamp() {
+		return System.currentTimeMillis();
+	}
+	
+	/* Ésto es para subir imagenes con Richfaces */
+    public int getSize() {
+        if (getFotos().size() > 0) {
+            return getFotos().size();
+        } else {
+            return 0;
+        }
+    }
 }

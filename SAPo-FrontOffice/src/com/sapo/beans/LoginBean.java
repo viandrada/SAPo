@@ -235,9 +235,17 @@ public class LoginBean {
 	}
 
 	public void logoutGmail() {
-		FacesContext.getCurrentInstance().getExternalContext()
-		.invalidateSession();
-		new LoginBean();
+		
+		this.email = null;
+		this.idUsuario = 0;
+		this.nombre = null;
+		this.premium = false;
+		this.redirect = "home.xhtml";
+		this.logueado = false;
+		this.contadorLogin = 0;
+		this.estilo = "areaTrabajo.css";
+		this.googleLogin = false;
+		
 		this.shownLogin = true;
 		this.nav.setRedirectTo("home.xhtml");
 	}

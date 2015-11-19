@@ -18,252 +18,317 @@
             overflow: auto;
         }
     </h:outputStylesheet>
-	<div class="container-fluid">
+	<h:outputStylesheet name="bootstrap/css/formulario.css" />
+	<h:outputScript name="js/formulario.js" />
+	<div class="container">
 		<div class="row">
-			<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
-				<h1>Producto nuevo</h1>
-			</div>
-			<h:form>
-				<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
-					<h:commandLink action="#{navigationAreaBean.goTo('almacen.xhtml')}">
-						<i class="fa fa-times fa-2x">Cerrar</i>
-					</h:commandLink>
-				</div>
-			</h:form>
+			<h2>Producto nuevo</h2>
 		</div>
+		<div class="row">
+			<section>
+				<div class="wizard">
+					<div class="wizard-inner">
+						<div class="connecting-line"></div>
+						<ul class="nav nav-tabs" role="tablist">
 
-		<h:messages id="messages" globalOnly="true" />
-		<h:form id="altaProducto" rendered="true"
-			enctype="multipart/form-data">
-			<div class="row">
-				<div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
+							<li role="presentation" class="active"><a href="#step1"
+								data-toggle="tab" aria-controls="step1" role="tab"
+								title="Paso 1"> <span class="round-tab"> <i
+										class="glyphicon glyphicon-pencil"></i>
+								</span>
+							</a></li>
 
+							<li role="presentation" class="disabled"><a href="#step2"
+								data-toggle="tab" aria-controls="step2" role="tab"
+								title="Paso 2"> <span class="round-tab"> <i
+										class="glyphicon glyphicon-pencil"></i>
+								</span>
+							</a></li>
+							<li role="presentation" class="disabled"><a href="#step3"
+								data-toggle="tab" aria-controls="step3" role="tab"
+								title="Paso 3"> <span class="round-tab"> <i
+										class="glyphicon glyphicon-picture"></i>
+								</span>
+							</a></li>
 
-					<!-- Nombre, stock y precio -->
-					<div class="row">
-						<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
-							<div class="form-group">
-								<h:inputText class="form-control input-lg" id="inputNombre"
-									value="#{altaProductoBean.nombre}" a:placeholder="Nombre">
-									<f:validateBean for="inputNombre" />
-								</h:inputText>
-								<h:message id="inputTextMessage" for="inputNombre"
-									errorStyle="color:red;"></h:message>
-							</div>
-						</div>
-						<div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
-							<div class="row">
-								<div class="form-group">
-									<div class="col-xs-12 col-sm-12 col-md-2 col-lg-2">
-										<h:outputText value="Stock " />
-									</div>
-									<div class="col-xs-12 col-sm-12 col-md-5 col-lg-5">
-										<h:inputText class="form-control input-lg" id="inputStock"
-											value="#{altaProductoBean.stock}">
-											<f:validateBean for="inputStock" />
-										</h:inputText>
-										<h:message id="inputTextMessageStock" for="inputStock"
-											errorStyle="color:red;"></h:message>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="col-xs-12 col-sm-12 col-md-5 col-lg-5">
-							<div class="row">
-								<div class="col-xs-12 col-sm-12 col-md-2 col-lg-2">
-									<h:outputText value="Precio " />
-								</div>
-								<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-									<div class="form-group">
-										<h:inputText class="form-control input-lg" id="inputPrecio"
-											value="#{altaProductoBean.precio}" a:placeholder="Precio">
-											<f:validateBean for="inputPrecio" />
-										</h:inputText>
-										<h:message id="inputTextMessagePrecio" for="inputPrecio"
-											errorStyle="color:red;"></h:message>
-									</div>
-								</div>
-							</div>
-						</div>
+							<li role="presentation" class="disabled"><a href="#complete"
+								data-toggle="tab" aria-controls="complete" role="tab"
+								title="Fin"> <span class="round-tab"> <i
+										class="glyphicon glyphicon-ok"></i>
+								</span>
+							</a></li>
+						</ul>
 					</div>
 
-					<!-- Categoría -->
-					<div class="row">
-						<!-- div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
-						<div class="form-group">
-							<label for="sel1">Genérica:</label>
-							<h:selectOneMenu value="#{altaProductoBean.idCatSeleccionada}"
-								class="form-control" id="sel">
-								<f:selectItems value="#{altaProductoBean.listDataCatGeneticas}"
-									var="c2" itemValue="#{c2.idCategoria}" itemLabel="#{c2.nombre}" />
-							</h:selectOneMenu>
+					<h:form role="form" id="altaProducto">
+						<div class="tab-content">
+							<div class="tab-pane active" role="tabpanel" id="step1">
+								<h3>Datos principales</h3>
+								<div class="row">
+									<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+
+
+										<!-- Nombre, stock y precio -->
+										<div class="row">
+											<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+												<div class="form-group">
+													<h:inputText class="form-control input-lg" id="inputNombre"
+														value="#{altaProductoBean.nombre}" a:placeholder="Nombre">
+														<f:validateBean for="inputNombre" />
+													</h:inputText>
+													<h:message id="inputTextMessage" for="inputNombre"
+														errorStyle="color:red;"></h:message>
+												</div>
+											</div>
+											<div class="col-xs-6 col-sm-6 col-md-2 col-lg-2">
+												<div class="row">
+													<div class="form-group">
+														<div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
+															<h:outputText value="Stock " />
+														</div>
+														<div class="col-xs-12 col-sm-12 col-md-9 col-lg-9">
+															<h:inputText class="form-control input-lg"
+																id="inputStock" value="#{altaProductoBean.stock}">
+																<f:validateBean for="inputStock" />
+															</h:inputText>
+															<h:message id="inputTextMessageStock" for="inputStock"
+																errorStyle="color:red;"></h:message>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="col-xs-6 col-sm-6 col-md-5 col-lg-5">
+												<div class="row">
+													<div class="col-xs-12 col-sm-12 col-md-2 col-lg-2">
+														<h:outputText value="Precio " />
+													</div>
+													<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+															<div class="form-group input-group">
+																<span class="input-group-addon">$</span>
+																<h:inputText class="form-control"
+																	id="inputPrecio" value="#{altaProductoBean.precio}"
+																	a:placeholder="Precio">
+																	<f:validateBean for="inputPrecio" />
+																</h:inputText>
+																<h:message id="inputTextMessagePrecio" for="inputPrecio"
+																	errorStyle="color:red;"></h:message>
+															</div>
+													</div>
+												</div>
+											</div>
+										</div>
+
+										<!-- Categoría -->
+										<div class="row">
+											<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+												<div class="form-group">
+													<label for="sel1">Categoría:</label>
+													<h:selectOneMenu
+														value="#{altaProductoBean.idCatSeleccionada}"
+														class="form-control" id="sel123">
+														<f:selectItems value="#{altaProductoBean.listDataCat}"
+															var="c" itemValue="#{c.idCategoria}"
+															itemLabel="#{c.nombre}" />
+													</h:selectOneMenu>
+												</div>
+											</div>
+											<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+												<div class="form-group">
+													<label for="sel1">Crear nueva:</label>
+													<h:inputText class="form-control" id="inputCatNueva"
+														value="#{altaProductoBean.catNueva}"
+														a:placeholder="Ingrese el nombre">
+													</h:inputText>
+												</div>
+											</div>
+										</div>
+										<!-- Fin categoría -->
+
+										<hr style="border-width: 3px;" />
+										<!-- Separador -->
+
+										<div class="form-group">
+											<h:inputTextarea class="form-control" id="inputDescripcion"
+												value="#{altaProductoBean.descripcion}" a:maxlength="500"
+												rows="5" a:placeholder="Escribe una descripcion aqui...">
+												<f:validateBean for="inputDescripcion" />
+											</h:inputTextarea>
+											<h:message id="inputTextMessageDescripcion"
+												for="inputDescripcion" errorStyle="color:red;"></h:message>
+										</div>
+
+									</div>
+								</div>
+								<ul class="list-inline pull-right">
+									<li><button type="button"
+											class="btn btn-primary next-step">Continuar</button></li>
+								</ul>
+							</div>
+							<div class="tab-pane" role="tabpanel" id="step2">
+								<h3>Atributos</h3>
+								<div class="row">
+									<h:dataTable value="#{altaProductoBean.atributosVista}"
+										var="item" id="tablaAtributos" class="table">
+										<h:column>
+											<f:facet name="header">Nombre</f:facet>
+											<h:outputText value="#{item.nombre}" />
+										</h:column>
+										<h:column>
+											<f:facet name="header">Tipo de dato</f:facet>
+											<h:outputText value="#{item.tipoDato}" />
+										</h:column>
+										<h:column>
+											<f:facet name="header">Valor</f:facet>
+											<h:outputText value="#{item.valor}" />
+										</h:column>
+									</h:dataTable>
+
+									<!-- Atributos genericos -->
+									<h:panelGroup id="atributos">
+										<div class="row">
+											<div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
+												<div class="form-group">
+													<h:inputText class="form-control" id="inputNombreAtr"
+														value="#{altaProductoBean.nombreAtr}"
+														a:placeholder="Nombre del atributo">
+														<f:ajax resetValues="true" />
+													</h:inputText>
+												</div>
+											</div>
+											<div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
+												<div class="form-group">
+													<h:selectOneMenu value="#{altaProductoBean.tipoDataAtr}"
+														class="form-control" id="inputTipoDatoAtr"
+														onchange="mostrarComponente()">
+														<f:selectItems value="#{altaProductoBean.tipoDatoList}"
+															var="e" itemValue="#{e}" itemLabel="#{e}"
+															id="tipoDatoSelect" />
+														<f:ajax event="change"
+															listener="#{altaProductoBean.comboChangeListener}"></f:ajax>
+													</h:selectOneMenu>
+												</div>
+											</div>
+											<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+												<div class="form-group" id="atributoTexto"
+													style="display: block;">
+													<h:inputText class="form-control" id="inputValorAtr"
+														value="#{altaProductoBean.valorAtr}" a:placeholder="Valor">
+														<f:ajax resetValues="true" />
+													</h:inputText>
+												</div>
+												<div class="form-group" id="atributoCalendario"
+													style="display: none;">
+													<rich:calendar
+														value="#{altaProductoBean.valorAtributoFecha}" id="cal"
+														pattern="dd/MM/yyyy">
+														<f:ajax event="change"
+															listener="#{altaProductoBean.handleDateSelect}"></f:ajax>
+													</rich:calendar>
+												</div>
+
+												<div class="form-group" id="atributoNumero"
+													style="display: none;">
+													<h:inputText class="form-control" id="atributoNumero"
+														value="#{altaProductoBean.valorAtributoNumero}"
+														a:placeholder="Valor">
+														<f:ajax resetValues="true" />
+													</h:inputText>
+												</div>
+											</div>
+											<div class="col-xs-12 col-sm-12 col-md-3 col-lg-2">
+												<h:commandButton class="btn btn-primary" value="Agregar"
+													actionListener="#{altaProductoBean.add}">
+													<f:ajax execute="@this" render="tablaAtributos atributos" />
+												</h:commandButton>
+											</div>
+										</div>
+									</h:panelGroup>
+									<!-- Fin de: Atributos genericos -->
+								</div>
+								<ul class="list-inline pull-right">
+									<li><button type="button"
+											class="btn btn-default prev-step">Anterior</button></li>
+									<li><button type="button"
+											class="btn btn-default next-step">Saltar</button></li>
+									<li><button type="button"
+											class="btn btn-primary next-step">Continuar</button></li>
+								</ul>
+							</div>
+							<div class="tab-pane" role="tabpanel" id="step3">
+								<h3>Imágenes</h3>
+								<div class="row">
+									<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+										<rich:fileUpload
+											fileUploadListener="#{altaProductoBean.listener}"
+											style="width:100%;" id="upload"
+											acceptedTypes=".jpg, .gif, .png, .bmp"
+											ontyperejected="alert('Only JPG, GIF, PNG and BMP files are accepted');"
+											maxFilesQuantity="5">
+											<a4j:ajax event="uploadcomplete" execute="@none"
+												render="info" />
+										</rich:fileUpload>
+									</div>
+									<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+										<h:panelGroup id="info" layout="block" style="width: auto;">
+											<rich:panel bodyClass="info">
+												<f:facet name="header">
+													<h:outputText value="Fotos cargadas" />
+												</f:facet>
+												<h:outputText value="No hay imagenes cargadas"
+													rendered="#{altaProductoBean.size==0}" />
+												<rich:dataGrid columns="1" value="#{altaProductoBean.fotos}"
+													var="file" rowKeyVar="row">
+													<rich:panel bodyClass="rich-laguna-panel-no-header">
+														<h:panelGrid columns="2">
+															<a4j:mediaOutput element="img" mimeType="image/jpeg"
+																createContent="#{altaProductoBean.paint}" value="#{row}"
+																style="height:15.5em;" cacheable="false">
+																<f:param value="#{altaProductoBean.timeStamp}"
+																	name="time" />
+															</a4j:mediaOutput>
+															<h:panelGrid columns="2">
+																<h:outputText value="Nombre:" />
+																<h:outputText value=" #{file.nombre}" />
+															</h:panelGrid>
+														</h:panelGrid>
+													</rich:panel>
+												</rich:dataGrid>
+											</rich:panel>
+											<br />
+											<a4j:commandButton
+												action="#{altaProductoBean.clearUploadData}"
+												render="info, upload" value="Limpiar fotos cargadas"
+												rendered="#{altaProductoBean.size>0}" />
+										</h:panelGroup>
+									</div>
+								</div>
+								<ul class="list-inline pull-right">
+									<li><button type="button"
+											class="btn btn-default prev-step">Anterior</button></li>
+									<li><button type="button"
+											class="btn btn-default next-step">Saltar</button></li>
+									<li><button type="button"
+											class="btn btn-primary btn-info-full next-step">Continuar</button></li>
+								</ul>
+							</div>
+							<div class="tab-pane" role="tabpanel" id="complete">
+								<h3>Completo!</h3>
+								<p>Haz completado todos los pasos correctamente. Haz click
+									en Guardar para crear tu producto.</p>
+
+								<div class="row">
+									<h:commandButton class="btn btn-primary" value="Crear"
+										action="#{navigationAreaBean.goTo('almacen.xhtml')}"
+										actionListener="#{altaProductoBean.altaProducto}">
+									</h:commandButton>
+								</div>
+							</div>
+							<div class="clearfix"></div>
 						</div>
-					</div-->
-						<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
-							<div class="form-group">
-								<label for="sel1">Categoría:</label>
-								<h:selectOneMenu value="#{altaProductoBean.idCatSeleccionada}"
-									class="form-control" id="sel123">
-									<f:selectItems value="#{altaProductoBean.listDataCat}" var="c"
-										itemValue="#{c.idCategoria}" itemLabel="#{c.nombre}" />
-								</h:selectOneMenu>
-							</div>
-						</div>
-						<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
-							<div class="form-group">
-								<label for="sel1">Crear nueva:</label>
-								<h:inputText class="form-control" id="inputCatNueva"
-									value="#{altaProductoBean.catNueva}"
-									a:placeholder="Ingrese el nombre">
-								</h:inputText>
-							</div>
-						</div>
-					</div>
-					<!-- Fin categoría -->
-
-					<hr style="border-width: 3px;" />
-					<!-- Separador -->
-
-					<div class="form-group">
-						<h:inputTextarea class="form-control" id="inputDescripcion"
-							value="#{altaProductoBean.descripcion}" a:maxlength="500"
-							rows="5" a:placeholder="Escribe una descripcion aqui...">
-							<f:validateBean for="inputDescripcion" />
-						</h:inputTextarea>
-						<h:message id="inputTextMessageDescripcion" for="inputDescripcion"
-							errorStyle="color:red;"></h:message>
-					</div>
-
-
-					<h:dataTable value="#{altaProductoBean.atributosVista}" var="item"
-						id="tablaAtributos" class="table">
-						<h:column>
-							<f:facet name="header">Nombre</f:facet>
-							<h:outputText value="#{item.nombre}" />
-						</h:column>
-						<h:column>
-							<f:facet name="header">Tipo de dato</f:facet>
-							<h:outputText value="#{item.tipoDato}" />
-						</h:column>
-						<h:column>
-							<f:facet name="header">Valor</f:facet>
-							<h:outputText value="#{item.valor}" />
-						</h:column>
-					</h:dataTable>
-
-					<!-- Atributos genericos -->
-					<h:panelGroup id="atributos">
-						<div class="row">
-							<div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
-								<div class="form-group">
-									<h:inputText class="form-control" id="inputNombreAtr"
-										value="#{altaProductoBean.nombreAtr}"
-										a:placeholder="Nombre del atributo">
-										<f:ajax resetValues="true" />
-									</h:inputText>
-								</div>
-							</div>
-							<div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
-								<div class="form-group">
-									<h:selectOneMenu value="#{altaProductoBean.tipoDataAtr}"
-										class="form-control" id="inputTipoDatoAtr"
-										onchange="mostrarComponente()">
-										<f:selectItems value="#{altaProductoBean.tipoDatoList}"
-											var="e" itemValue="#{e}" itemLabel="#{e}" id="tipoDatoSelect" />
-										<f:ajax event="change"
-											listener="#{altaProductoBean.comboChangeListener}"></f:ajax>
-									</h:selectOneMenu>
-								</div>
-							</div>
-							<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
-								<div class="form-group" id="atributoTexto"
-									style="display: block;">
-									<h:inputText class="form-control" id="inputValorAtr"
-										value="#{altaProductoBean.valorAtr}" a:placeholder="Valor">
-										<f:ajax resetValues="true" />
-									</h:inputText>
-								</div>
-								<div class="form-group" id="atributoCalendario"
-									style="display: none;">
-									<rich:calendar value="#{altaProductoBean.valorAtributoFecha}"
-										id="cal" pattern="dd/MM/yyyy">
-										<f:ajax event="change"
-											listener="#{altaProductoBean.handleDateSelect}"></f:ajax>
-									</rich:calendar>
-								</div>
-
-								<div class="form-group" id="atributoNumero"
-									style="display: none;">
-									<h:inputText class="form-control" id="atributoNumero"
-										value="#{altaProductoBean.valorAtributoNumero}"
-										a:placeholder="Valor">
-										<f:ajax resetValues="true" />
-									</h:inputText>
-								</div>
-							</div>
-							<div class="col-xs-12 col-sm-12 col-md-3 col-lg-2">
-								<h:commandButton class="btn btn-primary" value="Agregar"
-									actionListener="#{altaProductoBean.add}">
-									<f:ajax execute="@this"
-										render="tablaAtributos atributos" />
-								</h:commandButton>
-							</div>
-						</div>
-					</h:panelGroup>
-					<!-- Fin de: Atributos genericos -->
+					</h:form>
 				</div>
-
-			</div>
-			<div class="row">
-				<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-					<rich:fileUpload fileUploadListener="#{altaProductoBean.listener}"
-						style="width:100%;" id="upload"
-						acceptedTypes=".jpg, .gif, .png, .bmp"
-						ontyperejected="alert('Only JPG, GIF, PNG and BMP files are accepted');"
-						maxFilesQuantity="5">
-						<a4j:ajax event="uploadcomplete" execute="@none" render="info" />
-					</rich:fileUpload>
-				</div>
-				<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-					<h:panelGroup id="info" layout="block" style="width: auto;">
-						<rich:panel bodyClass="info">
-							<f:facet name="header">
-								<h:outputText value="Fotos cargadas" />
-							</f:facet>
-							<h:outputText value="No hay imagenes cargadas"
-								rendered="#{altaProductoBean.size==0}" />
-							<rich:dataGrid columns="1" value="#{altaProductoBean.fotos}"
-								var="file" rowKeyVar="row">
-								<rich:panel bodyClass="rich-laguna-panel-no-header">
-									<h:panelGrid columns="2">
-										<a4j:mediaOutput element="img" mimeType="image/jpeg"
-											createContent="#{altaProductoBean.paint}" value="#{row}"
-											style="width:100px; height:100px;" cacheable="false">
-											<f:param value="#{altaProductoBean.timeStamp}" name="time" />
-										</a4j:mediaOutput>
-										<h:panelGrid columns="2">
-											<h:outputText value="Nombre:" />
-											<h:outputText value="     #{file.nombre}" />
-										</h:panelGrid>
-									</h:panelGrid>
-								</rich:panel>
-							</rich:dataGrid>
-						</rich:panel>
-						<br />
-						<a4j:commandButton action="#{altaProductoBean.clearUploadData}"
-							render="info, upload" value="Limpiar fotos cargadas"
-							rendered="#{altaProductoBean.size>0}" />
-					</h:panelGroup>
-				</div>
-			</div>
-			<div class="row">
-				<h:commandButton class="btn btn-primary" value="Crear"
-					action="#{navigationAreaBean.goTo('almacen.xhtml')}"
-					actionListener="#{altaProductoBean.altaProducto}">
-				</h:commandButton>
-			</div>
-		</h:form>
-
+			</section>
+		</div>
 	</div>
 	<script type="text/javascript">
 
