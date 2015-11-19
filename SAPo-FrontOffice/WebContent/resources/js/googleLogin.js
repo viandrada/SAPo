@@ -27,3 +27,11 @@ function onSignIn(googleUser) {
 	window.location.replace(window.location.href);
 	
 }
+
+function googleLogout(){
+	var xhr = new XMLHttpRequest();
+	window.location.replace("https://accounts.google.com/logout");
+	//window.location.href = "https://accounts.google.com/logout";
+	//window.location.reload();
+	
+}

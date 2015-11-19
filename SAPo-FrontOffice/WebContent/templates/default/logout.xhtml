@@ -6,7 +6,8 @@
 		<h:form>
 			<h:outputText value="#{loginBean.nombre}"></h:outputText>
 			<h:outputText value="|"></h:outputText>
-			<h:commandLink value="Logout" action="#{loginBean.logout}" />
+			<h:commandLink value="Salir" action="#{loginBean.logout}" rendered="#{!loginBean.googleLogin}"/>
+			<h:commandLink value="Salir" onclick="googleLogout()" actionListener="#{loginBean.logout}" rendered="#{loginBean.googleLogin}"/>
 		</h:form>
 	</div>
 </ui:composition>

@@ -45,7 +45,8 @@
 
 				<h:panelGroup id="loginPanel" rendered="#{loginBean.shownLogin}">
 
-					<h:form class="navbar-form navbar-right">
+					<h:form id="inputHiddenForm" class="navbar-form navbar-right">
+						<h:inputHidden id="contadorLogin" value="#{loginBean.contadorLogin}" />
 						<div class="form-group">
 							<h:inputText id="loginEmail" value="#{loginBean.email}"
 								required="true" class="form-control" a:placeholder="Email">
@@ -77,7 +78,7 @@
 					<h:panelGroup class="btn btn-danger col-lg-offset-9" id="notif"
 						rel="popover" title="Notificaciones">
 						<span id="badge" class="badge">#{loginBean.cantNotificaciones}</span>
-						<f:ajax event="click" listener="#{loginBean.leidas}"/>
+						<f:ajax event="click" listener="#{loginBean.leidas}" />
 					</h:panelGroup>
 				</h:panelGroup>
 				<script>

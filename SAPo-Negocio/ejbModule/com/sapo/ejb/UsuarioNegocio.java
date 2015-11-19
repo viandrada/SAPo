@@ -86,12 +86,11 @@ public class UsuarioNegocio {
 		Usuario usuario = new Usuario();
 		DataUsuario usuarioPersistir = new DataUsuario();
 		usuarioPersistir.setEmail(dataUsuario.getEmail());
-		/*usuario = usuarioDAO.getUsuarioPorEmail(dataUsuario.getEmail());
-		if (usuario.getEmail() == null) {
-			Usuario usu = new Usuario();
-			usu.setEmail(dataUsuario.getEmail());
-			usuarioDAO.insertarUsuario(usu);
-		}*/
+		usuarioPersistir.setPremium(false);
+		usuarioPersistir.setEstilo("areaTrabajo.css");
+		usuarioPersistir.setEstaActivo(true);
+		usuarioPersistir.setFecha(new Date());
+		usuarioPersistir.setNombre(dataUsuario.getEmail().split("@")[0]);
 		this.altaUsuario(usuarioPersistir);
 		usuario = usuarioDAO.getUsuarioPorEmail(dataUsuario.getEmail());
 		DataUsuario dUsuario = new DataUsuario();
@@ -99,6 +98,10 @@ public class UsuarioNegocio {
 		dUsuario.setFecha(usuario.getFecha());
 		dUsuario.setIdUsuario(usuario.getIdUsuario());
 		dUsuario.setNombre(usuario.getNombre());
+		dUsuario.setEstaActivo(usuario.getEstaActivo());
+		dUsuario.setEstilo(usuario.getEstilo());
+		dUsuario.setMonto(usuario.getMonto());
+		dUsuario.setPremium(usuario.isPremium());
 		
 		return dUsuario;
 	}
