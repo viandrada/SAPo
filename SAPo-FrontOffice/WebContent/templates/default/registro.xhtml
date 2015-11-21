@@ -4,44 +4,79 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 
 <ui:composition>
+
+
+
 	<div class="container-fluid" id="altaUsuarioContent">
 		<div class="row">
-			<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6" >
+			<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
 				<h:form id="altaUsuario" rendered="true">
 
 					<div class="form-group">
 						<h:outputText value="Nombre : " />
+
 						<h:inputText class="form-control" id="inputNombre"
 							value="#{registroBean.nombre}">
+
 							<f:validateBean for="inputNombre" />
-							<f:ajax event="keyup" render="inputTextMessage" />
+							<f:ajax event="blur" execute="@this" render="inputTextMessage" />
+
 						</h:inputText>
-						<h:message id="inputTextMessage" for="inputNombre" errorStyle="color:red;"></h:message>
+
+						<h:message id="inputTextMessage" for="inputNombre"
+							errorStyle="color:red;"></h:message>
 					</div>
 
-					<div class="form-group">
-						<h:outputText value="Email : " />
+					<div class="form-group" Style="color: red;">
+						<h:outputText value="Email : " style="color:black;" />
 						<h:inputText class="form-control" id="inputEmail"
-							value="#{registroBean.email}">
-							<f:validateBean for="inputEmail" />
-							<f:ajax event="keyup" render="inputTextMessageEmail" />
-						</h:inputText>
-						<h:message id="inputTextMessageEmail" for="inputEmail" errorStyle="color:red;"></h:message>
-					</div>
+							value="#{registroBean.email}"
+							validator="#{registroBean.validateEmail}">
 
+							<f:ajax event="blur" execute="@this"
+								render="inputTextMessageEmail" />
+
+							<f:validateBean for="inputEmail" />
+
+						</h:inputText>
+
+						<h:message id="inputTextMessageEmail" for="inputEmail"
+							errorStyle="color:red;" Style="color:red;"></h:message>
+
+
+					</div>
 
 					<div class="form-group">
-						<h:outputText value="Password : " />
-						<h:inputSecret class="form-control" id="inputPassword" redisplay="true"
-							value="#{registroBean.password}">
-							<f:validateBean for="inputPassword" />
-							<f:ajax event="keyup" render="inputTextMessagePassword" />
+
+						<h:outputText value="Password :" />
+						<h:inputSecret id="password" value="#{registroBean.password}"
+							class="form-control" required="true">
+							<f:validator validatorId="confirmPasswordValidator" />
+							<f:attribute name="confirm"
+								value="#{confirmPassword.submittedValue}" />
+							<f:ajax event="blur" execute="password confirm"
+								render="m_password" />
 						</h:inputSecret>
-						<h:message id="inputTextMessagePassword" for="inputPassword" errorStyle="color:red;"></h:message>
+
+					</div>
+					<div class="form-group">
+						<h:outputText value="Repetir Password :" />
+						<h:inputSecret id="confirm" binding="#{confirmPassword}"
+							class="form-control" required="true">
+							<f:ajax event="blur" execute="password confirm"
+								render="m_password m_confirm" />
+						</h:inputSecret>
+						<h:message id="m_confirm" for="confirm" style="color:red;" />
+						<h:message id="m_password" for="password" style="color:red;" />
 					</div>
 
-					<h:commandButton class="btn btn-primary" value="Crear" type="submit" action="#{registroBean.registrar()}">
+
+					<h:commandButton class="btn btn-success pull-right" value="Crear"
+						type="submit" action="#{registroBean.registrar()}">
 					</h:commandButton>
+
+					<button type="button" class="btn btn-danger pull-left"
+						data-dismiss="modal">Cancelar</button>
 
 				</h:form>
 			</div>

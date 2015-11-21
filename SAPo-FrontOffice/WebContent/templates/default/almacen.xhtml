@@ -117,9 +117,6 @@
 				<h:commandButton value="Nuevo producto (con plantilla)"
 					action="#{navigationAreaBean.goTo('listarProductosGenericos.xhtml')}"
 					class="btn btn-primary"></h:commandButton>
-				<h:commandButton value="Chat"
-					action="#{navigationAreaBean.goTo('chat.xhtml')}"
-					class="btn btn-primary"></h:commandButton>
 				<h:commandButton value="Compartir Almacen"
 					action="#{navigationAreaBean.goTo('compartirAlmacen.xhtml')}"
 					class="btn btn-primary"></h:commandButton>
@@ -200,10 +197,11 @@
 											title="Editar"
 											action="#{editarProductoEspBean.getProducto(item.idProducto)}"
 											actionListener="#{navigationAreaBean.goTo('editarProductoEspecifico.xhtml')}"
-											value="">
+											value="   "
+											class="btn btn-default btn-xs">
 											<i class="fa fa-pencil-square-o"></i>
 										</h:commandLink>
-										<h:commandLink value=" " class="btn btn-danger btn-xs"
+										<h:commandLink value="   " class="btn btn-default btn-xs"
 											onclick="$('#myModalBaja').modal('show');document.getElementById('forBajaModal:idProductoSelec').value='#{item.idProducto}';document.getElementById('forBajaModal:nombreProdSelec').value='#{item.nombre}';"
 											immediate="true">
 											<i class="fa fa-times"></i>
@@ -212,6 +210,8 @@
 									</div>
 									<div class="col-xs-2 col-sm-2 col-md-1 col-lg-1">
 										<h:commandLink data-toggle="tooltip" data-placement="top"
+										 value="   "
+										class="btn btn-default btn-xs"
 											title="Configurar notificaciones"
 											action="#{configurarNotificacionBean.init(item.idProducto)}"
 											actionListener="#{navigationAreaBean.goTo('configurarNotificaciones.xhtml')}">

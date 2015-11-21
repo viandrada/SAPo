@@ -52,6 +52,13 @@ public class UsuarioDAO {
 						"SELECT a FROM Usuario a WHERE a.idUsuario=:idUsuario")
 				.setParameter("idUsuario", idUsuario).getResultList().size() == 1);
 	}
+	
+	public boolean existeUsuario(String email) {
+		return (em
+				.createQuery(
+						"SELECT a FROM Usuario a WHERE a.email=:email")
+				.setParameter("email", email).getResultList().size() == 1);
+	}
 
 	public boolean esPremium(String emailUser){
 		Usuario usr = getUsuarioPorEmail(emailUser);
@@ -85,6 +92,11 @@ public class UsuarioDAO {
 	@SuppressWarnings("unchecked")
 	public List<Usuario> getUsuarios() {
 		return em.createQuery("SELECT u FROM Usuario u").getResultList();
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Usuario> getUsuariosPremium() {
+		return em.createQuery("SELECT u FROM Usuario u WHERE u.premium = TRUE").getResultList();
 	}
 
 	@SuppressWarnings("unchecked")

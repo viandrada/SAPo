@@ -145,4 +145,8 @@ public class UsuarioNegocio {
 		u.setEstilo(estilo);
 		this.usuarioDAO.actualizarUsuario(u);
 	}
+	
+	public boolean existeUsuario(String email){
+		return usuarioDAO.existeUsuario(email);
+	}
 }
