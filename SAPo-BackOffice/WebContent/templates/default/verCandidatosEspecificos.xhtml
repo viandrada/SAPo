@@ -1,0 +1,51 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<ui:composition>
+	<h:outputScript name="js/buscador.js" />
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+				<h1>
+					<h:outputText value="Promover productos" />
+				</h1>
+				<div class="input-group">
+					<span class="input-group-addon">Búsqueda</span> <input id="filter2"
+						type="text" class="form-control" placeholder="Nombre"></input>
+				</div>
+				<div class="table-responsive">
+					<table class="table table-striped table-hover table-condensed">
+						<thead>
+							<tr>
+								<th><h:outputText value="Nombre" /></th>
+								<th><h:outputText value="Repeticiones" /></th>
+								<th><h:outputText value="Promover" /></th>
+							</tr>
+						</thead>
+						<tbody class="searchable">
+							<ui:repeat value="#{promoverEspecificosBean.productosCandidatos}"
+								var="o">
+								<tr>
+									<td><h:outputText value="#{o.nombre}" /></td>
+									<td><h:outputText value="#{o.count}" /></td>
+									<td><h:form id="editarForm">
+											<h:commandLink
+												actionListener="#{navigationBean.goTo('altaProducto.xhtml')}"
+												action="#{altaProductoGenericoBean.initPromover((o.nombre))}"
+												value="">
+												<i class="fa fa-arrow-up fa-2x"></i>
+											</h:commandLink>
+										</h:form></td>
+								</tr>
+							</ui:repeat>
+						</tbody>
+					</table>
+				</div>
+
+			</div>
+		</div>
+	</div>
+</ui:composition>
+</html>

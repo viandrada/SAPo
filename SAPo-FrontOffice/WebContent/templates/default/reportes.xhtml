@@ -2,7 +2,6 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
-	
 	xmlns:p="http://primefaces.org/ui">
 
 <ui:composition>
@@ -32,63 +31,200 @@
 					style="display: none;">
 					<h:outputText class="form-control" id="reportePorAlmacen"
 						value="Reporte 1">
-						
+
 					</h:outputText>
-					<h:selectOneMenu value="Seleccione un almacén"
-						class="form-control" id="inputAlmacenSeleccionado"
-						>
+					<h:selectOneMenu value="#{reportesBean.idAlmacen}"
+						class="form-control" id="inputAlmacenSeleccionado">
 						<f:selectItems value="#{reportesBean.almacenes}" var="e"
-							itemValue="#{e.idAlmacen}" itemLabel="#{e.nombre}" id="listaAlmacenSelect" />
+							itemValue="#{e.idAlmacen}" itemLabel="#{e.nombre}"
+							id="listaAlmacenSelect" />
 
 					</h:selectOneMenu>
 					<h:commandLink value="Ver movimientos de almacén"
-							onclick="document.getElementById('seleccionarReporte:inputUser').value='#{u.idUsuario}';"
-							actionListener="#{reportesBean.iniciarReporteAlmacen(u.idUsuario,e.idAlmacen)}"
-							action="#{navigationBean.goTo('movimientosPorAlmacen.xhtml')}">
-																			
+						actionListener="#{reportesBean.iniciarReporteAlmacen()}">
+						<f:ajax execute="inputAlmacenSeleccionado"
+							render="tablaMovsProdPorAlm" />
+
+
 					</h:commandLink>
-					
+
 				</div>
 				<div class="form-group" id="seleccionReporte2"
 					style="display: none;">
 					<h:outputText class="form-control" id="reportePorFechas"
 						value="Reporte 2">
-						
+
 					</h:outputText>
 					<div class="form-group" id="seleccionCalendarioInicio"
-							style="display: block;">
-							<p:calendar value="#{reportesBean.valorFechaInicio}"
-								pattern="dd/MM/yyyy" id="calInicio">
-								<f:ajax event="dateSelect"
-									listener="#{reportesBean.handleDateSelect}" />
-									<f:validateBean for="calInicio" />
-									<f:ajax resetValues="true" />
-							</p:calendar>
-							<h:message id="inputTextMessageCalendarioInicio" for="calInicio"
-										errorStyle="color:red;"></h:message>
+						style="display: block;">
+						<p:calendar value="#{reportesBean.valorFechaInicio}"
+							pattern="dd/MM/yyyy" id="calInicio">
+							<f:ajax event="dateSelect"
+								listener="#{reportesBean.handleDateSelect}" />
+							<f:validateBean for="calInicio" />
+							<f:ajax resetValues="true" />
+						</p:calendar>
+						<h:message id="inputTextMessageCalendarioInicio" for="calInicio"
+							errorStyle="color:red;"></h:message>
 					</div>
 					<div class="form-group" id="seleccionCalendarioFin"
-							style="display: block;">
-							<p:calendar value="#{reportesBean.valorFechaFin}"
-								pattern="dd/MM/yyyy" id="calFin">
-								<f:ajax event="dateSelect"
-									listener="#{reportesBean.handleDateSelect}" />
-									<f:validateBean for="calFin" />
-									<f:ajax resetValues="true" />
-							</p:calendar>
-							<h:message id="inputTextMessageCalendarioFin" for="calFin"
-										errorStyle="color:red;"></h:message>
+						style="display: block;">
+						<p:calendar value="#{reportesBean.valorFechaFin}"
+							pattern="dd/MM/yyyy" id="calFin">
+							<f:ajax event="dateSelect"
+								listener="#{reportesBean.handleDateSelect}" />
+							<f:validateBean for="calFin" />
+							<f:ajax resetValues="true" />
+						</p:calendar>
+						<h:message id="inputTextMessageCalendarioFin" for="calFin"
+							errorStyle="color:red;"></h:message>
 					</div>
 					<h:commandLink value="Ver movimientos entre fechas"
-							onclick="document.getElementById('seleccionarReporte:inputUser').value='#{u.idUsuario}';"
-							actionListener="#{reportesBean.listaReportesPorFechas(idUsuario, calInicio, calFin)}"
-							action="#{navigationBean.goTo('movimientosPorFecha.xhtml')}">
-																			
+						actionListener="#{reportesBean.iniciarReporteFechas()}">
+						<f:ajax execute="inputAlmacenSeleccionado"
+							render="tablaMovsProdPorFecha" />
+
 					</h:commandLink>
-					
+
 				</div>
 			</div>
+
 		</div>
+
+		<div>
+
+			<div class="container-fluid" id="tablaReporte1"
+				style="display: none;">
+				<h:panelGrid class="row">
+					<h1>Movimientos del usuario por almacén</h1>
+				</h:panelGrid>
+
+				<script type="text/javascript">
+					$(document).ready(function () {				
+					    (function ($) {    					
+					        $('#filter1').keyup(function () {
+					            var rex = new RegExp($(this).val(), 'i');
+					            $('.searchable tr').hide();
+					            $('.searchable tr').filter(function () {
+					                return rex.test($(this).text());
+					            }).show();
+					        })
+				
+					    }(jQuery));
+							
+					});			
+				</script>
+
+				<h:panelGroup id="tablaMovsProdPorAlm" rendered="true">
+					<div class="input-group">
+						<span class="input-group-addon">Buscar:</span> <input id="filter"
+							type="text" class="form-control" placeholder="ProductoPorAlm"></input>
+					</div>
+
+					<table class="table table-striped table-hover">
+						<thead>
+							<tr>
+								<th><h:outputText value="ID Prod" /></th>
+								<th><h:outputText value="Nombre" /></th>
+								<th><h:outputText value="Descripción" /></th>
+								<th><h:outputText value="Fecha Mov" /></th>
+								<th><h:outputText value="Precio" /></th>
+								<th><h:outputText value="Stock" /></th>
+								<th><h:outputText value="Categoría" /></th>
+								<th><h:outputText value="Atributos" /></th>
+								<th><h:outputText value="Tipo Mov" /></th>
+							</tr>
+						</thead>
+						<tbody class="searchable">
+							<ui:repeat value="#{reportesBean.listaReportesPorAlmacen}"
+								var="p">
+								<tr>
+									<td><h:outputText value="#{p.idProducto}" /></td>
+									<td><h:outputText value="#{p.nombre}" /></td>
+									<td><h:outputText value="#{p.descripcion}" /></td>
+									<td><h:outputText value="#{p.fechaMovimiento}" /></td>
+									<td><h:outputText value="#{p.precio}" /></td>
+									<td><h:outputText value="#{p.stock}" /></td>
+									<td><h:outputText value="#{p.nombreCategoria}" /></td>
+									<td><h:outputText value="#{p.atributos}" /></td>
+									<td><h:outputText value="#{p.tipoMovimiento}" /></td>
+								</tr>
+							</ui:repeat>
+						</tbody>
+					</table>
+
+
+				</h:panelGroup>
+			</div>
+
+
+		</div>
+			<div>
+				<div class="container-fluid" id="tablaReporte2"
+				style="display: none;">
+			<h:panelGrid class="row">
+				<h1>Movimientos del usuario por fecha</h1>
+			</h:panelGrid>
+	
+			<script type="text/javascript">
+				$(document).ready(function () {
+				    (function ($) {
+			 					
+				        $('#filter2').keyup(function () {	
+				            var rex = new RegExp($(this).val(), 'i');
+				            $('.searchable2 tr').hide();
+				            $('.searchable2 tr').filter(function () {
+				                return rex.test($(this).text());
+				            }).show();			
+				        }) 	
+				    }(jQuery));		
+				});
+			</script>
+		
+		<h:form id="tablaMovsProdPorFecha" rendered="true">
+			<div class="input-group">
+				<span class="input-group-addon">Buscar:</span> <input id="filter2"
+					type="text" class="form-control" placeholder="ProductoPorFecha"></input>
+			</div>
+
+			<table class="table table-striped table-hover">
+				<thead>
+					<tr>
+						<th><h:outputText value="ID Prod" /></th>
+						<th><h:outputText value="Nombre" /></th>
+						<th><h:outputText value="Descripción" /></th>
+						<th><h:outputText value="Fecha Mov" /></th>
+						<th><h:outputText value="Precio" /></th>
+						<th><h:outputText value="Stock" /></th>
+						<th><h:outputText value="Categoría" /></th>
+						<th><h:outputText value="Atributos" /></th>
+						<th><h:outputText value="Tipo Mov" /></th>
+					</tr>
+					</thead>
+					<tbody class="searchable2">
+						<ui:repeat value="#{reportesBean.listaReportesPorFechas}"
+							var="p">
+							<tr>
+								<td><h:outputText value="#{p.idProducto}" /></td>
+								<td><h:outputText value="#{p.nombre}" /></td>
+								<td><h:outputText value="#{p.descripcion}" /></td>
+								<td><h:outputText value="#{p.fechaMovimiento}" /></td>
+								<td><h:outputText value="#{p.precio}" /></td>
+								<td><h:outputText value="#{p.stock}" /></td>
+								<td><h:outputText value="#{p.nombreCategoria}" /></td>
+								<td><h:outputText value="#{p.atributos}" /></td>
+								<td><h:outputText value="#{p.tipoMovimiento}" /></td>
+							</tr>
+						</ui:repeat>
+					</tbody>
+				</table>
+
+			
+			</h:form>
+		</div>
+		
+		</div>
+
 
 
 
@@ -106,6 +242,8 @@
 
                   document.getElementById('seleccionReporte1').style.display='none';
                   document.getElementById('seleccionReporte2').style.display='none';
+                  document.getElementById('tablaReporte1').style.display='none';
+                  document.getElementById('tablaReporte2').style.display='none';
 
                   switch(tipoDato)
                   {
@@ -113,14 +251,20 @@
                         
                        document.getElementById('seleccionReporte1').style.display='block';
                        document.getElementById('seleccionReporte2').style.display='none';
+                       document.getElementById('tablaReporte1').style.display='block';
+                       document.getElementById('tablaReporte2').style.display='none';
                        break;
                     case "seleccionReporte2":
                         document.getElementById('seleccionReporte2').style.display='block'; 
-                        document.getElementById('seleccionReporte1').style.display='none';     
+                        document.getElementById('seleccionReporte1').style.display='none';   
+                        document.getElementById('tablaReporte1').style.display='none';  
+                        document.getElementById('tablaReporte2').style.display='block';
                         break;
                     default:
                     	document.getElementById('seleccionReporte1').style.display='none';
                 	    document.getElementById('seleccionReporte2').style.display='none';
+                        document.getElementById('tablaReporte1').style.display='none';
+                        document.getElementById('tablaReporte2').style.display='none';
                         break;
                   }
                   

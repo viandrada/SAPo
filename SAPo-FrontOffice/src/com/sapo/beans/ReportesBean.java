@@ -14,6 +14,7 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.event.AjaxBehaviorEvent;
 
 import com.datatypes.DataAlmacen;
+import com.datatypes.DataReporteProducto;
 import com.sapo.ejb.AlmacenNegocio;
 import com.sapo.ejb.ReporteNegocio;
 import com.sapo.utils.Atributo;
@@ -31,8 +32,15 @@ public class ReportesBean {
 	private HashMap<String,String> listaReportes;
 	private boolean sinAlmacenes;
 	private List<DataAlmacen> almacenes;
+	
+	
 	private Date valorFechaInicio;
 	private Date valorFechaFin;
+	int idUsuario;
+	int idAlmacen;
+	private List<DataReporteProducto> listaReportesPorAlmacen;
+	private List<DataReporteProducto> listaReportesPorFechas;
+	
 	
 	@EJB
 	AlmacenNegocio almacenNegocio;
@@ -121,6 +129,40 @@ public class ReportesBean {
 	public void setValorFechaFin(Date valorFechaFin) {
 		this.valorFechaFin = valorFechaFin;
 	}
+	
+	public int getIdUsuario() {
+		return idUsuario;
+	}
+
+	public void setIdUsuario(int idUsuario) {
+		this.idUsuario = idUsuario;
+	}
+
+	public int getIdAlmacen() {
+		return idAlmacen;
+	}
+
+	public void setIdAlmacen(int idAlmacen) {
+		this.idAlmacen = idAlmacen;
+	}
+
+	public List<DataReporteProducto> getListaReportesPorAlmacen() {
+		return listaReportesPorAlmacen;
+	}
+
+	public void setListaReportesPorAlmacen(
+			List<DataReporteProducto> listaReportesPorAlmacen) {
+		this.listaReportesPorAlmacen = listaReportesPorAlmacen;
+	}
+
+	public List<DataReporteProducto> getListaReportesPorFechas() {
+		return listaReportesPorFechas;
+	}
+
+	public void setListaReportesPorFechas(
+			List<DataReporteProducto> listaReportesPorFechas) {
+		this.listaReportesPorFechas = listaReportesPorFechas;
+	}
 
 	@PostConstruct
 	public void init() {
@@ -155,5 +197,14 @@ public class ReportesBean {
 	}
 	
 	
+	public void iniciarReporteAlmacen (){
+		listaReportesPorAlmacen = this.reporteNegocio.
+				buscarHistoricoProdPorUsuarioYAlmacen(this.usuarioLogueado.getIdUsuario(), idAlmacen);		
+	}
+	
+	public void iniciarReporteFechas(){
+		listaReportesPorFechas = this.reporteNegocio.
+				buscarHistoricoProdPorUsuarioEnFecha(this.usuarioLogueado.getIdUsuario(), valorFechaInicio, valorFechaFin);		
+	}
 	
 }

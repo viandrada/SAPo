@@ -24,6 +24,17 @@ public class ComentarioDAO {
 		return em.find(Comentario.class, email);
 	}
 	
+	public Comentario getComentario(int idComentario){
+		return em.find(Comentario.class, idComentario);
+	}
+	
+	public boolean esMiComentario(int idComentario, String email){
+		return (em.createQuery("SELECT a FROM Comentario a WHERE a.idComentario=:idComentario and a.usuario.email=:email")
+				.setParameter("idComentario", idComentario)
+				.setParameter("email", email)
+				.getResultList().size()== 1);
+	}
+	
 	public boolean existeComentario(int idComentario){
 		return (em.createQuery("SELECT a FROM Comentario a WHERE a.idComentario=:idComentario")
 				.setParameter("idComentario", idComentario)

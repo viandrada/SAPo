@@ -113,7 +113,8 @@
 			<h:form>
 				<h:commandButton value="Nuevo producto"
 					action="#{navigationAreaBean.goTo('altaProducto.xhtml')}"
-					actionListener="#{altaProductoBean.init()}" class="btn btn-primary"></h:commandButton>
+					actionListener="#{altaProductoBean.init()}" class="btn btn-primary">
+					<f:actionListener binding="#{atributosProductoBean.init()}"></f:actionListener></h:commandButton>
 				<h:commandButton value="Nuevo producto (con plantilla)"
 					action="#{navigationAreaBean.goTo('listarProductosGenericos.xhtml')}"
 					class="btn btn-primary"></h:commandButton>
@@ -128,6 +129,9 @@
 					class="btn btn-primary"></h:commandButton>
 				<h:commandButton value="Lista de compras"
 					action="#{navigationAreaBean.goTo('listaCompras.xhtml')}"
+					class="btn btn-primary"></h:commandButton>
+					<h:commandButton value="Reportes"
+					action="#{navigationAreaBean.goTo('reportesAtributos.xhtml')}"
 					class="btn btn-primary"></h:commandButton>
 			</h:form>
 		</div>

@@ -7,7 +7,7 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 
 <h:head>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"/>
+	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 	<f:facet name="first">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 		<meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
@@ -17,11 +17,10 @@
 	</f:facet>
 
 	<f:facet name="middle">
+
 		<h:outputScript name="js/jquery-2.1.4.min.js" target="head" />
-		<!-- <h:outputScript name="js/facebookLogin.js" target="head" /> -->
 		<h:outputScript name="js/googleLogin.js" target="head" />
-		<h:outputScript name="bootstrap/js/bootstrap.js" target="head" />
-		<h:outputStylesheet name="bootstrap/css/bootstrap.css" target="head" />
+
 		<h:outputStylesheet name="bootstrap/css/bootstrap.css.map"
 			target="head" />
 		<h:outputStylesheet name="css/jumbotron.css" target="head" />
@@ -47,5 +46,7 @@
 		</div>
 
 	</div>
+	<h:outputStylesheet name="bootstrap/css/bootstrap.css" target="head" />
+	<h:outputScript name="bootstrap/js/bootstrap.js" target="head" />
 </h:body>
 </html>

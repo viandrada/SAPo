@@ -4,10 +4,6 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 
 <ui:composition>
-
-
-
-
 	<aside class="sidebar show perfectScrollbar">
 		<div id="solso-sidebar">
 			<div class="panel-group" id="accordion">
@@ -15,7 +11,8 @@
 					<div class="panel panel-default">
 						<div class="panel-heading" style="color: white" id="heading1">
 							<h4 class="panel-title">
-								<a href="index.xhtml" class="single-item"> <i class="fa fa-home"></i> Principal
+								<a href="index.xhtml" class="single-item"> <i
+									class="fa fa-home"></i> Principal
 								</a>
 							</h4>
 						</div>
@@ -45,7 +42,7 @@
 				<div class="panel panel-default">
 					<div class="panel-heading" style="color: white" id="heading3">
 						<h4 class="panel-title">
-							<a href="#collapse3"> <i class="fa fa-table"></i> Categoria 
+							<a href="#collapse3"> <i class="fa fa-table"></i> Categoria
 							</a>
 						</h4>
 					</div>
@@ -57,7 +54,7 @@
 								<h:commandLink value="Alta-Baja-Edicion"
 									action="#{navigationBean.goTo('ABMCategoria.xhtml')}"
 									class="list-group-item"></h:commandLink>
-								
+
 							</h:form>
 						</div>
 					</div>
@@ -65,7 +62,7 @@
 				<div class="panel panel-default">
 					<div class="panel-heading" style="color: white" id="heading3">
 						<h4 class="panel-title">
-							<a href="#collapse3"> <i class="fa fa-table"></i> Producto 
+							<a href="#collapse3"> <i class="fa fa-table"></i> Producto
 							</a>
 						</h4>
 					</div>
@@ -78,16 +75,41 @@
 									action="#{navigationBean.goTo('altaProducto.xhtml')}"
 									actionListener="#{altaProductoGenericoBean.init()}"
 									class="list-group-item"></h:commandLink>
-								<h:commandLink value="Eliminar - Modificar" action="#{navigationBean.goTo('verProductos.xhtml')}"
+								<h:commandLink value="Eliminar - Modificar"
+									action="#{navigationBean.goTo('verProductos.xhtml')}"
+									class="list-group-item"></h:commandLink>
+								<h:commandLink value="Promover específicos"
+									action="#{navigationBean.goTo('verCandidatosEspecificos.xhtml')}"
 									class="list-group-item"></h:commandLink>
 							</h:form>
 						</div>
 					</div>
 				</div>
+
+				<div class="panel panel-default">
+					<div class="panel-heading" style="color: white" id="heading2">
+						<h4 class="panel-title">
+							<a href="#collapse2"><i class="fa fa-bell"></i>
+								Notificaciones </a>
+						</h4>
+					</div>
+
+					<div id="collapse2" class="panel-collapse collapse in">
+						<div>
+							<h:form>
+								<h:commandLink value="Configurar"
+									action="#{navigationBean.goTo('configurarNotificaciones.xhtml')}"
+									class="list-group-item"></h:commandLink>
+							</h:form>
+						</div>
+					</div>
+				</div>
+
 				<div class="panel panel-default">
 					<div class="panel-heading" style="color: white" id="heading4">
 						<h4 class="panel-title">
-							<a href="#collapse4"> <i class="fa fa-bar-chart-o"></i> Reportes 
+							<a href="#collapse4"> <i class="fa fa-bar-chart-o"></i>
+								Reportes
 							</a>
 						</h4>
 					</div>
@@ -95,14 +117,15 @@
 					<div id="collapse4" class="panel-collapse collapse in">
 						<div>
 							<h:form>
-								<h:commandLink action="#{navigationBean.goTo('reporteUsuarios.xhtml')}" value="Usuarios-Premium-Ganancia"
-									class="list-group-item"></h:commandLink>
-								<h:commandLink action="#{navigationBean.goTo('reporteUsuariosPremium.xhtml')}" value="Ganancia por Mes"
-									class="list-group-item"></h:commandLink>
-								<h:commandLink action="#{navigationBean.goTo('reporteProdGenMasUsado.xhtml')}" value="Producto Genérico más usado"
-									class="list-group-item"></h:commandLink>
-								<h:commandLink action="#" value="Reporte 4"
-									class="list-group-item"></h:commandLink>
+								<h:commandLink
+									action="#{navigationBean.goTo('reporteUsuarios.xhtml')}"
+									value="Usuarios-Premium-Ganancia" class="list-group-item"></h:commandLink>
+								<h:commandLink
+									action="#{navigationBean.goTo('reporteUsuariosPremium.xhtml')}"
+									value="Ganancia por Mes" class="list-group-item"></h:commandLink>
+								<h:commandLink
+									action="#{navigationBean.goTo('reporteProdGenMasUsado.xhtml')}"
+									value="Producto Genérico más usado" class="list-group-item"></h:commandLink>
 							</h:form>
 						</div>
 					</div>

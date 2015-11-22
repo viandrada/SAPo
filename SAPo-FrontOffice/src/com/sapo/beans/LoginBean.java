@@ -46,6 +46,7 @@ public class LoginBean {
 	private boolean shownLogin;
 	private int contadorLogin;
 	private String estilo;
+	private boolean googleLogin;
 
 	public String getEmail() {
 		return email;
@@ -159,6 +160,14 @@ public class LoginBean {
 		this.estilo = estilo;
 	}
 
+	public boolean isGoogleLogin() {
+		return googleLogin;
+	}
+
+	public void setGoogleLogin(boolean googleLogin) {
+		this.googleLogin = googleLogin;
+	}
+
 	@PostConstruct
 	public void init() {
 		this.notificaciones = new ArrayList<DataNotificacion>();
@@ -214,13 +223,33 @@ public class LoginBean {
 	}
 
 	public String logout() {
-		FacesContext.getCurrentInstance().getExternalContext()
-				.invalidateSession();
-		this.shownLogin = true;
-		this.nav.setRedirectTo("home.xhtml");
-		return "/login.xhtml?faces-redirect=true";
+	
+		if (!this.googleLogin) {
+			FacesContext.getCurrentInstance().getExternalContext()
+			.invalidateSession();
+			this.shownLogin = true;
+			this.nav.setRedirectTo("home.xhtml");
+			return "/login.xhtml?faces-redirect=true";
+		}
+		return null;
 	}
 
+	public void logoutGmail() {
+		
+		this.email = null;
+		this.idUsuario = 0;
+		this.nombre = null;
+		this.premium = false;
+		this.redirect = "home.xhtml";
+		this.logueado = false;
+		this.contadorLogin = 0;
+		this.estilo = "areaTrabajo.css";
+		this.googleLogin = false;
+		
+		this.shownLogin = true;
+		this.nav.setRedirectTo("home.xhtml");
+	}
+	
 	public void loginExterno(String email) {
 		DataUsuario dUsu = new DataUsuario();
 		dUsu.setEmail(email);
@@ -240,5 +269,15 @@ public class LoginBean {
 	public void leidas() {
 		this.notificacionService.actualizarNotificaciones(this.notificaciones);
 		this.cantNotificaciones = 0;
+	}
+
+	public void refreshSession(DataUsuario du) {
+		this.email = du.getEmail();
+		this.idUsuario = du.getIdUsuario();
+		this.nombre = du.getNombre();
+		this.premium = du.isPremium();
+		this.logueado = true;
+		this.estilo = du.getEstilo();
+		this.googleLogin = true;
 	}
 }

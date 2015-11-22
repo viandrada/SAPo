@@ -1,9 +1,9 @@
 package com.datatypes;
 
-import java.io.Serializable;
+//import java.io.Serializable;
 import java.util.Date;
 
-import javax.persistence.*;
+//import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**

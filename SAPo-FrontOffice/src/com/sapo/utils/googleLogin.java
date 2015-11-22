@@ -40,12 +40,20 @@ public class googleLogin extends HttpServlet {
 		dUsuario.setEmail(email);
 		DataUsuario dUsuarioDB = this.servicio.loginExterno(dUsuario);
 		LoginBean loginBean = (LoginBean) request.getSession().getAttribute("loginBean");
-		loginBean.setEmail(email);
-		loginBean.setLogueado(true);
+		if(loginBean != null){
+		/*loginBean.setEmail(dUsuarioDB.getEmail());
+		loginBean.setEstilo(dUsuarioDB.getEstilo());
+		loginBean.setIdUsuario(dUsuarioDB.getIdUsuario());
+		loginBean.setNombre(dUsuarioDB.getNombre());
+		loginBean.setPremium(dUsuarioDB.isPremium());
+		loginBean.setLogueado(true);*/
 		loginBean.setShownLogin(false);
+		loginBean.setGoogleLogin(true);
+		loginBean.refreshSession(dUsuarioDB);
 		NavigationBean navBean = (NavigationBean) request.getSession().getAttribute("navigationBean");
 		navBean.setRedirectTo("areaTrabajo.xhtml");
 		request.getRequestDispatcher("/index.xhtml").forward(request, response);
+		}
 		
 		System.out.print(email);
 	}

@@ -39,38 +39,59 @@
 			});
 		</script>
 
-		<h:form id="ediCat2" rendered="true">
-			<div class="input-group">
-				<span class="input-group-addon">Buscar:</span> <input id="filter2"
-					type="text" class="form-control" placeholder="Contenido/Usuario"></input>
-			</div>
 
-			<table class="table table-striped table-hover">
-				<thead>
-					<tr>
-						<th><h:outputText value="ID Comentario" /></th>
-						<th><h:outputText value="Contenido" /></th>
-						<th><h:outputText value="Fecha" /></th>
-						<th><h:outputText value="Usuario" /></th>
-					</tr>
-				</thead>
-				<tbody class="searchable">
-					<ui:repeat value="#{comentariosAlmacenBean.listDataComentarios}"
-						var="u">
+
+		<ui:fragment
+			rendered="#{comentariosAlmacenBean.listDataComentarios.size()==0}">
+		Aun no hay comentarios realizados en este almacen.
+<br />
+		</ui:fragment>
+		<br />
+		<h:form id="ediCat2" rendered="true">
+			<ui:fragment
+				rendered="#{comentariosAlmacenBean.listDataComentarios.size()!=0}">
+				<div class="input-group">
+					<span class="input-group-addon">Buscar:</span> <input id="filter2"
+						type="text" class="form-control" placeholder="Contenido/Usuario"></input>
+				</div>
+
+				<table class="table table-striped table-hover">
+					<thead>
 						<tr>
-							<td><h:outputText value="#{u.idComentario}" /></td>
-							<td><h:outputText value="#{u.contenido}" /></td>
-							<td><h:outputText value="#{u.fecha}" /></td>
-							<td><h:outputText value="#{u.emailUsu}" /></td>
+							<th><h:outputText value="ID Comentario" /></th>
+							<th><h:outputText value="Contenido" /></th>
+							<th><h:outputText value="Fecha" /></th>
+							<th><h:outputText value="Usuario" /></th>
+							<th></th>
 
 						</tr>
-					</ui:repeat>
-				</tbody>
-			</table>
+					</thead>
+					<tbody class="searchable">
+						<ui:repeat value="#{comentariosAlmacenBean.listDataComentarios}"
+							var="u">
+							<tr>
+								<td><h:outputText value="#{u.idComentario}" /></td>
+								<td><h:outputText value="#{u.contenido}" /></td>
+								<td><h:outputText value="#{u.fecha}" /></td>
+								<td><h:outputText value="#{u.emailUsu}" /></td>
+								<td><ui:fragment
+										rendered="#{comentariosAlmacenBean.esComentarioMio(u.idComentario)}">
+										<h:commandLink value="" class="btn btn-default btn-xs"
+											onclick="$('#myModalBaja').modal('show');document.getElementById('ediCat2:forBajaModal:idComentarioSelect').value='#{u.idComentario}';"
+											immediate="true">
+											<i class="fa fa-times"></i>
+											<f:ajax execute="@this" render="" />
+										</h:commandLink>
+									</ui:fragment></td>
+							</tr>
+						</ui:repeat>
+					</tbody>
+				</table>
 
-			<td><button type="button" class="btn btn-success"
-					data-toggle="modal" data-target="#myModaleditar"
-					onclick="return false;">Comentar</button></td>
+			</ui:fragment>
+
+			<button type="button" class="btn btn-success" data-toggle="modal"
+				data-target="#myModaleditar" onclick="return false;">Comentar</button>
 
 			<div class="modal fade" id="myModaleditar" role="dialog">
 				<div class="modal-dialog">
@@ -93,13 +114,59 @@
 								action="#{comentariosAlmacenBean.comentarEnAlmacen}">
 							</h:commandButton>
 
-							<button type="button" class="btn btn-danger  pull-left" data-dismiss="modal"
-								onclick="return false;">Cancelar</button>
+							<button type="button" class="btn btn-danger  pull-left"
+								data-dismiss="modal" onclick="return false;">Cancelar</button>
 						</div>
 					</div>
 				</div>
 			</div>
+
+
+
+
+			<!-- Modal para DAR DE BAJA producto ESTA HACIENDO CONFLICTO CON EL MODAL DE COMENTAR OJO-->
+			<div class="modal fade" id="myModalBaja" tabindex="-1" role="dialog"
+				aria-labelledby="myModalLabel">
+				<h:form id="forBajaModal">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal">X</button>
+								<h4 class="modal-title">Estas seguro que deseas descomentar
+									?</h4>
+							</div>
+							<div class="modal-body">
+								<div class="form-group">
+									<h:inputHidden
+										value="#{comentariosAlmacenBean.idComentarioSelect}"
+										id="idComentarioSelect" name="idComentarioSelect"
+										class="form-control" />
+
+								</div>
+							</div>
+							<div class="modal-footer">
+								<h:commandButton class="btn btn-success" value="Aceptar"
+									action="#{comentariosAlmacenBean.descomentarEnAlmacen}">
+								</h:commandButton>
+								<button type="button" class="btn btn-danger pull-left"
+									data-dismiss="modal" onclick="return false;">Cancelar</button>
+							</div>
+						</div>
+					</div>
+				</h:form>
+			</div>
+
+			<!-- Fin de ventana modal DAR DE BAJA-->
+
+
+
+
+
 		</h:form>
+
+
+
+
 	</div>
 </ui:composition>
 

@@ -1,19 +1,25 @@
 package com.sapo.beans;
 
+import java.io.IOException;
+import java.io.OutputStream;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.RequestScoped;
 import javax.faces.bean.SessionScoped;
-import javax.faces.view.ViewScoped;
+import javax.faces.event.AjaxBehaviorEvent;
 import javax.servlet.http.Part;
 import javax.validation.constraints.Min;
+import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotEmpty;
+import org.richfaces.event.FileUploadEvent;
+import org.richfaces.model.UploadedFile;
 
 import com.datatypes.DataAlmacen;
 import com.datatypes.DataCategoria;
@@ -23,6 +29,7 @@ import com.datatypes.DataUsuario;
 import com.google.gson.Gson;
 import com.sapo.ejb.AlmacenNegocio;
 import com.sapo.ejb.CategoriaNegocio;
+import com.sapo.utils.Atributo;
 import com.sapo.utils.PartToByteArrayConverter;
 
 @ManagedBean
@@ -35,6 +42,7 @@ public class AltaProductoBean {
 		this.dataProducto = new DataProducto();
 		this.dataUsuario = new DataUsuario();
 		this.fotos = new ArrayList<DataImagen>();
+		this.atributosVista = new ArrayList<Atributo>();
 	}
 
 	@EJB
@@ -48,16 +56,16 @@ public class AltaProductoBean {
 	@ManagedProperty(value = "#{atributosProductoBean}")
 	AtributosProductoBean atributosProductoBean;
 
-
 	private DataAlmacen dataAlmacen;
 	private DataCategoria dataCategoria;
 	private DataProducto dataProducto;
 	private DataUsuario dataUsuario;
 
-	@NotEmpty(message="Ups, parece que no ingresaste un nombre.")
+	@NotEmpty(message = "Ups, parece que no ingresaste un nombre.")
 	private String nombre;
+	@Size(max = 255, message = "La descripción es muy larga.")
 	private String descripcion;
-	@Min(value = 0, message="El precio no puede ser menor a 0.")
+	@Min(value = 0, message = "El precio no puede ser menor a 0.")
 	private float precio;
 	private String atributos;
 	private List<DataImagen> fotos;
@@ -65,7 +73,7 @@ public class AltaProductoBean {
 	private Part foto2;
 	private Part foto3;
 	private Part foto4;
-	@Min(value = 0, message="El stock no puede ser menor a 0.")
+	@Min(value = 0, message = "El stock no puede ser menor a 0.")
 	private int stock;
 	private List<String> tipoDatoList;
 
@@ -76,6 +84,14 @@ public class AltaProductoBean {
 	private String nombreCatSeleccionada;
 	private int idCatSeleccionada;
 	private String catNueva;
+
+	private List<Atributo> atributosVista;
+	private String nombreAtr;
+	private String tipoDataAtr;
+	private String valorAtr;
+	private double valorAtributoNumero;
+	private Date valorAtributoFecha;
+	private boolean renderText;
 
 	/* Getters and setteres */
 	public String getNombre() {
@@ -197,7 +213,7 @@ public class AltaProductoBean {
 	public void setStock(int stock) {
 		this.stock = stock;
 	}
-	
+
 	public List<String> getTipoDatoList() {
 		return tipoDatoList;
 	}
@@ -258,8 +274,65 @@ public class AltaProductoBean {
 		return atributosProductoBean;
 	}
 
-	public void setAtributosProductoBean(AtributosProductoBean atributosProductoBean) {
+	public void setAtributosProductoBean(
+			AtributosProductoBean atributosProductoBean) {
 		this.atributosProductoBean = atributosProductoBean;
+	}
+
+	public List<Atributo> getAtributosVista() {
+		return atributosVista;
+	}
+
+	public void setAtributosVista(List<Atributo> atributosVista) {
+		this.atributosVista = atributosVista;
+	}
+
+	public String getNombreAtr() {
+		return nombreAtr;
+	}
+
+	public void setNombreAtr(String nombreAtr) {
+		this.nombreAtr = nombreAtr;
+	}
+
+	public String getTipoDataAtr() {
+		return tipoDataAtr;
+	}
+
+	public void setTipoDataAtr(String tipoDataAtr) {
+		this.tipoDataAtr = tipoDataAtr;
+	}
+
+	public String getValorAtr() {
+		return valorAtr;
+	}
+
+	public void setValorAtr(String valorAtr) {
+		this.valorAtr = valorAtr;
+	}
+
+	public double getValorAtributoNumero() {
+		return valorAtributoNumero;
+	}
+
+	public void setValorAtributoNumero(double valorAtributoNumero) {
+		this.valorAtributoNumero = valorAtributoNumero;
+	}
+
+	public Date getValorAtributoFecha() {
+		return valorAtributoFecha;
+	}
+
+	public void setValorAtributoFecha(Date valorAtributoFecha) {
+		this.valorAtributoFecha = valorAtributoFecha;
+	}
+
+	public boolean isRenderText() {
+		return renderText;
+	}
+
+	public void setRenderText(boolean renderText) {
+		this.renderText = renderText;
 	}
 
 	@PostConstruct
@@ -268,12 +341,12 @@ public class AltaProductoBean {
 				.getEmail());
 		listDataCatGeneticas = cNegocio.listDataCategoriasGenericas();
 		this.listDataCat.addAll(this.listDataCatGeneticas);
-		/*if(!listDataCat.isEmpty()){
-			this.idCatSeleccionada = listDataCat.get(0).getIdCategoria();
-		}
-		else if(!listDataCatGeneticas.isEmpty()){
-			this.idCatSeleccionada = listDataCatGeneticas.get(0).getIdCategoria();
-		}*/
+		/*
+		 * if(!listDataCat.isEmpty()){ this.idCatSeleccionada =
+		 * listDataCat.get(0).getIdCategoria(); } else
+		 * if(!listDataCatGeneticas.isEmpty()){ this.idCatSeleccionada =
+		 * listDataCatGeneticas.get(0).getIdCategoria(); }
+		 */
 		this.nombreCatSeleccionada = null;
 		this.nombre = "";
 		this.stock = 0;
@@ -285,6 +358,18 @@ public class AltaProductoBean {
 		this.foto3 = null;
 		this.foto4 = null;
 		this.fotos.clear();
+
+		this.nombreAtr = null;
+		this.tipoDataAtr = "Texto";
+		this.valorAtr = null;
+		this.valorAtributoFecha = null;
+		this.valorAtributoNumero = 0.0f;
+		this.atributosVista = new ArrayList<Atributo>();
+		this.tipoDatoList = new ArrayList<String>();
+		this.tipoDatoList.add("Texto");
+		this.tipoDatoList.add("Numero");
+		this.tipoDatoList.add("Fecha");
+		this.tipoDataAtr = "Texto";
 	}
 
 	public String altaProducto() {
@@ -295,19 +380,19 @@ public class AltaProductoBean {
 		this.dataProducto.setEsIdeal(false);
 		this.dataProducto.setPrecio(this.precio);
 		this.dataProducto.setStock(this.stock);
-		//this.dataProducto.setIdUsuario(this.idUsuario);
+		// this.dataProducto.setIdUsuario(this.idUsuario);
 
 		// Conversiï¿½n de atributos genï¿½ricos a json
 		Gson gson = new Gson();
 		// Type type = new TypeToken<List<Atributo>>() {}.getType();
-		//String json = gson.toJson(this.getAtributosVista());
-		String json = gson.toJson(this.atributosProductoBean.getAtributosVista());
+		// String json = gson.toJson(this.getAtributosVista());
+		String json = gson.toJson(this.atributosVista);
 		System.out.println(json);
 		this.dataProducto.setAtributos(json);
 		// Fin de conversiï¿½n a json
 
 		// Procesando imagenes...
-		if (this.foto != null) {
+		/*if (this.foto != null) {
 			DataImagen dataImg = new DataImagen();
 			dataImg.setDatos(PartToByteArrayConverter.toByteArray(this.foto));
 			this.getFotos().add(dataImg);
@@ -326,7 +411,7 @@ public class AltaProductoBean {
 			DataImagen dataImg = new DataImagen();
 			dataImg.setDatos(PartToByteArrayConverter.toByteArray(this.foto4));
 			this.getFotos().add(dataImg);
-		}
+		}*/
 
 		this.dataProducto.setFotos(this.fotos);
 
@@ -346,4 +431,79 @@ public class AltaProductoBean {
 		this.atributosProductoBean.init();
 		return "index";
 	}
+
+	public void comboChangeListener(AjaxBehaviorEvent event) {
+		System.out.println(this.tipoDataAtr);
+	}
+
+	public void handleDateSelect(AjaxBehaviorEvent event) {
+
+		SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+		System.out.println(format.format(this.valorAtributoFecha));
+	}
+
+	/* Ésto es para agregar atributos genéricos */
+	public String add() {
+		Atributo a = new Atributo();
+		a.setNombre(this.getNombreAtr());
+		a.setTipoDato(this.getTipoDataAtr());
+
+		switch (this.getTipoDataAtr()) {
+		case "Texto":
+			a.setValor(this.valorAtr);
+			break;
+		case "Fecha":
+			SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+			a.setValor(format.format(this.valorAtributoFecha));
+			break;
+		case "Numero":
+			a.setValor(String.valueOf(this.valorAtributoNumero));
+			break;
+		default:
+			this.renderText = true;
+		}
+
+		this.atributosVista.add(a);
+		this.nombreAtr = null;
+		this.tipoDataAtr = "Texto";
+		this.valorAtr = null;
+		this.valorAtributoFecha = null;
+		this.valorAtributoNumero = 0.0f;
+		return null;
+	}
+
+	/* Ésto es para subir imagenes con Richfaces */
+	public void paint(OutputStream stream, Object object) throws IOException {
+		stream.write(getFotos().get((Integer) object).getDatos());
+		stream.close();
+	}
+
+	/* Ésto es para subir imagenes con Richfaces */
+	public void listener(FileUploadEvent event) throws Exception {
+		UploadedFile item = event.getUploadedFile();
+		DataImagen file = new DataImagen();
+		file.setNombre(item.getName());
+		file.setDatos(item.getData());
+		fotos.add(file);
+	}
+
+	/* Ésto es para subir imagenes con Richfaces */
+	public String clearUploadData() {
+		fotos.clear();
+		return null;
+	}
+
+	/* Ésto es para subir imagenes con Richfaces */
+	public long getTimeStamp() {
+		return System.currentTimeMillis();
+	}
+	
+	/* Ésto es para subir imagenes con Richfaces */
+    public int getSize() {
+        if (getFotos().size() > 0) {
+            return getFotos().size();
+        } else {
+            return 0;
+        }
+    }
 }

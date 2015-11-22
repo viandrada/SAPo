@@ -1,0 +1,61 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition>
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+				<div class="page-header">
+					<h1>Configuración de notificaciones</h1>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+				<h4>Límite de almacenes.</h4>
+			</div>
+		</div>
+		<h:form id="configNotificacion">
+			<div class="row">
+				<div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
+					<div class="form-group">
+						<h:selectBooleanCheckbox value="#{notificacionesBean.activa}" />
+					</div>
+				</div>
+				<div class="col-xs-7 col-sm-7 col-md-2 col-lg-2">
+					<h:outputLabel value="Notificar cuando falten " />
+				</div>
+				<div class="col-xs-3 col-sm-3 col-md-1 col-lg-1">
+					<div class="form-group">
+						<h:inputText class="form-control" id="valor"
+							value="#{notificacionesBean.cantAlmacenes}" a:placeholder="0">
+							<f:validateBean for="valor" />
+						</h:inputText>
+					</div>
+					<h:message id="valorMessage" for="valor" errorStyle="color:red;"></h:message>
+				</div>
+				<div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
+					<h:outputLabel value=" almacenes para alcanzar el límite." />
+				</div>
+			</div>
+			<hr />
+			<div class="row">
+				<div
+					class="col-xs-12 col-sm-12 col-md-3 col-lg-3 col-md-offset-9 col-lg-offset-9">
+					<h:commandButton class="btn btn-primary" value="Guardar cambios"
+						type="submit" action="#{notificacionesBean.guardarNotificacion()}"
+						update=":message">
+					</h:commandButton>
+				</div>
+				<p:growl id="message" showDetail="true" />
+			</div>
+
+
+		</h:form>
+	</div>
+</ui:composition>
+</html>

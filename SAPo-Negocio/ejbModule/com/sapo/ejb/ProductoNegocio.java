@@ -12,7 +12,7 @@ import com.datatypes.DataAlmacen;
 import com.datatypes.DataCategoria;
 import com.datatypes.DataImagen;
 import com.datatypes.DataProducto;
-import com.datatypes.DataUsuario;
+import com.datatypes.DataProductoCandidato;
 import com.sapo.dao.AlmacenDAO;
 import com.sapo.dao.AlmacenIdealDAO;
 import com.sapo.dao.CategoriaDAO;
@@ -29,6 +29,8 @@ import com.sapo.entidades.Producto;
 import com.sapo.entidades.ProductoGenerico;
 import com.sapo.entidades.Usuario;
 import com.sapo.utils.Fabrica;
+
+import static java.lang.Math.toIntExact;
 
 /**
  * Session Bean implementation class ProductoNegocio
@@ -56,10 +58,7 @@ public class ProductoNegocio {
 	@EJB
 	private Fabrica fabrica;
 
-	private Producto producto;
-
 	public ProductoNegocio() {
-		producto = new Producto();
 	}
 
 	public boolean altaProductoGenerico(DataProducto productoData,
@@ -116,10 +115,29 @@ public class ProductoNegocio {
 		dataProducto.setIdCategoria(producto.getCategoria().getIdCategoria());
 		dataProducto.setNombreCategoria(producto.getCategoria().getNombre());
 		// dataProducto.setIdUsuario(producto.getUsuario().getIdUsuario());
-		dataProducto.setFotos(toDataImagen(producto.getFoto()));
-		
-		dataProducto.setIdHermano(producto.getIdHermano());////////////////////////////////////////////////////
-		
+		List<DataImagen> imgs = new ArrayList<DataImagen>();
+		if (producto.getFoto().size() != 0) {
+			for (int i = 0; i < producto.getFoto().size(); i++) {
+				DataImagen im = new DataImagen();
+				if (producto.getFoto() != null) {
+					im.setIdImagen(producto.getFoto().get(i).getIdImagen());
+					im.setDatos(producto.getFoto().get(i).getDatos());
+					im.setMime(producto.getFoto().get(i).getMime());
+					im.setNombre(producto.getFoto().get(i).getNombre());
+					imgs.add(im);
+				}
+			}
+		} else {
+			DataImagen im = new DataImagen();
+			im.setIdImagen(1);
+			imgs.add(im);
+		}
+
+		dataProducto.setFotos(imgs);
+		//dataProducto.setFotos(toDataImagen(producto.getFoto()));
+
+		dataProducto.setIdHermano(producto.getIdHermano());// //////////////////////////////////////////////////
+
 		return dataProducto;
 	}
 
@@ -171,9 +189,10 @@ public class ProductoNegocio {
 				.getIdCategoria());
 		dataProducto.setNombreCategoria(productoGenerico.getCategoria()
 				.getNombre());
-		////////////////////seteo en id hermano del data el id del producto generico////////////////
+		// //////////////////seteo en id hermano del data el id del producto
+		// generico////////////////
 		dataProducto.setIdHermano(productoGenerico.getIdProductoGenerico());
-		
+
 		return dataProducto;
 	}
 
@@ -269,11 +288,12 @@ public class ProductoNegocio {
 		p.setFoto(imgs);
 
 		this.productoDAO.insertarProducto(p);
-		/////////////////////////////////////////////////////////////////////////////////////////
+		// ///////////////////////////////////////////////////////////////////////////////////////
 		p.setIdHermano(p.getIdProducto());
-		//////////////////////////////////////////guardo en idHermano el id de el mismo
+		// ////////////////////////////////////////guardo en idHermano el id de
+		// el mismo
 		this.productoDAO.actualizarProducto(p);
-		
+
 	}
 
 	public void actualizarStock(int idProducto, int stock) {
@@ -284,6 +304,7 @@ public class ProductoNegocio {
 			this.productoDAO.actualizarProducto(p);
 		}
 	}
+
 	public void actualizarStockIdeal(int idProducto, int stockIdeal) {
 		Producto p = new Producto();
 		if (stockIdeal >= 0) {
@@ -292,37 +313,40 @@ public class ProductoNegocio {
 			this.productoDAO.actualizarProducto(p);
 		}
 	}
-	
-//	
-//	/*Paso un id de un producto y obtengo el histórico de 
-//	 * ese producto en forma de lista de producto.
-//	 * POR AHORA VOID, PUEDE CAMBIAR
-//	 */
-//	public void buscarHistoricoProdPorId (int idProducto){
-//		
-//		List<Producto> listaProd = this.productoDAO.getHistoricoProdPorId(idProducto);
-//		
-//	}
-//	
-//	/*Paso un id de un producto y obtengo el histórico de 
-//	 * ese producto (sólo las modificaciones)
-//	 * POR AHORA VOID, PUEDE CAMBIAR
-//	 */
-//	public void buscarHistoricoModificacionesProdPorId (int idProducto){
-//		
-//		List<Producto> listaProd = this.productoDAO.getHistoricoModificacionesProdPorId(idProducto);
-//		
-//	}
-//	
-//	
-//	/* Paso un id de usuario y obtengo el histórico de productos
-//	 * de ese usuario.
-//	 * POR AHORA VOID, PUEDE CAMBIAR
-//	 * */
-//	public void buscarHistoricoProdPorUsuario(int idUsuario){
-//		
-//		List<Producto> listaProd = this.productoDAO.getHistoricoProdPorUsuario(idUsuario);
-//	}
+
+	//
+	// /*Paso un id de un producto y obtengo el histórico de
+	// * ese producto en forma de lista de producto.
+	// * POR AHORA VOID, PUEDE CAMBIAR
+	// */
+	// public void buscarHistoricoProdPorId (int idProducto){
+	//
+	// List<Producto> listaProd =
+	// this.productoDAO.getHistoricoProdPorId(idProducto);
+	//
+	// }
+	//
+	// /*Paso un id de un producto y obtengo el histórico de
+	// * ese producto (sólo las modificaciones)
+	// * POR AHORA VOID, PUEDE CAMBIAR
+	// */
+	// public void buscarHistoricoModificacionesProdPorId (int idProducto){
+	//
+	// List<Producto> listaProd =
+	// this.productoDAO.getHistoricoModificacionesProdPorId(idProducto);
+	//
+	// }
+	//
+	//
+	// /* Paso un id de usuario y obtengo el histórico de productos
+	// * de ese usuario.
+	// * POR AHORA VOID, PUEDE CAMBIAR
+	// * */
+	// public void buscarHistoricoProdPorUsuario(int idUsuario){
+	//
+	// List<Producto> listaProd =
+	// this.productoDAO.getHistoricoProdPorUsuario(idUsuario);
+	// }
 	public void modificarProductoEspecifico(DataProducto dataProducto,
 			DataCategoria dataCategoria, int idUsuario) {
 
@@ -336,7 +360,8 @@ public class ProductoNegocio {
 		} else {
 			cat.setNombre(dataCategoria.getNombre());
 			cat.setEsGenerica(false);
-			Usuario u = this.usuarioDAO.getUsuarioPorEmail(dataCategoria.getEmailUsuario());
+			Usuario u = this.usuarioDAO.getUsuarioPorEmail(dataCategoria
+					.getEmailUsuario());
 			cat.setUsu(u);
 		}
 		pg.setCategoria(cat);
@@ -360,31 +385,35 @@ public class ProductoNegocio {
 		pg.getFoto().addAll(imgs);
 
 		this.productoDAO.actualizarProducto(pg);
-		///////////cuando edito el producto el id de hermano el mismo ya que es unico al haberlo editado
-		//pg.setIdHermano(pg.getIdProducto());
-		//this.productoDAO.actualizarProducto(pg);
-		
-		
-		
-		///Tengo que editar a todos los hermanitos
-		//List<Producto> listHermanos =productoDAO.getProductosHermanos(dataProducto.getIdHermano());
-		List<Producto> listHermanos =productoDAO.getProductosHermanos(pg.getIdHermano());
-		
-		if (!listHermanos.isEmpty()){
-			for (Producto aux:listHermanos){
-				if ((aux.getIdProducto()!=pg.getIdProducto())){
-					//modificarProductoEspecifico(fabrica.convertirProducto(aux), dataCategoria, idUsuario);
-					Producto pg2 = this.productoDAO
-							.getProducto(aux.getIdProducto());
+		// /////////cuando edito el producto el id de hermano el mismo ya que es
+		// unico al haberlo editado
+		// pg.setIdHermano(pg.getIdProducto());
+		// this.productoDAO.actualizarProducto(pg);
+
+		// /Tengo que editar a todos los hermanitos
+		// List<Producto> listHermanos
+		// =productoDAO.getProductosHermanos(dataProducto.getIdHermano());
+		List<Producto> listHermanos = productoDAO.getProductosHermanos(pg
+				.getIdHermano());
+
+		if (!listHermanos.isEmpty()) {
+			for (Producto aux : listHermanos) {
+				if ((aux.getIdProducto() != pg.getIdProducto())) {
+					// modificarProductoEspecifico(fabrica.convertirProducto(aux),
+					// dataCategoria, idUsuario);
+					Producto pg2 = this.productoDAO.getProducto(aux
+							.getIdProducto());
 
 					Categoria cat2 = new Categoria();
 					if (dataCategoria.getNombre() == null) {
-						cat2 = this.categoriaDAO
-								.getCategoria(dataCategoria.getIdCategoria());
+						cat2 = this.categoriaDAO.getCategoria(dataCategoria
+								.getIdCategoria());
 					} else {
 						cat2.setNombre(dataCategoria.getNombre());
 						cat2.setEsGenerica(false);
-						Usuario u2 = this.usuarioDAO.getUsuarioPorEmail(dataCategoria.getEmailUsuario());
+						Usuario u2 = this.usuarioDAO
+								.getUsuarioPorEmail(dataCategoria
+										.getEmailUsuario());
 						cat2.setUsu(u2);
 					}
 					pg2.setCategoria(cat2);
@@ -394,13 +423,15 @@ public class ProductoNegocio {
 					pg2.setDescripcion(dataProducto.getDescripcion());
 					pg2.setEstaActivo(true);
 					pg2.setPrecio(dataProducto.getPrecio());
-					//pg2.setStock(dataProducto.getStock()); El stock para los hermanos no se toca
+					// pg2.setStock(dataProducto.getStock()); El stock para los
+					// hermanos no se toca
 
 					List<Imagen> imgs2 = new ArrayList<Imagen>();
 					for (int i = 0; i < dataProducto.getFotos().size(); i++) {
 						Imagen img2 = new Imagen();
 						img2.setDatos(dataProducto.getFotos().get(i).getDatos());
-						img2.setNombre(dataProducto.getFotos().get(i).getNombre());
+						img2.setNombre(dataProducto.getFotos().get(i)
+								.getNombre());
 						img2.setMime(dataProducto.getFotos().get(i).getMime());
 						this.imagenDAO.insertarImagen(img2);
 						imgs2.add(img2);
@@ -408,14 +439,51 @@ public class ProductoNegocio {
 					pg2.getFoto().addAll(imgs2);
 
 					this.productoDAO.actualizarProducto(pg2);
-				
-				}//if no es el que edite anteriormente
-			}//for hermanos
-		}//if tengo hermanos
-	
-		
-		
-		
 
+				}// if no es el que edite anteriormente
+			}// for hermanos
+		}// if tengo hermanos
+
+	}
+
+	public List<DataProductoCandidato> getProductosCandidatosAPromocion() {
+		List candidatos = this.productoDAO.getProductosCandidatosAPromocion();
+		List<DataProductoCandidato> dataCandidatosList = new ArrayList<DataProductoCandidato>();
+
+		if (candidatos != null) {
+			for (int i = 0; i < candidatos.size(); i++) {
+				DataProductoCandidato dc = new DataProductoCandidato();
+				Object[] objArray = (Object[]) candidatos.get(i);
+				dc.setNombre(objArray[0].toString());
+				dc.setCount(toIntExact((Long) objArray[1]));
+				dataCandidatosList.add(dc);
+			}
+		}
+
+		// Saco los que ya son genericos
+		List<ProductoGenerico> prodGenericos = this.productoGenericoDAO
+				.getProductosGenericos();
+
+		List<DataProductoCandidato> dataCandidatosListFinal = new ArrayList<DataProductoCandidato>();
+
+		if (prodGenericos != null && dataCandidatosList != null) {
+			for (int k = 0; k < dataCandidatosList.size(); k++) {
+				if (!esGenerico(dataCandidatosList.get(k), prodGenericos)) {
+					dataCandidatosListFinal.add(dataCandidatosList.get(k));
+				}
+			}
+		}
+		return dataCandidatosListFinal;
+	}
+
+	public boolean esGenerico(DataProductoCandidato candidato,
+			List<ProductoGenerico> dp) {
+
+		for (int i = 0; i < dp.size(); i++) {
+			if (dp.get(i).getNombre().equals(candidato.getNombre())) {
+				return true;
+			}
+		}
+		return false;
 	}
 }
