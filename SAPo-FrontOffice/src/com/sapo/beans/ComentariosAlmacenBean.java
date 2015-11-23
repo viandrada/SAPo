@@ -117,4 +117,7 @@ public class ComentariosAlmacenBean {
 		this.contenido = contenido;
 	}
 
+	public String getSize(){
+		return Integer.toString(this.listDataComentarios.size());
+	}
 }
