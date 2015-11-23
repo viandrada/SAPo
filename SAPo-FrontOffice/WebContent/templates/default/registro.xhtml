@@ -9,10 +9,11 @@
 
 	<div class="container-fluid" id="altaUsuarioContent">
 		<div class="row">
-			<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-				<h:form id="altaUsuario" rendered="true">
+		<h:form id="altaUsuario" rendered="true">
+			<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8  ">
+				
 
-					<div class="form-group">
+					<div class="form-group ">
 						<h:outputText value="Nombre : " />
 
 						<h:inputText class="form-control" id="inputNombre"
@@ -69,18 +70,23 @@
 						<h:message id="m_confirm" for="confirm" style="color:red;" />
 						<h:message id="m_password" for="password" style="color:red;" />
 					</div>
-
-
-					<h:commandButton class="btn btn-success pull-right" value="Crear"
-						type="submit" action="#{registroBean.registrar()}">
-					</h:commandButton>
-
-					<button type="button" class="btn btn-danger pull-left"
-						data-dismiss="modal">Cancelar</button>
-
-				</h:form>
 			</div>
+			<br/><br/>
+			
+			
+			
+			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+	<br/><br/>
+				<h:commandButton class="btn btn-success pull-right" value="Crear"
+					type="submit" action="#{registroBean.registrar()}">
+				</h:commandButton>
+
+				<button type="button" class="btn btn-danger pull-left"
+					data-dismiss="modal">Cancelar</button>
+			
 		</div>
+		</h:form>
+	</div>
 	</div>
 
 </ui:composition>
