@@ -31,46 +31,47 @@
 
 		<div class="row">
 			<div class="col-xs-12 col-sm-12 col-md-9 col-md-9">
-				<!-- h:dataTable value="#{homeUsuarioBean.almacenes}" var="a"-->
 				<ul class="list-group">
 					<ui:repeat value="#{homeUsuarioBean.almacenes}" var="item">
 						<div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
+							<div class="row">
+								<h:form>
+									<li class="list-group-item">
+										<div class="row">
+											<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+												<h:outputText value="#{item.nombre}" />
+											</div>
 
-							<h:form>
-								<li class="list-group-item">
-
-									<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
-										<h:outputText value="#{item.nombre}" />
-									</div>
-									<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-										<h:commandLink
-											action="#{editarAlmacenBean.getAlmacen(item.idAlmacen)}"
-											actionListener="#{navigationAreaBean.goTo('editarAlmacen.xhtml')}"
-											value=" "
-											class="btn btn-default btn-xs">
-											<i class="fa fa-pencil-square-o"></i>
-										</h:commandLink>
-										<h:commandLink value=" "
-											class="btn btn-default btn-xs"
-											action="#{editarAlmacenBean.getAlmacen(item.idAlmacen)}"
-											onclick="$('#myModabaja').modal('show');" immediate="true">
-											<i class="fa fa-times"></i>
-											<f:ajax execute="@this" render=":modalBa" />
-										</h:commandLink>
-									</div> <h:commandLink
-										action="#{navigationAreaBean.irAlmacen(item.idAlmacen)}"
-										class="thumbnail">
-										<!--h:graphicImage class="img-responsive"
-										value="/resources/images/box.png">
-									</h:graphicImage-->
-										<h:graphicImage class="img-responsive imgDefault"
-											style="height:200px;" value="Image/#{item.idFoto}">
-										</h:graphicImage>
-									</h:commandLink>
-								</li>
-							</h:form>
+											<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+												<h:commandLink
+													action="#{editarAlmacenBean.getAlmacen(item.idAlmacen)}"
+													actionListener="#{navigationAreaBean.goTo('editarAlmacen.xhtml')}"
+													value=" " class="btn btn-default btn-xs">
+													<i class="fa fa-pencil-square-o"></i>
+												</h:commandLink>
+												<h:commandLink value=" " class="btn btn-default btn-xs"
+													action="#{editarAlmacenBean.getAlmacen(item.idAlmacen)}"
+													onclick="$('#myModabaja').modal('show');" immediate="true">
+													<i class="fa fa-times"></i>
+													<f:ajax execute="@this" render=":modalBa" />
+												</h:commandLink>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+												<h:commandLink
+													action="#{navigationAreaBean.irAlmacen(item.idAlmacen)}"
+													class="thumbnail">
+													<h:graphicImage class="img-responsive imgDefault"
+														style="height:200px;" value="Image/#{item.idFoto}">
+													</h:graphicImage>
+												</h:commandLink>
+											</div>
+										</div>
+									</li>
+								</h:form>
+							</div>
 						</div>
-
 					</ui:repeat>
 					<!-- /h:dataTable-->
 				</ul>
