@@ -44,6 +44,7 @@ public class ComentariosAlmacenBean {
 	//private int idAlmacen;
 	//private String emailUsuarioLogueado;
 	private String contenido;
+	private int idComentarioSelect;
 	
 	private List<DataComentario> listDataComentarios;
 	
@@ -53,6 +54,18 @@ public class ComentariosAlmacenBean {
 		return "index?faces-redirect=true";
 	}
 		
+	public String descomentarEnAlmacen(){
+		//almacenNegocio.comentarEnAlmacen(usuarioLogueado.getEmail(), idComentarioSelect, nav.getIdAlmacenActual());
+		//contenido="";
+		almacenNegocio.descomentarEnAlmacen(usuarioLogueado.getEmail(), idComentarioSelect, nav.getIdAlmacenActual());
+		
+		return "index?faces-redirect=true";
+	}
+	
+	public boolean esComentarioMio(int idComentarioSelecionado){
+		return almacenNegocio.esComentarioDeUsuario(usuarioLogueado.getEmail(), idComentarioSelecionado, nav.getIdAlmacenActual());
+	}
+	
 	public String getNombreUsuSelect() {
 		return nombreUsuSelect;
 	}
@@ -115,6 +128,14 @@ public class ComentariosAlmacenBean {
 
 	public void setContenido(String contenido) {
 		this.contenido = contenido;
+	}
+
+	public int getIdComentarioSelect() {
+		return idComentarioSelect;
+	}
+
+	public void setIdComentarioSelect(int idComentarioSelect) {
+		this.idComentarioSelect = idComentarioSelect;
 	}
 
 	public String getSize(){

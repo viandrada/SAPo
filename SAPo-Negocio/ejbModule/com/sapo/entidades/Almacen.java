@@ -155,6 +155,11 @@ public boolean EsUsuariodeEsteAlmacen(String emailUsuario) {
 		this.comentarios.add(c);
 	}
 
+	public void quitarComentario(Comentario c) {
+		System.out.println("quite EL COMENTARIO: "+c.getContenido()+" AL ALMACEN : "+nombre);
+		this.comentarios.remove(c);
+	}
+	
 	public int getIdAlmacen() {
 		return idAlmacen;
 	}

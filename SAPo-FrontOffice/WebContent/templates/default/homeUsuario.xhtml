@@ -46,11 +46,12 @@
 										<h:commandLink
 											action="#{editarAlmacenBean.getAlmacen(item.idAlmacen)}"
 											actionListener="#{navigationAreaBean.goTo('editarAlmacen.xhtml')}"
-											value="">
+											value=" "
+											class="btn btn-default btn-xs">
 											<i class="fa fa-pencil-square-o"></i>
 										</h:commandLink>
 										<h:commandLink value=" "
-											class="btn btn-danger btn-xs"
+											class="btn btn-default btn-xs"
 											action="#{editarAlmacenBean.getAlmacen(item.idAlmacen)}"
 											onclick="$('#myModabaja').modal('show');" immediate="true">
 											<i class="fa fa-times"></i>

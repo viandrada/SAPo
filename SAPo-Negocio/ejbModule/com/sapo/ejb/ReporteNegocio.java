@@ -157,7 +157,7 @@ public class ReporteNegocio {
 
 	public List<DataDatoGrafico> getDatosGraficoGanancias() {
 
-		List<Usuario> listUsus = usuarioDAO.getUsuarios();
+		List<Usuario> listUsus = usuarioDAO.getUsuariosPremium();
 
 		List<DataDatoGrafico> listaDatosResult = new LinkedList<DataDatoGrafico>();
 

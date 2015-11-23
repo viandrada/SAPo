@@ -6,7 +6,7 @@
 
 <ui:composition>
 	<div class="container-fluid">
-	<h:outputStylesheet name="css/comentarios.css" />
+		<h:outputStylesheet name="css/comentarios.css" />
 
 		<script type="text/javascript">
 			$(document).ready(function () {
@@ -28,6 +28,14 @@
 			});
 		</script>
 
+
+
+		<ui:fragment
+			rendered="#{comentariosAlmacenBean.listDataComentarios.size()==0}">
+		Aun no hay comentarios realizados en este almacen.
+<br />
+		</ui:fragment>
+		<br />
 		<h:form id="ediCat2" rendered="true">
 			<div class="input-group">
 				<span class="input-group-addon">Buscar:</span> <input id="filter2"
@@ -37,7 +45,8 @@
 				<div class="col-md-11">
 					<div class="page-header">
 						<h1>
-							<small class="pull-right">#{comentariosAlmacenBean.size} comentarios</small> Comentarios
+							<small class="pull-right">#{comentariosAlmacenBean.size}
+								comentarios</small> Comentarios
 						</h1>
 					</div>
 					<div class="comments-list">
@@ -64,9 +73,6 @@
 				</div>
 			</div>
 
-			<td><button type="button" class="btn btn-success"
-					data-toggle="modal" data-target="#myModaleditar"
-					onclick="return false;">Comentar</button></td>
 
 			<div class="modal fade" id="myModaleditar" role="dialog">
 				<div class="modal-dialog">
@@ -95,6 +101,39 @@
 					</div>
 				</div>
 			</div>
+
+			<!-- Modal para DAR DE BAJA producto ESTA HACIENDO CONFLICTO CON EL MODAL DE COMENTAR OJO-->
+			<div class="modal fade" id="myModalBaja" tabindex="-1" role="dialog"
+				aria-labelledby="myModalLabel">
+				<h:form id="forBajaModal">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal">X</button>
+								<h4 class="modal-title">Estas seguro que deseas descomentar
+									?</h4>
+							</div>
+							<div class="modal-body">
+								<div class="form-group">
+									<h:inputHidden
+										value="#{comentariosAlmacenBean.idComentarioSelect}"
+										id="idComentarioSelect" name="idComentarioSelect"
+										class="form-control" />
+
+								</div>
+							</div>
+							<div class="modal-footer">
+								<h:commandButton class="btn btn-success" value="Aceptar"
+									action="#{comentariosAlmacenBean.descomentarEnAlmacen}">
+								</h:commandButton>
+								<button type="button" class="btn btn-danger pull-left"
+									data-dismiss="modal" onclick="return false;">Cancelar</button>
+							</div>
+						</div>
+					</div>
+				</h:form>
+			</div>
+			<!-- Fin de ventana modal DAR DE BAJA-->
 		</h:form>
 	</div>
 </ui:composition>

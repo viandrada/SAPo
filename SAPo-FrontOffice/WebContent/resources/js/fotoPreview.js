@@ -18,6 +18,10 @@ $("#altaAlmacen\\imagenAlmacen").change(function(){
 var loadFile = function(event){
 	var output = document.getElementById('inputFotoPreview');
 	output.src = URL.createObjectURL(event.target.files[0]);
+	
+	//var output2 = document.getElementById('idima');
+	//output2.value = URL.createObjectURL(event.target.files[0]);
+	
 };
 
 var loadFile2 = function(event){

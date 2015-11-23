@@ -175,21 +175,21 @@ public class AlmacenNegocio {
 		}
 		// return idAlmacenGenerado;
 	}
-	
-	public void bajaAlmacen(DataAlmacen almacen/*, DataUsuario usuario*/) {
-		
+
+	public void bajaAlmacen(DataAlmacen almacen/* , DataUsuario usuario */) {
+
 		Almacen a = almacenDAO.getAlmacen(almacen.getIdAlmacen());
-		
-		System.out.println(" ID ALMACEN PARA DAR DE BAJA: "+a.getIdAlmacen());
-		
+
+		System.out.println(" ID ALMACEN PARA DAR DE BAJA: " + a.getIdAlmacen());
+
 		a.setEstaActivo(false);
-		
-		
-		System.out.println(" SETEO ALMACEN ESTA ACTIVO EN FALSE: "+a.getEstaActivo());
+
+		System.out.println(" SETEO ALMACEN ESTA ACTIVO EN FALSE: "
+				+ a.getEstaActivo());
 		almacenDAO.actualizarAlmacen(a);
-		
-		System.out.println(" ACTUALIZO: "+a.getEstaActivo());
-		
+
+		System.out.println(" ACTUALIZO: " + a.getEstaActivo());
+
 	}
 
 	public List<DataAlmacen> getAlmacenes(String emailUsr) {
@@ -221,7 +221,7 @@ public class AlmacenNegocio {
 				.getIdUsuario();
 		return this.almacenDAO.getCantAlmacenesUsuario(idUser);
 	}
-	
+
 	public int getCantidadAlmacenesDeUsuarioHabilitados(String emailUsr) {
 		int idUser = this.usuarioDAO.getUsuarioPorEmail(emailUsr)
 				.getIdUsuario();
@@ -329,7 +329,7 @@ public class AlmacenNegocio {
 		dataProductos = this.toDataProductos(productos);
 		return dataProductos;
 	}
-	
+
 	public List<DataProducto> getProductosActivosDeAlmacen(int idAlmacen) {
 		List<DataProducto> dataProductos = new ArrayList<DataProducto>();
 		List<Producto> productos = this.productoDAO
@@ -456,6 +456,31 @@ public class AlmacenNegocio {
 		a.agregarComentario(co);
 
 		almacenDAO.actualizarAlmacen(a);
+	};
+
+	public void descomentarEnAlmacen(String emailusuario, int idComentario,
+			int idAlmacen) {
+
+		// Usuario usuario = usuarioDAO.getUsuarioPorEmail(emailusuario);
+		/*
+		 * Comentario co = new Comentario(); co.setContenido(contenido);
+		 * co.setFecha(new Date()); co.setUsuario(usuario);
+		 */
+
+		// comentarioDAO.insertarComentario(co);
+		if (comentarioDAO.esMiComentario(idComentario, emailusuario)) {
+			Almacen a = almacenDAO.getAlmacen(idAlmacen);
+			Comentario c = comentarioDAO.getComentario(idComentario);
+
+			a.quitarComentario(c);
+
+			almacenDAO.actualizarAlmacen(a);
+		}
+	};
+	
+	public boolean esComentarioDeUsuario(String emailusuario, int idComentario,
+			int idAlmacen) {
+		return comentarioDAO.esMiComentario(idComentario, emailusuario);
 	};
 
 	public DataAlmacen getAlmacenIdealPorId(int idAlmacenIdeal) {
@@ -695,10 +720,11 @@ public class AlmacenNegocio {
 		 */
 
 	}
-	
+
 	public void bajaProducto(int idAlmacenOrigen, int idProducto) {
 		System.out.println("HOLA ESTOY BAJANDO NEGOCIO");
-		System.out.println(" IDPRODUCTO: " + idProducto + "IDALMAORIGEN: " + idAlmacenOrigen);
+		System.out.println(" IDPRODUCTO: " + idProducto + "IDALMAORIGEN: "
+				+ idAlmacenOrigen);
 
 		Almacen aOrigen = almacenDAO.getAlmacen(idAlmacenOrigen);
 		System.out.println("pido almacen ORIGEN: " + aOrigen.getNombre());
@@ -722,15 +748,15 @@ public class AlmacenNegocio {
 
 				if (p.getIdProducto() == idProducto) {
 					System.out.println("ENCONTRE EL PRODUCTO A DAR DE BAJA");
-					
-						p.setEstaActivo(false);
-						
-						System.out.println("DOY DE BAJA A: "+p.getNombre());
-						// almacenDAO.actualizarAlmacen(aDestino);
-					
-						productoDAO.actualizarProducto(p);
 
-					}
+					p.setEstaActivo(false);
+
+					System.out.println("DOY DE BAJA A: " + p.getNombre());
+					// almacenDAO.actualizarAlmacen(aDestino);
+
+					productoDAO.actualizarProducto(p);
+
+				}
 
 			}// for
 		}// if lista de prod no es vacia
