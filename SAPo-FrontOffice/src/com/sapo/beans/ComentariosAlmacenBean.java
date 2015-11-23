@@ -138,4 +138,7 @@ public class ComentariosAlmacenBean {
 		this.idComentarioSelect = idComentarioSelect;
 	}
 
+	public String getSize(){
+		return Integer.toString(this.listDataComentarios.size());
+	}
 }

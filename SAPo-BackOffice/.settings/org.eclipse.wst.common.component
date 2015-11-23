@@ -2,7 +2,7 @@
     <wb-module deploy-name="SAPo-BackOffice">
         <wb-resource deploy-path="/" source-path="/WebContent" tag="defaultRootSource"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src"/>
-        <dependent-module archiveName="SAPo-Crosscuttin.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/SAPo-Crosscuttin/SAPo-Crosscuttin">
+        <dependent-module archiveName="SAPo-Negocio.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/SAPo-Negocio/SAPo-Negocio">
             <dependency-type>uses</dependency-type>
         </dependent-module>
         <property name="context-root" value="SAPo-BackOffice"/>

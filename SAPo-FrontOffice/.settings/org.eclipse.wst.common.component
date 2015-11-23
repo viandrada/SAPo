@@ -2,6 +2,9 @@
     <wb-module deploy-name="SAPo-FrontOffice">
         <wb-resource deploy-path="/" source-path="/WebContent" tag="defaultRootSource"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src"/>
+        <dependent-module archiveName="SAPo-Negocio.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/SAPo-Negocio/SAPo-Negocio">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
         <property name="context-root" value="SAPo-FrontOffice"/>
         <property name="java-output-path" value="/SAPo-FrontOffice/build/classes"/>
     </wb-module>

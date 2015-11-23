@@ -8,6 +8,7 @@
 
 	<script src="resources/js/chat.js"></script>
 	<link href="resources/css/areaTrabajo.css" />
+
 	<!-- no me anduvo  -->
 
 	<script>
@@ -52,7 +53,7 @@
 }
 </style>
 
-	<div class="container-fluid">
+	<div class="container">
 
 		<!-- Datos del almacen -->
 		<div class="row">
@@ -114,7 +115,8 @@
 				<h:commandButton value="Nuevo producto"
 					action="#{navigationAreaBean.goTo('altaProducto.xhtml')}"
 					actionListener="#{altaProductoBean.init()}" class="btn btn-primary">
-					<f:actionListener binding="#{atributosProductoBean.init()}"></f:actionListener></h:commandButton>
+					<f:actionListener binding="#{atributosProductoBean.init()}"></f:actionListener>
+				</h:commandButton>
 				<h:commandButton value="Nuevo producto (con plantilla)"
 					action="#{navigationAreaBean.goTo('listarProductosGenericos.xhtml')}"
 					class="btn btn-primary"></h:commandButton>
@@ -187,8 +189,8 @@
 		<!-- Productos del almacen -->
 		<div class="row">
 			<ul class="list-group">
-			<!-- 	<ui:repeat value="#{almacenBean.almacen.productos}" var="item"> -->
-			<ui:repeat value="#{almacenBean.listaProductosActivos}" var="item">
+				<!-- 	<ui:repeat value="#{almacenBean.almacen.productos}" var="item"> -->
+				<ui:repeat value="#{almacenBean.listaProductosActivos}" var="item">
 					<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
 						<h:form id="modalForm">
 							<li class="list-group-item">
@@ -342,10 +344,10 @@
 									<h:inputHidden value="#{moverProductoBean.idProductoSelec}"
 										id="idProductoSelec" name="idProductoSelec"
 										class="form-control" />
-										<h:inputHidden value="#{moverProductoBean.nombreproductoSelec}"
+									<h:inputHidden value="#{moverProductoBean.nombreproductoSelec}"
 										id="nombreProdSelec" name="nombreProdSelec"
 										class="form-control" />
-										
+
 								</div>
 							</div>
 							<div class="modal-footer">
@@ -363,6 +365,10 @@
 			<!-- Fin de ventana modal DAR DE BAJA-->
 		</div>
 		<!-- Fin de: Productos del almacen -->
+
+		<hr />
+		<ui:include src="/templates/default/comentariosAlmacen.xhtml" />
+
 		<footer class="footer">
 			<!-- div data-spy="affix" data-offset-top="0" data-offset-bottom="0"-->
 			<div class="navbar-fixed-bottom">
@@ -441,7 +447,10 @@
 					</form>
 				</div>
 			</div>
+			
 		</footer>
+
+		
 	</div>
 </ui:composition>
 </html>
