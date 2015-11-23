@@ -15,12 +15,13 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 
+import com.datatypes.Atributo;
 import com.datatypes.DataImagen;
 import com.datatypes.DataProducto;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.sapo.ejb.ProductoNegocio;
-import com.sapo.utils.Atributo;
+//import com.sapo.utils.Atributo;
 
 @ManagedBean
 @RequestScoped
@@ -115,9 +116,9 @@ public class DetalleProductoEspBean {
 	}
 
 	/*
-	 * Este método está en caso que el usuario refresque la vista del
-	 * detalle de producto. Si refresca no existe más el id. Con ésto si
-	 * refresca lo redirecciona al almacén de nuevo.
+	 * Este mï¿½todo estï¿½ en caso que el usuario refresque la vista del
+	 * detalle de producto. Si refresca no existe mï¿½s el id. Con ï¿½sto si
+	 * refresca lo redirecciona al almacï¿½n de nuevo.
 	 */
 	@PreDestroy
 	public void redireccion() {

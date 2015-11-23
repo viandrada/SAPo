@@ -13,11 +13,12 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 
+import com.datatypes.Atributo;
 import com.datatypes.DataProducto;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.sapo.ejb.ProductoNegocio;
-import com.sapo.utils.Atributo;
+//import com.sapo.utils.Atributo;
 
 @ManagedBean
 @RequestScoped

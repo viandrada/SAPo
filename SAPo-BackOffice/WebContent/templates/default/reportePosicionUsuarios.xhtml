@@ -1,0 +1,37 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<ui:composition>
+	<h:outputScript name="js/buscador.js" />
+	<script type="text/javascript" 
+    		src="http://maps.googleapis.com/maps/api/js?sensor=false">
+    	</script>
+		<h:outputScript library="js" name="mapa.js"/>
+	<div class="container-fluid">
+			<div id="mapa" style="width:1000px; height:500px"></div>
+		<h:outputScript>
+			mapa("mapa", 0, 0, 2);
+		</h:outputScript>
+		<h:form>
+			<ui:repeat value="#{listcat.catastrofes}" var="c">
+				<h:outputScript>
+					var marca#{c.id} = agregarMarca(#{c.latitud}, #{c.longitud}, '#{c.titulo}');
+					agregarCirculos(marca#{c.id},#{c.radio});
+					var contenido = '<b:container><b:row>' +
+						'<b:column span="3"><img src="http://www.ivoox.com/canales/7OLA_Futurog.jpg"/></b:column>' +
+						//'<b:column span="3"><img src="http://localhost:8080/com.sgc.rest/imagen/#{c.logo}"/></b:column>' +
+						'<b:column span="6"><p>#{c.titulo}</p></b:column>' +
+						'<b:column span="3"><a href="catastrofe.xhtml?id=#{c.id}">Ir al sitio</a></b:column>' +
+						'</b:row><b:row>' + 
+						'<b:column span="3"></b:column>' + 
+						'<b:column span="9">#{c.descripcion}</b:column>' +
+						'</b:row></b:container>';
+					agregarVentana(contenido, marca#{c.id});
+				</h:outputScript>
+			</ui:repeat>
+		</h:form>
+	</div>
+</ui:composition>
+</html>

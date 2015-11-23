@@ -11,7 +11,9 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.event.AjaxBehaviorEvent;
 
-import com.sapo.utils.Atributo;
+import com.datatypes.Atributo;
+
+//import com.sapo.utils.Atributo;
 
 /*Esta clase no se usa por ahora. Es para implementar una posible mejora si da el tiempo (para que el altaProducto no sea SessionScoped).*/
 @ManagedBean
