@@ -337,6 +337,27 @@ public class AlmacenNegocio {
 		dataProductos = this.toDataProductos(productos);
 		return dataProductos;
 	}
+	
+	public List<DataProducto> getProductosActivosDeAlmacenConAtributo(int idAlmacen, String atributo) {
+		System.out.println("ENTRE AL GET PRODUCTOS ACTIVOS ALMACEN: "+ idAlmacen+" CON ATRIBUTO:  "
+				+ atributo+"  de almacenNegocio");
+		List<DataProducto> dataProductos = new ArrayList<DataProducto>();
+		List<Producto> productos = this.productoDAO
+				.getProductosActivosAlmacenConAtributo(idAlmacen,atributo);
+		dataProductos = this.toDataProductos(productos);
+		//System.out.println("YA PASE 2" );
+		
+		if (!productos.isEmpty()) {
+			for (Producto p : productos) {
+				System.out.println("Producto NOMBRE: "
+						+ p.getNombre() +" AlmacenNegocio");
+
+			}
+		}else {System.out.println(" NO HAY PRODUCTOS CON ATRIBUTO: "+ atributo +" AlmacenNegocio");}
+		
+		
+		return dataProductos;
+	}
 
 	public List<DataProducto> toDataProductos(List<Producto> productos) {
 		List<DataProducto> dataProductos = new ArrayList<DataProducto>();
