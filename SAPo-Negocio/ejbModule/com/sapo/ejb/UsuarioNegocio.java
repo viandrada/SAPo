@@ -1,15 +1,16 @@
 package com.sapo.ejb;
 
 import java.util.Date;
-
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.ejb.EJB;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 
 import com.datatypes.DataUsuario;
 import com.sapo.dao.UsuarioDAO;
+import com.sapo.entidades.Imagen;
 import com.sapo.entidades.Usuario;
 import com.sapo.utils.Fabrica;
 
@@ -151,5 +152,25 @@ public class UsuarioNegocio {
 	
 	public boolean existeUsuario(String email){
 		return usuarioDAO.existeUsuario(email);
+	}
+	
+	public void guardarCambios(DataUsuario d){
+		Usuario u = new Usuario();
+		u = this.usuarioDAO.getUsuario(d.getIdUsuario());
+		u.setEmail(d.getEmail());
+		u.setNombre(d.getNombre());
+		if(d.getBytesFoto()!= null){
+			Imagen img = new Imagen();
+			img.setDatos(d.getBytesFoto());
+			u.setFoto(img);
+		}
+		this.usuarioDAO.actualizarUsuario(u);
+	}
+	
+	public void cambiarPassword(DataUsuario d){
+		Usuario u = new Usuario();
+		u = this.usuarioDAO.getUsuario(d.getIdUsuario());
+		u.setPassword(d.getPassword());
+		this.usuarioDAO.actualizarUsuario(u);
 	}
 }
