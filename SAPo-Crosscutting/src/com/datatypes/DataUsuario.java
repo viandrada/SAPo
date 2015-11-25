@@ -16,6 +16,8 @@ public class DataUsuario {
 	private Date fechaPago;
 	private float monto;
 	private String estilo;
+	private int idFoto;
+	private byte[] bytesFoto;
 
 	public boolean isPremium() {
 		return premium;
@@ -77,5 +79,17 @@ public class DataUsuario {
 	}
 	public void setEstilo(String estilo) {
 		this.estilo = estilo;
+	}
+	public int getIdFoto() {
+		return idFoto;
+	}
+	public void setIdFoto(int idFoto) {
+		this.idFoto = idFoto;
+	}
+	public byte[] getBytesFoto() {
+		return bytesFoto;
+	}
+	public void setBytesFoto(byte[] bytesFoto) {
+		this.bytesFoto = bytesFoto;
 	}
 }

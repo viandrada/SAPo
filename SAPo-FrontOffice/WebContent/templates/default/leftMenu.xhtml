@@ -4,107 +4,95 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 
 <ui:composition>
-	<h:panelGroup class="container">
+	<div class="container-fluid">
 		<ul class="nav nav-pills nav-stacked visible-md visible-lg">
 			<h:form class="form">
 				<div class="row">
-					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-						<h:commandLink value="Mis almacenes     "
-							action="#{navigationAreaBean.goTo('homeUsuario.xhtml')}"
-							class="list-group-item"></h:commandLink>
-					</div>
+					<h:commandLink value="Mis almacenes     "
+						action="#{navigationAreaBean.goTo('homeUsuario.xhtml')}"
+						class="list-group-item"></h:commandLink>
 				</div>
 				<ui:fragment
 					rendered="#{altaAlmacenBean.estoyProrDebajoDeAlmacenesPermtidos}">
 					<div class="row">
-						<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-							<h:commandLink value="Nuevo almacén"
-								action="#{navigationAreaBean.goTo('altaAlmacen.xhtml')}"
-								class="list-group-item"></h:commandLink>
-						</div>
+						<h:commandLink value="Nuevo almacén"
+							action="#{navigationAreaBean.goTo('altaAlmacen.xhtml')}"
+							class="list-group-item"></h:commandLink>
 					</div>
 				</ui:fragment>
 
 				<ui:fragment
 					rendered="#{!altaAlmacenBean.estoyProrDebajoDeAlmacenesPermtidos}">
 					<div class="row">
-						<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-							<h:commandLink value="No puede crear mas almacenes, debe pasar a usuario Premium"
-								action="#{navigationAreaBean.goTo('perfilUsuario.xhtml')}"
-								class="list-group-item"></h:commandLink>
-						</div>
-					</div>
-				</ui:fragment>
-
-
-
-
-				<div class="row">
-					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-						<h:commandLink value="Reportes"
-							action="#{navigationAreaBean.goTo('reportes.xhtml')}"
-							class="list-group-item"></h:commandLink>
-					</div>
-				</div>
-
-				<div class="row">
-					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-						<h:commandLink value="Perfil    "
+						<h:commandLink
+							value="No puede crear mas almacenes, debe pasar a usuario Premium"
 							action="#{navigationAreaBean.goTo('perfilUsuario.xhtml')}"
 							class="list-group-item"></h:commandLink>
 					</div>
+				</ui:fragment>
+				<div class="row">
+					<h:commandLink value="Reportes"
+						action="#{navigationAreaBean.goTo('reportes.xhtml')}"
+						class="list-group-item"></h:commandLink>
+				</div>
+
+				<div class="row">
+					<h:commandLink value="Perfil    "
+						action="#{navigationAreaBean.goTo('perfilUsuario.xhtml')}"
+						class="list-group-item"></h:commandLink>
 				</div>
 			</h:form>
 		</ul>
-
-		<div class="dropdown visible-xs visible-sm">
-			<button class="btn btn-info" style="width: 100%" id="dLabel"
-				type="button" data-toggle="dropdown" aria-haspopup="true"
-				aria-expanded="false">
-				Menú<span class="caret"></span>
-			</button>
-			<ul class="dropdown-menu list-group" style="width: 100%"
-				aria-labelledby="dLabel">
-				<h:form class="form">
-					<li>
-						<div class="row">
-							<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-								<h:commandLink value="Mis almacenes     "
-									action="#{navigationAreaBean.goTo('homeUsuario.xhtml')}"
-									class="list-group-item"></h:commandLink>
+		<div class="row">
+			<div class="dropdown visible-xs visible-sm">
+				<button class="btn btn-info" style="width: 100%" id="dLabel"
+					type="button" data-toggle="dropdown" aria-haspopup="true"
+					aria-expanded="false">
+					Menú<span class="caret"></span>
+				</button>
+				<ul class="dropdown-menu list-group" style="width: 100%"
+					aria-labelledby="dLabel">
+					<h:form class="form">
+						<li>
+							<div class="row">
+								<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+									<h:commandLink value="Mis almacenes     "
+										action="#{navigationAreaBean.goTo('homeUsuario.xhtml')}"
+										class="list-group-item"></h:commandLink>
+								</div>
 							</div>
-						</div>
-					</li>
-					<li>
-						<div class="row">
-							<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-								<h:commandLink value="Nuevo almacén"
-									action="#{navigationAreaBean.goTo('altaAlmacen.xhtml')}"
-									class="list-group-item"></h:commandLink>
+						</li>
+						<li>
+							<div class="row">
+								<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+									<h:commandLink value="Nuevo almacén"
+										action="#{navigationAreaBean.goTo('altaAlmacen.xhtml')}"
+										class="list-group-item"></h:commandLink>
+								</div>
 							</div>
-						</div>
-					</li>
-					<li>
-						<div class="row">
-							<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-								<h:commandLink value="Reportes"
-									action="#{navigationAreaBean.goTo('reportes.xhtml')}"
-									class="list-group-item"></h:commandLink>
+						</li>
+						<li>
+							<div class="row">
+								<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+									<h:commandLink value="Reportes"
+										action="#{navigationAreaBean.goTo('reportes.xhtml')}"
+										class="list-group-item"></h:commandLink>
+								</div>
 							</div>
-						</div>
-					</li>
-					<li>
-						<div class="row">
-							<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-								<h:commandLink value="Perfil    "
-									action="#{navigationAreaBean.goTo('perfilUsuario.xhtml')}"
-									class="list-group-item"></h:commandLink>
+						</li>
+						<li>
+							<div class="row">
+								<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+									<h:commandLink value="Perfil    "
+										action="#{navigationAreaBean.goTo('perfilUsuario.xhtml')}"
+										class="list-group-item"></h:commandLink>
+								</div>
 							</div>
-						</div>
-					</li>
-				</h:form>
-			</ul>
+						</li>
+					</h:form>
+				</ul>
+			</div>
 		</div>
-	</h:panelGroup>
+	</div>
 </ui:composition>
 </html>

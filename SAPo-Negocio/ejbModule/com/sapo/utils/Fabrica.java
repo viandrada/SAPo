@@ -114,6 +114,7 @@ public class Fabrica {
 		dataUser.setFechaPago(usuario.getFechaPago());
 		dataUser.setMonto(usuario.getMonto());
 		dataUser.setEstilo(usuario.getEstilo());
+		dataUser.setIdFoto(usuario.getFoto().getIdImagen());
 		return dataUser;
 
 	}
@@ -207,6 +208,8 @@ public class Fabrica {
 		dataRepProd.setStock(prod.getStock());
 		dataRepProd.setTipoMovimiento(mov);
 		dataRepProd.setFechaMovimiento(fechaMov);
+		dataRepProd.setIdAlmacen(prod.getAlmacen().getIdAlmacen());
+		dataRepProd.setNombreAlmacen(prod.getAlmacen().getNombre());
 
 		return dataRepProd;
 	}
