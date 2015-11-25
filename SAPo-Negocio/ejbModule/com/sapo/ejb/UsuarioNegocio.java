@@ -173,4 +173,13 @@ public class UsuarioNegocio {
 		u.setPassword(d.getPassword());
 		this.usuarioDAO.actualizarUsuario(u);
 	}
+	
+	public void actualizarPosicion(double latitud, double longitud, int idUsuario){
+		Usuario u = new Usuario();
+		u = this.usuarioDAO.getUsuario(idUsuario);
+		u.setLatitud(latitud);
+		u.setLongitud(longitud);
+		this.usuarioDAO.actualizarUsuario(u);
+		
+	}
 }

@@ -205,8 +205,8 @@ public class ReporteNegocio {
 
 	public List<DataAtributoAcumulado> getDatasAtributosAcumulados(int idAlmacen) {
 
-		System.out.println("ENTRE AL GET ATRIBUTOS ACUMULADOS DEL ALMACEN:  "
-				+ idAlmacen);
+		/*System.out.println("ENTRE AL GET ATRIBUTOS ACUMULADOS DEL ALMACEN:  "
+				+ idAlmacen);*/
 		//List<Producto> listProd = productoDAO.getProductosAlmacen(idAlmacen);
 		List<Producto> listProd = productoDAO.getProductosActivosAlmacen(idAlmacen);
 		
@@ -223,8 +223,8 @@ public class ReporteNegocio {
 			for (Producto p : listProd) {
 				
 				String atributos = p.getAtributos();
-				System.out.println("PRODUCTO NOMBRE: "
-						+ p.getNombre());
+				/*System.out.println("PRODUCTO NOMBRE: "
+						+ p.getNombre());*/
 				Gson gson = new Gson();
 				//System.out.println("HOLA 5");
 				Type collectionType = new TypeToken<Collection<Atributo>>() {
@@ -244,12 +244,12 @@ public class ReporteNegocio {
 					for (Atributo a : atributosVista) {
 						if (existeDato(a.getNombre(), listaDatosResult)) {
 							
-							System.out.println("EXISTE DATO, PRODUCTO: "+p.getNombre()+" ATRIBUTO: "
+						/*	System.out.println("EXISTE DATO, PRODUCTO: "+p.getNombre()+" ATRIBUTO: "
 									+ a.getNombre());
-
+*/
 						} else {
-							System.out.println("NO EXISTE DATO, PRODUCTO: "+p.getNombre()+" ATRIBUTO: "
-									+ a.getNombre());
+							/*System.out.println("NO EXISTE DATO, PRODUCTO: "+p.getNombre()+" ATRIBUTO: "
+									+ a.getNombre());*/
 
 						
 

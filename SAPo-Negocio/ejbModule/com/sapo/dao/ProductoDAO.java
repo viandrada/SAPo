@@ -48,9 +48,12 @@ public class ProductoDAO {
 
 	public List<Producto> getProductosActivosAlmacenConAtributo(int idAlmacen,
 			String atributos) {
-		System.out.println("ENTRE AL GET PRODUCTOS ACTIVOS ALMACEN: "
+		
+		/*System.out.println("ENTRE AL GET PRODUCTOS ACTIVOS ALMACEN: "
 				+ idAlmacen + " CON ATRIBUTO:  " + atributos
-				+ "  de ProductoDAO");
+				+ "  de ProductoDAO");*/
+		
+		
 		// Query consulta =
 		// em.createQuery("SELECT p FROM Producto p WHERE"+" p.almacen.idAlmacen = :idAlmacen and p.esIdeal = FALSE and p.estaActivo = TRUE"+" and p.atributos LIKE :atributos");
 
@@ -58,7 +61,7 @@ public class ProductoDAO {
 		// em.createQuery("SELECT p FROM Producto p WHERE p.atributos LIKE :atributos");
 
 		Query consulta = em
-				.createQuery("SELECT p FROM Producto p WHERE p.almacen.idAlmacen = :idAlmacen and p.atributos LIKE :atributos");
+				.createQuery("SELECT p FROM Producto p WHERE p.almacen.idAlmacen = :idAlmacen and p.atributos LIKE :atributos and p.esIdeal = FALSE and p.estaActivo = TRUE");
 
 		// .createQuery("SELECT p FROM Producto p WHERE"
 		// +
@@ -71,13 +74,13 @@ public class ProductoDAO {
 		
 		List<Producto> productos = (List<Producto>) consulta.getResultList();
 
-		if (!productos.isEmpty()) {
+		/*if (!productos.isEmpty()) {
 			for (Producto p : productos) {
 				System.out.println("Producto de get LIKE NOMBRE: "
 						+ p.getNombre() );
 
 			}
-		}else {System.out.println(" get de la consulta NO HAY PRODUCTOS CON ATRIBUTO: "+ atributos +" ProductoDAO");}
+		}else {System.out.println(" get de la consulta NO HAY PRODUCTOS CON ATRIBUTO: "+ atributos +" ProductoDAO");}*/
 
 		return productos;
 	}

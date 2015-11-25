@@ -95,16 +95,9 @@
 							var="u">
 							<tr>
 								<td><h:outputText value="#{u.nombre}" /></td>
-								<td><ui:fragment rendered="#{u.tipoDato=='Fecha'}">
-										<h:outputText value="#{u.valorFecha}" />
-
-									</ui:fragment> <ui:fragment rendered="#{u.tipoDato=='Texto'}">
-										<h:outputText value="#{u.valor}" />
-
-									</ui:fragment> <ui:fragment rendered="#{u.tipoDato=='Numero'}">
-										<h:outputText value="#{u.valorNumero}" />
-
-									</ui:fragment></td>
+								<td>
+									<h:outputText value="#{u.valor}" />
+									</td>
 								<td><h:outputText value="#{u.nombreProducto}" /></td>
 							</tr>
 						</ui:repeat>

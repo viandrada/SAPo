@@ -110,15 +110,15 @@ public class ReporteAtributoBean {
 
 		// List<Producto> listProd = productoDAO.getProductosAlmacen(idAlmacen);
 
-		List<DataAtributoAcumulado> listaDatosResult = new LinkedList<DataAtributoAcumulado>();
+		//List<DataAtributoAcumulado> listaDatosResult = new LinkedList<DataAtributoAcumulado>();
 
-		List<Atributo> atributosVista = new LinkedList<Atributo>();
+		//List<Atributo> atributosVista = new LinkedList<Atributo>();
 
 		try {
 
 			if (!listDataProductos.isEmpty()) {
 				for (DataProducto p : listDataProductos) {
-
+					List<Atributo> atributosVista = new LinkedList<Atributo>();
 					String atributos = p.getAtributos();
 
 					Gson gson = new Gson();
@@ -158,19 +158,20 @@ public class ReporteAtributoBean {
 								
 								dato.setTipoDato(a.getTipoDato());
 								dato.setValor(a.getValor());
-								dato.setValorFecha(a.getValorFecha());
-								dato.setValorNumero(a.getValorNumero());
+								//dato.setValorFecha(a.getValorFecha());
+								//dato.setValorNumero(a.getValorNumero());
 
 								listDatasAMostrar.add(dato);
+								
 								if(dato.getTipoDato().equals("Numero")){
-									resultadoNumerico=resultadoNumerico+dato.getValorNumero();
-									System.out.println("Resultado NUMERICO VE EN: "+resultadoNumerico);
+									resultadoNumerico=resultadoNumerico+Double.parseDouble(dato.getValor()) ;
+									System.out.println("Resultado NUMERICO ES: "+resultadoNumerico);
 									esNumerico=true;
 								}else System.out.println("NO ES NUMERICO");
 								
 								
 								
-								System.out.println("AGREGO EL DATO nombre producto"+dato.getNombreProducto()+"nombre atributo"+dato.getNombre());
+								System.out.println("AGREGO EL DATO nombre producto: "+dato.getNombreProducto()+" nombre atributo: "+dato.getNombre());
 							}
 							else{
 								System.out.println("NO COINCIDE ATRiBUTO "+a.getNombre()+"=="+nombreAtributoSelect);
