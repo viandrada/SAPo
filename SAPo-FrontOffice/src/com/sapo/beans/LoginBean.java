@@ -50,6 +50,7 @@ public class LoginBean {
 	private int contadorLogin;
 	private String estilo;
 	private boolean googleLogin;
+	private int idFoto;
 
 	private double latitud;
 	private double longitud;
@@ -192,6 +193,14 @@ public class LoginBean {
 		this.googleLogin = googleLogin;
 	}
 
+	public int getIdFoto() {
+		return idFoto;
+	}
+
+	public void setIdFoto(int idFoto) {
+		this.idFoto = idFoto;
+	}
+
 	@PostConstruct
 	public void init() {
 		this.notificaciones = new ArrayList<DataNotificacion>();
@@ -247,6 +256,7 @@ public class LoginBean {
 			this.nombre = dataUser.getNombre();
 			this.premium = dataUser.isPremium();
 			this.estilo = dataUser.getEstilo();
+			this.idFoto = dataUser.getIdFoto();
 
 			this.nav.setRedirectTo("areaTrabajo.xhtml");
 			this.shownLogin = false;
