@@ -111,7 +111,14 @@ public class ProductoDAO {
 			Date fechaInicio, Date fechaFin) {
 
 		AuditReader reader = AuditReaderFactory.get(em);
-		Number fInicio = reader.getRevisionNumberForDate(fechaInicio);
+		Number fInicio = 1;
+		try {
+			fInicio = reader.getRevisionNumberForDate(fechaInicio);
+		} catch (Exception e) {
+			System.out.println("Error en fecha de revisión, se utiliza"
+					+ "la primer revisión");
+		}
+		
 		Number fFin = reader.getRevisionNumberForDate(fechaFin);
 
 		List queryProducto = reader.createQuery()
