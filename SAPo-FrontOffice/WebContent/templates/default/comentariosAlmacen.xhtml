@@ -6,9 +6,10 @@
 
 <ui:composition>
 	<div class="container-fluid">
-		<h:outputStylesheet name="css/comentarios.css" />
+		<section id="comentarios">
+			<h:outputStylesheet name="css/comentarios.css" />
 
-		<script type="text/javascript">
+			<script type="text/javascript">
 			$(document).ready(function () {
 			
 			    (function ($) {
@@ -30,117 +31,128 @@
 
 
 
-		<ui:fragment
-			rendered="#{comentariosAlmacenBean.listDataComentarios.size()==0}">
+			<ui:fragment
+				rendered="#{comentariosAlmacenBean.listDataComentarios.size()==0}">
 		Aun no hay comentarios realizados en este almacen.
 <br />
-		</ui:fragment>
-		<br />
-		<h:form id="ediCat2" rendered="true">
-			<div class="input-group">
-				<span class="input-group-addon">Buscar:</span> <input id="filter2"
-					type="text" class="form-control" placeholder="Contenido/Usuario"></input>
-			</div>
-			<div class="row">
-				<div class="col-md-11">
-					<div class="page-header">
-						<h1>
-							<small class="pull-right">#{comentariosAlmacenBean.size}
-								comentarios</small> Comentarios
-						</h1>
-					</div>
-					<div class="comments-list">
-						<ui:repeat class="searchable"
-							value="#{comentariosAlmacenBean.listDataComentarios}" var="u">
-							<div class="media">
-								<p class="pull-right">
-									<small>#{u.fecha}</small>
-								</p>
-								<a class="media-left" href="#"> <h:graphicImage
-										value="http://lorempixel.com/40/40/people/1/" /></a>
-								<div class="media-body">
+			</ui:fragment>
+			<br />
+			<h:form id="ediCat2" rendered="true">
+				<div class="input-group">
+					<span class="input-group-addon">Buscar:</span> <input id="filter2"
+						type="text" class="form-control" placeholder="Contenido/Usuario"></input>
+				</div>
+				<div class="row">
+					<div class="col-md-11">
+						<div class="page-header">
+							<h1>
+								<small class="pull-right">#{comentariosAlmacenBean.size}
+									comentarios</small> Comentarios
+							</h1>
+							<button type="button" class="btn btn-success" data-toggle="modal"
+								data-target="#myModaleditar" onclick="return false;">Comentar</button>
+						</div>
 
-									<h4 class="media-heading user_name">#{u.emailUsu}</h4>
-									#{u.contenido}
+						<div class="comments-list">
+							<ui:repeat class="searchable"
+								value="#{comentariosAlmacenBean.listDataComentarios}" var="u">
+								<div class="media">
 
-									<p>
-										<small><a href="">Like</a> - <a href="">Share</a></small>
+									<ui:fragment
+										rendered="#{comentariosAlmacenBean.esComentarioMio(u.idComentario)}">
+										<p class="pull-right">
+											<h:commandLink value="" class="btn btn-default btn-xs"
+												onclick="$('#myModalBaja').modal('show');document.getElementById('ediCat2:forBajaModal:idComentarioSelect').value='#{u.idComentario}';"
+												immediate="true">
+												<i class="fa fa-times"></i>
+												<f:ajax execute="@this" render="" />
+											</h:commandLink>
+										</p>
+									</ui:fragment>
+									<p class="pull-right">
+										<small>#{u.fecha}</small>
 									</p>
+									<a class="media-left" href="#"> <h:graphicImage
+											value="Image/#{loginBean.idFoto}" style="height:2.5em">
+										</h:graphicImage></a>
+									<div class="media-body">
+
+										<h4 class="media-heading user_name">#{u.emailUsu}</h4>
+										#{u.contenido}
+
+										<p>
+											<small><a href="">Like</a> - <a href="">Share</a></small>
+										</p>
+									</div>
 								</div>
-							</div>
-						</ui:repeat>
-					</div>
-				</div>
-			</div>
-
-
-			<div class="modal fade" id="myModaleditar" role="dialog">
-				<div class="modal-dialog">
-					<!-- Modal content-->
-					<div class="modal-content">
-						<div class="modal-header">
-							<button type="button" class="close" data-dismiss="modal">X</button>
-							<h4 class="modal-title">Ingrese comentario...</h4>
-						</div>
-						<div class="modal-body">
-
-							<h:inputText value="#{comentariosAlmacenBean.contenido}"
-								id="contenido" class="form-control" />
-						</div>
-
-						<div class="modal-footer">
-
-							<h:commandButton class="btn btn-success" value="Aceptar"
-								type="submit"
-								action="#{comentariosAlmacenBean.comentarEnAlmacen}">
-							</h:commandButton>
-
-							<button type="button" class="btn btn-danger  pull-left"
-								data-dismiss="modal" onclick="return false;">Cancelar</button>
+							</ui:repeat>
 						</div>
 					</div>
 				</div>
-			</div>
 
-			<!-- Modal para DAR DE BAJA producto ESTA HACIENDO CONFLICTO CON EL MODAL DE COMENTAR OJO-->
-			<div class="modal fade" id="myModalBaja" tabindex="-1" role="dialog"
-				aria-labelledby="myModalLabel">
-				<h:form id="forBajaModal">
+
+				<div class="modal fade" id="myModaleditar" role="dialog">
 					<div class="modal-dialog">
+						<!-- Modal content-->
 						<div class="modal-content">
 							<div class="modal-header">
 								<button type="button" class="close" data-dismiss="modal">X</button>
-								<h4 class="modal-title">Estas seguro que deseas descomentar
-									?</h4>
+								<h4 class="modal-title">Ingrese comentario...</h4>
 							</div>
 							<div class="modal-body">
-								<div class="form-group">
-									<h:inputHidden
-										value="#{comentariosAlmacenBean.idComentarioSelect}"
-										id="idComentarioSelect" name="idComentarioSelect"
-										class="form-control" />
 
-								</div>
+								<h:inputText value="#{comentariosAlmacenBean.contenido}"
+									id="contenido" class="form-control" />
 							</div>
+
 							<div class="modal-footer">
+
 								<h:commandButton class="btn btn-success" value="Aceptar"
-									action="#{comentariosAlmacenBean.descomentarEnAlmacen}">
+									type="submit"
+									action="#{comentariosAlmacenBean.comentarEnAlmacen}">
 								</h:commandButton>
-								<button type="button" class="btn btn-danger pull-left"
+
+								<button type="button" class="btn btn-danger  pull-left"
 									data-dismiss="modal" onclick="return false;">Cancelar</button>
 							</div>
 						</div>
 					</div>
-				</h:form>
-			</div>
-			<!-- Fin de ventana modal DAR DE BAJA-->
-		</h:form>
+				</div>
+
+				<!-- Modal para DAR DE BAJA producto ESTA HACIENDO CONFLICTO CON EL MODAL DE COMENTAR OJO-->
+				<div class="modal fade" id="myModalBaja" tabindex="-1" role="dialog"
+					aria-labelledby="myModalLabel">
+					<h:form id="forBajaModal">
+						<div class="modal-dialog">
+							<div class="modal-content">
+								<div class="modal-header">
+									<button type="button" class="close" data-dismiss="modal">X</button>
+									<h4 class="modal-title">Estas seguro que deseas
+										descomentar ?</h4>
+								</div>
+								<div class="modal-body">
+									<div class="form-group">
+										<h:inputHidden
+											value="#{comentariosAlmacenBean.idComentarioSelect}"
+											id="idComentarioSelect" name="idComentarioSelect"
+											class="form-control" />
+
+									</div>
+								</div>
+								<div class="modal-footer">
+									<h:commandButton class="btn btn-success" value="Aceptar"
+										action="#{comentariosAlmacenBean.descomentarEnAlmacen}">
+									</h:commandButton>
+									<button type="button" class="btn btn-danger pull-left"
+										data-dismiss="modal" onclick="return false;">Cancelar</button>
+								</div>
+							</div>
+						</div>
+					</h:form>
+				</div>
+				<!-- Fin de ventana modal DAR DE BAJA-->
+			</h:form>
+		</section>
 	</div>
 </ui:composition>
-
-<h:panelGroup class="row">
-	<h:commandButton value="Compartir Almacen"
-		action="#{navigationAreaBean.goTo('compartirAlmacen.xhtml')}"
-		class="btn btn-primary btn-lg"></h:commandButton>
-</h:panelGroup>
 </html>

@@ -3060,6 +3060,7 @@ fieldset[disabled] .btn {
   color: #333;
   background-color: #fff;
   border-color: #ccc;
+  margin-left: 20px;
 }
 .btn-default:hover,
 .btn-default:focus,

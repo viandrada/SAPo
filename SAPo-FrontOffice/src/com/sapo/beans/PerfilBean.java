@@ -196,6 +196,7 @@ public class PerfilBean {
 	public void actualizarLoginBean(DataUsuario du) {
 		this.usuarioLogueado.setEmail(du.getEmail());
 		this.usuarioLogueado.setNombre(du.getNombre());
+		this.usuarioLogueado.setIdFoto(du.getIdFoto());
 	}
 
 	public void cambiarPassword() {
