@@ -21,13 +21,14 @@ import javax.servlet.http.Part;
 import org.richfaces.event.FileUploadEvent;
 import org.richfaces.model.UploadedFile;
 
+import com.datatypes.Atributo;
 import com.datatypes.DataAlmacen;
 import com.datatypes.DataImagen;
 import com.datatypes.DataProducto;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.sapo.ejb.ProductoNegocio;
-import com.sapo.utils.Atributo;
+//import com.sapo.utils.Atributo;
 import com.sapo.utils.PartToByteArrayConverter;
 
 @ManagedBean
@@ -269,7 +270,7 @@ public class AltaProductoConPlantillaBean {
 		}
 	}
 
-	// Para agregar atributo genérico nuevo a la lista.
+	// Para agregar atributo genï¿½rico nuevo a la lista.
 	public String add() {
 		Atributo a = new Atributo();
 		a.setNombre(this.nombreAtr);
@@ -317,20 +318,20 @@ public class AltaProductoConPlantillaBean {
 	public void altaProducto() {
 		DataAlmacen dataAlmacen = new DataAlmacen();
 		dataAlmacen.setIdAlmacen(this.nav.getIdAlmacenActual());
-		this.productoNuevo.setIdProductoGenerico(this.productoGenerico.getIdProducto());//Se guarda la referencia al producto genérico.
+		this.productoNuevo.setIdProductoGenerico(this.productoGenerico.getIdProducto());//Se guarda la referencia al producto genï¿½rico.
 		this.productoNuevo.setNombre(this.productoGenerico.getNombre());
 		this.productoNuevo.setDescripcion(this.productoGenerico.getDescripcion());
 		this.productoNuevo.setEstaActivo(true);
 		this.productoNuevo.setIdCategoria(this.productoGenerico.getIdCategoria());
 		//El Stock, precio se cargan directamente del input.
 		
-		// Conversión de atributos genéricos a json
+		// Conversiï¿½n de atributos genï¿½ricos a json
 		Gson gson = new Gson();
 		this.atributosVista.addAll(this.getAtributosNuevosVista());
-		String json = gson.toJson(this.getAtributosVista());//Se incluyen los que agregó el usuario a los que ya tenía el genérico.
+		String json = gson.toJson(this.getAtributosVista());//Se incluyen los que agregï¿½ el usuario a los que ya tenï¿½a el genï¿½rico.
 		System.out.println(json);
 		this.productoNuevo.setAtributos(json);
-		// Fin de conversión a json
+		// Fin de conversiï¿½n a json
 		
 		// Procesando imagenes...
 		/*if (this.foto != null) {
@@ -354,7 +355,7 @@ public class AltaProductoConPlantillaBean {
 			this.getFotos().add(dataImg);
 		}*/
 
-		//Si no sube imagen, se guarda la del genérico.
+		//Si no sube imagen, se guarda la del genï¿½rico.
 		if(this.fotos.size() == 0){
 			DataImagen dataImg = new DataImagen();
 			dataImg.setIdImagen(this.productoGenerico.getFotos().get(0).getIdImagen());
@@ -365,13 +366,13 @@ public class AltaProductoConPlantillaBean {
 		this.service.altaProductoDesdePlantilla(this.productoNuevo, dataAlmacen);
 	}
 	
-	/* Ésto es para subir imagenes con Richfaces */
+	/* ï¿½sto es para subir imagenes con Richfaces */
 	public void paint(OutputStream stream, Object object) throws IOException {
 		stream.write(getFotos().get((Integer) object).getDatos());
 		stream.close();
 	}
 
-	/* Ésto es para subir imagenes con Richfaces */
+	/* ï¿½sto es para subir imagenes con Richfaces */
 	public void listener(FileUploadEvent event) throws Exception {
 		UploadedFile item = event.getUploadedFile();
 		DataImagen file = new DataImagen();
@@ -380,18 +381,18 @@ public class AltaProductoConPlantillaBean {
 		fotos.add(file);
 	}
 
-	/* Ésto es para subir imagenes con Richfaces */
+	/* ï¿½sto es para subir imagenes con Richfaces */
 	public String clearUploadData() {
 		fotos.clear();
 		return null;
 	}
 
-	/* Ésto es para subir imagenes con Richfaces */
+	/* ï¿½sto es para subir imagenes con Richfaces */
 	public long getTimeStamp() {
 		return System.currentTimeMillis();
 	}
 	
-	/* Ésto es para subir imagenes con Richfaces */
+	/* ï¿½sto es para subir imagenes con Richfaces */
     public int getSize() {
         if (getFotos().size() > 0) {
             return getFotos().size();

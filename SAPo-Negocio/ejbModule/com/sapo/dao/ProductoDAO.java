@@ -8,6 +8,7 @@ import javax.ejb.Stateless;
 import javax.ejb.TransactionManagement;
 import javax.ejb.TransactionManagementType;
 import javax.persistence.EntityManager;
+import javax.persistence.NamedQuery;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
@@ -42,6 +43,45 @@ public class ProductoDAO {
 				.createNamedQuery("Productos.getProductosActivosDeAlmacen.IdAlmacen");
 		consulta.setParameter("idAlmacen", idAlmacen);
 		List<Producto> productos = (List<Producto>) consulta.getResultList();
+		return productos;
+	}
+
+	public List<Producto> getProductosActivosAlmacenConAtributo(int idAlmacen,
+			String atributos) {
+		
+		/*System.out.println("ENTRE AL GET PRODUCTOS ACTIVOS ALMACEN: "
+				+ idAlmacen + " CON ATRIBUTO:  " + atributos
+				+ "  de ProductoDAO");*/
+		
+		
+		// Query consulta =
+		// em.createQuery("SELECT p FROM Producto p WHERE"+" p.almacen.idAlmacen = :idAlmacen and p.esIdeal = FALSE and p.estaActivo = TRUE"+" and p.atributos LIKE :atributos");
+
+		// ESTA NO REVIENTA Query consulta =
+		// em.createQuery("SELECT p FROM Producto p WHERE p.atributos LIKE :atributos");
+
+		Query consulta = em
+				.createQuery("SELECT p FROM Producto p WHERE p.almacen.idAlmacen = :idAlmacen and p.atributos LIKE :atributos and p.esIdeal = FALSE and p.estaActivo = TRUE");
+
+		// .createQuery("SELECT p FROM Producto p WHERE"
+		// +
+		// "p.almacen.idAlmacen = :idAlmacen and p.esIdeal = FALSE and p.estaActivo = TRUE"
+		// + "and p.atributos LIKE :atributos");
+
+		consulta.setParameter("idAlmacen", idAlmacen);
+		consulta.setParameter("atributos", "%" + atributos + "%");
+
+		
+		List<Producto> productos = (List<Producto>) consulta.getResultList();
+
+		/*if (!productos.isEmpty()) {
+			for (Producto p : productos) {
+				System.out.println("Producto de get LIKE NOMBRE: "
+						+ p.getNombre() );
+
+			}
+		}else {System.out.println(" get de la consulta NO HAY PRODUCTOS CON ATRIBUTO: "+ atributos +" ProductoDAO");}*/
+
 		return productos;
 	}
 
@@ -104,8 +144,8 @@ public class ProductoDAO {
 	}
 
 	/*
-	 * Obtiene una lista con los productos y sus hist�ricos de un usuario
-	 * dentro de un lapso de tiempo.
+	 * Obtiene una lista con los productos y sus hist�ricos de un usuario dentro
+	 * de un lapso de tiempo.
 	 */
 	public List getHistoricoProdPorUsuarioEnFecha(int idUsuario,
 			Date fechaInicio, Date fechaFin) {
@@ -132,8 +172,8 @@ public class ProductoDAO {
 	}
 
 	/*
-	 * Obtiene una lista con los productos y sus hist�ricos de un usuario
-	 * dentro espec�ficamente para un almac�n
+	 * Obtiene una lista con los productos y sus hist�ricos de un usuario dentro
+	 * espec�ficamente para un almac�n
 	 */
 	public List getHistoricoProdPorUsuarioEnAlmacen(int idUsuario, int idAlmacen) {
 		AuditReader reader = AuditReaderFactory.get(em);
@@ -174,9 +214,9 @@ public class ProductoDAO {
 	}
 
 	/*
-	 * Paso un id de un producto y obtengo el hist�rico de las MODIFICACIONES
-	 * de ese producto. (s�lo las modificaciones) SI SE USA HAY QUE REVISAR
-	 * ESTO - getHistoricoProdPorUsuario
+	 * Paso un id de un producto y obtengo el hist�rico de las MODIFICACIONES de
+	 * ese producto. (s�lo las modificaciones) SI SE USA HAY QUE REVISAR ESTO -
+	 * getHistoricoProdPorUsuario
 	 */
 	public List<Producto> getHistoricoModificacionesProdPorId(int idProd) {
 		AuditReader reader = AuditReaderFactory.get(em);

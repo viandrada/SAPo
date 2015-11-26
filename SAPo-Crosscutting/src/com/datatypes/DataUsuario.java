@@ -16,7 +16,24 @@ public class DataUsuario {
 	private Date fechaPago;
 	private float monto;
 	private String estilo;
+	private int idFoto;
+	private byte[] bytesFoto;
+	
+	private double latitud;
+	private double longitud;
 
+	public double getLatitud() {
+		return latitud;
+	}
+	public void setLatitud(double latitud) {
+		this.latitud = latitud;
+	}
+	public double getLongitud() {
+		return longitud;
+	}
+	public void setLongitud(double longitud) {
+		this.longitud = longitud;
+	}
 	public boolean isPremium() {
 		return premium;
 	}
@@ -77,5 +94,17 @@ public class DataUsuario {
 	}
 	public void setEstilo(String estilo) {
 		this.estilo = estilo;
+	}
+	public int getIdFoto() {
+		return idFoto;
+	}
+	public void setIdFoto(int idFoto) {
+		this.idFoto = idFoto;
+	}
+	public byte[] getBytesFoto() {
+		return bytesFoto;
+	}
+	public void setBytesFoto(byte[] bytesFoto) {
+		this.bytesFoto = bytesFoto;
 	}
 }

@@ -18,7 +18,7 @@ import com.datatypes.DataAlmacen;
 import com.datatypes.DataReporteProducto;
 import com.sapo.ejb.AlmacenNegocio;
 import com.sapo.ejb.ReporteNegocio;
-import com.sapo.utils.Atributo;
+//import com.sapo.utils.Atributo;
 
 
 @ManagedBean

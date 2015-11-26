@@ -21,6 +21,7 @@ import javax.servlet.http.Part;
 import org.richfaces.event.FileUploadEvent;
 import org.richfaces.model.UploadedFile;
 
+import com.datatypes.Atributo;
 import com.datatypes.DataCategoria;
 import com.datatypes.DataImagen;
 import com.datatypes.DataProducto;
@@ -28,7 +29,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.sapo.ejb.CategoriaNegocio;
 import com.sapo.ejb.ProductoNegocio;
-import com.sapo.utils.Atributo;
+//import com.sapo.utils.Atributo;
 import com.sapo.utils.PartToByteArrayConverter;
 
 @ManagedBean
@@ -441,13 +442,13 @@ public class EditarProductoEspBean {
 
 	}
 	
-	/* Ésto es para subir imagenes con Richfaces */
+	/* ï¿½sto es para subir imagenes con Richfaces */
 	public void paint(OutputStream stream, Object object) throws IOException {
 		stream.write(getFotos().get((Integer) object).getDatos());
 		stream.close();
 	}
 
-	/* Ésto es para subir imagenes con Richfaces */
+	/* ï¿½sto es para subir imagenes con Richfaces */
 	public void listener(FileUploadEvent event) throws Exception {
 		UploadedFile item = event.getUploadedFile();
 		DataImagen file = new DataImagen();
@@ -456,18 +457,18 @@ public class EditarProductoEspBean {
 		fotos.add(file);
 	}
 
-	/* Ésto es para subir imagenes con Richfaces */
+	/* ï¿½sto es para subir imagenes con Richfaces */
 	public String clearUploadData() {
 		fotos.clear();
 		return null;
 	}
 
-	/* Ésto es para subir imagenes con Richfaces */
+	/* ï¿½sto es para subir imagenes con Richfaces */
 	public long getTimeStamp() {
 		return System.currentTimeMillis();
 	}
 	
-	/* Ésto es para subir imagenes con Richfaces */
+	/* ï¿½sto es para subir imagenes con Richfaces */
     public int getSize() {
         if (getFotos().size() > 0) {
             return getFotos().size();

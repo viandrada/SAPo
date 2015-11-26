@@ -39,6 +39,29 @@ public class Usuario implements Serializable {
 	private Date fechaPago;
 	private float monto;
 	private boolean estaActivo;
+	
+	private double latitud;
+	private double longitud;
+
+	public void setEstaActivo(boolean estaActivo) {
+		this.estaActivo = estaActivo;
+	}
+
+	public double getLatitud() {
+		return latitud;
+	}
+
+	public void setLatitud(double latitud) {
+		this.latitud = latitud;
+	}
+
+	public double getLongitud() {
+		return longitud;
+	}
+
+	public void setLongitud(double longitud) {
+		this.longitud = longitud;
+	}
 
 	public Usuario() {
 		super();

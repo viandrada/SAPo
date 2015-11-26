@@ -21,6 +21,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 import org.richfaces.event.FileUploadEvent;
 import org.richfaces.model.UploadedFile;
 
+import com.datatypes.Atributo;
 import com.datatypes.DataAlmacen;
 import com.datatypes.DataCategoria;
 import com.datatypes.DataImagen;
@@ -29,7 +30,7 @@ import com.datatypes.DataUsuario;
 import com.google.gson.Gson;
 import com.sapo.ejb.AlmacenNegocio;
 import com.sapo.ejb.CategoriaNegocio;
-import com.sapo.utils.Atributo;
+//import com.sapo.utils.Atributo;
 import com.sapo.utils.PartToByteArrayConverter;
 
 @ManagedBean
@@ -63,7 +64,7 @@ public class AltaProductoBean {
 
 	@NotEmpty(message = "Ups, parece que no ingresaste un nombre.")
 	private String nombre;
-	@Size(max = 255, message = "La descripción es muy larga.")
+	@Size(max = 255, message = "La descripciï¿½n es muy larga.")
 	private String descripcion;
 	@Min(value = 0, message = "El precio no puede ser menor a 0.")
 	private float precio;
@@ -442,7 +443,7 @@ public class AltaProductoBean {
 		System.out.println(format.format(this.valorAtributoFecha));
 	}
 
-	/* Ésto es para agregar atributos genéricos */
+	/* ï¿½sto es para agregar atributos genï¿½ricos */
 	public String add() {
 		Atributo a = new Atributo();
 		a.setNombre(this.getNombreAtr());
@@ -472,13 +473,13 @@ public class AltaProductoBean {
 		return null;
 	}
 
-	/* Ésto es para subir imagenes con Richfaces */
+	/* ï¿½sto es para subir imagenes con Richfaces */
 	public void paint(OutputStream stream, Object object) throws IOException {
 		stream.write(getFotos().get((Integer) object).getDatos());
 		stream.close();
 	}
 
-	/* Ésto es para subir imagenes con Richfaces */
+	/* ï¿½sto es para subir imagenes con Richfaces */
 	public void listener(FileUploadEvent event) throws Exception {
 		UploadedFile item = event.getUploadedFile();
 		DataImagen file = new DataImagen();
@@ -487,18 +488,18 @@ public class AltaProductoBean {
 		fotos.add(file);
 	}
 
-	/* Ésto es para subir imagenes con Richfaces */
+	/* ï¿½sto es para subir imagenes con Richfaces */
 	public String clearUploadData() {
 		fotos.clear();
 		return null;
 	}
 
-	/* Ésto es para subir imagenes con Richfaces */
+	/* ï¿½sto es para subir imagenes con Richfaces */
 	public long getTimeStamp() {
 		return System.currentTimeMillis();
 	}
 	
-	/* Ésto es para subir imagenes con Richfaces */
+	/* ï¿½sto es para subir imagenes con Richfaces */
     public int getSize() {
         if (getFotos().size() > 0) {
             return getFotos().size();

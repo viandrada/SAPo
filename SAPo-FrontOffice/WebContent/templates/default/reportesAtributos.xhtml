@@ -1,0 +1,117 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<ui:composition>
+	<div class="container-fluid">
+
+		<div class="row">
+			<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+				<h1>Reporte por atributo de producto</h1>
+			</div>
+			<h:form>
+				<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+					<h:commandLink action="#{navigationAreaBean.goTo('almacen.xhtml')}">
+						<i class="fa fa-times fa-2x">Cerrar</i>
+					</h:commandLink>
+				</div>
+			</h:form>
+		</div>
+
+		<script type="text/javascript">
+			$(document).ready(function () {
+			
+			    (function ($) {
+			
+			        $('#filter2').keyup(function () {
+			
+			            var rex = new RegExp($(this).val(), 'i');
+			            $('.searchable tr').hide();
+			            $('.searchable tr').filter(function () {
+			                return rex.test($(this).text());
+			            }).show();
+			
+			        })
+			
+			    }(jQuery));
+					
+			});
+		</script>
+
+		<div class="row">
+			<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+				<h:form id="formAtributo" rendered="true">
+
+					<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+						<div class="form-group">
+							<label for="sel1">Seleccionar Atributo:</label>
+							<h:selectOneMenu
+								value="#{reporteAtributoBean.nombreAtributoSelect}"
+								class="form-control" id="sel123">
+								<f:selectItems
+									value="#{reporteAtributoBean.listDataAtriAcumulados}" var="c"
+									itemValue="#{c.nombre}" itemLabel="#{c.nombre}" />
+							</h:selectOneMenu>
+						</div>
+					</div>
+
+					<h:commandButton class="btn btn-success pull-right"
+						value="Ver Reporte" type="submit"
+						action="#{reporteAtributoBean.ejecutarReporte}">
+					</h:commandButton>
+				</h:form>
+			</div>
+		</div>
+
+
+		<ui:fragment
+			rendered="#{reporteAtributoBean.listDatasAMostrar.size()==0}">
+		Aun no hay productos a mostrar.
+		<br />
+		</ui:fragment>
+		<br />
+		<h:form id="ediCat2" rendered="true">
+			<ui:fragment
+				rendered="#{reporteAtributoBean.listDatasAMostrar.size()!=0}">
+				
+				<div class="input-group">
+					<span class="input-group-addon">Buscar:</span> <input id="filter2"
+						type="text" class="form-control"
+						placeholder="Atributo/Valor/Nombre"></input>
+				</div>
+
+				<table class="table table-striped table-hover">
+					<thead>
+						<tr>
+							<th><h:outputText value="Atributo" /></th>
+							<th><h:outputText value="Valor" /></th>
+							<th><h:outputText value="Nombre Producto" /></th>
+						</tr>
+					</thead>
+					<tbody class="searchable">
+						<ui:repeat value="#{reporteAtributoBean.listDatasAMostrar}"
+							var="u">
+							<tr>
+								<td><h:outputText value="#{u.nombre}" /></td>
+								<td>
+									<h:outputText value="#{u.valor}" />
+									</td>
+								<td><h:outputText value="#{u.nombreProducto}" /></td>
+							</tr>
+						</ui:repeat>
+					</tbody>
+				</table>
+				<ui:fragment
+					rendered="#{reporteAtributoBean.listDatasAMostrar.get(0).tipoDato=='Numero'}">
+		            La suma total de atributo seleccionado es:  #{reporteAtributoBean.resultadoNumerico}.  
+				</ui:fragment>
+			</ui:fragment>
+
+
+		</h:form>
+	</div>
+</ui:composition>
+
+</html>

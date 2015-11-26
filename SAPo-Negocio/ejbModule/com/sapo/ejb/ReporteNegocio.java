@@ -1,10 +1,13 @@
 package com.sapo.ejb;
 
+import java.lang.reflect.Type;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -17,12 +20,18 @@ import org.hibernate.envers.AuditReaderFactory;
 import org.hibernate.envers.DefaultRevisionEntity;
 import org.hibernate.envers.query.AuditEntity;
 
+import com.datatypes.Atributo;
 import com.datatypes.DataAlmacen;
+import com.datatypes.DataAtributoAcumulado;
 import com.datatypes.DataDatoGrafico;
 import com.datatypes.DataReporteAlmacen;
 import com.datatypes.DataReporteProducto;
 import com.datatypes.DataReporteProductoGenerico;
 import com.datatypes.DataUsuario;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+//import com.google.gson.Gson;
+//import com.google.gson.reflect.TypeToken;
 import com.sapo.dao.AlmacenDAO;
 import com.sapo.dao.AlmacenIdealDAO;
 import com.sapo.dao.ProductoDAO;
@@ -108,52 +117,46 @@ public class ReporteNegocio {
 		return esMayor;
 	}
 
-	/*public List<DataDatoGrafico> ordenarPorFecha(
-			List<DataDatoGrafico> sinOrdenar) {
-		List<DataDatoGrafico> ordenada = new LinkedList<DataDatoGrafico>();
-
-		if (!sinOrdenar.isEmpty()) {
-			
-			for (DataDatoGrafico d : sinOrdenar) {
-				
-				if (!ordenada.isEmpty()) {
-					
-					for (int i = 0; i < ordenada.size(); i++) {
-					
-						if (compararFechasAMayorB(d,ordenada.get(i))){
-							System.out.println("ES MAYOR");
-							
-						}else{
-							System.out.println("ES MENOR");
-							int j=i;
-							while (j<=ordenada.size()){
-								j=j+1;
-								if (j==ordenada.size())
-									ordenada.add(d);
-								else{
-									
-								}
-									
-								
-							}
-							
-							
-							
-							
-							ordenada.add(i, d);
-						}
-
-					}// for
-
-				}// if
-				else  ordenada.add(d);
-
-			}// for
-
-		}// if
-
-		return ordenada;
-	}*/
+	/*
+	 * public List<DataDatoGrafico> ordenarPorFecha( List<DataDatoGrafico>
+	 * sinOrdenar) { List<DataDatoGrafico> ordenada = new
+	 * LinkedList<DataDatoGrafico>();
+	 * 
+	 * if (!sinOrdenar.isEmpty()) {
+	 * 
+	 * for (DataDatoGrafico d : sinOrdenar) {
+	 * 
+	 * if (!ordenada.isEmpty()) {
+	 * 
+	 * for (int i = 0; i < ordenada.size(); i++) {
+	 * 
+	 * if (compararFechasAMayorB(d,ordenada.get(i))){
+	 * System.out.println("ES MAYOR");
+	 * 
+	 * }else{ System.out.println("ES MENOR"); int j=i; while
+	 * (j<=ordenada.size()){ j=j+1; if (j==ordenada.size()) ordenada.add(d);
+	 * else{
+	 * 
+	 * }
+	 * 
+	 * 
+	 * }
+	 * 
+	 * 
+	 * 
+	 * 
+	 * ordenada.add(i, d); }
+	 * 
+	 * }// for
+	 * 
+	 * }// if else ordenada.add(d);
+	 * 
+	 * }// for
+	 * 
+	 * }// if
+	 * 
+	 * return ordenada; }
+	 */
 
 	public List<DataDatoGrafico> getDatosGraficoGanancias() {
 
@@ -170,7 +173,7 @@ public class ReporteNegocio {
 			cal.setTime(date);
 			int month = cal.get(Calendar.MONTH) + 1;
 			int year = cal.get(Calendar.YEAR);
-			int orden =(int) cal.getTimeInMillis();
+			int orden = (int) cal.getTimeInMillis();
 
 			if (existeDato(month, year, listaDatosResult)) {
 
@@ -193,10 +196,82 @@ public class ReporteNegocio {
 			}
 
 		}
-		//listaDatosResult=ordenarPorFecha(listaDatosResult);
-		//ESTO ES PARA ORDENAR LA LISTA EN ORDEN ASCENDENTE
-		Collections.sort(listaDatosResult,Collections.reverseOrder());
+		// listaDatosResult=ordenarPorFecha(listaDatosResult);
+		// ESTO ES PARA ORDENAR LA LISTA EN ORDEN ASCENDENTE
+		Collections.sort(listaDatosResult, Collections.reverseOrder());
+
+		return listaDatosResult;
+	}
+
+	public List<DataAtributoAcumulado> getDatasAtributosAcumulados(int idAlmacen) {
+
+		/*System.out.println("ENTRE AL GET ATRIBUTOS ACUMULADOS DEL ALMACEN:  "
+				+ idAlmacen);*/
+		//List<Producto> listProd = productoDAO.getProductosAlmacen(idAlmacen);
+		List<Producto> listProd = productoDAO.getProductosActivosAlmacen(idAlmacen);
 		
+		
+		//System.out.println("HOLA 1");
+		List<DataAtributoAcumulado> listaDatosResult = new LinkedList<DataAtributoAcumulado>();
+		//System.out.println("HOLA 2");
+		List<Atributo> atributosVista = new LinkedList<Atributo>();
+		//System.out.println("HOLA 3");
+	try {
+		
+	
+		if (!listProd.isEmpty()) {
+			for (Producto p : listProd) {
+				
+				String atributos = p.getAtributos();
+				/*System.out.println("PRODUCTO NOMBRE: "
+						+ p.getNombre());*/
+				Gson gson = new Gson();
+				//System.out.println("HOLA 5");
+				Type collectionType = new TypeToken<Collection<Atributo>>() {
+				}.getType();
+				//System.out.println("HOLA 6");
+				Collection<Atributo> atribs = gson.fromJson(atributos,
+						collectionType);
+				//System.out.println("HOLA 7");
+				for (Iterator<Atributo> iterator = atribs.iterator(); iterator
+						.hasNext();) {
+					Atributo atributo = (Atributo) iterator.next();
+					atributosVista.add(atributo);
+
+				}
+
+				if (!atributosVista.isEmpty()) {
+					for (Atributo a : atributosVista) {
+						if (existeDato(a.getNombre(), listaDatosResult)) {
+							
+						/*	System.out.println("EXISTE DATO, PRODUCTO: "+p.getNombre()+" ATRIBUTO: "
+									+ a.getNombre());
+*/
+						} else {
+							/*System.out.println("NO EXISTE DATO, PRODUCTO: "+p.getNombre()+" ATRIBUTO: "
+									+ a.getNombre());*/
+
+						
+
+							DataAtributoAcumulado dato = new DataAtributoAcumulado();
+							dato.setNombre(a.getNombre());
+							
+
+							listaDatosResult.add(dato);
+						}
+					}// for
+				}// if
+			}
+			// listaDatosResult=ordenarPorFecha(listaDatosResult);
+			// ESTO ES PARA ORDENAR LA LISTA EN ORDEN ASCENDENTE
+			// Collections.sort(listaDatosResult, Collections.reverseOrder());
+			Collections.sort(listaDatosResult);
+		}//if
+		
+	} catch (Exception e) {
+		// TODO: handle exception
+	}
+	
 		return listaDatosResult;
 	}
 
@@ -221,6 +296,22 @@ public class ReporteNegocio {
 			for (DataDatoGrafico d : listaDatos) {
 
 				if (d.getAnio() == anio && d.getMes() == mes)
+					hay = true;
+			}
+		}
+		return hay;
+	}
+
+	public boolean existeDato(String nombre,
+			List<DataAtributoAcumulado> listaDatos) {
+
+		boolean hay = false;
+		if (!listaDatos.isEmpty()) {
+			for (DataAtributoAcumulado d : listaDatos) {
+
+			//	if (d.getNombre() == nombre)
+				//	hay = true;
+				if (d.getNombre().equals(nombre))
 					hay = true;
 			}
 		}

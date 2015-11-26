@@ -30,58 +30,78 @@
 		<!-- Fin de Jumbotron -->
 
 		<div class="row">
-			<div class="col-xs-12 col-sm-12 col-md-9 col-md-9">
-				<!-- h:dataTable value="#{homeUsuarioBean.almacenes}" var="a"-->
-				<ul class="list-group">
-					<ui:repeat value="#{homeUsuarioBean.almacenes}" var="item">
-						<div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
-
+			<ul class="list-group">
+				<ui:repeat value="#{homeUsuarioBean.almacenes}" var="item">
+					<div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
+						<div class="row">
 							<h:form>
 								<li class="list-group-item">
+									<div class="row">
+										<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+											<h:outputText value="#{item.nombre}" />
+										</div>
 
-									<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
-										<h:outputText value="#{item.nombre}" />
+										<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+											<h:commandLink
+												action="#{editarAlmacenBean.getAlmacen(item.idAlmacen)}"
+												actionListener="#{navigationAreaBean.goTo('editarAlmacen.xhtml')}"
+												value=" " class="btn btn-default btn-xs">
+												<i class="fa fa-pencil-square-o"></i>
+											</h:commandLink>
+											<h:commandLink value=" " class="btn btn-default btn-xs"
+												action="#{editarAlmacenBean.getAlmacen(item.idAlmacen)}"
+												onclick="$('#myModabaja').modal('show');" immediate="true">
+												<i class="fa fa-times"></i>
+												<f:ajax execute="@this" render=":modalBa" />
+											</h:commandLink>
+										</div>
 									</div>
-									<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-										<h:commandLink
-											action="#{editarAlmacenBean.getAlmacen(item.idAlmacen)}"
-											actionListener="#{navigationAreaBean.goTo('editarAlmacen.xhtml')}"
-											value=" "
-											class="btn btn-default btn-xs">
-											<i class="fa fa-pencil-square-o"></i>
-										</h:commandLink>
-										<h:commandLink value=" "
-											class="btn btn-default btn-xs"
-											action="#{editarAlmacenBean.getAlmacen(item.idAlmacen)}"
-											onclick="$('#myModabaja').modal('show');" immediate="true">
-											<i class="fa fa-times"></i>
-											<f:ajax execute="@this" render=":modalBa" />
-										</h:commandLink>
-									</div> <h:commandLink
-										action="#{navigationAreaBean.irAlmacen(item.idAlmacen)}"
-										class="thumbnail">
-										<!--h:graphicImage class="img-responsive"
-										value="/resources/images/box.png">
-									</h:graphicImage-->
-										<h:graphicImage class="img-responsive imgDefault"
-											style="height:200px;" value="Image/#{item.idFoto}">
-										</h:graphicImage>
-									</h:commandLink>
+									<div class="row">
+										<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+											<h:commandLink
+												action="#{navigationAreaBean.irAlmacen(item.idAlmacen)}"
+												class="thumbnail">
+												<div class="visible-lg">
+													<h:graphicImage class="img-responsive imgDefault"
+														style="height:19em;" value="Image/#{item.idFoto}">
+													</h:graphicImage>
+												</div>
+												<div class="visible-md">
+													<h:graphicImage class="img-responsive imgDefault"
+														style="height:15em;" value="Image/#{item.idFoto}">
+													</h:graphicImage>
+												</div>
+												<div class="visible-sm">
+													<h:graphicImage class="img-responsive imgDefault"
+														style="height:23em;" value="Image/#{item.idFoto}">
+													</h:graphicImage>
+												</div>
+												<div class="visible-xs visible-sm">
+													<h:graphicImage class="img-responsive imgDefault"
+														style="height:15em;" value="Image/#{item.idFoto}">
+													</h:graphicImage>
+												</div>
+											</h:commandLink>
+										</div>
+									</div>
 								</li>
 							</h:form>
 						</div>
+					</div>
+				</ui:repeat>
+				<!-- /h:dataTable-->
+			</ul>
+		</div>
+		<hr />
+		<div class="row">
+			<div class="col-md-8 col-lg-8 col-md-offset-2 col-lg-offset-2">
+				<h:panelGrid rendered="#{not homeUsuarioBean.sinAlmacenes}"
+					class=" visible-md visible-lg">
 
-					</ui:repeat>
-					<!-- /h:dataTable-->
-				</ul>
-
-			</div>
-			<h:panelGrid rendered="#{not homeUsuarioBean.sinAlmacenes}"
-				class=" visible-md visible-lg">
-				<div class="col-md-3 col-lg-3">
 					<ui:include src="/templates/default/historicoMovimientos.xhtml" />
-				</div>
-			</h:panelGrid>
+
+				</h:panelGrid>
+			</div>
 		</div>
 
 		<div class="modal fade" id="myModabaja" tabindex="-1" role="dialog">

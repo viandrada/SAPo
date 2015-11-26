@@ -1,0 +1,51 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<ui:composition>
+	<h:outputScript name="js/buscador.js" />
+	<script type="text/javascript" 
+    		src="http://maps.googleapis.com/maps/api/js?sensor=true">
+    	</script>
+		<h:outputScript library="js" name="mapa.js"/>
+		
+		<script type="text/javascript" src="jquery-1.7.1.min.js"></script>
+		
+		
+	<div class="container-fluid">
+			<div id="mapa" style="width:1000px; height:500px"></div>
+		<h:outputScript>
+			mapa("mapa", -32.916277, -56.060646, 6);
+		</h:outputScript>
+		<h:form>
+			<ui:repeat value="#{reporteUsuariosBean.listDataUsuarios}" var="c">
+				<h:outputScript>
+					var marca#{c.idUsuario} = agregarMarca(#{c.latitud}, #{c.longitud}, '#{c.email}');
+					agregarCirculos(marca#{c.idUsuario},#{0});
+					var contenido = '<container><row>' +
+						'<column span="3"><h:graphicImage class="img-responsive" id="idima"
+						value="Image/#{c.idFoto}" >
+						
+					</h:graphicImage></column>' +
+						//'<column span="3"></column>' +
+						'<column span="6"><p>#{c.email}</p></column>' +
+						'<column span="3"></column>' +
+						'</row><row>' + 
+						'<column span="3"></column>' + 
+						'<column span="9">#{c.nombre}</column>' +
+						'</row></container>';
+					agregarVentana(contenido, marca#{c.idUsuario});
+				</h:outputScript>
+			</ui:repeat>
+		</h:form>
+	
+	</div>
+	
+	
+	
+	
+	
+    
+</ui:composition>
+</html>

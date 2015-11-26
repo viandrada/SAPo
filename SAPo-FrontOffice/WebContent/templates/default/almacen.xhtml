@@ -7,7 +7,12 @@
 <ui:composition>
 
 	<script src="resources/js/chat.js"></script>
+	<script type="text/javascript" src="resources/js/jquery.easing.min.js">	</script>
+	<script type="text/javascript" src="resources/js/scrolling-nav.js">
+	</script>
 	<link href="resources/css/areaTrabajo.css" />
+	<link href="resources/css/scrolling-nav.css" rel="stylesheet"
+		type="text/css" />
 
 	<!-- no me anduvo  -->
 
@@ -114,27 +119,26 @@
 			<h:form>
 				<h:commandButton value="Nuevo producto"
 					action="#{navigationAreaBean.goTo('altaProducto.xhtml')}"
-					actionListener="#{altaProductoBean.init()}" class="btn btn-primary">
+					actionListener="#{altaProductoBean.init()}" class="btn btn-default">
 					<f:actionListener binding="#{atributosProductoBean.init()}"></f:actionListener>
 				</h:commandButton>
 				<h:commandButton value="Nuevo producto (con plantilla)"
 					action="#{navigationAreaBean.goTo('listarProductosGenericos.xhtml')}"
-					class="btn btn-primary"></h:commandButton>
+					class="btn btn-default"></h:commandButton>
 				<h:commandButton value="Compartir Almacen"
 					action="#{navigationAreaBean.goTo('compartirAlmacen.xhtml')}"
-					class="btn btn-primary"></h:commandButton>
-				<h:commandButton value="Comentarios"
-					action="#{navigationAreaBean.goTo('comentariosAlmacen.xhtml')}"
-					class="btn btn-primary"></h:commandButton>
+					class="btn btn-default"></h:commandButton>
+				<a class="btn btn-default page-scroll" href="#comentarios"><i
+					class="fa fa-comment fa-1x"></i></a>
 				<h:commandButton value="Almacén ideal"
 					action="#{navigationAreaBean.goTo('almacenIdeal.xhtml')}"
-					class="btn btn-primary"></h:commandButton>
+					class="btn btn-default"></h:commandButton>
 				<h:commandButton value="Lista de compras"
 					action="#{navigationAreaBean.goTo('listaCompras.xhtml')}"
-					class="btn btn-primary"></h:commandButton>
-					<h:commandButton value="Reportes"
+					class="btn btn-default"></h:commandButton>
+					<h:commandButton value="Reporte por Atributo"
 					action="#{navigationAreaBean.goTo('reportesAtributos.xhtml')}"
-					class="btn btn-primary"></h:commandButton>
+					class="btn btn-default"></h:commandButton>
 			</h:form>
 		</div>
 
@@ -166,11 +170,8 @@
 							class="btn">
 							<i class="fa fa-share-alt fa-2x"></i>
 						</h:commandLink>
-						<h:commandLink value=""
-							action="#{navigationAreaBean.goTo('comentariosAlmacen.xhtml')}"
-							class="btn">
-							<i class="fa fa-comment fa-2x"></i>
-						</h:commandLink>
+						<a class="btn page-scroll" href="#comentarios"><i
+							class="fa fa-comment fa-2x"></i></a>
 						<h:commandLink value=""
 							action="#{navigationAreaBean.goTo('almacenIdeal.xhtml')}"
 							class="btn">
@@ -187,27 +188,42 @@
 		</div>
 		<hr />
 		<!-- Productos del almacen -->
-		<div class="row">
-			<ul class="list-group">
-				<!-- 	<ui:repeat value="#{almacenBean.almacen.productos}" var="item"> -->
-				<ui:repeat value="#{almacenBean.listaProductosActivos}" var="item">
-					<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
-						<h:form id="modalForm">
-							<li class="list-group-item">
+		<ul class="list-group">
+			<!-- 	<ui:repeat value="#{almacenBean.almacen.productos}" var="item"> -->
+			<ui:repeat value="#{almacenBean.listaProductosActivos}" var="item">
+				<h:form id="modalForm">
+					<li class="list-group-item">
+						<div class="row">
+							<div class="col-xs-6 col-sm-6 col-md-4 col-lg-4">
+								<h:commandLink
+									actionListener="#{navigationAreaBean.goTo('detalleProducto.xhtml')}"
+									action="#{detalleProductoEspBean.init(item.idProducto)}"
+									class="thumbnail">
+									<h:graphicImage class="img-responsive" style="height:150px;"
+										value="Image/#{item.fotos.get(0).idImagen}">
+									</h:graphicImage>
+									<f:param name="Id" value="#{item.idProducto}" />
+								</h:commandLink>
+							</div>
+							<div class="col-xs-6 col-sm-6 col-md-8 col-lg-8">
 								<div class="row">
-									<div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+									<div class="col-xs-9 col-sm-5 col-md-5 col-lg-8">
 										<h:outputText value="#{item.nombre}" />
 									</div>
+
 									<div class="col-xs-2 col-sm-2 col-md-1 col-lg-1">
-										<h:commandLink data-toggle="tooltip" data-placement="top"
-											title="Editar"
-											action="#{editarProductoEspBean.getProducto(item.idProducto)}"
-											actionListener="#{navigationAreaBean.goTo('editarProductoEspecifico.xhtml')}"
-											value="   "
-											class="btn btn-default btn-xs">
-											<i class="fa fa-pencil-square-o"></i>
+										<h:commandLink value="" class="btn btn-default btn-lg"
+											data-toggle="tooltip" data-placement="top"
+											title="Configurar notificaciones"
+											action="#{configurarNotificacionBean.init(item.idProducto)}"
+											actionListener="#{navigationAreaBean.goTo('configurarNotificaciones.xhtml')}">
+											<i class="fa fa-cog"></i>
 										</h:commandLink>
-										<h:commandLink value="   " class="btn btn-default btn-xs"
+									</div>
+
+									<div class="col-xs-2 col-sm-2 col-md-1 col-lg-1">
+										<h:commandLink value="" class="btn btn-default btn-lg"
+											data-toggle="tooltip" data-placement="top" title="Eliminar"
 											onclick="$('#myModalBaja').modal('show');document.getElementById('forBajaModal:idProductoSelec').value='#{item.idProducto}';document.getElementById('forBajaModal:nombreProdSelec').value='#{item.nombre}';"
 											immediate="true">
 											<i class="fa fa-times"></i>
@@ -216,23 +232,14 @@
 									</div>
 									<div class="col-xs-2 col-sm-2 col-md-1 col-lg-1">
 										<h:commandLink data-toggle="tooltip" data-placement="top"
-										 value="   "
-										class="btn btn-default btn-xs"
-											title="Configurar notificaciones"
-											action="#{configurarNotificacionBean.init(item.idProducto)}"
-											actionListener="#{navigationAreaBean.goTo('configurarNotificaciones.xhtml')}">
-											<i class="fa fa-cog"></i>
+											title="Editar"
+											action="#{editarProductoEspBean.getProducto(item.idProducto)}"
+											actionListener="#{navigationAreaBean.goTo('editarProductoEspecifico.xhtml')}"
+											value="" class="btn btn-default btn-lg">
+											<i class="fa fa-pencil-square-o"></i>
 										</h:commandLink>
 									</div>
-								</div> <h:commandLink
-									actionListener="#{navigationAreaBean.goTo('detalleProducto.xhtml')}"
-									action="#{detalleProductoEspBean.init(item.idProducto)}"
-									class="thumbnail">
-									<h:graphicImage class="img-responsive" style="height:100px;"
-										value="Image/#{item.fotos.get(0).idImagen}">
-									</h:graphicImage>
-									<f:param name="Id" value="#{item.idProducto}" />
-								</h:commandLink>
+								</div>
 								<div class="row">
 									<div class="col-xs-4 col-md-4 col-sm-2 col-lg-2">
 										<h:form id="formMover">
@@ -244,6 +251,8 @@
 											</h:commandLink>
 										</h:form>
 									</div>
+								</div>
+								<div class="row">
 									<div
 										class="col-xs-2 col-md-4 col-sm-1 col-lg-1 col-sm-offset-5 col-lg-offset-5">
 										<h:commandButton
@@ -259,111 +268,92 @@
 											action="#{almacenBean.actualizarStock(item.idProducto,item.stock + 1)}"
 											value="+" />
 									</div>
+
 								</div>
-							</li>
-						</h:form>
-						<!-- Modal -->
-						<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
-							aria-labelledby="myModalLabel">
-							<div class="modal-dialog" role="document">
-								<div class="modal-content">
-									<div class="modal-header">
-										<button type="button" class="close" data-dismiss="modal"
-											aria-label="Close">
-											<span aria-hidden="true"></span>
-										</button>
-										<h4 class="modal-title" id="myModalLabel">Detalle</h4>
-									</div>
-									<div class="modal-body"></div>
-									<div class="modal-footer">
-										<button type="button" class="btn btn-info"
-											data-dismiss="modal">Cancelar</button>
-									</div>
-								</div>
+
 							</div>
 						</div>
-						<!-- Fin de ventana modal -->
-					</div>
-				</ui:repeat>
-			</ul>
-			<!-- Modal para Mover producto -->
-			<div class="modal fade" id="myModal2" tabindex="-1" role="dialog"
-				aria-labelledby="myModalLabel">
-				<h:form id="nombreCambiar">
-					<div class="modal-dialog">
-						<div class="modal-content">
-							<div class="modal-header">
-								<button type="button" class="close" data-dismiss="modal">X</button>
-								<h4 class="modal-title">Selecciona que cantidad y en que
-									almacen quieres hacerlo...</h4>
-							</div>
-							<div class="modal-body">
-								<div class="form-group">
-									<h:inputHidden value="#{moverProductoBean.idProductoSelec}"
-										id="idProductoSelec" name="idProductoSelec"
-										class="form-control" />
-									<label for="inputStock2">Stock:</label>
-									<h:inputText class="form-control input-xs" id="inputStock"
-										name="inputStock" value="#{moverProductoBean.cantStockAMover}">
-									</h:inputText>
-									<label for="sel1">Almacenes:</label>
-									<h:selectOneMenu value="#{moverProductoBean.idAlmacenSelec}"
-										class="form-control" id="sel12">
-										<f:selectItems
-											value="#{moverProductoBean.listaAlmacenesDeUsuarioMenosenElqueEsta}"
-											var="c2" itemValue="#{c2.idAlmacen}" itemLabel="#{c2.nombre}" />
-									</h:selectOneMenu>
-								</div>
-							</div>
-							<div class="modal-footer">
-								<h:commandButton class="btn btn-success" value="Mover"
-									action="#{moverProductoBean.moverProducto}">
-								</h:commandButton>
-								<button type="button" class="btn btn-danger pull-left"
-									data-dismiss="modal" onclick="return false;">Cancelar</button>
-							</div>
-						</div>
-					</div>
+					</li>
 				</h:form>
-			</div>
-			<!-- Fin de ventana modalMOVER-->
-
-			<!-- Modal para DAR DE BAJA producto -->
-			<div class="modal fade" id="myModalBaja" tabindex="-1" role="dialog"
-				aria-labelledby="myModalLabel">
-				<h:form id="forBajaModal">
-					<div class="modal-dialog">
-						<div class="modal-content">
-							<div class="modal-header">
-								<button type="button" class="close" data-dismiss="modal">X</button>
-								<h4 class="modal-title">Estas seguro que deseas dar de baja
-									este producto?</h4>
-							</div>
-							<div class="modal-body">
-								<div class="form-group">
-									<h:inputHidden value="#{moverProductoBean.idProductoSelec}"
-										id="idProductoSelec" name="idProductoSelec"
-										class="form-control" />
-									<h:inputHidden value="#{moverProductoBean.nombreproductoSelec}"
-										id="nombreProdSelec" name="nombreProdSelec"
-										class="form-control" />
-
-								</div>
-							</div>
-							<div class="modal-footer">
-								<h:commandButton class="btn btn-success" value="Aceptar"
-									action="#{moverProductoBean.darDeBajaProducto}">
-								</h:commandButton>
-								<button type="button" class="btn btn-danger pull-left"
-									data-dismiss="modal" onclick="return false;">Cancelar</button>
+			</ui:repeat>
+		</ul>
+		<!-- Modal para Mover producto -->
+		<div class="modal fade" id="myModal2" tabindex="-1" role="dialog"
+			aria-labelledby="myModalLabel">
+			<h:form id="nombreCambiar">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal">X</button>
+							<h4 class="modal-title">Selecciona que cantidad y en que
+								almacen quieres hacerlo...</h4>
+						</div>
+						<div class="modal-body">
+							<div class="form-group">
+								<h:inputHidden value="#{moverProductoBean.idProductoSelec}"
+									id="idProductoSelec" name="idProductoSelec"
+									class="form-control" />
+								<label for="inputStock2">Stock:</label>
+								<h:inputText class="form-control input-xs" id="inputStock"
+									name="inputStock" value="#{moverProductoBean.cantStockAMover}">
+								</h:inputText>
+								<label for="sel1">Almacenes:</label>
+								<h:selectOneMenu value="#{moverProductoBean.idAlmacenSelec}"
+									class="form-control" id="sel12">
+									<f:selectItems
+										value="#{moverProductoBean.listaAlmacenesDeUsuarioMenosenElqueEsta}"
+										var="c2" itemValue="#{c2.idAlmacen}" itemLabel="#{c2.nombre}" />
+								</h:selectOneMenu>
 							</div>
 						</div>
+						<div class="modal-footer">
+							<h:commandButton class="btn btn-success" value="Mover"
+								action="#{moverProductoBean.moverProducto}">
+							</h:commandButton>
+							<button type="button" class="btn btn-danger pull-left"
+								data-dismiss="modal" onclick="return false;">Cancelar</button>
+						</div>
 					</div>
-				</h:form>
-			</div>
-
-			<!-- Fin de ventana modal DAR DE BAJA-->
+				</div>
+			</h:form>
 		</div>
+		<!-- Fin de ventana modalMOVER-->
+
+		<!-- Modal para DAR DE BAJA producto -->
+		<div class="modal fade" id="myModalBaja" tabindex="-1" role="dialog"
+			aria-labelledby="myModalLabel">
+			<h:form id="forBajaModal">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal">X</button>
+							<h4 class="modal-title">Estas seguro que deseas dar de baja
+								este producto?</h4>
+						</div>
+						<div class="modal-body">
+							<div class="form-group">
+								<h:inputHidden value="#{moverProductoBean.idProductoSelec}"
+									id="idProductoSelec" name="idProductoSelec"
+									class="form-control" />
+								<h:inputHidden value="#{moverProductoBean.nombreproductoSelec}"
+									id="nombreProdSelec" name="nombreProdSelec"
+									class="form-control" />
+
+							</div>
+						</div>
+						<div class="modal-footer">
+							<h:commandButton class="btn btn-success" value="Aceptar"
+								action="#{moverProductoBean.darDeBajaProducto}">
+							</h:commandButton>
+							<button type="button" class="btn btn-danger pull-left"
+								data-dismiss="modal" onclick="return false;">Cancelar</button>
+						</div>
+					</div>
+				</div>
+			</h:form>
+		</div>
+
+		<!-- Fin de ventana modal DAR DE BAJA-->
 		<!-- Fin de: Productos del almacen -->
 
 		<hr />
@@ -447,10 +437,10 @@
 					</form>
 				</div>
 			</div>
-			
+
 		</footer>
 
-		
+
 	</div>
 </ui:composition>
 </html>

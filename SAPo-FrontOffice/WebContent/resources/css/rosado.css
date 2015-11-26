@@ -37,3 +37,12 @@
 .areaTrabajoFondo{
 	background-color: crimson;
 }
+
+.producto{
+	margin-top: 15px;
+    margin-left: 15px;
+    margin-right: 30px;
+    background-color: rgba(0, 0, 0, 0.53);
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
