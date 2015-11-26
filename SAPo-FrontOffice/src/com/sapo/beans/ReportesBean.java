@@ -11,6 +11,7 @@ import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
+import javax.faces.bean.ViewScoped;
 import javax.faces.event.AjaxBehaviorEvent;
 
 import com.datatypes.DataAlmacen;
@@ -21,7 +22,7 @@ import com.sapo.ejb.ReporteNegocio;
 
 
 @ManagedBean
-@RequestScoped
+@ViewScoped
 public class ReportesBean {
 	
 	public ReportesBean(){
@@ -179,7 +180,13 @@ public class ReportesBean {
 	public void handleDateSelect(AjaxBehaviorEvent event) {
 
 		SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
-		
+		if (this.valorFechaInicio!=null){
+			System.out.println(format.format(this.valorFechaInicio));
+			
+		}
+		if (this.valorFechaFin!=null){
+			System.out.println(format.format(this.valorFechaFin));
+		}
 	}
 	
 	public void listarAlmacenes(){
@@ -203,6 +210,7 @@ public class ReportesBean {
 	}
 	
 	public void iniciarReporteFechas(){
+		//System.out.println("en reporte fechas: Inicio: "+ valorFechaInicio.toString()+ " Fin: "+ valorFechaFin.toString() );
 		listaReportesPorFechas = this.reporteNegocio.
 				buscarHistoricoProdPorUsuarioEnFecha(this.usuarioLogueado.getIdUsuario(), valorFechaInicio, valorFechaFin);		
 	}
