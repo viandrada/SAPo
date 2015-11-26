@@ -5,7 +5,8 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
-	xmlns:ui="http://java.sun.com/jsf/facelets">
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
 
 <h:head>
 	<f:facet name="first">
@@ -23,6 +24,14 @@
 		<h:outputStylesheet name="bootstrap/css/bootstrap.css.map"
 			target="head" />
 		<h:outputStylesheet name="css/signin.css" target="head" />
+			<style type="text/css">
+.ui-growl {
+	position: absolute;
+	top: 70px;
+	width: 301px;
+	z-index: 9999;
+}
+</style>
 	</f:facet>
 
 	<f:facet name="last">
@@ -43,9 +52,11 @@
 			<div class="container-fluid">
 
 				<h:form class="form-signin" id="loginForm">
+				
+				 <p:growl id="growl" sticky="true" showDetail="true" life="3000" />  
 					<h:panelGroup class="row">
 						<h:inputText id="loginEmail" value="#{loginAdminBean.email}"
-							required="true" class="form-control" a:placeholder="Email">
+							class="form-control" a:placeholder="Email">
 							<f:validateBean for="loginEmail" />
 							<f:ajax event="keyup" render="loginEmailMessage" />
 						</h:inputText>
@@ -53,7 +64,7 @@
 							errorStyle="color:red;"></h:message>
 					</h:panelGroup>
 					<h:inputSecret id="loginPass" value="#{loginAdminBean.password}"
-						required="true" class="form-control" a:placeholder="Password">
+						 class="form-control" a:placeholder="Password">
 						<f:validateBean for="loginPass" />
 						<f:ajax event="blur" render="loginPassMessage" />
 					</h:inputSecret>

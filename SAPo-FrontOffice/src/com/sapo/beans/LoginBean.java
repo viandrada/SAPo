@@ -7,10 +7,13 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+
+import org.primefaces.context.RequestContext;
 
 import com.datatypes.DataNotificacion;
 import com.datatypes.DataUsuario;
@@ -47,7 +50,7 @@ public class LoginBean {
 	private int contadorLogin;
 	private String estilo;
 	private boolean googleLogin;
-	
+
 	private double latitud;
 	private double longitud;
 
@@ -56,7 +59,7 @@ public class LoginBean {
 	}
 
 	public void setLatitud(double latitud) {
-		System.out.println("ENTRE AL SET LATITUD"+latitud);
+		System.out.println("ENTRE AL SET LATITUD" + latitud);
 		this.latitud = latitud;
 	}
 
@@ -65,7 +68,7 @@ public class LoginBean {
 	}
 
 	public void setLongitud(double longitud) {
-		System.out.println("ENTRE AL SET LATITUD"+longitud);
+		System.out.println("ENTRE AL SET LATITUD" + longitud);
 		this.longitud = longitud;
 	}
 
@@ -195,6 +198,20 @@ public class LoginBean {
 	}
 
 	public String login() {
+
+		//RequestContext context = RequestContext.getCurrentInstance();
+		FacesMessage message = null;
+		
+		if(this.email==null||this.password==null){
+			
+			message = new FacesMessage(FacesMessage.SEVERITY_WARN,
+					"Error de credenciales", "email o contraseña vacios");
+			FacesContext.getCurrentInstance().addMessage(null, message);
+			
+			System.out.println("Todo mal");
+			return "error";
+		}
+		else{
 		this.dataUsuario.setEmail(this.email);
 
 		/* Encriptar password para compararlo con el encriptado de la BD */
@@ -236,24 +253,37 @@ public class LoginBean {
 
 			this.generarNotificaciones();
 			this.obtenerNotificaciones();
-			
-			
-			usuarioNegocio.actualizarPosicion(latitud, longitud, dataUser.getIdUsuario());
-			
-			
-			
+
+			usuarioNegocio.actualizarPosicion(latitud, longitud,
+					dataUser.getIdUsuario());
+
+			message = new FacesMessage(FacesMessage.SEVERITY_INFO,
+					"Bienvenido", dataUser.getNombre());
+			FacesContext.getCurrentInstance().addMessage(null, message);
+			//context.addCallbackParam("loggedIn", loggedIn);
+
 			return "/index.xhtml?faces-redirect=true";
 		} else {
+
+			message = new FacesMessage(FacesMessage.SEVERITY_WARN,
+					"Error de credenciales", "email o contraseña incorrectos");
+			FacesContext.getCurrentInstance().addMessage(null, message);
+			//context.addCallbackParam("loggedIn", loggedIn);
+
 			System.out.println("Todo mal");
 			return "error";
 		}
+		
+		}
+		
+		
 	}
 
 	public String logout() {
-	
+
 		if (!this.googleLogin) {
 			FacesContext.getCurrentInstance().getExternalContext()
-			.invalidateSession();
+					.invalidateSession();
 			this.shownLogin = true;
 			this.nav.setRedirectTo("home.xhtml");
 			return "/login.xhtml?faces-redirect=true";
@@ -262,7 +292,7 @@ public class LoginBean {
 	}
 
 	public void logoutGmail() {
-		
+
 		this.email = null;
 		this.idUsuario = 0;
 		this.nombre = null;
@@ -272,11 +302,11 @@ public class LoginBean {
 		this.contadorLogin = 0;
 		this.estilo = "areaTrabajo.css";
 		this.googleLogin = false;
-		
+
 		this.shownLogin = true;
 		this.nav.setRedirectTo("home.xhtml");
 	}
-	
+
 	public void loginExterno(String email) {
 		DataUsuario dUsu = new DataUsuario();
 		dUsu.setEmail(email);
