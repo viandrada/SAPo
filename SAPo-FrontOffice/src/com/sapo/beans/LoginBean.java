@@ -48,6 +48,27 @@ public class LoginBean {
 	private String estilo;
 	private boolean googleLogin;
 	private int idFoto;
+	
+	private double latitud;
+	private double longitud;
+
+	public double getLatitud() {
+		return latitud;
+	}
+
+	public void setLatitud(double latitud) {
+		System.out.println("ENTRE AL SET LATITUD"+latitud);
+		this.latitud = latitud;
+	}
+
+	public double getLongitud() {
+		return longitud;
+	}
+
+	public void setLongitud(double longitud) {
+		System.out.println("ENTRE AL SET LATITUD"+longitud);
+		this.longitud = longitud;
+	}
 
 	public String getEmail() {
 		return email;
@@ -225,6 +246,12 @@ public class LoginBean {
 
 			this.generarNotificaciones();
 			this.obtenerNotificaciones();
+			
+			
+			usuarioNegocio.actualizarPosicion(latitud, longitud, dataUser.getIdUsuario());
+			
+			
+			
 			return "/index.xhtml?faces-redirect=true";
 		} else {
 			System.out.println("Todo mal");

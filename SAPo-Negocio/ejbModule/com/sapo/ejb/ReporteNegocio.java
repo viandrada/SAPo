@@ -205,66 +205,34 @@ public class ReporteNegocio {
 
 	public List<DataAtributoAcumulado> getDatasAtributosAcumulados(int idAlmacen) {
 
-		/*
-		 * // Conversi�n de atributos gen�ricos a json Gson gson = new Gson();
-		 * this.atributosVista.addAll(this.getAtributosNuevosVista()); String
-		 * json = gson.toJson(this.getAtributosVista());// Se incluyen los //
-		 * que agreg� el // usuario a los que // ya ten�a el // gen�rico.
-		 * System.out.println(json); this.productoAEditar.setAtributos(json);
-		 */
-
-		/*
-		 * 
-		 * private List<Atributo> atributosVista;
-		 * 
-		 * 
-		 * this.productoAEditar =
-		 * service.getProductoPorId((Integer.parseInt(id)));
-		 * 
-		 * Gson gson = new Gson(); Type collectionType = new
-		 * TypeToken<Collection<Atributo>>() { }.getType(); Collection<Atributo>
-		 * atribs = gson.fromJson( this.productoAEditar.getAtributos(),
-		 * collectionType);
-		 * 
-		 * for (Iterator<Atributo> iterator = atribs.iterator(); iterator
-		 * .hasNext();) { Atributo atributo = (Atributo) iterator.next();
-		 * this.atributosVista.add(atributo);
-		 * 
-		 * }
-		 */
-		System.out.println("ENTRE AL GET ATRIBUTOS DEL ALMACEN:  "
-				+ idAlmacen);
-		List<Producto> listProd = productoDAO.getProductosAlmacen(idAlmacen);
-		System.out.println("HOLA 1");
+		/*System.out.println("ENTRE AL GET ATRIBUTOS ACUMULADOS DEL ALMACEN:  "
+				+ idAlmacen);*/
+		//List<Producto> listProd = productoDAO.getProductosAlmacen(idAlmacen);
+		List<Producto> listProd = productoDAO.getProductosActivosAlmacen(idAlmacen);
+		
+		
+		//System.out.println("HOLA 1");
 		List<DataAtributoAcumulado> listaDatosResult = new LinkedList<DataAtributoAcumulado>();
-		System.out.println("HOLA 2");
+		//System.out.println("HOLA 2");
 		List<Atributo> atributosVista = new LinkedList<Atributo>();
-		System.out.println("HOLA 3");
+		//System.out.println("HOLA 3");
 	try {
 		
 	
 		if (!listProd.isEmpty()) {
 			for (Producto p : listProd) {
-				// System.out.println("USUARIO: " + u.getEmail());
-
-				// //Date date = u.getFechaPago();
-				// Calendar cal = Calendar.getInstance();
-
-				// cal.setTime(date);
-				// int month = cal.get(Calendar.MONTH) + 1;
-				// int year = cal.get(Calendar.YEAR);
-				// int orden =(int) cal.getTimeInMillis();
-
+				
 				String atributos = p.getAtributos();
-				System.out.println("HOLA 4");
+				/*System.out.println("PRODUCTO NOMBRE: "
+						+ p.getNombre());*/
 				Gson gson = new Gson();
-				System.out.println("HOLA 5");
+				//System.out.println("HOLA 5");
 				Type collectionType = new TypeToken<Collection<Atributo>>() {
 				}.getType();
-				System.out.println("HOLA 6");
+				//System.out.println("HOLA 6");
 				Collection<Atributo> atribs = gson.fromJson(atributos,
 						collectionType);
-				System.out.println("HOLA 7");
+				//System.out.println("HOLA 7");
 				for (Iterator<Atributo> iterator = atribs.iterator(); iterator
 						.hasNext();) {
 					Atributo atributo = (Atributo) iterator.next();
@@ -275,25 +243,19 @@ public class ReporteNegocio {
 				if (!atributosVista.isEmpty()) {
 					for (Atributo a : atributosVista) {
 						if (existeDato(a.getNombre(), listaDatosResult)) {
-							// DataDatoGrafico da = getDato(month, year,
-							// listaDatosResult);
-
-							// da.setGananciaMes(da.getGananciaMes() +
-							// u.getMonto());
-							System.out.println("EXISTE DATO, ATRIBUTO: "
+							
+						/*	System.out.println("EXISTE DATO, PRODUCTO: "+p.getNombre()+" ATRIBUTO: "
 									+ a.getNombre());
-
+*/
 						} else {
-							System.out.println("NO EXISTE DATO, ATRIBUTO: "
-									+ a.getNombre());
+							/*System.out.println("NO EXISTE DATO, PRODUCTO: "+p.getNombre()+" ATRIBUTO: "
+									+ a.getNombre());*/
 
-							// DataAtributoAcumulado da
+						
 
 							DataAtributoAcumulado dato = new DataAtributoAcumulado();
 							dato.setNombre(a.getNombre());
-							// dato.setMes(month);
-							// dato.setGananciaMes(u.getMonto());
-							// dato.setOrden(orden);
+							
 
 							listaDatosResult.add(dato);
 						}
@@ -347,7 +309,9 @@ public class ReporteNegocio {
 		if (!listaDatos.isEmpty()) {
 			for (DataAtributoAcumulado d : listaDatos) {
 
-				if (d.getNombre() == nombre)
+			//	if (d.getNombre() == nombre)
+				//	hay = true;
+				if (d.getNombre().equals(nombre))
 					hay = true;
 			}
 		}

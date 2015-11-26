@@ -6,32 +6,46 @@
 <ui:composition>
 	<h:outputScript name="js/buscador.js" />
 	<script type="text/javascript" 
-    		src="http://maps.googleapis.com/maps/api/js?sensor=false">
+    		src="http://maps.googleapis.com/maps/api/js?sensor=true">
     	</script>
 		<h:outputScript library="js" name="mapa.js"/>
+		
+		<script type="text/javascript" src="jquery-1.7.1.min.js"></script>
+		
+		
 	<div class="container-fluid">
 			<div id="mapa" style="width:1000px; height:500px"></div>
 		<h:outputScript>
-			mapa("mapa", 0, 0, 2);
+			mapa("mapa", -32.916277, -56.060646, 6);
 		</h:outputScript>
 		<h:form>
-			<ui:repeat value="#{listcat.catastrofes}" var="c">
+			<ui:repeat value="#{reporteUsuariosBean.listDataUsuarios}" var="c">
 				<h:outputScript>
-					var marca#{c.id} = agregarMarca(#{c.latitud}, #{c.longitud}, '#{c.titulo}');
-					agregarCirculos(marca#{c.id},#{c.radio});
-					var contenido = '<b:container><b:row>' +
-						'<b:column span="3"><img src="http://www.ivoox.com/canales/7OLA_Futurog.jpg"/></b:column>' +
-						//'<b:column span="3"><img src="http://localhost:8080/com.sgc.rest/imagen/#{c.logo}"/></b:column>' +
-						'<b:column span="6"><p>#{c.titulo}</p></b:column>' +
-						'<b:column span="3"><a href="catastrofe.xhtml?id=#{c.id}">Ir al sitio</a></b:column>' +
-						'</b:row><b:row>' + 
-						'<b:column span="3"></b:column>' + 
-						'<b:column span="9">#{c.descripcion}</b:column>' +
-						'</b:row></b:container>';
-					agregarVentana(contenido, marca#{c.id});
+					var marca#{c.idUsuario} = agregarMarca(#{c.latitud}, #{c.longitud}, '#{c.email}');
+					agregarCirculos(marca#{c.idUsuario},#{0});
+					var contenido = '<container><row>' +
+						'<column span="3"><h:graphicImage class="img-responsive" id="idima"
+						value="Image/#{c.idFoto}" >
+						
+					</h:graphicImage></column>' +
+						//'<column span="3"></column>' +
+						'<column span="6"><p>#{c.email}</p></column>' +
+						'<column span="3"></column>' +
+						'</row><row>' + 
+						'<column span="3"></column>' + 
+						'<column span="9">#{c.nombre}</column>' +
+						'</row></container>';
+					agregarVentana(contenido, marca#{c.idUsuario});
 				</h:outputScript>
 			</ui:repeat>
 		</h:form>
+	
 	</div>
+	
+	
+	
+	
+	
+    
 </ui:composition>
 </html>

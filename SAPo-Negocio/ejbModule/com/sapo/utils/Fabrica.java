@@ -38,13 +38,13 @@ import com.sapo.entidades.Usuario;
 
 @Stateless
 public class Fabrica {
-	
+
 	@EJB
 	private CategoriaDAO categoriaDAO;
-	
+
 	@EJB
 	private UsuarioDAO usuarioDAO;
-	
+
 	@EJB
 	private ImagenDAO imagenDAO;
 
@@ -75,11 +75,22 @@ public class Fabrica {
 			dcat.setEstaActivo(c.getEstaActivo());
 
 			dcat.setPremium(c.isPremium());
-			
+
 			dcat.setFecha(c.getFecha());
 			dcat.setFechaPago(c.getFechaPago());
 			dcat.setMonto(c.getMonto());
 
+			if (c.getLatitud() != 0) {
+				dcat.setLatitud(c.getLatitud());
+				dcat.setLongitud(c.getLongitud());
+			} else {
+				dcat.setLatitud(-34.935830);
+				dcat.setLongitud(-56.160113);
+			}
+			
+			if(c.getFoto()!=null){
+			dcat.setIdFoto(c.getFoto().getIdImagen());
+			};
 			l.add(dcat);
 		}
 		return l;
@@ -114,7 +125,11 @@ public class Fabrica {
 		dataUser.setFechaPago(usuario.getFechaPago());
 		dataUser.setMonto(usuario.getMonto());
 		dataUser.setEstilo(usuario.getEstilo());
-		dataUser.setIdFoto(usuario.getFoto().getIdImagen());
+		if (usuario.getFoto() != null) {
+			dataUser.setIdFoto(usuario.getFoto().getIdImagen());
+		} else {
+		}
+		;
 		return dataUser;
 
 	}
@@ -146,9 +161,11 @@ public class Fabrica {
 				dProd.setFotos(toDataImagen(img));
 			}
 			dProd.setAtributos(productosGenericos.get(i).getAtributos());
-			////////////////////////////////////le seteo en id hermano el id del prod generico
-			dProd.setIdHermano(productosGenericos.get(i).getIdProductoGenerico());
-			
+			// //////////////////////////////////le seteo en id hermano el id
+			// del prod generico
+			dProd.setIdHermano(productosGenericos.get(i)
+					.getIdProductoGenerico());
+
 			dataProductos.add(dProd);
 		}
 		return dataProductos;
@@ -214,9 +231,10 @@ public class Fabrica {
 		return dataRepProd;
 	}
 
-	public DataReporteProductoGenerico toDataReporteProductoGenerico (ProductoGenerico prodGen, BigInteger cantUsos){
+	public DataReporteProductoGenerico toDataReporteProductoGenerico(
+			ProductoGenerico prodGen, BigInteger cantUsos) {
 		DataReporteProductoGenerico dataRepProdGen = new DataReporteProductoGenerico();
-	
+
 		dataRepProdGen.setAtributos(prodGen.getAtributos());
 		dataRepProdGen.setDescripcion(prodGen.getDescripcion());
 		dataRepProdGen.setEstaActivo(prodGen.getEstaActivo());
@@ -225,10 +243,10 @@ public class Fabrica {
 		dataRepProdGen.setNombre(prodGen.getNombre());
 		dataRepProdGen.setNombreCategoria(prodGen.getCategoria().getNombre());
 		dataRepProdGen.setCantidadUsos(cantUsos.intValue());
-		
+
 		return dataRepProdGen;
 	}
-	
+
 	public List<DataAlmacen> convertirAlmacenes(List<Almacen> lcat) {
 		List<DataAlmacen> l = new LinkedList<DataAlmacen>();
 		for (Almacen c : lcat) {
@@ -243,49 +261,52 @@ public class Fabrica {
 		}
 		return l;
 	}
-	
-	public DataProducto convertirProducto(Producto producto/*, DataCategoria dataCategoria*/){
-	
-			/*Producto pg = this.productoDAO
-					.getProducto(dataProducto.getIdProducto());*/
-				
-			DataProducto pg = new DataProducto();
-		
-			/*Categoria cat = new Categoria();
-			if (dataCategoria.getNombre() == null) {
-				cat = this.categoriaDAO
-						.getCategoria(dataCategoria.getIdCategoria());
-			} else {
-				cat.setNombre(dataCategoria.getNombre());
-				cat.setEsGenerica(false);
-				Usuario u = this.usuarioDAO.getUsuarioPorEmail(dataCategoria.getEmailUsuario());
-				cat.setUsu(u);
-			}*/
-			//pg.setCategoria(cat);
-			//pg.setIdCategoria(cat.getIdCategoria());
-			pg.setIdCategoria(producto.getCategoria().getIdCategoria());
-			//pg.
-			pg.setAtributos(producto.getAtributos());
-			pg.setNombre(producto.getNombre());
-			pg.setDescripcion(producto.getDescripcion());
-			pg.setEstaActivo(true);
-			pg.setPrecio(producto.getPrecio());
-			pg.setStock(producto.getStock());
-		
-			List<DataImagen> imgs = new ArrayList<DataImagen>();
-			for (int i = 0; i < producto.getFoto().size(); i++) {
-				DataImagen img = new DataImagen();
-				img.setDatos(producto.getFoto().get(i).getDatos());
-				img.setNombre(producto.getFoto().get(i).getNombre());
-				img.setMime(producto.getFoto().get(i).getMime());
-				//this.imagenDAO.insertarImagen(img);
-				imgs.add(img);
-			}
-			pg.getFotos().addAll(imgs);
-	
-	
-	return pg;
-	
+
+	public DataProducto convertirProducto(Producto producto/*
+															 * , DataCategoria
+															 * dataCategoria
+															 */) {
+
+		/*
+		 * Producto pg = this.productoDAO
+		 * .getProducto(dataProducto.getIdProducto());
+		 */
+
+		DataProducto pg = new DataProducto();
+
+		/*
+		 * Categoria cat = new Categoria(); if (dataCategoria.getNombre() ==
+		 * null) { cat = this.categoriaDAO
+		 * .getCategoria(dataCategoria.getIdCategoria()); } else {
+		 * cat.setNombre(dataCategoria.getNombre()); cat.setEsGenerica(false);
+		 * Usuario u =
+		 * this.usuarioDAO.getUsuarioPorEmail(dataCategoria.getEmailUsuario());
+		 * cat.setUsu(u); }
+		 */
+		// pg.setCategoria(cat);
+		// pg.setIdCategoria(cat.getIdCategoria());
+		pg.setIdCategoria(producto.getCategoria().getIdCategoria());
+		// pg.
+		pg.setAtributos(producto.getAtributos());
+		pg.setNombre(producto.getNombre());
+		pg.setDescripcion(producto.getDescripcion());
+		pg.setEstaActivo(true);
+		pg.setPrecio(producto.getPrecio());
+		pg.setStock(producto.getStock());
+
+		List<DataImagen> imgs = new ArrayList<DataImagen>();
+		for (int i = 0; i < producto.getFoto().size(); i++) {
+			DataImagen img = new DataImagen();
+			img.setDatos(producto.getFoto().get(i).getDatos());
+			img.setNombre(producto.getFoto().get(i).getNombre());
+			img.setMime(producto.getFoto().get(i).getMime());
+			// this.imagenDAO.insertarImagen(img);
+			imgs.add(img);
+		}
+		pg.getFotos().addAll(imgs);
+
+		return pg;
+
 	}
 
 	public List<DataNotificacion> toDataNotificacion(
@@ -301,31 +322,34 @@ public class Fabrica {
 		}
 		return dataNotificaciones;
 	}
-	
+
 	public List<DataNotificacionConfig> toDataNotificacionConfig(
 			List<NotificacionConfig> configuraciones) {
 		List<DataNotificacionConfig> dataNotificacionesConfig = new ArrayList<DataNotificacionConfig>();
 		for (int i = 0; i < configuraciones.size(); i++) {
 			DataNotificacionConfig dn = new DataNotificacionConfig();
-			dn.setIdNotificacionConfig(configuraciones.get(i).getIdNotificacionConfig());
+			dn.setIdNotificacionConfig(configuraciones.get(i)
+					.getIdNotificacionConfig());
 			dn.setIdUsuario(configuraciones.get(i).getUsuario().getIdUsuario());
-			dn.setIdProducto(configuraciones.get(i).getProducto().getIdProducto());
+			dn.setIdProducto(configuraciones.get(i).getProducto()
+					.getIdProducto());
 			dn.setNombreCampo(configuraciones.get(i).getNombreCampo());
 			dn.setOperador(configuraciones.get(i).getOperador());
-			dn.setValor( Double.valueOf(configuraciones.get(i).getValor()));
+			dn.setValor(Double.valueOf(configuraciones.get(i).getValor()));
 			dataNotificacionesConfig.add(dn);
 		}
 		return dataNotificacionesConfig;
 	}
-	
+
 	public List<DataNotificacionGenericaConfig> toDataNotificacionGenericaConfig(
 			List<NotificacionGenericaConfig> configuraciones) {
 		List<DataNotificacionGenericaConfig> dataNotificacionesGenericaConfig = new ArrayList<DataNotificacionGenericaConfig>();
 		for (int i = 0; i < configuraciones.size(); i++) {
 			DataNotificacionGenericaConfig dn = new DataNotificacionGenericaConfig();
-			dn.setIdNotificacionGenericaConfig(configuraciones.get(i).getIdNotificacionGenericaConfig());
+			dn.setIdNotificacionGenericaConfig(configuraciones.get(i)
+					.getIdNotificacionGenericaConfig());
 			dn.setNombreParametro(configuraciones.get(i).getNombreParametro());
-			dn.setValor( configuraciones.get(i).getValor());
+			dn.setValor(configuraciones.get(i).getValor());
 			dn.setActiva(configuraciones.get(i).isActiva());
 			dataNotificacionesGenericaConfig.add(dn);
 		}

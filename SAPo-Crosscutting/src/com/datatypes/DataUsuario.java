@@ -18,7 +18,22 @@ public class DataUsuario {
 	private String estilo;
 	private int idFoto;
 	private byte[] bytesFoto;
+	
+	private double latitud;
+	private double longitud;
 
+	public double getLatitud() {
+		return latitud;
+	}
+	public void setLatitud(double latitud) {
+		this.latitud = latitud;
+	}
+	public double getLongitud() {
+		return longitud;
+	}
+	public void setLongitud(double longitud) {
+		this.longitud = longitud;
+	}
 	public boolean isPremium() {
 		return premium;
 	}
