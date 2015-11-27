@@ -128,17 +128,17 @@
 				<h:commandButton value="Compartir Almacen"
 					action="#{navigationAreaBean.goTo('compartirAlmacen.xhtml')}"
 					class="btn btn-default"></h:commandButton>
-				<a class="btn btn-default page-scroll" href="#comentarios"><i
-					class="fa fa-comment fa-1x"></i></a>
 				<h:commandButton value="Almacén ideal"
 					action="#{navigationAreaBean.goTo('almacenIdeal.xhtml')}"
 					class="btn btn-default"></h:commandButton>
 				<h:commandButton value="Lista de compras"
 					action="#{navigationAreaBean.goTo('listaCompras.xhtml')}"
 					class="btn btn-default"></h:commandButton>
-					<h:commandButton value="Reporte por Atributo"
+				<h:commandButton value="Reporte por Atributo"
 					action="#{navigationAreaBean.goTo('reportesAtributos.xhtml')}"
 					class="btn btn-default"></h:commandButton>
+				<a class="btn btn-default page-scroll" href="#comentarios"><i
+					class="fa fa-comment fa-1x"></i></a>
 			</h:form>
 		</div>
 
@@ -194,23 +194,63 @@
 				<h:form id="modalForm">
 					<li class="list-group-item">
 						<div class="row">
-							<div class="col-xs-6 col-sm-6 col-md-4 col-lg-4">
-								<h:commandLink
-									actionListener="#{navigationAreaBean.goTo('detalleProducto.xhtml')}"
-									action="#{detalleProductoEspBean.init(item.idProducto)}"
-									class="thumbnail">
-									<h:graphicImage class="img-responsive" style="height:150px;"
-										value="Image/#{item.fotos.get(0).idImagen}">
-									</h:graphicImage>
-									<f:param name="Id" value="#{item.idProducto}" />
-								</h:commandLink>
-							</div>
-							<div class="col-xs-6 col-sm-6 col-md-8 col-lg-8">
+							<div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
+								<div class="row visible-xs">
+									<h4>
+										<strong>#{item.nombre}</strong>
+									</h4>
+								</div>
 								<div class="row">
-									<div class="col-xs-9 col-sm-5 col-md-5 col-lg-8">
-										<h:outputText value="#{item.nombre}" />
+									<h:commandLink
+										actionListener="#{navigationAreaBean.goTo('detalleProducto.xhtml')}"
+										action="#{detalleProductoEspBean.init(item.idProducto)}"
+										class="thumbnail">
+										<h:graphicImage class="img-responsive" style="height:150px;"
+											value="Image/#{item.fotos.get(0).idImagen}">
+										</h:graphicImage>
+										<f:param name="Id" value="#{item.idProducto}" />
+									</h:commandLink>
+								</div>
+								<div class="row">
+									<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+										<div class="input-group number-spinner">
+											<span class="input-group-btn"> <h:commandLink
+													class="btn btn-default" data-dir="dwn"
+													action="#{almacenBean.actualizarStock(item.idProducto,item.stock - 1)}">
+													<span class="glyphicon glyphicon-minus"></span>
+												</h:commandLink>
+											</span> <input type="text" class="form-control text-center"
+												value="#{item.stock}" /><span class="input-group-btn">
+												<h:commandLink class="btn btn-default" data-dir="up"
+													action="#{almacenBean.actualizarStock(item.idProducto,item.stock + 1)}">
+													<span class="glyphicon glyphicon-plus"></span>
+												</h:commandLink>
+											</span>
+										</div>
 									</div>
 
+								</div>
+							</div>
+							<div class="col-xs-11 col-sm-6 col-md-7 col-lg-7">
+								<div class="row">
+									<div class="hidden-xs col-sm-5 col-md-5 col-lg-8">
+										<h4>
+											<strong>#{item.nombre}</strong>
+										</h4>
+									</div>
+									<div class="col-xs-2 col-sm-2 col-md-1 col-lg-1">
+										<h:form id="formMover">
+											<h:commandLink value="" class="btn btn-default btn-lg"
+												data-toggle="tooltip" data-placement="top"
+												title="Mover de almacén"
+												rendered="#{moverProductoBean.cantAlamcenenDeUsusario >= 2}"
+												onclick="$('#myModal2').modal('show');document.getElementById('nombreCambiar:inputStock').value='#{item.stock}';document.getElementById('nombreCambiar:idProductoSelec').value='#{item.idProducto}';"
+												immediate="true">
+												<i class="fa fa-arrow-right"></i>
+												<f:ajax execute="@this" render="formMover" />
+											</h:commandLink>
+										</h:form>
+									</div>
 									<div class="col-xs-2 col-sm-2 col-md-1 col-lg-1">
 										<h:commandLink value="" class="btn btn-default btn-lg"
 											data-toggle="tooltip" data-placement="top"
@@ -218,16 +258,6 @@
 											action="#{configurarNotificacionBean.init(item.idProducto)}"
 											actionListener="#{navigationAreaBean.goTo('configurarNotificaciones.xhtml')}">
 											<i class="fa fa-cog"></i>
-										</h:commandLink>
-									</div>
-
-									<div class="col-xs-2 col-sm-2 col-md-1 col-lg-1">
-										<h:commandLink value="" class="btn btn-default btn-lg"
-											data-toggle="tooltip" data-placement="top" title="Eliminar"
-											onclick="$('#myModalBaja').modal('show');document.getElementById('forBajaModal:idProductoSelec').value='#{item.idProducto}';document.getElementById('forBajaModal:nombreProdSelec').value='#{item.nombre}';"
-											immediate="true">
-											<i class="fa fa-times"></i>
-											<f:ajax execute="@this" render="" />
 										</h:commandLink>
 									</div>
 									<div class="col-xs-2 col-sm-2 col-md-1 col-lg-1">
@@ -239,38 +269,17 @@
 											<i class="fa fa-pencil-square-o"></i>
 										</h:commandLink>
 									</div>
-								</div>
-								<div class="row">
-									<div class="col-xs-4 col-md-4 col-sm-2 col-lg-2">
-										<h:form id="formMover">
-											<h:commandLink value="Mover" class="btn btn-primary btn-xs"
-												rendered="#{moverProductoBean.cantAlamcenenDeUsusario >= 2}"
-												onclick="$('#myModal2').modal('show');document.getElementById('nombreCambiar:inputStock').value='#{item.stock}';document.getElementById('nombreCambiar:idProductoSelec').value='#{item.idProducto}';"
-												immediate="true">
-												<f:ajax execute="@this" render="formMover" />
-											</h:commandLink>
-										</h:form>
+									<div class="col-xs-2 col-sm-2 col-md-1 col-lg-1">
+										<h:commandLink value="" class="btn btn-default btn-lg"
+											data-toggle="tooltip" data-placement="top" title="Eliminar"
+											onclick="$('#myModalBaja').modal('show');document.getElementById('forBajaModal:idProductoSelec').value='#{item.idProducto}';document.getElementById('forBajaModal:nombreProdSelec').value='#{item.nombre}';"
+											immediate="true">
+											<i class="fa fa-times"></i>
+											<f:ajax execute="@this" render="" />
+										</h:commandLink>
 									</div>
 								</div>
-								<div class="row">
-									<div
-										class="col-xs-2 col-md-4 col-sm-1 col-lg-1 col-sm-offset-5 col-lg-offset-5">
-										<h:commandButton
-											action="#{almacenBean.actualizarStock(item.idProducto,item.stock - 1)}"
-											value="-" />
-									</div>
-									<div class="col-xs-2 col-md-4 col-sm-1 col-lg-1">
-
-										<span class="badge">#{item.stock}</span>
-									</div>
-									<div class="col-xs-3 col-md-4 col-sm-1 col-lg-1">
-										<h:commandButton
-											action="#{almacenBean.actualizarStock(item.idProducto,item.stock + 1)}"
-											value="+" />
-									</div>
-
-								</div>
-
+								<div class="row hidden-xs"><p>#{item.descripcion}</p></div>
 							</div>
 						</div>
 					</li>
