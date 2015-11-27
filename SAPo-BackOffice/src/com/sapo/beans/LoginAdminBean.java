@@ -1,6 +1,7 @@
 package com.sapo.beans;
 
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
@@ -59,6 +60,20 @@ public class LoginAdminBean {
 		}
 	}*/
     public String login() {
+    	
+    	
+    	FacesMessage message = null;
+    	
+if(this.email==null||this.password==null){
+			
+			message = new FacesMessage(FacesMessage.SEVERITY_WARN,
+					"Error de credenciales", "email o contraseña vacios");
+			FacesContext.getCurrentInstance().addMessage(null, message);
+			
+			System.out.println("Todo mal");
+			return "error";
+		}
+		else{
 		
 		DataAdministrador dataAdmin = new DataAdministrador();
 			
@@ -71,10 +86,29 @@ public class LoginAdminBean {
 		if(ok){
 			this.redirect = "Login OK!";
 		    this.logueado = true;
+		    
+		    
+		    message = new FacesMessage(FacesMessage.SEVERITY_INFO,
+					"Bienvenido", dataAdmin.getEmail());
+			FacesContext.getCurrentInstance().addMessage(null, message);
+		    
+		    
 		    return "/index.xhtml";
 		}
-		else{System.out.println("Todo mal");
-		return "error";}
+		else{
+			message = new FacesMessage(FacesMessage.SEVERITY_WARN,
+					"Error de credenciales", "email o contraseña incorrectos");
+			FacesContext.getCurrentInstance().addMessage(null, message);
+			//context.addCallbackParam("loggedIn", loggedIn);
+			
+			System.out.println("Todo mal");
+			return "error";
+		}
+	
+	
+		}
+
+
 	}
 	
 	public String logout() {

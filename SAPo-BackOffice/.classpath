@@ -12,6 +12,6 @@
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/gson-2.3.1.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/primefaces-5.3.jar"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/SAPo-Negocio"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jdk1.8.0_60"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>
