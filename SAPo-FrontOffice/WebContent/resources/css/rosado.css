@@ -46,3 +46,8 @@
     padding-top: 15px;
     padding-bottom: 15px;
 }
+
+.itemAlmacen {
+	margin: 5px;
+	background-color: rgba(252, 248, 227, 0.32);
+}

@@ -90,7 +90,7 @@ public class Fabrica {
 			
 			if(c.getFoto()!=null){
 			dcat.setIdFoto(c.getFoto().getIdImagen());
-			};
+			}else{dcat.setIdFoto(1);}
 			l.add(dcat);
 		}
 		return l;

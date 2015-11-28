@@ -72,9 +72,10 @@ public class ListaCompras {
 			if (dt != null) {
 				int difStock = productosIdeal.get(i).getStockIdeal()
 						- dt.getStock();
-				if (difStock != 0) {
+				if (difStock > 0) {
 					productosIdeal.get(i).setStock(
-							productosIdeal.get(i).getStockIdeal());
+							productosIdeal.get(i).getStockIdeal() - dt.getStock());
+					
 					this.listaCompras.add(productosIdeal.get(i));
 				}
 			}
