@@ -8,6 +8,7 @@ import javax.faces.bean.ManagedBean;
 
 import com.sapo.ejb.AdministradorNegocio;
 import com.sapo.ejb.AlmacenNegocio;
+import com.sapo.ejb.ConfiguracionNegocio;
 
 @ManagedBean(eager=true)
 @ApplicationScoped
@@ -21,6 +22,9 @@ public class NavigationBean {
 
 	@EJB
 	AdministradorNegocio adminNegocio;
+	@EJB
+	ConfiguracionNegocio configNegocio;
+	
 	private String redirectTo;
 	private String renderContent;
 	
@@ -62,6 +66,7 @@ public class NavigationBean {
 	@PostConstruct
 	public void insertAdmin(){
 		this.adminNegocio.insertAdmin();
+		this.configNegocio.cargarFotosPorDefecto();
 	}
 
 }
