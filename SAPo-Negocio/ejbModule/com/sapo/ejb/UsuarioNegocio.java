@@ -92,8 +92,24 @@ public class UsuarioNegocio {
 		usuarioPersistir.setEstaActivo(true);
 		usuarioPersistir.setFecha(new Date());
 		usuarioPersistir.setNombre(dataUsuario.getEmail().split("@")[0]);
+		
+		
+		
+		//usuarioPersistir.setLatitud(dataUsuario.getLatitud());
+		//usuarioPersistir.setLongitud(dataUsuario.getLongitud());
+		
+		
+		
 		this.altaUsuario(usuarioPersistir);
+		
 		usuario = usuarioDAO.getUsuarioPorEmail(dataUsuario.getEmail());
+		
+		
+		actualizarPosicion(dataUsuario.getLatitud(), dataUsuario.getLongitud(),
+				usuario.getIdUsuario());
+		
+		
+		
 		DataUsuario dUsuario = new DataUsuario();
 		dUsuario.setEmail(usuario.getEmail());
 		dUsuario.setFecha(usuario.getFecha());
@@ -103,6 +119,10 @@ public class UsuarioNegocio {
 		dUsuario.setEstilo(usuario.getEstilo());
 		dUsuario.setMonto(usuario.getMonto());
 		dUsuario.setPremium(usuario.isPremium());
+		
+		dUsuario.setLatitud(usuario.getLatitud());
+		dUsuario.setLongitud(usuario.getLongitud());
+		
 		
 		return dUsuario;
 	}
