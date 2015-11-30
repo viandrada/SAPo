@@ -8,7 +8,9 @@ import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 
 import com.datatypes.DataImagen;
+import com.sapo.dao.ConfiguarcionDAO;
 import com.sapo.dao.ImagenDAO;
+import com.sapo.entidades.Configuracion;
 import com.sapo.entidades.Imagen;
 
 /**
@@ -27,6 +29,9 @@ public class ConfiguracionNegocio {
 
 	@EJB
 	ImagenDAO imagenDAO;
+	
+	@EJB
+	ConfiguarcionDAO configDAO;
 
 	public DataImagen getImagenPorDefecto(int idImagen) {
 		DataImagen di = new DataImagen();
@@ -75,5 +80,10 @@ public class ConfiguracionNegocio {
 				this.imagenDAO.insertarImagen(imagenes.get(i));
 			}
 		}
+	}
+	
+	public void configurarMaxAlmacenes(){
+		if (!this.configDAO.existeConfiguracion("maxCantAlmPremium"))
+			configDAO.insertarMaxAlmacenes();
 	}
 }

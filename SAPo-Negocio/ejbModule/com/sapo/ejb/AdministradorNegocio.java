@@ -8,6 +8,7 @@ import javax.ejb.Stateless;
 
 import com.datatypes.DataAdministrador;
 import com.sapo.dao.AdministradorDAO;
+import com.sapo.dao.ConfiguarcionDAO;
 import com.sapo.entidades.Administrador;
 
 /**
@@ -29,6 +30,9 @@ public class AdministradorNegocio /*
 
 	@EJB
 	AdministradorDAO adminDAO;
+	
+	@EJB
+	ConfiguarcionDAO configDAO;
 
 	// private Administrador admin;
 
@@ -105,6 +109,7 @@ public class AdministradorNegocio /*
 			admin.setPassword("1a1dc91c907325c69271ddf0c944bc72");
 			this.adminDAO.insertarAdministrador(admin);
 		}
+		
 	}
 	/*
 	 * public Administrador getAdmin() { return admin; }

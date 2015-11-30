@@ -67,6 +67,7 @@ public class NavigationBean {
 	public void insertAdmin(){
 		this.adminNegocio.insertAdmin();
 		this.configNegocio.cargarFotosPorDefecto();
+		this.configNegocio.configurarMaxAlmacenes();
 	}
 
 }

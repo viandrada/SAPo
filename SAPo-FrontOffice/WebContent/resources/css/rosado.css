@@ -35,7 +35,11 @@
 	}
 	
 .areaTrabajoFondo{
-	background-color: crimson;
+	background-color: rgba(255, 197, 199, 0.6);
+}
+
+body{
+	background-color: rgba(255, 197, 199, 0.6);
 }
 
 .producto{

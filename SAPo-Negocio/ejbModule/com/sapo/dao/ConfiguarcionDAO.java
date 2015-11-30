@@ -36,7 +36,7 @@ public class ConfiguarcionDAO {
 		em.merge(a);		
 	}
 	
-	public void primeraConfiguracion(){
+	public void insertarMaxAlmacenes(){
 		Configuracion config1 = new Configuracion ("maxCantAlmComun",5);
 		Configuracion config2 = new Configuracion ("maxCantAlmPremium",100);
 		Configuracion config3 = new Configuracion ("precioPremium",3.0f);
