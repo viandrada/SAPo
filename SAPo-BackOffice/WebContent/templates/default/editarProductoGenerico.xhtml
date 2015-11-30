@@ -111,7 +111,7 @@
 				var="item" id="tablaAtributos" class="table">
 				<h:column>
 					<f:facet name="header">Id</f:facet>
-					<h:outputText
+					<h:outputText id="idAtributo"
 						value="#{editarProductoGenericoBean.atributosVista.indexOf(item)}" />
 				</h:column>
 				<h:column>
@@ -127,11 +127,11 @@
 					<h:outputText value="#{item.valor}" />
 				</h:column>
 				<h:column>
-					<f:facet name="header">Editar</f:facet>
-					<a href="" data-toggle="modal"
-						onclick="document.getElementById('idEliminar').value='#{o.idProducto}';return false;"
-						data-target="#myModaleditar"> <i class="fa fa-times fa-2x"></i>
-					</a>
+					<f:facet name="header">Eliminar</f:facet>
+					<h:commandLink
+						actionListener="#{editarProductoGenericoBean.eliminar(editarProductoGenericoBean.atributosVista.indexOf(item))}">
+						<f:ajax render="@form" /><i class="fa fa-times fa-2x"></i>
+					</h:commandLink>
 				</h:column>
 			</h:dataTable>
 
@@ -233,11 +233,7 @@
 				</div>
 				<div class="modal-body">
 
-					<h:inputText value="#{verProductosBean.nombreProductoSeleccionado}"
-						id="nombre" class="form-control" placeholder="Nombre"
-						readonly="false" />
-					<h:inputHidden value="#{verProductosBean.idProductoSeleccionado}"
-						id="idProducto" class="form-control" />
+					<h:outputText id="idEliminar" class="form-control" />
 
 				</div>
 				<div class="modal-footer">

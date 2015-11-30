@@ -1,6 +1,5 @@
 package com.sapo.beans;
 
-import java.io.IOException;
 import java.lang.reflect.Type;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -11,12 +10,9 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
-import javax.faces.application.ViewHandler;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
-import javax.faces.component.UIViewRoot;
-import javax.faces.context.FacesContext;
 import javax.faces.event.AjaxBehaviorEvent;
 import javax.servlet.http.Part;
 
@@ -211,7 +207,8 @@ public class EditarProductoGenericoBean {
 		DataProducto dataProductoModificado = new DataProducto();
 		dataProductoModificado.setIdProducto(this.dataProducto.getIdProducto());
 		dataProductoModificado.setNombre(this.dataProducto.getNombre());
-		dataProductoModificado.setDescripcion(this.dataProducto.getDescripcion());
+		dataProductoModificado.setDescripcion(this.dataProducto
+				.getDescripcion());
 		dataProductoModificado.setEstaActivo(true);
 
 		// Conversión de atributos genéricos a json
@@ -228,8 +225,7 @@ public class EditarProductoGenericoBean {
 			dataImg.setDatos(PartToByteArrayConverter.toByteArray(this.foto));
 			this.setDataImagen(dataImg);
 			imagenesData.add(this.dataImagen);
-		}
-		else{
+		} else {
 			dataImg.setIdImagen(dataProducto.getFotos().get(0).getIdImagen());
 			imagenesData.add(dataImg);
 		}
@@ -242,26 +238,25 @@ public class EditarProductoGenericoBean {
 			dataCategoria.setNombre(this.categoriaNueva);
 		}
 
-		this.service.modificarProductoGenerico(dataProductoModificado, dataCategoria);
+		this.service.modificarProductoGenerico(dataProductoModificado,
+				dataCategoria);
 
 		this.init();
 		this.nav.setRedirectTo("verProductos.xhtml");
-		
-		//Sol 1:
-		/*try {
-			FacesContext.getCurrentInstance().getExternalContext().redirect("/index.xhtml");
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		//Sol 2:
-		FacesContext context = FacesContext.getCurrentInstance();
-		String viewId = context.getViewRoot().getViewId();
-		ViewHandler handler = context.getApplication().getViewHandler();
-		UIViewRoot root = handler.createView(context, viewId);
-		root.setViewId(viewId);
-		context.setViewRoot(root);*/
-		
+
+		// Sol 1:
+		/*
+		 * try {
+		 * FacesContext.getCurrentInstance().getExternalContext().redirect(
+		 * "/index.xhtml"); } catch (IOException e) { // TODO Auto-generated
+		 * catch block e.printStackTrace(); } //Sol 2: FacesContext context =
+		 * FacesContext.getCurrentInstance(); String viewId =
+		 * context.getViewRoot().getViewId(); ViewHandler handler =
+		 * context.getApplication().getViewHandler(); UIViewRoot root =
+		 * handler.createView(context, viewId); root.setViewId(viewId);
+		 * context.setViewRoot(root);
+		 */
+
 		return "/index.xhtml";
 
 	}
@@ -294,6 +289,13 @@ public class EditarProductoGenericoBean {
 		this.valorAtributoNumero = 0.0f;
 		this.valorAtributoFecha = null;
 		this.tipoDato = "Texto";
+		return null;
+	}
+
+	public String eliminar(int index) {
+
+		atributosVista.remove(index);
+
 		return null;
 	}
 

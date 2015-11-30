@@ -31,7 +31,7 @@
 				</div>
 				<h:panelGroup class="row"
 					rendered="#{almacenIdealBean.almacenIdeal.productos.size()==0}">
-					<hr/>
+					<hr />
 					<p>Aún no agregaste productos al almacén ideal.</p>
 				</h:panelGroup>
 				<div class="table-responsive">
@@ -140,7 +140,7 @@
 											<h:graphicImage class="img-responsive"
 												rendered="#{item.recomendado}"
 												value="/resources/images/recomendado.jpg"
-												style="max-height:3em;display: inline;position: absolute;z-index: 100;margin: -8px 0 -2px -22px;"
+												style="max-height:3em;display: inline;position: absolute;z-index: 100;margin: -28px 0px 0px 89px;"
 												data-toggle="tooltip" data-placement="top"
 												title="Recomendado">
 											</h:graphicImage>
@@ -154,12 +154,23 @@
 								</h:commandLink>
 								<div class="row">
 									<div class="col-xs-12 col-md-12 col-sm-12 col-lg-12">
-										<h:commandButton
-											action="#{almacenIdealBean.agregarGenerico(item)}"
-											value="Agregar" rendered="#{!item.agregado}" />
-										<h:outputLabel value="Agregado" rendered="#{item.agregado}" />
-										<button type="button" class="" data-toggle="modal"
-											data-target="#myModal">Ver más</button>
+										<div class="row">
+											<div class="col-xs-6 col-md-6 col-sm-6 col-lg-6">
+												<h:commandButton
+													action="#{almacenIdealBean.agregarGenerico(item)}"
+													value="Agregar" rendered="#{!item.agregado}" />
+												<h:outputLabel rendered="#{item.agregado}">
+													<small>Agregado</small>
+												</h:outputLabel>
+											</div>
+											<div class="col-xs-6 col-md-6 col-sm-6 col-lg-6">
+												<h:commandButton class="" data-toggle="modal"
+													value="Ver más"
+													actionListener="#{navigationAreaBean.goTo('detalleProducto.xhtml')}"
+													action="#{detalleProductoEspBean.init(item.idProducto)}"
+													data-target="#myModal"></h:commandButton>
+											</div>
+										</div>
 									</div>
 								</div>
 							</li>

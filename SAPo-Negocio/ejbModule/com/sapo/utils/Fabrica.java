@@ -128,6 +128,7 @@ public class Fabrica {
 		if (usuario.getFoto() != null) {
 			dataUser.setIdFoto(usuario.getFoto().getIdImagen());
 		} else {
+			dataUser.setIdFoto(1);//Foto de perfil por defecto
 		}
 		;
 		return dataUser;

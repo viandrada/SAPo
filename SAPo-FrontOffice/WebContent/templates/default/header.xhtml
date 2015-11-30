@@ -8,8 +8,6 @@
 <ui:composition>
 	<script src="https://apis.google.com/js/platform.js"></script>
 
-
-	<script type="text/javascript" src="jquery-1.7.1.min.js"></script>
 	<script type="text/javascript"
 		src="http://maps.googleapis.com/maps/api/js?sensor=true"></script>
 	<style type="text/css">
@@ -21,7 +19,7 @@
 }
 </style>
 
-			<script type="text/javascript">
+	<script type="text/javascript">
         //var map;
         var latitud;
         var longitud;
@@ -144,6 +142,8 @@
 				<h:form>
 					<h:commandLink action="#{navigationBean.goTo('home.xhtml')}"
 						class="navbar-brand">Mi almacén</h:commandLink>
+					<h:commandLink action="#{navigationBean.goTo('areaTrabajo.xhtml')}"
+						rendered="#{loginBean.logueado}" class="navbar-brand"><i class="fa fa-home"></i></h:commandLink>
 				</h:form>
 			</div>
 
@@ -152,31 +152,31 @@
 				<h:panelGroup id="loginPanel" rendered="#{loginBean.shownLogin}">
 
 					<h:form id="inputHiddenForm" class="navbar-form navbar-right">
-					
-					
-					  
-					 <p:growl id="growl" sticky="true" showDetail="true" life="3000" />  
-					
+
+
+
+						<p:growl id="growl" sticky="true" showDetail="true" life="3000" />
+
 						<h:inputHidden id="contadorLogin"
 							value="#{loginBean.contadorLogin}" />
 						<div class="form-group">
 							<h:inputText id="loginEmail" value="#{loginBean.email}"
-								 class="form-control" a:placeholder="Email">
+								class="form-control" a:placeholder="Email">
 								<f:ajax />
 							</h:inputText>
 						</div>
 						<div class="form-group">
-							<h:inputSecret value="#{loginBean.password}" 
-								class="form-control" a:placeholder="Password">
+							<h:inputSecret value="#{loginBean.password}" class="form-control"
+								a:placeholder="Password">
 								<f:ajax />
 							</h:inputSecret>
 						</div>
 
-						
-						
-						<h:inputHidden id="latitud" value="#{loginBean.latitud}"  />
-						<h:inputHidden id="longitud" value="#{loginBean.longitud}"  />
-						
+
+
+						<h:inputHidden id="latitud" value="#{loginBean.latitud}" />
+						<h:inputHidden id="longitud" value="#{loginBean.longitud}" />
+
 
 						<h:commandButton value="Ingresar" action="#{loginBean.login}"
 							class="btn btn-primary" update="growl"></h:commandButton>
@@ -221,21 +221,6 @@
 					</div>
 				</h:panelGroup>
 			</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 		</div>
 	</nav>
 
