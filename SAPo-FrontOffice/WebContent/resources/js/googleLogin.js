@@ -1,4 +1,53 @@
+		var latitud;
+        var longitud;
+        
+   //     $(document).ready(function() {
+       //     localizame(); /*Cuando cargue la página, cargamos nuestra posición*/   
+      //  });
+        
+        function localizame() {
+            if (navigator.geolocation) { /* Si el navegador tiene geolocalizacion */
+                navigator.geolocation.getCurrentPosition(coordenadas, errores);
+            }else{
+                alert('Oops! Tu navegador no soporta geolocalización. Bájate Chrome, que es gratis!');
+            }
+        }
+        
+        function coordenadas(position) {
+            latitud = position.coords.latitude; /*Guardamos nuestra latitud*/
+            longitud = position.coords.longitude; /*Guardamos nuestra longitud*/
+            //cargarMapa();
+          //  cargarCoordenadas();
+        }
+        
+        function errores(err) {
+            /*Controlamos los posibles errores */
+            if (err.code == 0) {
+              alert("Oops! Algo ha salido mal");
+            }
+            if (err.code == 1) {
+              alert("Oops! No has aceptado compartir tu posición");
+            }
+            if (err.code == 2) {
+              alert("Oops! No se puede obtener la posición actual");
+            }
+            if (err.code == 3) {
+              alert("Oops! Hemos superado el tiempo de espera");
+            }
+        }
+
+
+
+
+
 function onSignIn(googleUser) {
+	
+	
+	//  $(document).ready(function() {
+          localizame(); /*Cuando cargue la página, cargamos nuestra posición*/   
+    //  });
+	
+	
 	var counter = document.getElementById("inputHiddenForm:contadorLogin").value;
 	var profile = googleUser.getBasicProfile();
 	document.getElementById('loginPanel').rendered = false;
@@ -10,7 +59,7 @@ function onSignIn(googleUser) {
 	console.log('Email: ' + profile.getEmail());
 	if (counter != 1) {
 		var xhr = new XMLHttpRequest();
-		xhr.open('GET', 'http://localhost:8080/SAPo-FrontOffice/googleLogin/'+ profile.getEmail());
+		xhr.open('GET', 'http://localhost:8080/SAPo-FrontOffice/googleLogin/'+ profile.getEmail()+'&'+latitud+'&'+longitud);
 		//xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
 		xhr.send(null);
 		xhr.onload = function() {

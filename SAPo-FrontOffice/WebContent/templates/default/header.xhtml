@@ -172,11 +172,8 @@
 							</h:inputSecret>
 						</div>
 
-
-
-						<h:inputHidden id="latitud" value="#{loginBean.latitud}" />
-						<h:inputHidden id="longitud" value="#{loginBean.longitud}" />
-
+						<h:inputHidden  id="latitud" value="#{loginBean.latitud}"  />
+						<h:inputHidden  id="longitud" value="#{loginBean.longitud}"  />
 
 						<h:commandButton value="Ingresar" action="#{loginBean.login}"
 							class="btn btn-primary" update="growl"></h:commandButton>

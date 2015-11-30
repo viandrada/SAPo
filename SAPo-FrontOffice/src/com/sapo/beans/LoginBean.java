@@ -320,6 +320,9 @@ public class LoginBean {
 	public void loginExterno(String email) {
 		DataUsuario dUsu = new DataUsuario();
 		dUsu.setEmail(email);
+		//dUsu.setLatitud(latitud);
+		//dUsu.setLongitud(longitud);
+		
 		this.usuarioNegocio.loginExterno(dUsu);
 	}
 
