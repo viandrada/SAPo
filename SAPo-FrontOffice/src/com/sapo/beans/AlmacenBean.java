@@ -89,7 +89,7 @@ public class AlmacenBean {
 		for (int i = 0; i < dataProductos.size(); i++) {
 			if (dataProductos.get(i).getFotos().isEmpty()) {
 				DataImagen dataImg = new DataImagen();
-				dataImg.setIdImagen(1);
+				dataImg.setIdImagen(2);
 				dataProductos.get(i).getFotos().add(dataImg);// TODO Guardar en
 																// base una
 																// imagen por

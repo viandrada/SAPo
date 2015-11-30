@@ -244,6 +244,7 @@ public class AltaProductoConPlantillaBean {
 		this.foto3 = null;
 		this.foto4 = null;
 		this.fotos.clear();
+		this.productoNuevo = new DataProducto();
 		getPlantilla();
 		this.tipoDatoList = new ArrayList<String>();
 		this.tipoDatoList.add("Texto");
@@ -363,7 +364,7 @@ public class AltaProductoConPlantillaBean {
 		}
 		this.productoNuevo.setFotos(this.fotos);
 		
-		this.service.altaProductoDesdePlantilla(this.productoNuevo, dataAlmacen);
+		this.service.altaProductoDesdePlantilla(this.productoNuevo, dataAlmacen, this.usuarioLogueado.getEmail());
 	}
 	
 	/* �sto es para subir imagenes con Richfaces */

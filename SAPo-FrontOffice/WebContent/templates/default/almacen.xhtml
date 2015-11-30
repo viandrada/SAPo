@@ -127,6 +127,17 @@ $(document).ready(function () {
 			<ui:fragment
 				rendered="#{compartirAlmacenBean.listDataUsuQueCompartenAlmacen.isEmpty()}">
 				Solo tú eres Administrador de este Almacén.
+				<h:form class="list-inline">
+					<div class="col-xs-1 col-md-1 col-sm-1 col-lg-1">
+						<h:commandLink style="padding:2px;"
+							class="img-responsive img-circle btn-default"
+							action="#{navigationAreaBean.goTo('compartirAlmacen.xhtml')}"
+							value="" data-toggle="tooltip" data-placement="top"
+							title="Compartir almacén">
+							<i class="fa fa-user-plus fa-2x"></i>
+						</h:commandLink>
+					</div>
+				</h:form>
 			</ui:fragment>
 
 
@@ -212,7 +223,8 @@ $(document).ready(function () {
 		</h:panelGroup>
 		<div class="input-group">
 			<span class="input-group-addon">Búsqueda</span> <input id="filter2"
-				type="text" class="form-control" placeholder="Nombre"></input>
+				type="text" class="form-control"
+				placeholder="Busque productos por nombre, descripción o categoría"></input>
 		</div>
 		<!-- Productos del almacen -->
 		<ul class="list-group searchable">
@@ -312,6 +324,10 @@ $(document).ready(function () {
 											</p>
 										</blockquote>
 									</div>
+									<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+										<span class="label label-default" data-toggle="tooltip"
+											data-placement="top" title="Categoría"><h:outputLabel value="#{item.nombreCategoria}"/></span>
+									</div>
 								</div>
 							</div>
 						</div>
@@ -327,8 +343,8 @@ $(document).ready(function () {
 					<div class="modal-content">
 						<div class="modal-header">
 							<button type="button" class="close" data-dismiss="modal">X</button>
-							<h4 class="modal-title">Selecciona que cantidad y en que
-								almacen quieres hacerlo...</h4>
+							<h4 class="modal-title">Selecciona que cantidad y en qué
+								almacén quieres hacerlo...</h4>
 						</div>
 						<div class="modal-body">
 							<div class="form-group">
