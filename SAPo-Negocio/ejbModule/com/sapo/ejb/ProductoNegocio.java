@@ -255,7 +255,7 @@ public class ProductoNegocio {
 	}
 
 	public void altaProductoDesdePlantilla(DataProducto dataProducto,
-			DataAlmacen dataAlmacen) {
+			DataAlmacen dataAlmacen, String email) {
 
 		Producto p = new Producto();
 		ProductoGenerico pg = this.productoGenericoDAO
@@ -267,7 +267,8 @@ public class ProductoNegocio {
 		Almacen a = new Almacen();
 		a = this.almacenDAO.getAlmacen(dataAlmacen.getIdAlmacen());
 		p.setAlmacen(a);
-
+		Usuario usr = this.usuarioDAO.getUsuarioPorEmail(email);
+		p.setUsuario(usr);
 		p.setAtributos(dataProducto.getAtributos());
 		p.setNombre(dataProducto.getNombre());
 		p.setDescripcion(dataProducto.getDescripcion());

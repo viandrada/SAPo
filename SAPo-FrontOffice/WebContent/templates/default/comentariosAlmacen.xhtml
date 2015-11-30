@@ -30,12 +30,9 @@
 		</script>
 
 			<h:form id="ediCat2" rendered="true">
-				<div class="input-group">
-					<span class="input-group-addon">Buscar:</span> <input id="filter2"
-						type="text" class="form-control" placeholder="Contenido/Usuario"></input>
-				</div>
+
 				<div class="row">
-					<div class="col-md-11">
+					<div class="col-md-12 col-lg-12">
 						<div class="page-header">
 							<h1>
 								<small class="pull-right">#{comentariosAlmacenBean.size}
@@ -44,11 +41,20 @@
 							<button type="button" class="btn btn-success" data-toggle="modal"
 								data-target="#myModaleditar" onclick="return false;">Comentar</button>
 						</div>
-						<ui:fragment
+						<div class="input-group">
+							<span class="input-group-addon">Búsqueda:</span> <input
+								id="filter2" type="text" class="form-control"
+								placeholder="Contenido/Usuario"></input>
+						</div>
+						<h:panelGroup
 							rendered="#{comentariosAlmacenBean.listDataComentarios.size()==0}">
-							<p>Aún no hay comentarios realizados en este almacén.</p>
-							<br />
-						</ui:fragment>
+							<div class="row">
+								<hr />
+								<div class="col-md-12 col-lg-12">
+									<p>Aún no hay comentarios realizados en este almacén.</p>
+								</div>
+							</div>
+						</h:panelGroup>
 						<div class="comments-list">
 							<ui:repeat class="searchable"
 								value="#{comentariosAlmacenBean.listDataComentarios}" var="u">

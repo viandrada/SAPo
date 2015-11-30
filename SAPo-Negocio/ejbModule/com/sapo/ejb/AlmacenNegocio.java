@@ -367,6 +367,10 @@ public class AlmacenNegocio {
 				dataProducto.setIdProductoGenerico(productos.get(i)
 						.getProductoGenerico().getIdProductoGenerico());
 			}
+			dataProducto.setIdCategoria(productos.get(i).getCategoria()
+					.getIdCategoria());
+			dataProducto.setNombreCategoria(productos.get(i).getCategoria()
+					.getNombre());
 			dataProducto.setNombre(productos.get(i).getNombre());
 			dataProducto.setDescripcion(productos.get(i).getDescripcion());
 			dataProducto.setPrecio(productos.get(i).getPrecio());
