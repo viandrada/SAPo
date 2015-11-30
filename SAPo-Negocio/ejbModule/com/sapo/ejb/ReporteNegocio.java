@@ -173,7 +173,9 @@ public class ReporteNegocio {
 			cal.setTime(date);
 			int month = cal.get(Calendar.MONTH) + 1;
 			int year = cal.get(Calendar.YEAR);
-			int orden = (int) cal.getTimeInMillis();
+			
+			long orden = (long) cal.getTimeInMillis();
+			//int orden = (int) cal.;
 
 			if (existeDato(month, year, listaDatosResult)) {
 
@@ -198,7 +200,8 @@ public class ReporteNegocio {
 		}
 		// listaDatosResult=ordenarPorFecha(listaDatosResult);
 		// ESTO ES PARA ORDENAR LA LISTA EN ORDEN ASCENDENTE
-		Collections.sort(listaDatosResult, Collections.reverseOrder());
+		//Collections.sort(listaDatosResult, Collections.reverseOrder());
+		Collections.sort(listaDatosResult);
 
 		return listaDatosResult;
 	}

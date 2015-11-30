@@ -16,7 +16,8 @@ public class DataDatoGrafico implements Comparable<DataDatoGrafico> {
 	private float gananciaMes;
 	private int mes;
 	private int anio;
-	private int orden;
+	//private int orden;
+	private long orden;
 	
 	
 	
@@ -44,13 +45,13 @@ public class DataDatoGrafico implements Comparable<DataDatoGrafico> {
 		this.anio = anio;
 	}
 
-	public int getOrden() {
+	/*public int getOrden() {
 		return orden;
 	}
 
 	public void setOrden(int orden) {
 		this.orden = orden;
-	}
+	}*/
 
 	@Override
 	public int compareTo(DataDatoGrafico o) {
@@ -60,6 +61,14 @@ public class DataDatoGrafico implements Comparable<DataDatoGrafico> {
 		else return 1;
 					
 		//return orden.compareTo(o.orden);
+	}
+
+	public long getOrden() {
+		return orden;
+	}
+
+	public void setOrden(long orden) {
+		this.orden = orden;
 	}
 	
 	
