@@ -29,14 +29,6 @@
 			});
 		</script>
 
-
-
-			<ui:fragment
-				rendered="#{comentariosAlmacenBean.listDataComentarios.size()==0}">
-		Aun no hay comentarios realizados en este almacen.
-<br />
-			</ui:fragment>
-			<br />
 			<h:form id="ediCat2" rendered="true">
 				<div class="input-group">
 					<span class="input-group-addon">Buscar:</span> <input id="filter2"
@@ -52,7 +44,11 @@
 							<button type="button" class="btn btn-success" data-toggle="modal"
 								data-target="#myModaleditar" onclick="return false;">Comentar</button>
 						</div>
-
+						<ui:fragment
+							rendered="#{comentariosAlmacenBean.listDataComentarios.size()==0}">
+							<p>Aún no hay comentarios realizados en este almacén.</p>
+							<br />
+						</ui:fragment>
 						<div class="comments-list">
 							<ui:repeat class="searchable"
 								value="#{comentariosAlmacenBean.listDataComentarios}" var="u">
@@ -80,9 +76,6 @@
 										<h4 class="media-heading user_name">#{u.emailUsu}</h4>
 										#{u.contenido}
 
-										<p>
-											<small><a href="">Like</a> - <a href="">Share</a></small>
-										</p>
 									</div>
 								</div>
 							</ui:repeat>
@@ -97,7 +90,7 @@
 						<div class="modal-content">
 							<div class="modal-header">
 								<button type="button" class="close" data-dismiss="modal">X</button>
-								<h4 class="modal-title">Ingrese comentario...</h4>
+								<h4 class="modal-title">Ingrese su comentario:</h4>
 							</div>
 							<div class="modal-body">
 
@@ -127,8 +120,7 @@
 							<div class="modal-content">
 								<div class="modal-header">
 									<button type="button" class="close" data-dismiss="modal">X</button>
-									<h4 class="modal-title">Estas seguro que deseas
-										descomentar ?</h4>
+									<h4 class="modal-title">¿Eliminar comentario?</h4>
 								</div>
 								<div class="modal-body">
 									<div class="form-group">

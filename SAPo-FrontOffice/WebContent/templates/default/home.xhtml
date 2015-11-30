@@ -4,29 +4,31 @@
 	xmlns:p="http://primefaces.org/ui">
 
 <ui:composition>
-
- <iframe id="logoutframe" src="https://accounts.google.com/logout" style="display: none"></iframe>
+	<h:outputStylesheet name="css/home.css" target="head" />
+	<iframe id="logoutframe" src="https://accounts.google.com/logout"
+		style="display: none"></iframe>
 	<!-- Main jumbotron for a primary marketing message or call to action -->
-	<div class="jumbotron">
+	<div class="jumbotron"
+		style="background-color: rgba(238, 238, 238, 0.34); margin-top: 45px;">
 		<div class="container">
 			<h1>Bienvenido a Mi Almacén</h1>
 			<p>A través de Mi Almacén podrás mantener sincronizado de forma
 				virtual cualquier grupo de items que desees, pudiendo acceder a
 				ellos a partir de difentes dispositivos. Para poder crear tu primer
 				almacén y usarlo de forma gratuita, deberás registrarte primero.</p>
-			
-				<!-- Boton para mostrar ventana modal -->
-				<button type="button" class="btn btn-primary btn-lg"
-					data-toggle="modal" data-target="#myModal">Registrarme</button>
 
-				<!-- Modal -->
+			<!-- Boton para mostrar ventana modal -->
+			<button type="button" class="btn btn-primary btn-lg"
+				data-toggle="modal" data-target="#myModal">Registrarme</button>
+
+			<!-- Modal -->
 			<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
 				aria-labelledby="myModalLabel">
 				<div class="modal-dialog" role="document">
 					<div class="modal-content">
 						<div class="modal-header">
 							<button type="button" class="close" data-dismiss="modal">X</button>
-						
+
 							<h4 class="modal-title" id="myModalLabel">Registro</h4>
 						</div>
 						<div class="modal-body">
@@ -36,34 +38,47 @@
 				</div>
 			</div>
 			<!-- Fin de ventana modal -->
-			
+
 		</div>
 	</div>
 
-	<div class="container">
+	<div class="container-fluid">
 		<!-- Example row of columns -->
 		<div class="row">
-			<div class="col-md-4">
-				<h2>Quiénes somos</h2>
-				<p>Somos...</p>
+			<div class="col-md-3 col-lg-3"
+				style="background-color: rgba(238, 238, 238, 0.34); margin-left: 1%; margin-right: 1%;">
+				<h2>Qué es Mi Almacén</h2>
 				<p>
-					<a class="btn btn-info" href="#" role="button">Ver más </a>
+					<strong>Descubrí de qué se trata mi almacén.</strong>
+				</p>
+				<br />
+				<p>
+					<a class="btn btn-default" href="#descripcion" role="button">Ver
+						más </a>
 				</p>
 			</div>
-			<div class="col-md-4">
+			<div class="col-md-4 col-lg-4"
+				style="background-color: rgba(238, 238, 238, 0.34); margin-left: 1%; margin-right: 1%;">
 				<h2>Cómo usar Mi Almacén</h2>
-				<p>Aquí encontrará una guía para rápidamente comenzar a usar Mi
-					Almacén</p>
 				<p>
-					<button type="button" class="btn btn-info" data-toggle="modal"
+					<strong>Aquí encontrarás una guía para rápidamente comenzar
+						a usar Mi Almacén</strong>
+				</p>
+				<p>
+					<button type="button" class="btn btn-default" data-toggle="modal"
 						data-target="#tutorialModal">Ver tutorial</button>
 				</p>
 			</div>
-			<div class="col-md-4">
-				<h2>Contactanos</h2>
-				<p>Por consultas, envíenos un correo a mialmacen@mialmacen.com</p>
+			<div class="col-md-4 col-lg-4"
+				style="background-color: rgba(238, 238, 238, 0.34); margin-left: 1%; margin-right: 1%;">
+				<h2>Qué puedo hacer</h2>
 				<p>
-					<a class="btn btn-info" href="#" role="button">Ver más </a>
+					<strong>Podrás crear almacenes, agregar nuevos ítems con
+						atributos configurables, crear lista de compras y más!</strong>
+				</p>
+				<p>
+					<a class="btn btn-default" href="#funcionalidad" role="button">Ver
+						más </a>
 				</p>
 			</div>
 		</div>
@@ -90,7 +105,62 @@
 			</div>
 		</div>
 	</div>
-	<!-- /container -->
+	<section id="descripcion">
+		<div class="container-fluid">
 
+			<div class="row">
+				<div class="col-md-12 col-lg-12"
+					style="background-color: rgba(238, 238, 238, 0.59); margin-top: 2%;">
+					<h3>Mi Almacén</h3>
+					<p>
+						<strong>El incesante avance tecnológico de los últimos
+							años nos permite estar conectados en todo momento a Internet
+							desde una amplia gama de dispositivos. Gracias a esto, es posible
+							desarrollar y utilizar sistemas de gran porte focalizados en
+							ayudar y organizar nuestras vidas. La necesidad de contar con un
+							inventario es algo que el ser humano ha tenido presente desde
+							larga data. <em>Mi Almacén</em> nace con la idea de tener un
+							sistema en el cual se puedan crear inventarios de objetos de
+							cualquier índole dentro de de almacenes virtuales, algo
+							restringido en los sistemas actuales. Este sistema fue construido
+							utilizando la plataforma Java Enterprise Edition y es accesible
+							desde diversos dispositivos gracias a su tecnología Web
+							Responsive. Como característica principal destacamos la capacidad
+							de poder crear y administrar un almacén que contenga productos de
+							cualquier tipo.
+						</strong>
+					</p>
+				</div>
+			</div>
+
+		</div>
+	</section>
+	<section id="tutorial"></section>
+	<section id="funcionalidad">
+		<div class="container-fluid">
+
+			<div class="row">
+				<div class="col-md-12 col-lg-12"
+					style="background-color: rgba(238, 238, 238, 0.59); margin-top: 2%;">
+					<h2>Funcionalidades</h2>
+					<ul>
+						<li><h3>Crear, editar, eliminar almacenes</h3></li>
+						<li><h3>Crear, editar, eliminar productos</h3></li>
+						<li><h3>Manejo de stock (modo rápido)</h3></li>
+						<li><h3>Configurar notificaciones</h3></li>
+						<li><h3>Compartir almacén con otros usuarios</h3></li>
+						<li><h3>Mover producto entre almacenes</h3></li>
+						<li><h3>Hacer comentarios en el almacén</h3></li>
+						<li><h3>Crear tu almacén ideal</h3></li>
+						<li><h3>Ver productos recomendados</h3></li>
+						<li><h3>Generar lista de compras</h3></li>
+						<li><h3>Chatear</h3></li>
+					</ul>
+				</div>
+			</div>
+
+		</div>
+	</section>
+	<!-- /container -->
 </ui:composition>
 </html>

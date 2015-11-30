@@ -84,13 +84,16 @@ public class ProductoNegocio {
 		productoGenerico.setCategoria(catGuardar);
 
 		List<Imagen> imgs = new ArrayList<Imagen>();
-		for (int i = 0; i < productoData.getFotos().size(); i++) {
-			Imagen img = new Imagen();
-			img.setDatos(productoData.getFotos().get(i).getDatos());
-			imgs.add(img);
+		if (productoData.getFotos() != null) {
+			for (int i = 0; i < productoData.getFotos().size(); i++) {
+				Imagen img = new Imagen();
+				img.setDatos(productoData.getFotos().get(i).getDatos());
+				imgs.add(img);
+			}
+			productoGenerico.setFoto(imgs.get(0));// Se puede cambiar para
+													// guardar
+			// m�s de na foto.
 		}
-		productoGenerico.setFoto(imgs.get(0));// Se puede cambiar para guardar
-												// m�s de na foto.
 
 		try {
 			this.productoGenericoDAO.insertarProductoGenerico(productoGenerico);
@@ -134,7 +137,7 @@ public class ProductoNegocio {
 		}
 
 		dataProducto.setFotos(imgs);
-		//dataProducto.setFotos(toDataImagen(producto.getFoto()));
+		// dataProducto.setFotos(toDataImagen(producto.getFoto()));
 
 		dataProducto.setIdHermano(producto.getIdHermano());// //////////////////////////////////////////////////
 

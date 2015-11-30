@@ -90,7 +90,7 @@ public class Fabrica {
 			
 			if(c.getFoto()!=null){
 			dcat.setIdFoto(c.getFoto().getIdImagen());
-			};
+			}else{dcat.setIdFoto(1);}
 			l.add(dcat);
 		}
 		return l;
@@ -128,6 +128,7 @@ public class Fabrica {
 		if (usuario.getFoto() != null) {
 			dataUser.setIdFoto(usuario.getFoto().getIdImagen());
 		} else {
+			dataUser.setIdFoto(1);//Foto de perfil por defecto
 		}
 		;
 		return dataUser;

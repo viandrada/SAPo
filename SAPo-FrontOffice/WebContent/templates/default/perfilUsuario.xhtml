@@ -14,15 +14,16 @@
 	z-index: 9999;
 }
 </style>
-	<div class="container">
+	<div class="container-fluid">
 		<h1>Mi perfil</h1>
 		<hr />
 		<div class="row">
-			<h:form role="form" enctype="multipart/form-data" id="datosPersonales">
+			<h:form role="form" enctype="multipart/form-data"
+				id="datosPersonales">
 				<!-- left column -->
 				<div class="col-md-3">
 					<div class="text-center">
-						<h:graphicImage class="avatar img-circle"
+						<h:graphicImage class="avatar img-circle" style="height:10em;"
 							value="Image/#{perfilBean.idFoto}" alt="avatar">
 						</h:graphicImage>
 						<h6>Cambiar foto...</h6>
@@ -32,7 +33,7 @@
 				</div>
 
 				<!-- edit form column -->
-				<div class="col-md-9 personal-info">
+				<div class="col-md-8 personal-info">
 					<!-- div class="alert alert-info alert-dismissable" id="mensajes">
 						<a class="panel-close close" data-dismiss="alert">×</a> <i
 							class="fa fa-coffee"></i> <span></span><h:message for="guardarDetalles" />
@@ -65,116 +66,118 @@
 				</div>
 			</h:form>
 		</div>
-	</div>
-	<hr />
-	<div class="row">
-		<!-- left column -->
-		<div class="col-md-3">
-			<div class="row"></div>
-		</div>
 
-		<!-- edit form column -->
-		<div class="col-md-9 personal-info">
-			<h3>Cuenta</h3>
-			<div class="form-horizontal">
-				<h:form class="form-horizontal" role="form">
+		<hr />
+		<div class="row">
+			<!-- left column -->
+			<div class="col-md-3">
+				<div class="row"></div>
+			</div>
+
+			<!-- edit form column -->
+			<div class="col-md-8 personal-info">
+				<h3>Cuenta</h3>
+				<div class="form-horizontal">
+					<h:form class="form-horizontal" role="form">
+						<div class="form-group">
+							<label class="col-md-3 control-label">Password:</label>
+							<div class="col-md-8">
+								<h:inputSecret id="password"
+									value="#{perfilBean.passwordActual}" class="form-control"
+									required="true" a:placeholder="******">
+									<f:validator validatorId="confirmPasswordValidator" />
+									<f:attribute name="confirm"
+										value="#{confirmPassword.submittedValue}" />
+									<f:ajax event="blur" execute="password confirm"
+										render="m_password" />
+								</h:inputSecret>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-md-3 control-label">Confirmar password:</label>
+							<div class="col-md-8">
+								<h:inputSecret id="confirm" binding="#{confirmPassword}"
+									class="form-control" required="true" a:placeholder="******">
+									<f:ajax event="blur" execute="password confirm"
+										render="m_password m_confirm" />
+								</h:inputSecret>
+								<h:message id="m_confirm" for="confirm" style="color:red;" />
+								<h:message id="m_password" for="password" style="color:red;" />
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-md-3 control-label"></label>
+							<div class="col-md-8">
+								<h:commandButton class="btn btn-primary"
+									action="#{perfilBean.cambiarPassword()}"
+									value="Cambiar contraseña" update=":mensaje" />
+								<span></span>
+							</div>
+						</div>
+					</h:form>
 					<div class="form-group">
-						<label class="col-md-3 control-label">Password:</label>
-						<div class="col-md-8">
-							<h:inputSecret id="password" value="#{perfilBean.passwordActual}"
-								class="form-control" required="true" a:placeholder="******">
-								<f:validator validatorId="confirmPasswordValidator" />
-								<f:attribute name="confirm"
-									value="#{confirmPassword.submittedValue}" />
-								<f:ajax event="blur" execute="password confirm"
-									render="m_password" />
-							</h:inputSecret>
+						<label class="col-lg-3 control-label">Premium:</label>
+						<div class="col-lg-1">
+							<h:selectBooleanCheckbox class="form-control" disabled="true"
+								value="#{perfilBean.usuarioLogueado.premium}" />
 						</div>
+						<h:panelGroup rendered="#{not perfilBean.premium}">
+							<div
+								class="col-xs-6 col-sm-2 col-md-2 col-lg-2 col-sm-offset-1 col-md-offset-1 col-lg-offset-2">
+								<form action="https://www.sandbox.paypal.com/cgi-bin/webscr"
+									method="post" target="_top">
+									<input type="hidden" name="cmd" value="_s-xclick"></input> <input
+										type="hidden" name="hosted_button_id" value="5EGNZUCXH93MS"></input>
+									<input type="hidden" name="on0" value="#{loginBean.email}"></input>
+									<input type="image"
+										src="https://www.sandbox.paypal.com/es_ES/ES/i/btn/btn_buynowCC_LG.gif"
+										border="0" name="submit"
+										alt="PayPal. La forma rápida y segura de pagar en Internet."></input>
+									<img alt="" border="0"
+										src="https://www.sandbox.paypal.com/en_US/i/scr/pixel.gif"
+										width="1" height="1"></img>
+								</form>
+							</div>
+						</h:panelGroup>
 					</div>
-					<div class="form-group">
-						<label class="col-md-3 control-label">Confirmar password:</label>
-						<div class="col-md-8">
-							<h:inputSecret id="confirm" binding="#{confirmPassword}"
-								class="form-control" required="true" a:placeholder="******">
-								<f:ajax event="blur" execute="password confirm"
-									render="m_password m_confirm" />
-							</h:inputSecret>
-							<h:message id="m_confirm" for="confirm" style="color:red;" />
-							<h:message id="m_password" for="password" style="color:red;" />
-						</div>
-					</div>
-					<div class="form-group">
-						<label class="col-md-3 control-label"></label>
-						<div class="col-md-8">
-							<h:commandButton class="btn btn-primary"
-								action="#{perfilBean.cambiarPassword()}"
-								value="Cambiar contraseña" update=":mensaje" />
-							<span></span>
-						</div>
-					</div>
-				</h:form>
-				<div class="form-group">
-					<label class="col-lg-3 control-label">Premium:</label>
-					<div class="col-lg-1">
-						<h:selectBooleanCheckbox class="form-control" disabled="true"
-							value="#{perfilBean.usuarioLogueado.premium}" />
-					</div>
-					<h:panelGroup rendered="#{not perfilBean.premium}">
-						<div
-							class="col-xs-6 col-sm-2 col-md-2 col-lg-2 col-sm-offset-1 col-md-offset-1 col-lg-offset-2">
-							<form action="https://www.sandbox.paypal.com/cgi-bin/webscr"
-								method="post" target="_top">
-								<input type="hidden" name="cmd" value="_s-xclick"></input> <input
-									type="hidden" name="hosted_button_id" value="5EGNZUCXH93MS"></input>
-								<input type="hidden" name="on0" value="#{loginBean.email}"></input>
-								<input type="image"
-									src="https://www.sandbox.paypal.com/es_ES/ES/i/btn/btn_buynowCC_LG.gif"
-									border="0" name="submit"
-									alt="PayPal. La forma rápida y segura de pagar en Internet."></input>
-								<img alt="" border="0"
-									src="https://www.sandbox.paypal.com/en_US/i/scr/pixel.gif"
-									width="1" height="1"></img>
-							</form>
-						</div>
-					</h:panelGroup>
 				</div>
 			</div>
 		</div>
-	</div>
-	<hr />
-	<div class="row">
-		<!-- left column -->
-		<div class="col-md-3">
-			<div class="row"></div>
-		</div>
+		<hr />
+		<div class="row">
+			<!-- left column -->
+			<div class="col-md-3">
+				<div class="row"></div>
+			</div>
 
-		<!-- edit form column -->
-		<div class="col-md-9 personal-info">
-			<h3>Apariencia</h3>
-			<div class="form-horizontal">
-				<h:form>
-					<div class="form-group">
-						<label class="col-md-3 control-label">Estilo:</label>
-						<div class="col-md-8">
-							<h:selectOneMenu value="#{perfilBean.css}" class="form-control"
-								id="estilo" onchange="previsualizar()">
-								<f:selectItems value="#{perfilBean.listaCSS}" var="e"
-									itemValue="#{e}" itemLabel="#{e}" id="cssSeleccionado" />
-								<f:validateBean for="nombreCampo" />
-							</h:selectOneMenu>
+			<!-- edit form column -->
+			<div class="col-md-8 personal-info">
+				<h3>Apariencia</h3>
+				<div class="form-horizontal">
+					<h:form>
+						<div class="form-group">
+							<label class="col-md-3 control-label">Estilo:</label>
+							<div class="col-md-8">
+								<h:selectOneMenu value="#{perfilBean.css}" class="form-control"
+									id="estilo" onchange="previsualizar()">
+									<f:selectItems value="#{perfilBean.listaCSS}" var="e"
+										itemValue="#{e}" itemLabel="#{e}" id="cssSeleccionado" />
+									<f:validateBean for="nombreCampo" />
+								</h:selectOneMenu>
+							</div>
 						</div>
-					</div>
-					<div class="form-group">
-						<label class="col-md-3 control-label"></label>
-						<div class="col-md-8">
-							<h:commandButton class="btn btn-primary"
-								action="#{perfilBean.guardarEstilo()}" value="Guardar estilo"
-								update=":message" />
-							<span></span>
+						<div class="form-group">
+							<label class="col-md-3 control-label"></label>
+							<div class="col-md-8">
+								<h:commandButton class="btn btn-primary"
+									action="#{perfilBean.guardarEstilo()}" value="Guardar estilo"
+									update=":message" />
+								<span></span>
+							</div>
+							<p:growl id="message" showDetail="true" />
 						</div>
-						<p:growl id="message" showDetail="true" />
-					</div>
-				</h:form>
+					</h:form>
+				</div>
 			</div>
 		</div>
 	</div>

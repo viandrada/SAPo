@@ -1,0 +1,53 @@
+@CHARSET "ISO-8859-1";
+
+.fondo {
+	background-color: #eee;
+	background-image: url('../../resources/images/cajaArriba4.png');
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+	height:1000px;
+	width:100%;
+}
+
+.imgDefault {
+	background-image: url('../../resources/images/box.png');
+	background-size: cover;
+	background-repeat: no-repeat;
+	height:100%;
+	width:100%;
+}
+
+@media only screen and (max-width: 500px) {
+    
+}
+
+.bodycontainer {
+		max-height: 200px;
+		width: 100%;
+		margin: 0;
+		overflow-y: auto;
+	}
+	
+	.table-scrollable {
+		margin: 0;
+		padding: 0;
+	}
+	
+.areaTrabajoFondo{
+	background-color: rgba(252, 252, 247, 0.75);
+}
+
+.producto{
+	margin-top: 15px;
+    margin-left: 15px;
+    margin-right: 30px;
+    background-color: rgba(0, 0, 0, 0.53);
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+
+.itemAlmacen {
+	margin: 5px;
+	background-color: rgba(252, 248, 227, 0.32);
+}

@@ -5,29 +5,35 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 
 <ui:composition>
+	<div class="row">
+		<h5>
+			<i class="fa fa-angle-double-right"></i><em> Actividad reciente</em>
+		</h5>
+	</div>
 	<div>
-		<h:dataTable value="#{homeUsuarioBean.movimientos}" var="item"
-			class="table table-condensed table-responsive"
-			style="background-color: #EBF2ED;">
-			<h:column>
-				<f:facet name="header">Fecha Movimiento</f:facet>
-				<h:outputText value="#{item.fechaMovimiento}">
-					<f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss" locale="es" />
-				</h:outputText>
-			</h:column>
-			<h:column>
-				<f:facet name="header">Producto</f:facet>
-				<h:outputText value="#{item.nombre}" />
-			</h:column>
-			<h:column>
-				<f:facet name="header">Movimiento</f:facet>
-				<h:outputText value="#{item.tipoMovimiento}" />
-			</h:column>
-			<h:column>
-				<f:facet name="header">Almacen</f:facet>
-				<h:outputText value="#{item.nombreAlmacen}" />
-			</h:column>
-		</h:dataTable>
+		<div class="row">
+			<h:dataTable value="#{homeUsuarioBean.movimientos}" var="item"
+				class="table table-striped table-hover table-responsive table-bordered">
+				<h:column>
+					<f:facet name="header">Fecha Movimiento</f:facet>
+					<h:outputText value="#{item.fechaMovimiento}">
+						<f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss" locale="es" />
+					</h:outputText>
+				</h:column>
+				<h:column>
+					<f:facet name="header">Producto</f:facet>
+					<h:outputText value="#{item.nombre}" />
+				</h:column>
+				<h:column>
+					<f:facet name="header">Movimiento</f:facet>
+					<h:outputText value="#{item.tipoMovimiento}" />
+				</h:column>
+				<h:column>
+					<f:facet name="header">Almacen</f:facet>
+					<h:outputText value="#{item.nombreAlmacen}" />
+				</h:column>
+			</h:dataTable>
+		</div>
 	</div>
 </ui:composition>
 </html>

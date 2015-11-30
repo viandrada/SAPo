@@ -132,7 +132,7 @@ public class PerfilBean {
 	}
 
 	@PostConstruct
-	public void inti() {
+	public void init() {
 		// TODO Cargar nombres de css -> como mejora: levantar los nombres de la
 		// carpeta css de resources.
 		getDatosUsuario(this.usuarioLogueado.getIdUsuario());
@@ -140,7 +140,9 @@ public class PerfilBean {
 			this.setIdFoto(1);
 		}
 		this.listaCSS = new HashMap<String, String>();
-		this.listaCSS.put("Default", "areaTrabajo.css");
+		this.listaCSS.put("Predeterminado", "areaTrabajo.css");
+		this.listaCSS.put("Amarillo", "amarillo.css");
+		this.listaCSS.put("Celeste", "celeste.css");
 		this.listaCSS.put("Rosado", "rosado.css");
 		this.listaCSS.put("Verde", "verde.css");
 
@@ -152,7 +154,7 @@ public class PerfilBean {
 		FacesMessage message = new FacesMessage(
 				FacesMessage.SEVERITY_INFO,
 				"OK",
-				"Estilo guardado. Debes volver a iniciar sesión para poder ver tu nuevo estilo.");
+				"Estilo guardado. Debes volver a iniciar sesiÃ³n para poder ver tu nuevo estilo.");
 		FacesContext.getCurrentInstance().addMessage(null, message);
 	}
 
@@ -185,7 +187,7 @@ public class PerfilBean {
 		}
 		this.usuarioNegocio.guardarCambios(du);
 		actualizarLoginBean(du);
-		inti();
+		init();
 		FacesMessage message = new FacesMessage();
         message.setSeverity(FacesMessage.SEVERITY_INFO);
         message.setSummary("OK");
@@ -228,7 +230,7 @@ public class PerfilBean {
 		FacesMessage message = new FacesMessage();
         message.setSeverity(FacesMessage.SEVERITY_INFO);
         message.setSummary("OK");
-        message.setDetail("Contraseña cambiada");
+        message.setDetail("ContraseÃ±a cambiada");
         FacesContext.getCurrentInstance().addMessage(null, message);
 	}
 }

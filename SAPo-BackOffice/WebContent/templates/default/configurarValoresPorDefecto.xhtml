@@ -1,0 +1,124 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+
+<ui:composition>
+	<style type="text/css">
+.ui-growl {
+	position: absolute;
+	top: 70px;
+	width: 301px;
+	z-index: 9999;
+}
+</style>
+	<div class="container-fluid">
+		<h1>Valores por defecto</h1>
+		<hr />
+		<div class="row">
+			<h:form role="form" enctype="multipart/form-data" id="fotoPerfil">
+				<!-- left column -->
+				<div class="col-md-3">
+					<p>Perfil</p>
+				</div>
+				<div class="col-md-3">
+					<div class="text-center">
+						<h:panelGroup rendered="#{valoresPorDefectoBean.hayFotoPerfil}">
+							<h:graphicImage class="avatar" style="height:10em;"
+								value="Image/1" alt="avatar">
+							</h:graphicImage>
+						</h:panelGroup>
+						<h6>Cambiar foto...</h6>
+						<h:inputFile id="imagenAlmacen" class="form-control"
+							value="#{valoresPorDefectoBean.fotoPerfil}" />
+					</div>
+				</div>
+				<div class="col-md-3">
+					<div class="form-group">
+						<label class="col-md-3 control-label"></label>
+						<div class="col-md-8">
+							<h:commandButton class="btn btn-primary" id="guardarDetalles"
+								action="#{valoresPorDefectoBean.guardarFotoPerfil()}"
+								value="Guardar" update=":mensaje" />
+							<span></span>
+						</div>
+					</div>
+				</div>
+				<!-- edit form column -->
+				<div class="col-md-8 personal-info"></div>
+			</h:form>
+		</div>
+
+		<hr />
+		<div class="row">
+			<h:form role="form" enctype="multipart/form-data" id="fotoProducto">
+				<!-- left column -->
+				<div class="col-md-3">
+					<p>Producto</p>
+				</div>
+				<div class="col-md-3">
+					<div class="text-center">
+						<h:panelGroup rendered="#{valoresPorDefectoBean.hayFotoProducto}">
+							<h:graphicImage class="avatar" style="height:10em;"
+								value="Image/2" alt="avatar">
+							</h:graphicImage>
+						</h:panelGroup>
+						<h6>Cambiar foto...</h6>
+						<h:inputFile id="imagenProducto" class="form-control"
+							value="#{valoresPorDefectoBean.fotoProducto}" />
+					</div>
+				</div>
+				<div class="col-md-3">
+					<div class="form-group">
+						<label class="col-md-3 control-label"></label>
+						<div class="col-md-8">
+							<h:commandButton class="btn btn-primary" id="guardarImgProducto"
+								action="#{valoresPorDefectoBean.guardarFotoProducto()}"
+								value="Guardar" update=":mensaje" />
+							<span></span>
+						</div>
+					</div>
+				</div>
+				<!-- edit form column -->
+				<div class="col-md-8 personal-info"></div>
+			</h:form>
+		</div>
+		<hr />
+		<div class="row">
+			<h:form role="form" enctype="multipart/form-data" id="fotoAlmacen">
+				<!-- left column -->
+				<div class="col-md-3">
+					<p>Almacén</p>
+				</div>
+				<div class="col-md-3">
+					<div class="text-center">
+						<h:panelGroup rendered="#{valoresPorDefectoBean.hayFotoAlmacen}">
+							<h:graphicImage class="avatar" style="height:10em;"
+								value="Image/3" alt="avatar">
+							</h:graphicImage>
+						</h:panelGroup>
+						<h6>Cambiar foto...</h6>
+						<h:inputFile id="imagenAlmacen" class="form-control"
+							value="#{valoresPorDefectoBean.fotoAlmacen}" />
+					</div>
+				</div>
+				<div class="col-md-3">
+					<div class="form-group">
+						<label class="col-md-3 control-label"></label>
+						<div class="col-md-8">
+							<h:commandButton class="btn btn-primary" id="guardarImgAlmacen"
+								action="#{valoresPorDefectoBean.guardarFotoAlmacen()}"
+								value="Guardar" update=":mensaje" />
+							<span></span>
+						</div>
+					</div>
+				</div>
+				<!-- edit form column -->
+				<div class="col-md-8 personal-info"></div>
+			</h:form>
+		</div>
+	</div>
+</ui:composition>
+</html>

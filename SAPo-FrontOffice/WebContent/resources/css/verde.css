@@ -35,7 +35,7 @@
 	}
 	
 .areaTrabajoFondo{
-	background-color: #446C44;
+	background-color: rgba(218, 246, 217, 0.75);
 }
 
 .producto{
@@ -45,4 +45,9 @@
     background-color: rgba(0, 0, 0, 0.53);
     padding-top: 15px;
     padding-bottom: 15px;
+}
+
+.itemAlmacen {
+	margin: 5px;
+	background-color: rgba(252, 248, 227, 0.32);
 }

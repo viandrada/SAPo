@@ -8,9 +8,21 @@
 	xmlns:p="http://primefaces.org/ui">
 
 <ui:composition>
-	<h:outputStylesheet name="bootstrap/css/formulario.css" />
+	<h:outputStylesheet name="css/formulario.css" />
 	<h:outputScript name="js/formulario.js" />
-	<div class="container">
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+				<h2>Editar producto</h2>
+			</div>
+			<h:form>
+				<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+					<h:commandLink action="#{navigationAreaBean.goTo('almacen.xhtml')}">
+						<i class="fa fa-times fa-2x">Cerrar</i>
+					</h:commandLink>
+				</div>
+			</h:form>
+		</div>
 		<div class="row">
 			<section>
 				<div class="wizard">
@@ -229,34 +241,37 @@
 									<h:column>
 										<f:facet name="header">Valor</f:facet>
 										<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-											<div class="form-group" id="atributoTextoTabla1"
-												style="display: block;">
-												<h:inputText class="form-control" id="inputValorAtrTabla1"
-													value="#{item.valor}" a:placeholder="Valor">
-													<f:validateBean for="inputValorAtrTabla1" />
-													<f:ajax event="keyup" render="inputTextMessage" />
-												</h:inputText>
-												<h:message id="inputTextMessageValorAtr"
-													for="inputValorAtrTabla1" errorStyle="color:red;"></h:message>
-											</div>
-											<div class="form-group" id="atributoCalendarioTabla1"
-												style="display: none;">
-												<p:calendar value="#{item.valorFecha}" pattern="dd/MM/yyyy">
-													<f:ajax event="dateSelect"
-														listener="#{editarProductoEspBean.handleDateSelect}" />
-												</p:calendar>
-											</div>
-
-											<div class="form-group" id="atributoNumeroTabla1"
-												style="display: none;">
-												<h:inputText class="form-control" id="atributoNumeroTabla1"
-													value="#{item.valorNumero}" a:placeholder="Valor">
-													<f:validateBean for="atributoNumeroTabla1" />
-													<f:ajax event="keyup" render="inputTextMessage" />
-												</h:inputText>
-												<h:message id="inputTextMessageatributoNumero"
-													for="inputValorAtr" errorStyle="color:red;"></h:message>
-											</div>
+											<h:panelGrid rendered="#{item.tipoDato == 'Texto'}">
+												<div class="form-group" id="atributoTextoTabla1">
+													<h:inputText class="form-control" id="inputValorAtrTabla1"
+														value="#{item.valor}" a:placeholder="Valor">
+														<f:validateBean for="inputValorAtrTabla1" />
+														<f:ajax event="keyup" render="inputTextMessage" />
+													</h:inputText>
+													<h:message id="inputTextMessageValorAtr"
+														for="inputValorAtrTabla1" errorStyle="color:red;"></h:message>
+												</div>
+											</h:panelGrid>
+											<h:panelGrid rendered="#{item.tipoDato == 'Fecha'}">
+												<div class="form-group" id="atributoCalendarioTabla1">
+													<rich:calendar value="#{item.valorFecha}"
+														pattern="dd/MM/yyyy">
+														<f:ajax event="change"
+															listener="#{editarProductoEspBean.handleDateSelect}" />
+													</rich:calendar>
+												</div>
+											</h:panelGrid>
+											<h:panelGrid rendered="#{item.tipoDato == 'Numero'}">
+												<div class="form-group" id="atributoNumeroTabla1">
+													<h:inputText class="form-control" id="atributoNumeroTabla1"
+														value="#{item.valorNumero}" a:placeholder="Valor">
+														<f:validateBean for="atributoNumeroTabla1" />
+														<f:ajax event="keyup" render="inputTextMessage" />
+													</h:inputText>
+													<h:message id="inputTextMessageatributoNumero"
+														for="inputValorAtr" errorStyle="color:red;"></h:message>
+												</div>
+											</h:panelGrid>
 										</div>
 									</h:column>
 

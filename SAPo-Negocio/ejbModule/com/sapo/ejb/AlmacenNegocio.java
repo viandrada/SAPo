@@ -239,8 +239,7 @@ public class AlmacenNegocio {
 				cant = this.configuracionDAO
 						.getValorConfigInt("maxCantAlmComun");
 
-		} else
-			this.configuracionDAO.primeraConfiguracion();
+		}
 		return cant;
 	}
 

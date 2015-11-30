@@ -4,32 +4,38 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 
 <ui:composition>
-
 	<div class="container-fluid" id="altaCatContent">
 		<div class="row">
-			<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+			<div class="col-xs-11 col-sm-11 col-md-11 col-lg-11">
 				<h:form id="altaCat" rendered="true">
-					<h1>
-						<h:outputText value="Nueva Categoria" />
-					</h1>
-
-					<div class="form-group">
-						<h:outputText value="Nombre : " />
-						<h:inputText class="form-control" id="inputNombre"
-							value="#{categoriaBean.nombre}" required="true">
-							<!-- <f:validateBean for="inputNombre" />
-							<f:ajax event="keyup" render="@this inputTextMessage" /> -->
-						</h:inputText>
-						<!-- 	<span style="color:red">Error: Es necesario que ingrese un nombre.</span> -->
-						<!-- <h:message id="inputTextMessage" for="inputNombre"
-							errorStyle="color:red;"></h:message> -->
+					<div class="row">
+						<h1>
+							<h:outputText value="Nueva Categoria" />
+						</h1>
 					</div>
-					<h:commandButton class="btn btn-primary" value="Crear"
-						type="submit" action="#{categoriaBean.altaCategoria()}">
-					</h:commandButton>
-
+					<div class="row">
+						<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+							<div class="form-group">
+								<h:outputText value="Nombre : " />
+								<h:inputText class="form-control" id="inputNombre"
+									value="#{categoriaBean.nombre}" required="true">
+									<!-- <f:validateBean for="inputNombre" />
+							<f:ajax event="keyup" render="@this inputTextMessage" /> -->
+								</h:inputText>
+								<!-- 	<span style="color:red">Error: Es necesario que ingrese un nombre.</span> -->
+								<!-- <h:message id="inputTextMessage" for="inputNombre"
+							errorStyle="color:red;"></h:message> -->
+							</div>
+							<h:commandButton class="btn btn-primary" value="Crear"
+								type="submit" action="#{categoriaBean.altaCategoria()}">
+							</h:commandButton>
+						</div>
+					</div>
 				</h:form>
-
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-xs-11 col-sm-11 col-md-11 col-lg-11">
 				<h:form id="ediCat" rendered="true">
 					<h1>
 						<h:outputText value="Promover Categorias Especificas" />
@@ -120,7 +126,5 @@
 			</div>
 		</div>
 	</div>
-
-
 </ui:composition>
 </html>
