@@ -1,5 +1,7 @@
 package com.sapo.beans;
 
+import java.io.IOException;
+import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -7,12 +9,19 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 import javax.faces.event.AjaxBehaviorEvent;
 import javax.servlet.http.Part;
 
 //import org.primefaces.event.SelectEvent;
+
+import javax.validation.constraints.NotNull;
+
+import org.richfaces.event.FileUploadEvent;
+import org.richfaces.model.UploadedFile;
 
 import com.datatypes.DataCategoria;
 import com.datatypes.DataImagen;
@@ -30,6 +39,7 @@ public class AltaProductoGenericoBean {
 	public AltaProductoGenericoBean() {
 	}
 
+	@NotNull(message = "El nombre es requerido.")
 	private String nombre;
 	private String descripcion;
 	private List<DataCategoria> categorias;
@@ -197,14 +207,21 @@ public class AltaProductoGenericoBean {
 	public void init() {
 		categorias = cNegocio.listDataCategoriasGenericas();
 		atributosVista = new ArrayList<Atributo>();
+		this.dataImagen = null;
 		this.nombre = "";
-		this.categoriaNueva = null;
 		this.descripcion = "";
+		this.categoriaNueva = null;
 		this.tipoDatoList = new ArrayList<String>();
 		this.tipoDatoList.add("Texto");
 		this.tipoDatoList.add("Numero");
 		this.tipoDatoList.add("Fecha");
 		this.tipoDato = "Texto";
+		this.nombreAtributo = "";
+		this.tipoAtributo = "Texto";
+		this.valorAtributoTexto = "";
+		this.valorAtributoNumero = 0.0f;
+		this.valorAtributoFecha = null;
+		this.foto = null;
 	}
 	
 	public void initPromover(String nombre){
@@ -227,14 +244,15 @@ public class AltaProductoGenericoBean {
 		// Fin de conversi�n a json
 
 		// Procesando imagen...
-		DataImagen dataImg = new DataImagen();
+		//DataImagen dataImg = new DataImagen();
 		List<DataImagen> imagenesData = new ArrayList<DataImagen>();
-		if (this.foto != null) {
-			dataImg.setDatos(PartToByteArrayConverter.toByteArray(this.foto));
-			this.setDataImagen(dataImg);
+		if (this.dataImagen != null) {
+			//dataImg.setDatos(PartToByteArrayConverter.toByteArray(this.foto));
+			//this.setDataImagen(dataImg);
 			imagenesData.add(this.dataImagen);
+			dataProducto.setFotos(imagenesData);
 		}
-		dataProducto.setFotos(imagenesData);
+		
 
 		// Procesando categor�a...
 		if (this.categoriaNueva == null || this.categoriaNueva.isEmpty()) {
@@ -247,6 +265,11 @@ public class AltaProductoGenericoBean {
 		this.productoNegocio.altaProductoGenerico(dataProducto, dataCategoria);
 
 		this.init();
+		FacesMessage message = new FacesMessage(
+				FacesMessage.SEVERITY_INFO,
+				"OK",
+				"Producto guardado");
+		FacesContext.getCurrentInstance().addMessage(null, message);
 		return "index";
 	}
 
@@ -290,5 +313,39 @@ public class AltaProductoGenericoBean {
 
 	    SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
 	    System.out.println(format.format(this.valorAtributoFecha));
+	}
+	
+	public void listener(FileUploadEvent event) throws Exception {
+		UploadedFile item = event.getUploadedFile();
+		DataImagen file = new DataImagen();
+		file.setNombre(item.getName());
+		file.setDatos(item.getData());
+		this.dataImagen = file;
+	}
+	
+	/* �sto es para subir imagenes con Richfaces */
+	public String clearUploadData() {
+		foto = null;
+		return null;
+	}
+
+	/* �sto es para subir imagenes con Richfaces */
+	public long getTimeStamp() {
+		return System.currentTimeMillis();
+	}
+	
+	/* �sto es para subir imagenes con Richfaces */
+    public int getSize() {
+        if (this.dataImagen != null) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
+    
+	/* �sto es para subir imagenes con Richfaces */
+	public void paint(OutputStream stream, Object object) throws IOException {
+		stream.write(getDataImagen().getDatos());
+		stream.close();
 	}
 }

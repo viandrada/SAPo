@@ -14,7 +14,6 @@
 	<link href="resources/css/chat.css" />
 	<link href="resources/css/scrolling-nav.css" rel="stylesheet"
 		type="text/css" />
-
 	<!-- no me anduvo  -->
 
 	<script>
@@ -44,7 +43,25 @@
 		} 
 
 	</script>
+	<script>
+$(document).ready(function () {
 
+    (function ($) {
+
+        $('#filter2').keyup(function () {
+
+            var rex = new RegExp($(this).val(), 'i');
+            $('.searchable li').hide();
+            $('.searchable li').filter(function () {
+                return rex.test($(this).text());
+            }).show();
+
+        })
+
+    }(jQuery));
+
+});
+</script>
 	<style type="text/css">
 .bodycontainer {
 	max-height: 200px;
@@ -189,9 +206,16 @@
 			</h:form>
 		</div>
 		<hr />
+		<h:panelGroup
+			rendered="#{almacenBean.listaProductosActivos.size()==0}">
+			<p>No hay productos todavía en el almacén.</p>
+		</h:panelGroup>
+		<div class="input-group">
+			<span class="input-group-addon">Búsqueda</span> <input id="filter2"
+				type="text" class="form-control" placeholder="Nombre"></input>
+		</div>
 		<!-- Productos del almacen -->
-		<ul class="list-group">
-			<!-- 	<ui:repeat value="#{almacenBean.almacen.productos}" var="item"> -->
+		<ul class="list-group searchable">
 			<ui:repeat value="#{almacenBean.listaProductosActivos}" var="item">
 				<h:form id="modalForm">
 					<li class="list-group-item">
@@ -423,7 +447,8 @@
 									<button type="button"
 										class="btn btn-default btn-xs dropdown-toggle"
 										data-toggle="dropdown">
-										<span id="divColapsar" class="glyphicon glyphicon-chevron-down" onclick="colapsar()"></span>
+										<span id="divColapsar"
+											class="glyphicon glyphicon-chevron-down" onclick="colapsar()"></span>
 									</button>
 								</div>
 							</div>

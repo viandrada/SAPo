@@ -1,0 +1,7 @@
+.bodyHome{
+	background-image: url("#{resource['images/fondoHome.jpg']}");
+	background-repeat: no-repeat; 
+	background-attachment: fixed; 
+	background-size: cover; 
+	background-position: center;"WebContent/resources/images/fondoHome.jpg"
+}

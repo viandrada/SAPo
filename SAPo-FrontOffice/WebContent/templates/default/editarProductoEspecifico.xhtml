@@ -8,9 +8,21 @@
 	xmlns:p="http://primefaces.org/ui">
 
 <ui:composition>
-	<h:outputStylesheet name="bootstrap/css/formulario.css" />
+	<h:outputStylesheet name="css/formulario.css" />
 	<h:outputScript name="js/formulario.js" />
 	<div class="container-fluid">
+		<div class="row">
+			<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+				<h2>Editar producto</h2>
+			</div>
+			<h:form>
+				<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+					<h:commandLink action="#{navigationAreaBean.goTo('almacen.xhtml')}">
+						<i class="fa fa-times fa-2x">Cerrar</i>
+					</h:commandLink>
+				</div>
+			</h:form>
+		</div>
 		<div class="row">
 			<section>
 				<div class="wizard">
