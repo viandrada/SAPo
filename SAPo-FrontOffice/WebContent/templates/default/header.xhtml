@@ -140,13 +140,21 @@
 						class="icon-bar"></span>
 				</button>
 				<h:form>
-					<h:commandLink action="#{navigationBean.goTo('home.xhtml')}"
-						class="navbar-brand">Mi almacén</h:commandLink>
-					<h:commandLink action="#{navigationBean.goTo('areaTrabajo.xhtml')}"
-						rendered="#{loginBean.logueado}" class="navbar-brand"><i class="fa fa-home"></i></h:commandLink>
+					<h:commandLink style="padding-top:7px;"
+						rendered="#{!loginBean.logueado}"
+						action="#{navigationBean.goTo('home.xhtml')}" class="navbar-brand">
+						<h:graphicImage style="height:2em;margin-top:0px;"
+							value="resources/images/logo.png"></h:graphicImage>
+					</h:commandLink>
+					<h:commandLink style="padding-top:7px;" action="#{navigationBean.goTo('areaTrabajo.xhtml')}"
+						actionListener="#{navigationAreaBean.goTo('homeUsuario.xhtml')}"
+						rendered="#{loginBean.logueado}" class="navbar-brand">
+						<h:graphicImage style="height:2em;margin-top:0px;"
+							value="resources/images/logo.png"></h:graphicImage>
+					</h:commandLink>
+
 				</h:form>
 			</div>
-
 			<div id="navbar" class="navbar-collapse collapse">
 
 				<h:panelGroup id="loginPanel" rendered="#{loginBean.shownLogin}">
@@ -172,8 +180,8 @@
 							</h:inputSecret>
 						</div>
 
-						<h:inputHidden  id="latitud" value="#{loginBean.latitud}"  />
-						<h:inputHidden  id="longitud" value="#{loginBean.longitud}"  />
+						<h:inputHidden id="latitud" value="#{loginBean.latitud}" />
+						<h:inputHidden id="longitud" value="#{loginBean.longitud}" />
 
 						<h:commandButton value="Ingresar" action="#{loginBean.login}"
 							class="btn btn-primary" update="growl"></h:commandButton>
