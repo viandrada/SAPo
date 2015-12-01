@@ -169,6 +169,7 @@ public class ReportesBean {
 	public void init() {
 		this.tipoReporte= "Texto";
 		this.listaReportes = new HashMap<String, String>();
+		this.listaReportes.put("Seleccione","seleccionReporte0");
 		this.listaReportes.put("Reporte por Almacén","seleccionReporte1");
 		this.listaReportes.put("Reporte por Fechas", "seleccionReporte2");
 		this.valorFechaInicio = null;
