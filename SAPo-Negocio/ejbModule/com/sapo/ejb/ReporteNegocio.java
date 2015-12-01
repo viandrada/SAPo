@@ -335,15 +335,18 @@ public class ReporteNegocio {
 				Object[] objArray = (Object[]) listaAlm.get(i);
 				Almacen alm = (Almacen) objArray[0];
 				String tipoMov = objArray[2].toString();
-				DefaultRevisionEntity info = (DefaultRevisionEntity) objArray[1];
-				DataReporteAlmacen dataRepAlm = this.fabrica
-						.toDataReporteAlmacen(alm, tipoMov,
-								info.getRevisionDate());
-				System.out.println("Hist Alm x Usr " + i + ": "
-						+ alm.getNombre() + " - email: "
-						+ alm.getPropietario().getEmail() + " TipoMov "
-						+ tipoMov);
-				listaRepAlm.add(dataRepAlm);
+				//controlo error en caso que se borre producto ideal
+				if ((tipoMov.contains("MOD"))|| (tipoMov.contains("ADD"))){
+					DefaultRevisionEntity info = (DefaultRevisionEntity) objArray[1];
+					DataReporteAlmacen dataRepAlm = this.fabrica
+							.toDataReporteAlmacen(alm, tipoMov,
+									info.getRevisionDate());
+					System.out.println("Hist Alm x Usr " + i + ": "
+							+ alm.getNombre() + " - email: "
+							+ alm.getPropietario().getEmail() + " TipoMov "
+							+ tipoMov);
+					listaRepAlm.add(dataRepAlm);
+				}
 			}
 		}
 		return listaRepAlm;
@@ -361,13 +364,17 @@ public class ReporteNegocio {
 				Producto prod = (Producto) objArray[0];
 				DefaultRevisionEntity info = (DefaultRevisionEntity) objArray[1];
 				String tipoMov = objArray[2].toString();
-				DataReporteProducto dataRepProd = this.fabrica
-						.toDataReporteProducto(prod, tipoMov,
-								info.getRevisionDate());
-				System.out.println("Hist Prod x Usr " + i + ": "
-						+ prod.getNombre() + " - id: " + prod.getIdProducto()
-						+ " TipoMov " + tipoMov);
-				listaRepProd.add(dataRepProd);
+				
+				//controlo error en caso que se borre producto ideal
+				if ((tipoMov.contains("MOD"))|| (tipoMov.contains("ADD"))){
+					DataReporteProducto dataRepProd = this.fabrica
+							.toDataReporteProducto(prod, tipoMov,
+									info.getRevisionDate());
+					System.out.println("Hist Prod x Usr " + i + ": "
+							+ prod.getNombre() + " - id: " + prod.getIdProducto()
+							+ " TipoMov " + tipoMov);
+					listaRepProd.add(dataRepProd);
+				}
 			}
 		}
 		return listaRepProd;
@@ -387,15 +394,19 @@ public class ReporteNegocio {
 				Object[] objArray = (Object[]) listaProd.get(i);
 				Producto prod = (Producto) objArray[0];
 				String tipoMov = objArray[2].toString();
-				DefaultRevisionEntity info = (DefaultRevisionEntity) objArray[1];
-				DataReporteProducto dataRepProd = this.fabrica
-						.toDataReporteProducto(prod, tipoMov,
-								info.getRevisionDate());
-				System.out.println("Hist Stock Alm x Usr " + i + ": "
-						+ prod.getNombre() + " - Stock: " + prod.getStock()
-						+ " TipoMov " + tipoMov + " Fecha "
-						+ info.getRevisionDate().toString());
-				listaRepProd.add(dataRepProd);
+				
+				//controlo error en caso que se borre producto ideal
+				if ((tipoMov.contains("MOD"))|| (tipoMov.contains("ADD"))){
+					DefaultRevisionEntity info = (DefaultRevisionEntity) objArray[1];
+					DataReporteProducto dataRepProd = this.fabrica
+							.toDataReporteProducto(prod, tipoMov,
+									info.getRevisionDate());
+					System.out.println("Hist Stock Alm x Usr " + i + ": "
+							+ prod.getNombre() + " - Stock: " + prod.getStock()
+							+ " TipoMov " + tipoMov + " Fecha "
+							+ info.getRevisionDate().toString());
+					listaRepProd.add(dataRepProd);
+				}
 			}
 		}
 		return listaRepProd;
@@ -415,14 +426,18 @@ public class ReporteNegocio {
 				Object[] objArray = (Object[]) listaProd.get(i);
 				Producto prod = (Producto) objArray[0];
 				String tipoMov = objArray[2].toString();
-				DefaultRevisionEntity info = (DefaultRevisionEntity) objArray[1];
-				DataReporteProducto dataRepProd = this.fabrica
-						.toDataReporteProducto(prod, tipoMov,
-								info.getRevisionDate());
-				System.out.println("Hist Prod en Fecha x Usu " + i + ": "
-						+ prod.getNombre() + " - Stock: " + prod.getStock()
-						+ " TipoMov " + tipoMov);
-				listaRepProd.add(dataRepProd);
+				
+				//controlo error en caso que se borre producto ideal
+				if ((tipoMov.contains("MOD"))|| (tipoMov.contains("ADD"))){
+					DefaultRevisionEntity info = (DefaultRevisionEntity) objArray[1];
+					DataReporteProducto dataRepProd = this.fabrica
+							.toDataReporteProducto(prod, tipoMov,
+									info.getRevisionDate());
+					System.out.println("Hist Prod en Fecha x Usu " + i + ": "
+							+ prod.getNombre() + " - Stock: " + prod.getStock()
+							+ " TipoMov " + tipoMov);
+					listaRepProd.add(dataRepProd);
+				}
 			}
 		}
 		return listaRepProd;
@@ -442,14 +457,18 @@ public class ReporteNegocio {
 				Object[] objArray = (Object[]) listaProd.get(i);
 				Producto prod = (Producto) objArray[0];
 				String tipoMov = objArray[2].toString();
-				DefaultRevisionEntity info = (DefaultRevisionEntity) objArray[1];
-				DataReporteProducto dataRepProd = this.fabrica
-						.toDataReporteProducto(prod, tipoMov,
-								info.getRevisionDate());
-				System.out.println("Hist Prod por usr y alm " + i + ": "
-						+ prod.getNombre() + " - Stock: " + prod.getStock()
-						+ " TipoMov " + tipoMov);
-				listaRepProd.add(dataRepProd);
+				
+				//controlo error en caso que se borre producto ideal
+				if ((tipoMov.contains("MOD"))|| (tipoMov.contains("ADD"))){
+					DefaultRevisionEntity info = (DefaultRevisionEntity) objArray[1];
+					DataReporteProducto dataRepProd = this.fabrica
+							.toDataReporteProducto(prod, tipoMov,
+									info.getRevisionDate());
+					System.out.println("Hist Prod por usr y alm " + i + ": "
+							+ prod.getNombre() + " - Stock: " + prod.getStock()
+							+ " TipoMov " + tipoMov);
+					listaRepProd.add(dataRepProd);
+				}
 			}
 		}
 		return listaRepProd;

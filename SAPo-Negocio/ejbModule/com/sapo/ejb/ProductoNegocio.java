@@ -318,39 +318,8 @@ public class ProductoNegocio {
 		}
 	}
 
-	//
-	// /*Paso un id de un producto y obtengo el histórico de
-	// * ese producto en forma de lista de producto.
-	// * POR AHORA VOID, PUEDE CAMBIAR
-	// */
-	// public void buscarHistoricoProdPorId (int idProducto){
-	//
-	// List<Producto> listaProd =
-	// this.productoDAO.getHistoricoProdPorId(idProducto);
-	//
-	// }
-	//
-	// /*Paso un id de un producto y obtengo el histórico de
-	// * ese producto (sólo las modificaciones)
-	// * POR AHORA VOID, PUEDE CAMBIAR
-	// */
-	// public void buscarHistoricoModificacionesProdPorId (int idProducto){
-	//
-	// List<Producto> listaProd =
-	// this.productoDAO.getHistoricoModificacionesProdPorId(idProducto);
-	//
-	// }
-	//
-	//
-	// /* Paso un id de usuario y obtengo el histórico de productos
-	// * de ese usuario.
-	// * POR AHORA VOID, PUEDE CAMBIAR
-	// * */
-	// public void buscarHistoricoProdPorUsuario(int idUsuario){
-	//
-	// List<Producto> listaProd =
-	// this.productoDAO.getHistoricoProdPorUsuario(idUsuario);
-	// }
+	
+	
 	public void modificarProductoEspecifico(DataProducto dataProducto,
 			DataCategoria dataCategoria, int idUsuario) {
 
