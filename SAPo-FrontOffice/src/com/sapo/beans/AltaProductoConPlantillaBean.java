@@ -245,6 +245,10 @@ public class AltaProductoConPlantillaBean {
 		this.foto4 = null;
 		this.fotos.clear();
 		this.productoNuevo = new DataProducto();
+		this.nombreAtr = null;
+		this.valorAtr = null;
+		this.valorAtributoFecha = null;
+		this.valorAtributoNumero = 0.0d;
 		getPlantilla();
 		this.tipoDatoList = new ArrayList<String>();
 		this.tipoDatoList.add("Texto");

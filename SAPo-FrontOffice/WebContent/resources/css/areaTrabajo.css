@@ -10,6 +10,10 @@
 	width: 100%;
 }
 
+body{
+	background-color: #eee;
+}
+
 .imgDefault {
 	background-image: url('../../resources/images/box.png');
 	background-size: cover;

@@ -11,7 +11,7 @@
 
 	<div class="container-fluid">
 		<h:outputStylesheet name="css/formulario.css" />
-	<h:outputScript name="js/formulario.js" />
+		<h:outputScript name="js/formulario.js" />
 		<div class="row">
 			<div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
 				<h2>Producto nuevo (con plantilla)</h2>
@@ -94,7 +94,8 @@
 												<h:outputText value="Precio " />
 											</div>
 											<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
-												<div class="form-group">
+												<div class="form-group input-group">
+													<span class="input-group-addon">$</span>
 													<h:inputText class="form-control input-lg" id="inputPrecio"
 														value="#{altaProductoConPlantillaBean.productoNuevo.precio}"
 														a:placeholder="Precio">
@@ -220,77 +221,79 @@
 								</h:dataTable>
 
 								<!-- Atributos genericos -->
-								<div class="row">
-									<div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
-										<div class="form-group">
-											<h:inputText class="form-control" id="inputNombreAtr"
-												value="#{altaProductoConPlantillaBean.nombreAtr}"
-												a:placeholder="Nombre del atributo">
-												<f:validateBean for="inputNombreAtr" />
-												<f:ajax event="keyup" render="inputTextMessage" />
-											</h:inputText>
-											<h:message id="inputTextMessageNombreAtr"
-												for="inputNombreAtr" errorStyle="color:red;"></h:message>
+								<h:panelGroup id="atributos">
+									<div class="row">
+										<div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
+											<div class="form-group">
+												<h:inputText class="form-control" id="inputNombreAtr"
+													value="#{altaProductoConPlantillaBean.nombreAtr}"
+													a:placeholder="Nombre del atributo">
+													<f:validateBean for="inputNombreAtr" />
+													<f:ajax event="keyup" render="inputTextMessage" />
+												</h:inputText>
+												<h:message id="inputTextMessageNombreAtr"
+													for="inputNombreAtr" errorStyle="color:red;"></h:message>
+											</div>
 										</div>
-									</div>
-									<div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
-										<div class="form-group">
-											<h:selectOneMenu
-												value="#{altaProductoConPlantillaBean.tipoDataAtr}"
-												class="form-control" id="tipoDato"
-												onchange="mostrarComponente()">
-												<f:selectItems
-													value="#{altaProductoConPlantillaBean.tipoDatoList}"
-													var="e" itemValue="#{e}" itemLabel="#{e}"
-													id="tipoDatoSelect" />
-												<f:ajax event="change"
-													listener="#{altaProductoConPlantillaBean.comboChangeListener}"></f:ajax>
-											</h:selectOneMenu>
+										<div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
+											<div class="form-group">
+												<h:selectOneMenu
+													value="#{altaProductoConPlantillaBean.tipoDataAtr}"
+													class="form-control" id="tipoDato"
+													onchange="mostrarComponente()">
+													<f:selectItems
+														value="#{altaProductoConPlantillaBean.tipoDatoList}"
+														var="e" itemValue="#{e}" itemLabel="#{e}"
+														id="tipoDatoSelect" />
+													<f:ajax event="change"
+														listener="#{altaProductoConPlantillaBean.comboChangeListener}"></f:ajax>
+												</h:selectOneMenu>
+											</div>
 										</div>
-									</div>
-									<div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
-										<div class="form-group" id="atributoTexto"
-											style="display: block;">
-											<h:inputText class="form-control" id="inputValorAtr"
-												value="#{altaProductoConPlantillaBean.valorAtr}"
-												a:placeholder="Valor">
-												<f:validateBean for="inputNombreAtr" />
-												<f:ajax event="keyup" render="inputTextMessage" />
-											</h:inputText>
-											<h:message id="inputTextMessageValorAtr" for="inputValorAtr"
-												errorStyle="color:red;"></h:message>
-										</div>
+										<div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
+											<div class="form-group" id="atributoTexto"
+												style="display: block;">
+												<h:inputText class="form-control" id="inputValorAtr"
+													value="#{altaProductoConPlantillaBean.valorAtr}"
+													a:placeholder="Valor">
+													<f:validateBean for="inputNombreAtr" />
+													<f:ajax event="keyup" render="inputTextMessage" />
+												</h:inputText>
+												<h:message id="inputTextMessageValorAtr" for="inputValorAtr"
+													errorStyle="color:red;"></h:message>
+											</div>
 
-										<div class="form-group" id="atributoCalendario"
-											style="display: none;">
-											<rich:calendar
-												value="#{altaProductoConPlantillaBean.valorAtributoFecha}"
-												id="cal" pattern="dd/MM/yyyy">
-												<f:ajax event="change"
-													listener="#{altaProductoConPlantillaBean.handleDateSelect}"></f:ajax>
-											</rich:calendar>
-										</div>
+											<div class="form-group" id="atributoCalendario"
+												style="display: none;">
+												<rich:calendar
+													value="#{altaProductoConPlantillaBean.valorAtributoFecha}"
+													id="cal" pattern="dd/MM/yyyy">
+													<f:ajax event="change"
+														listener="#{altaProductoConPlantillaBean.handleDateSelect}"></f:ajax>
+												</rich:calendar>
+											</div>
 
-										<div class="form-group" id="atributoNumero"
-											style="display: none;">
-											<h:inputText class="form-control" id="atributoNumero"
-												value="#{altaProductoConPlantillaBean.valorAtributoNumero}"
-												a:placeholder="Valor">
-												<f:validateBean for="atributoNumero" />
-												<f:ajax event="keyup" render="inputTextMessage" />
-											</h:inputText>
-											<h:message id="inputTextMessageatributoNumero"
-												for="inputValorAtr" errorStyle="color:red;"></h:message>
+											<div class="form-group" id="atributoNumero"
+												style="display: none;">
+												<h:inputText class="form-control" id="atributoNumero"
+													value="#{altaProductoConPlantillaBean.valorAtributoNumero}"
+													a:placeholder="Valor">
+													<f:validateBean for="atributoNumero" />
+													<f:ajax event="keyup" render="inputTextMessage" />
+												</h:inputText>
+												<h:message id="inputTextMessageatributoNumero"
+													for="inputValorAtr" errorStyle="color:red;"></h:message>
+											</div>
+										</div>
+										<div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
+											<h:commandButton class="btn btn-primary" value="Agregar"
+												actionListener="#{altaProductoConPlantillaBean.add}">
+												<f:ajax
+													render="altaProductoPlantilla:tablaAtributosAgregados atributos" />
+											</h:commandButton>
 										</div>
 									</div>
-									<div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
-										<h:commandButton class="btn btn-primary" value="Agregar"
-											actionListener="#{altaProductoConPlantillaBean.add}">
-											<f:ajax
-												render="altaProductoPlantilla:tablaAtributosAgregados" />
-										</h:commandButton>
-									</div>
-								</div>
+								</h:panelGroup>
 								<!-- Fin de: Atributos -->
 								<ul class="list-inline pull-right">
 									<li><button type="button"

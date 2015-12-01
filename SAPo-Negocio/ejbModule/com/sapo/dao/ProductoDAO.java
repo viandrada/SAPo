@@ -32,7 +32,7 @@ public class ProductoDAO {
 
 	public List<Producto> getProductosAlmacen(int idAlmacen) {
 		Query consulta = this.em
-				.createNamedQuery("Productos.getProductosDeAlmacen.IdAlmacen");
+				.createNamedQuery("Productos.getProductosActivosDeAlmacen.IdAlmacen");
 		consulta.setParameter("idAlmacen", idAlmacen);
 		List<Producto> productos = (List<Producto>) consulta.getResultList();
 		return productos;
