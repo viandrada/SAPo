@@ -174,7 +174,7 @@ public class ReporteNegocio {
 			int month = cal.get(Calendar.MONTH) + 1;
 			int year = cal.get(Calendar.YEAR);
 			int orden = (int) cal.getTimeInMillis();
-
+			System.out.println(orden);
 			if (existeDato(month, year, listaDatosResult)) {
 
 				DataDatoGrafico da = getDato(month, year, listaDatosResult);

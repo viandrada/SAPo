@@ -217,13 +217,17 @@
 									<f:param name="Id" value="#{item.idProducto}" />
 								</h:commandLink>
 								<div class="row">
-									<div class="col-xs-12 col-md-12 col-sm-12 col-lg-12">
+									<div class="col-xs-6 col-md-6 col-sm-6 col-lg-6">
 										<h:commandButton
 											action="#{almacenIdealBean.agregarEspecifico(item)}"
 											value="Agregar" rendered="#{!item.agregado}" />
 										<h:outputLabel value="Agregado" rendered="#{item.agregado}" />
-										<button type="button" class="" data-toggle="modal"
-											data-target="#myModal">Ver más</button>
+									</div>
+									<div class="col-xs-6 col-md-6 col-sm-6 col-lg-6">
+										<h:commandButton class="" data-toggle="modal" value="Ver más"
+											actionListener="#{navigationAreaBean.goTo('detalleProducto.xhtml')}"
+											action="#{detalleProductoEspBean.init(item.idProducto)}"
+											data-target="#myModal"></h:commandButton>
 									</div>
 								</div></li>
 						</h:form>
