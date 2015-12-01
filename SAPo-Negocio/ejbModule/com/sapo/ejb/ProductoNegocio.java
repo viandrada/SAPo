@@ -139,7 +139,7 @@ public class ProductoNegocio {
 		dataProducto.setFotos(imgs);
 		// dataProducto.setFotos(toDataImagen(producto.getFoto()));
 
-		dataProducto.setIdHermano(producto.getIdHermano());// //////////////////////////////////////////////////
+		dataProducto.setIdHermano(producto.getIdHermano());// /////////////////////////////////////////////////
 
 		return dataProducto;
 	}

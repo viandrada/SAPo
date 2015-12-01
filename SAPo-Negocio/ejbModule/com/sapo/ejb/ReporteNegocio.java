@@ -458,7 +458,7 @@ public class ReporteNegocio {
 				Producto prod = (Producto) objArray[0];
 				String tipoMov = objArray[2].toString();
 				
-				//controlo error en caso que se borre producto ideal
+				//controlo error en caso que se borre producto ideal 
 				if ((tipoMov.contains("MOD"))|| (tipoMov.contains("ADD"))){
 					DefaultRevisionEntity info = (DefaultRevisionEntity) objArray[1];
 					DataReporteProducto dataRepProd = this.fabrica

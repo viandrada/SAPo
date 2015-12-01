@@ -241,7 +241,7 @@ public class ProductoDAO {
 
 	/*
 	 * Paso un id de un producto y obtengo el producto en su estado inicial
-	 * cuando se di� de alta. SI SE USA HAY QUE REVISAR ESTO -
+	 * cuando se dió de alta. SI SE USA HAY QUE REVISAR ESTO -
 	 * getHistoricoProdPorUsuario
 	 */
 	public Producto getHistoricoInicialProdPorId(int idProd) {
