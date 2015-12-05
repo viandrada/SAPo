@@ -379,7 +379,7 @@ public class AlmacenNegocio {
 			dataProducto.setStockIdeal(productos.get(i).getStockIdeal());
 			if (productos.get(i).getFoto().size() == 0) {
 				DataImagen di = new DataImagen();
-				di.setIdImagen(1);
+				di.setIdImagen(2);
 				List<DataImagen> imgList = new ArrayList<DataImagen>();
 				imgList.add(di);
 				dataProducto.setFotos(imgList);

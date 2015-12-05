@@ -132,7 +132,8 @@ public class ProductoNegocio {
 			}
 		} else {
 			DataImagen im = new DataImagen();
-			im.setIdImagen(1);
+			im.setIdImagen(2);
+			im.setDatos(this.imagenDAO.getImagen(2).getDatos());
 			imgs.add(im);
 		}
 
@@ -318,8 +319,6 @@ public class ProductoNegocio {
 		}
 	}
 
-	
-	
 	public void modificarProductoEspecifico(DataProducto dataProducto,
 			DataCategoria dataCategoria, int idUsuario) {
 
@@ -346,16 +345,25 @@ public class ProductoNegocio {
 		pg.setPrecio(dataProducto.getPrecio());
 		pg.setStock(dataProducto.getStock());
 
+		/*Borro fotos anteriores*/
+		List<Imagen> imgsRemove = new ArrayList<Imagen>();
+		for (int i = 0; i < pg.getFoto().size(); i++) {
+			Imagen img = new Imagen();
+			img = this.imagenDAO.getImagen(pg.getFoto().get(i).getIdImagen());
+			imgsRemove.add(img);
+		}
+		pg.getFoto().removeAll(imgsRemove);
+
+		/*Guardo fotos nuevas (ya trae las anteriores)*/
 		List<Imagen> imgs = new ArrayList<Imagen>();
 		for (int i = 0; i < dataProducto.getFotos().size(); i++) {
-			Imagen img = new Imagen();
-			img.setDatos(dataProducto.getFotos().get(i).getDatos());
-			img.setNombre(dataProducto.getFotos().get(i).getNombre());
-			img.setMime(dataProducto.getFotos().get(i).getMime());
-			this.imagenDAO.insertarImagen(img);
-			imgs.add(img);
+			Imagen imgNueva = new Imagen();
+			imgNueva.setDatos(dataProducto.getFotos().get(i).getDatos());
+			imgNueva.setNombre(dataProducto.getFotos().get(i).getNombre());
+			imgNueva.setMime(dataProducto.getFotos().get(i).getMime());
+			imgs.add(imgNueva);
 		}
-		pg.getFoto().addAll(imgs);
+		pg.setFoto(imgs);
 
 		this.productoDAO.actualizarProducto(pg);
 		// /////////cuando edito el producto el id de hermano el mismo ya que es

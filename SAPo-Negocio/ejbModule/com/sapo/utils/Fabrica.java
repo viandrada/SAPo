@@ -157,7 +157,9 @@ public class Fabrica {
 				dProd.setFotos(toDataImagen(img));
 			} else {
 				Imagen dataImg = new Imagen();
+				Imagen dataImgBD = this.imagenDAO.getImagen(2);
 				dataImg.setIdImagen(2);// TODO settear imagen x defecto
+				dataImg.setDatos(dataImgBD.getDatos());
 				img.add(dataImg);
 				dProd.setFotos(toDataImagen(img));
 			}

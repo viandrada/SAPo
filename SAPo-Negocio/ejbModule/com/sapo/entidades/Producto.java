@@ -34,7 +34,7 @@ public class Producto implements Serializable, Cloneable {
 	
 	@Audited(withModifiedFlag=true)
 	private float precio;
-	@ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.REMOVE,
+	@ManyToMany(fetch = FetchType.EAGER,cascade = { CascadeType.PERSIST, CascadeType.REMOVE,
 			CascadeType.MERGE })
 	private List<Imagen> foto;
 	@Column(length = 1000)

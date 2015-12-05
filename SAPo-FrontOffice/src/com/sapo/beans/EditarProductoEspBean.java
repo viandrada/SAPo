@@ -29,8 +29,6 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.sapo.ejb.CategoriaNegocio;
 import com.sapo.ejb.ProductoNegocio;
-//import com.sapo.utils.Atributo;
-import com.sapo.utils.PartToByteArrayConverter;
 
 @ManagedBean
 @SessionScoped
@@ -296,10 +294,10 @@ public class EditarProductoEspBean {
 			this.atributosVista.add(atributo);
 
 		}
-		
+
 		this.fotos = new ArrayList<DataImagen>();
 		for (int i = 0; i < this.productoAEditar.getFotos().size(); i++) {
-			if(this.productoAEditar.getFotos().get(i).getIdImagen() != 0){
+			if (this.productoAEditar.getFotos().get(i).getIdImagen() != 0) {
 				this.fotos.add(this.productoAEditar.getFotos().get(i));
 			}
 		}
@@ -307,35 +305,37 @@ public class EditarProductoEspBean {
 
 	// Para agregar atributo gen�rico nuevo a la lista.
 	public String add() {
-		Atributo a = new Atributo();
-		a.setNombre(this.nombreAtr);
-		a.setTipoDato(this.tipoDato);
+		if (this.nombreAtr != null) {
+			Atributo a = new Atributo();
+			a.setNombre(this.nombreAtr);
+			a.setTipoDato(this.tipoDato);
 
-		switch (this.tipoDato) {
-		case "Texto":
-			a.setValor(this.valorAtr);
-			break;
-		case "Fecha":
-			SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
-			a.setValorFecha(this.valorAtributoFecha);
-			a.setValor(format.format(this.valorAtributoFecha));
-			break;
-		case "Numero":
-			a.setValorNumero(this.valorAtributoNumero);
-			a.setValor(String.valueOf(this.valorAtributoNumero));
-			break;
-		default:
-			this.renderText = true;
+			switch (this.tipoDato) {
+			case "Texto":
+				a.setValor(this.valorAtr);
+				break;
+			case "Fecha":
+				SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+				a.setValorFecha(this.valorAtributoFecha);
+				a.setValor(format.format(this.valorAtributoFecha));
+				break;
+			case "Numero":
+				a.setValorNumero(this.valorAtributoNumero);
+				a.setValor(String.valueOf(this.valorAtributoNumero));
+				break;
+			default:
+				this.renderText = true;
+			}
+
+			this.atributosNuevosVista.add(a);
+			a = new Atributo();
+			this.nombreAtr = null;
+			this.tipoDato = "Texto";
+			this.valorAtr = null;
+			this.valorAtributoNumero = 0.0f;
+			this.valorAtributoFecha = null;
+			this.tipoDato = "Texto";
 		}
-
-		this.atributosNuevosVista.add(a);
-		a = new Atributo();
-		this.nombreAtr = null;
-		this.tipoDato = "Texto";
-		this.valorAtr = null;
-		this.valorAtributoNumero = 0.0f;
-		this.valorAtributoFecha = null;
-		this.tipoDato = "Texto";
 		return null;
 	}
 
@@ -377,52 +377,6 @@ public class EditarProductoEspBean {
 		// Fin de conversi�n a json
 
 		// Procesando imagenes...
-		/*DataImagen dataImg = new DataImagen();
-		List<DataImagen> imagenesData = new ArrayList<DataImagen>();
-		if (this.foto != null) {
-			dataImg.setDatos(PartToByteArrayConverter.toByteArray(this.foto));
-			imagenesData.add(dataImg);
-		} else {
-			if (!this.productoAEditar.getFotos().isEmpty()
-					&& this.productoAEditar.getFotos().get(0) != null) {
-				dataImg.setIdImagen(this.productoAEditar.getFotos().get(0)
-						.getIdImagen());
-				imagenesData.add(dataImg);
-			}
-		}
-		if (this.foto2 != null) {
-			dataImg.setDatos(PartToByteArrayConverter.toByteArray(this.foto2));
-			imagenesData.add(dataImg);
-		} else {
-			if (!this.productoAEditar.getFotos().isEmpty()
-					&& this.productoAEditar.getFotos().size() > 1) {
-				dataImg.setIdImagen(this.productoAEditar.getFotos().get(1)
-						.getIdImagen());
-				imagenesData.add(dataImg);
-			}
-		}
-		if (this.foto3 != null) {
-			dataImg.setDatos(PartToByteArrayConverter.toByteArray(this.foto3));
-			imagenesData.add(dataImg);
-		} else {
-			if (!this.productoAEditar.getFotos().isEmpty()
-					&& this.productoAEditar.getFotos().size() > 2) {
-				dataImg.setIdImagen(this.productoAEditar.getFotos().get(2)
-						.getIdImagen());
-				imagenesData.add(dataImg);
-			}
-		}
-		if (this.foto4 != null) {
-			dataImg.setDatos(PartToByteArrayConverter.toByteArray(this.foto4));
-			imagenesData.add(dataImg);
-		} else {
-			if (!this.productoAEditar.getFotos().isEmpty()
-					&& this.productoAEditar.getFotos().size() > 3) {
-				dataImg.setIdImagen(this.productoAEditar.getFotos().get(3)
-						.getIdImagen());
-				imagenesData.add(dataImg);
-			}
-		}*/
 		this.productoAEditar.setFotos(this.fotos);
 
 		this.service.modificarProductoEspecifico(this.productoAEditar,
@@ -430,21 +384,23 @@ public class EditarProductoEspBean {
 
 		this.init();
 		this.nav.setRedirectTo("verProductos.xhtml");
-		
+
 		this.usuarioLogueado.generarNotificaciones();
 		this.usuarioLogueado.obtenerNotificaciones();
-		
+
 		nav.setRedirectTo("almacen.xhtml");
 		return "index?faces-redirect=true";
-		
-		//nav.setRedirectTo("almacen.xhtml");
-		//return "/index.xhtml";
+
+		// nav.setRedirectTo("almacen.xhtml");
+		// return "/index.xhtml";
 
 	}
-	
+
 	/* �sto es para subir imagenes con Richfaces */
 	public void paint(OutputStream stream, Object object) throws IOException {
+		if(getFotos().size() > 0){
 		stream.write(getFotos().get((Integer) object).getDatos());
+		}
 		stream.close();
 	}
 
@@ -460,6 +416,7 @@ public class EditarProductoEspBean {
 	/* �sto es para subir imagenes con Richfaces */
 	public String clearUploadData() {
 		fotos.clear();
+		this.fotos = new ArrayList<DataImagen>();
 		return null;
 	}
 
@@ -467,13 +424,13 @@ public class EditarProductoEspBean {
 	public long getTimeStamp() {
 		return System.currentTimeMillis();
 	}
-	
+
 	/* �sto es para subir imagenes con Richfaces */
-    public int getSize() {
-        if (getFotos().size() > 0) {
-            return getFotos().size();
-        } else {
-            return 0;
-        }
-    }
+	public int getSize() {
+		if (getFotos().size() > 0) {
+			return getFotos().size();
+		} else {
+			return 0;
+		}
+	}
 }

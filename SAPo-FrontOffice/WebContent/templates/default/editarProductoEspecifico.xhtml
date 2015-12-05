@@ -127,7 +127,7 @@
 										</div>
 									</div>
 									<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
-										<div id="carousel-example-generic" class="carousel slide"
+										<div id="carousel-example-generic" class="carousel slide img-thumbnail"
 											data-ride="carousel">
 											<!-- Indicators -->
 											<ol class="carousel-indicators">
@@ -303,74 +303,76 @@
 									</div>
 								</div>
 								<!-- Atributos genericos -->
-								<div class="row">
-									<div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
-										<div class="form-group">
-											<h:inputText class="form-control" id="inputNombreAtr"
-												value="#{editarProductoEspBean.nombreAtr}"
-												a:placeholder="Nombre del atributo">
-												<f:validateBean for="inputNombreAtr" />
-												<f:ajax event="keyup" render="inputTextMessage" />
-											</h:inputText>
-											<h:message id="inputTextMessageNombreAtr"
-												for="inputNombreAtr" errorStyle="color:red;"></h:message>
+								<h:panelGroup id="atributos">
+									<div class="row">
+										<div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
+											<div class="form-group">
+												<h:inputText class="form-control" id="inputNombreAtr"
+													value="#{editarProductoEspBean.nombreAtr}"
+													a:placeholder="Nombre del atributo">
+													<f:validateBean for="inputNombreAtr" />
+													<f:ajax event="keyup" render="inputTextMessage" />
+												</h:inputText>
+												<h:message id="inputTextMessageNombreAtr"
+													for="inputNombreAtr" errorStyle="color:red;"></h:message>
+											</div>
 										</div>
-									</div>
-									<div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
-										<div class="form-group">
-											<h:selectOneMenu value="#{editarProductoEspBean.tipoDato}"
-												class="form-control" id="tipoDato"
-												onchange="mostrarComponente()">
-												<f:selectItems value="#{editarProductoEspBean.tipoDatoList}"
-													var="e" itemValue="#{e}" itemLabel="#{e}"
-													id="tipoDatoSelect" />
-												<f:ajax event="change"
-													listener="#{editarProductoEspBean.comboChangeListener}"></f:ajax>
-											</h:selectOneMenu>
+										<div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
+											<div class="form-group">
+												<h:selectOneMenu value="#{editarProductoEspBean.tipoDato}"
+													class="form-control" id="tipoDato"
+													onchange="mostrarComponente()">
+													<f:selectItems
+														value="#{editarProductoEspBean.tipoDatoList}" var="e"
+														itemValue="#{e}" itemLabel="#{e}" id="tipoDatoSelect" />
+													<f:ajax event="change"
+														listener="#{editarProductoEspBean.comboChangeListener}"></f:ajax>
+												</h:selectOneMenu>
+											</div>
 										</div>
-									</div>
-									<div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
-										<div class="form-group" id="atributoTexto"
-											style="display: block;">
-											<h:inputText class="form-control" id="inputValorAtr"
-												value="#{editarProductoEspBean.valorAtr}"
-												a:placeholder="Valor">
-												<f:validateBean for="inputNombreAtr" />
-												<f:ajax event="keyup" render="inputTextMessage" />
-											</h:inputText>
-											<h:message id="inputTextMessageValorAtr" for="inputValorAtr"
-												errorStyle="color:red;"></h:message>
-										</div>
+										<div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
+											<div class="form-group" id="atributoTexto"
+												style="display: block;">
+												<h:inputText class="form-control" id="inputValorAtr"
+													value="#{editarProductoEspBean.valorAtr}"
+													a:placeholder="Valor">
+													<f:validateBean for="inputNombreAtr" />
+													<f:ajax event="keyup" render="inputTextMessage" />
+												</h:inputText>
+												<h:message id="inputTextMessageValorAtr" for="inputValorAtr"
+													errorStyle="color:red;"></h:message>
+											</div>
 
-										<div class="form-group" id="atributoCalendario"
-											style="display: none;">
-											<rich:calendar
-												value="#{editarProductoEspBean.valorAtributoFecha}"
-												pattern="dd/MM/yyyy">
-												<f:ajax event="change"
-													listener="#{editarProductoEspBean.handleDateSelect}" />
-											</rich:calendar>
-										</div>
+											<div class="form-group" id="atributoCalendario"
+												style="display: none;">
+												<rich:calendar
+													value="#{editarProductoEspBean.valorAtributoFecha}"
+													pattern="dd/MM/yyyy">
+													<f:ajax event="change"
+														listener="#{editarProductoEspBean.handleDateSelect}" />
+												</rich:calendar>
+											</div>
 
-										<div class="form-group" id="atributoNumero"
-											style="display: none;">
-											<h:inputText class="form-control" id="atributoNumero"
-												value="#{editarProductoEspBean.valorAtributoNumero}"
-												a:placeholder="Valor">
-												<f:validateBean for="atributoNumero" />
-												<f:ajax event="keyup" render="inputTextMessage" />
-											</h:inputText>
-											<h:message id="inputTextMessageatributoNumero"
-												for="inputValorAtr" errorStyle="color:red;"></h:message>
+											<div class="form-group" id="atributoNumero"
+												style="display: none;">
+												<h:inputText class="form-control" id="atributoNumero"
+													value="#{editarProductoEspBean.valorAtributoNumero}"
+													a:placeholder="Valor">
+													<f:validateBean for="atributoNumero" />
+													<f:ajax event="keyup" render="inputTextMessage" />
+												</h:inputText>
+												<h:message id="inputTextMessageatributoNumero"
+													for="inputValorAtr" errorStyle="color:red;"></h:message>
+											</div>
+										</div>
+										<div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
+											<h:commandButton class="btn btn-primary" value="Agregar"
+												actionListener="#{editarProductoEspBean.add}">
+												<f:ajax render="tablaAtributosAgregados atributos" />
+											</h:commandButton>
 										</div>
 									</div>
-									<div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
-										<h:commandButton class="btn btn-primary" value="Agregar"
-											actionListener="#{editarProductoEspBean.add}">
-											<f:ajax render="@form" />
-										</h:commandButton>
-									</div>
-								</div>
+								</h:panelGroup>
 								<!-- Fin de: Atributos genericos -->
 								<ul class="list-inline pull-right">
 									<li><button type="button"
